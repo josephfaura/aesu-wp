@@ -1,0 +1,33 @@
+# AESU Git Repo: wp-content scope
+# Ignore everything except custom code
+
+uploads/
+cache/
+upgrade/
+ai1wm-backups/
+wflogs/
+ewww/
+*.zip
+*.tar
+*.sql
+*.log
+*.DS_Store
+.idea/
+.vscode/
+node_modules/
+vendor/
+advanced-cache.php
+wp-cache-config.php
+
+# Plugins
+wp-content/plugins/*
+!wp-content/plugins/awi-custom-functions/**
+
+# Themes
+wp-content/themes/*
+!wp-content/themes/awi-revamped/**
+!wp-content/themes/aesu-theme/**
+!wp-content/themes/aesu-child-theme/**
+
+# Optional ACF JSON
+!wp-content/acf-json/**
