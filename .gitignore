@@ -1,33 +1,44 @@
-# AESU Git Repo: wp-content scope
-# Ignore everything except custom code
+# --- WordPress core (never track)
+../wp-admin/
+../wp-includes/
+../wp-config.php
+../wp-config-sample.php
+../index.php
 
+# --- Big/generated stuff
 uploads/
 cache/
 upgrade/
 ai1wm-backups/
-wflogs/
+backups*/
+autoptimize_*/
+wpallimport/
 ewww/
+*.log
+*.sql
 *.zip
 *.tar
-*.sql
-*.log
-*.DS_Store
-.idea/
-.vscode/
+*.tar.gz
+.DS_Store
+
+# --- ACF JSON (skip the folder and any .gitkeep)
+acf-json/
+**/.gitkeep
+
+# --- Plugins: ignore EVERYTHING
+plugins/
+
+# --- Themes: ignore all, allow ONLY awi-revamped
+themes/*
+!themes/awi-revamped/
+
+# --- Also ignore default WP themes if present (belt & suspenders)
+themes/twentytwenty*/
+themes/twentytwentythree/
+themes/twentytwentyfour/
+themes/twentytwentyfive/
+
+# --- Misc
 node_modules/
 vendor/
-advanced-cache.php
-wp-cache-config.php
-
-# Plugins
-wp-content/plugins/*
-!wp-content/plugins/awi-custom-functions/**
-
-# Themes
-wp-content/themes/*
-!wp-content/themes/awi-revamped/**
-!wp-content/themes/aesu-theme/**
-!wp-content/themes/aesu-child-theme/**
-
-# Optional ACF JSON
-!wp-content/acf-json/**
+.env
