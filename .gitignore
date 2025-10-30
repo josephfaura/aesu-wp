@@ -42,3 +42,7 @@ themes/twentytwentyfive/
 node_modules/
 vendor/
 .env
+/wflogs
+autoptimize_404_handler.php
+index.php
+wp-cache-config.php
