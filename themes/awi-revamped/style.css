@@ -4026,19 +4026,41 @@ nav{
   }
 }
 
-
 /* --------------------------------------------------------------
    CAROUSEL FIXES — Chevron arrows with responsive outer spacing
+   Targets: .trip_highlight_items, .hotels_slider, .trip_options_slider
    -------------------------------------------------------------- */
 
-/* Reset UL defaults */
+/* Group helper */
 .trip_highlight_items,
 .hotels_slider,
-.trip_options_slider {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+.trip_options_slider { list-style: none; margin: 0; padding: 0; }
+
+/* Prevent FOUC while Slick bootstraps */
+.trip_highlight_items,
+.hotels_slider,
+.trip_options_slider { opacity: 0; transition: opacity .25s ease; }
+
+/* Show only after Slick initializes */
+.trip_highlight_items.slick-initialized,
+.hotels_slider.slick-initialized,
+.trip_options_slider.slick-initialized { opacity: 1; }
+
+/* Hide controls until initialized */
+.trip_highlight_items .slick-arrow,
+.trip_highlight_items .slick-dots,
+.hotels_slider .slick-arrow,
+.hotels_slider .slick-dots,
+.trip_options_slider .slick-arrow,
+.trip_options_slider .slick-dots { display: none !important; }
+
+.trip_highlight_items.slick-initialized .slick-arrow,
+.hotels_slider.slick-initialized .slick-arrow,
+.trip_options_slider.slick-initialized .slick-arrow { display: flex !important; }
+
+.trip_highlight_items.slick-initialized .slick-dots,
+.hotels_slider.slick-initialized .slick-dots,
+.trip_options_slider.slick-initialized .slick-dots { display: block !important; }
 
 /* Arrow containers */
 .trip_highlight_items .slick-prev,
@@ -4062,31 +4084,24 @@ nav{
   justify-content: center;
 }
 
-/* --------------------------------------------------------------
-   Padding between cards and arrows — desktop default
-   -------------------------------------------------------------- */
+/* Desktop default outer padding */
 .trip_highlight_items .slick-prev,
 .hotels_slider .slick-prev,
-.trip_options_slider .slick-prev {
-  left: -36px !important;
-}
+.trip_options_slider .slick-prev { left: -36px !important; }
+
 .trip_highlight_items .slick-next,
 .hotels_slider .slick-next,
-.trip_options_slider .slick-next {
-  right: -36px !important;
-}
+.trip_options_slider .slick-next { right: -36px !important; }
 
-/* Kill Slick’s pseudo icons */
+/* Remove Slick’s pseudo-icons */
 .trip_highlight_items .slick-prev:before,
 .trip_highlight_items .slick-next:before,
 .hotels_slider .slick-prev:before,
 .hotels_slider .slick-next:before,
 .trip_options_slider .slick-prev:before,
-.trip_options_slider .slick-next:before {
-  content: none !important;
-}
+.trip_options_slider .slick-next:before { content: none !important; }
 
-/* Chevron icons */
+/* Chevron icon look */
 .trip_highlight_items .slick-prev i,
 .trip_highlight_items .slick-next i,
 .hotels_slider .slick-prev i,
@@ -4094,128 +4109,76 @@ nav{
 .trip_options_slider .slick-prev i,
 .trip_options_slider .slick-next i {
   font-size: 28px;
-  color: rgba(0, 0, 0, 0.55);
-  transition: color 0.2s ease;
+  color: rgba(0,0,0,.55);
+  transition: color .2s ease;
 }
 .trip_highlight_items .slick-prev:hover i,
 .trip_highlight_items .slick-next:hover i,
 .hotels_slider .slick-prev:hover i,
 .hotels_slider .slick-next:hover i,
 .trip_options_slider .slick-prev:hover i,
-.trip_options_slider .slick-next:hover i {
-  color: rgba(0, 0, 0, 0.85);
-}
+.trip_options_slider .slick-next:hover i { color: rgba(0,0,0,.85); }
+
+/* Dots spacing (JS will hide if only one page) */
+.trip_highlight_items .slick-dots,
+.hotels_slider .slick-dots,
+.trip_options_slider .slick-dots { margin-top: 14px; text-align: center; }
 
 /* --------------------------------------------------------------
    RESPONSIVE SPACING
    -------------------------------------------------------------- */
 
-/* Laptop to tablet (1024px and below) */
+/* ≤1024px */
 @media (max-width: 1024px) {
   .trip_highlight_items .slick-prev,
   .hotels_slider .slick-prev,
-  .trip_options_slider .slick-prev {
-    left: -28px !important;
-  }
+  .trip_options_slider .slick-prev { left: -28px !important; }
+
   .trip_highlight_items .slick-next,
   .hotels_slider .slick-next,
-  .trip_options_slider .slick-next {
-    right: -28px !important;
-  }
+  .trip_options_slider .slick-next { right: -28px !important; }
 }
 
-/* Tablet (768px and below) */
+/* ≤768px */
 @media (max-width: 768px) {
   .trip_highlight_items .slick-prev,
   .trip_highlight_items .slick-next,
   .hotels_slider .slick-prev,
   .hotels_slider .slick-next,
   .trip_options_slider .slick-prev,
-  .trip_options_slider .slick-next {
-    width: 40px;
-    height: 40px;
-  }
+  .trip_options_slider .slick-next { width: 40px; height: 40px; }
 
   .trip_highlight_items .slick-prev,
   .hotels_slider .slick-prev,
-  .trip_options_slider .slick-prev {
-    left: -22px !important;
-  }
+  .trip_options_slider .slick-prev { left: -22px !important; }
+
   .trip_highlight_items .slick-next,
   .hotels_slider .slick-next,
-  .trip_options_slider .slick-next {
-    right: -22px !important;
-  }
+  .trip_options_slider .slick-next { right: -22px !important; }
 }
 
-/* Mobile (480px and below) */
+/* ≤480px */
 @media (max-width: 480px) {
   .trip_highlight_items .slick-prev,
   .trip_highlight_items .slick-next,
   .hotels_slider .slick-prev,
   .hotels_slider .slick-next,
   .trip_options_slider .slick-prev,
-  .trip_options_slider .slick-next {
-    width: 34px;
-    height: 34px;
-  }
+  .trip_options_slider .slick-next { width: 34px; height: 34px; }
 
   .trip_highlight_items .slick-prev,
   .hotels_slider .slick-prev,
-  .trip_options_slider .slick-prev {
-    left: -16px !important;
-  }
+  .trip_options_slider .slick-prev { left: -16px !important; }
+
   .trip_highlight_items .slick-next,
   .hotels_slider .slick-next,
-  .trip_options_slider .slick-next {
-    right: -16px !important;
-  }
+  .trip_options_slider .slick-next { right: -16px !important; }
 }
 
-/* Dots styling */
-.trip_highlight_items .slick-dots,
-.hotels_slider .slick-dots,
-.trip_options_slider .slick-dots {
-  margin-top: 14px;
-  text-align: center;
-}
-
-/* Prevent FOUC while Slick bootstraps */
-.trip_highlight_items,
-.hotels_slider,
-.trip_options_slider {
-  opacity: 0;                 /* hide before init */
-  transition: opacity .2s ease;
-}
-
-/* Show only after Slick initializes */
-.trip_highlight_items.slick-initialized,
-.hotels_slider.slick-initialized,
-.trip_options_slider.slick-initialized {
-  opacity: 1;
-}
-
-/* Hide controls until initialized */
-.trip_highlight_items .slick-arrow,
-.trip_highlight_items .slick-dots,
-.hotels_slider .slick-arrow,
-.hotels_slider .slick-dots,
-.trip_options_slider .slick-arrow,
-.trip_options_slider .slick-dots {
-  display: none !important;
-}
-.trip_highlight_items.slick-initialized .slick-arrow,
-.hotels_slider.slick-initialized .slick-arrow,
-.trip_options_slider.slick-initialized .slick-arrow { display: flex !important; }
-.trip_highlight_items.slick-initialized .slick-dots,
-.hotels_slider.slick-initialized .slick-dots,
-.trip_options_slider.slick-initialized .slick-dots { display: block !important; }
-
-/* (Optional) make sure slide images don’t jump during load */
+/* Images shouldn’t jump during load */
 .trip_highlight_items img,
 .hotels_slider img,
-.trip_options_slider img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+.trip_options_slider img { display: block; width: 100%; height: auto; }
+
+/* Hide single slick dot if it ever renders */
+.slick-dots li:first-child:last-child { display: none; }
