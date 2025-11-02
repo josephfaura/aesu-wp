@@ -422,12 +422,14 @@ if ( ! post_password_required() ) {
 					<div class="itinerary_item_content">
 						<div class="accordion_trigger" style="position:relative;"><?php echo $itinerary_item['itinerary_trigger_text']; ?><span class="collapsed_indicator"><?php if($itinerary_item['default_expand'] == "False"){ ?>+<?php }else{ ?>-<?php } ?></span></div>
 
-						<div class="accordion_content" <?php if($itinerary_item['default_expand'] == "False"){ ?>style="display:none;"<?php }else{ ?>style="display:block;"<?php } ?>>	
+						<div class="accordion_content" <?php if($itinerary_item['default_expand'] == "False"){ ?>style="display:none;"<?php }else{ ?>style="display:block;"<?php } ?>>
 
-						<div class="itinerary_image" style="background-image:url('<?php echo $itinerary_item['itinerary_image']['url'] ?>');"></div>
+							<div class="itinerary_text">
+								<?php echo $itinerary_item['itinerary_content']; ?>
+							</div>
 
-							<?php echo $itinerary_item['itinerary_content']; ?>
-						</div>
+							<div class="itinerary_image" style="background-image:url('<?php echo $itinerary_item['itinerary_image']['url'] ?>');"></div>
+							</div>
 					</div>
 				</li>
 			<?php } ?>
