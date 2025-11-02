@@ -3978,3 +3978,48 @@ nav{
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+/* === Whats Included accordion icon placement fix === */
+.whats_included_accordion_section .collapsed_indicator {
+  position: absolute;
+  top: 10px;          /* pins icon near top */
+  right: 15px;        /* keeps spacing consistent with edge */
+  transform: none;    /* remove vertical centering from itinerary version */
+  font-size: 32px;    /* optional: adjust to match design */
+  font-weight: 900;
+  color: #2C768E;     /* same theme color */
+  z-index: 2;         /* ensure icon sits above header text */
+}
+
+/* If the trigger container has overflow or padding differences, this helps */
+.whats_included_accordion_section .accordion_trigger {
+  position: relative;
+  padding-right: 60px; /* make room for the icon */
+}
+
+/* === What's Included section: keep +/- icons at top-right === */
+.whats_included_accordion_section .collapsed_indicator {
+  position: absolute;
+  top: 8px;          /* pins icon close to top */
+  right: 16px;       /* aligns with card edge */
+  transform: none;   /* remove vertical centering */
+  font-size: 30px;   /* adjust size as needed */
+  line-height: 1;
+  font-weight: 900;
+  color: #2C768E;
+  z-index: 5;
+}
+
+.whats_included_accordion_section .accordion_trigger {
+  position: relative;
+  padding-right: 60px; /* make space for the icon so text doesn't overlap */
+  min-height: 48px;    /* ensures enough height even for single-line titles */
+}
+
+/* optional: small screens */
+@media (max-width: 768px) {
+  .whats_included_accordion_section .collapsed_indicator {
+    top: 10px;
+    right: 12px;
+    font-size: 26px;
+  }
+}
