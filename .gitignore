@@ -46,3 +46,6 @@ vendor/
 autoptimize_404_handler.php
 index.php
 wp-cache-config.php
+
+themes/awi-revamped/_notes/
+themes/awi-revamped/**/dwsync.xml

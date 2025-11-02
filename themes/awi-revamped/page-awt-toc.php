@@ -49,7 +49,7 @@ if(function_exists('get_field')){
 		left:0;
 		top:0;
 		width:100%;
-		background-color:rgba(0,0,0,.5);
+		background-color:rgba(0,0,0,.4);
 		height:100%;
 	}
 	.packages{
