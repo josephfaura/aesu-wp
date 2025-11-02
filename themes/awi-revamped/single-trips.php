@@ -393,7 +393,7 @@ if ( ! post_password_required() ) {
   <h3><?php echo $whats_included_accordion_title ?></h3>
 
   <!-- make this label simple; JS will sync it -->
-  <a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>
+
 
   <ul>
     <?php foreach ($whats_included_accordion_item['accordion_items'] as $row) { 
