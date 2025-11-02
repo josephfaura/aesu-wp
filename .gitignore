@@ -49,3 +49,4 @@ wp-cache-config.php
 
 themes/awi-revamped/_notes/
 themes/awi-revamped/**/dwsync.xml
+mu-plugins/wpsynchro-mu-plugin-compat.php
