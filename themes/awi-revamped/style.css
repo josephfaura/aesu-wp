@@ -4013,7 +4013,7 @@ nav{
 
 .whats_included_accordion_section .accordion_trigger {
   position: relative;
-  padding-right: 60px; /* make space for the icon so text doesn't overlap */
+  padding-right: 56px; /* make space for the icon so text doesn't overlap */
   min-height: 48px;    /* ensures enough height even for single-line titles */
 }
 
