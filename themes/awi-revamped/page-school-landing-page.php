@@ -111,8 +111,8 @@ if(function_exists('get_field')){
     .welcome_letter{
         display:flex;
         flex-wrap:wrap;
-        gap:32px;
-        padding-top:24px;
+        /*gap:32px;
+        padding-top:24px;*/
     }
     .welcome_letter > div{
         display:flex;
@@ -123,7 +123,7 @@ if(function_exists('get_field')){
     .welcome_letter_contact{
         display:flex;
         gap:32px;
-        padding:32px 0;
+        padding:16px 0;
     }
     .welcome_letter_contact > div{
         display:flex;
@@ -134,8 +134,8 @@ if(function_exists('get_field')){
         background-repeat:no-repeat;
     }
     .welcome_letter_right{
-        max-width:1000px;
-        margin-right:32px;
+        background: #f2f2f2;
+        padding: 36px 56px 40px 56px;
     }
     .contact_info h2{
         margin-bottom:18px;
@@ -299,9 +299,9 @@ if(function_exists('get_field')){
         .welcome_letter_left {
             height:600px;
         }
-        .welcome_letter{
+        /*.welcome_letter{
             padding-top:0;
-        }
+        }*/
         .welcome_letter > div{
             width:100%;
             flex:none;
@@ -310,7 +310,6 @@ if(function_exists('get_field')){
         .welcome_letter_right{
             max-width:100%;
             padding:32px;
-            padding-top:0;
         }
         .welcome_letter_copy h2{
             margin-top:0;
