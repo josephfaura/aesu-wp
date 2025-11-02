@@ -291,10 +291,18 @@ if ( ! post_password_required() ) {
     // The password has been entered — show this content
 ?>
 <section class="mobile_cta">
-	
 	<div class="trip_days_price"><?php echo $days_price; ?></div>
 	<a href="<?php echo $cta_button['url'] ?>" class="red_button_cta" target="_blank"><?php echo $cta_button['title'] ?></a>
 </section>
+
+<?php if(is_user_logged_in()){ ?>
+		<style>
+			.single-trips .trip_header{
+				top:32px;
+			}
+		</style>
+	<?php } ?>
+
 <section class="trip_header">
 	<div class="trip_header_info">
 		<?php if($school_logo['url']){ ?>
