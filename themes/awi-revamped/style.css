@@ -3895,7 +3895,7 @@ nav{
 /* Title row */
 .itinerary .accordion_trigger{
   display:flex; align-items:center; justify-content:space-between;
-  gap:.5rem; padding:10px 30px 8px; margin-bottom:6px; line-height:1.2; font-size:1.25rem;
+  padding:14px 30px;
 }
 
 /* First paragraph under content: no extra top gap */
