@@ -730,9 +730,9 @@ function legacy_page_taxonomy() {
 	register_taxonomy( 'legacy_pages', array( 'page' ), $args );
 
 }
-add_action( 'init', 'legacy_page_taxonomy', 0 );
+/*add_action( 'init', 'legacy_page_taxonomy', 0 );
 if($_GET['run_import_script'] == 'true'){
-/*add_action('init', function() {
+add_action('init', function() {
     if ( ! current_user_can('manage_options') ) {
         return; // only allow admins
     }
@@ -769,8 +769,8 @@ if($_GET['run_import_script'] == 'true'){
     }
 
     error_log('Second payment_info learn_more_cta_url update completed.');
-});*/
-}
+});
+}*/
 
 // Sitemap shortcode
 function generate_sitemap() {

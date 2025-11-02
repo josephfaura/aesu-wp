@@ -121,7 +121,7 @@ if ( $tour ) {
 		top:0;
 		background-color:#fff;
 		box-shadow:0px 3px 10px rgba(0,0,0,.25);
-		z-index:99999999;
+		z-index:99999;
 	}
 	.mobile_cta{
 		display:none;
@@ -178,25 +178,26 @@ if ( $tour ) {
 		padding-left:16px;
 	}
 	*/
-	}
+}
+
 	/*.whats_included_image{
 		padding:20px;
-	}*/
+	}
 	.itinerary_image_item{
 		float:right;
 		max-height:400px;
-	}
+	}*/
 	.accordion_item{
 		clear:both;
 	}
 	.slick-next{
 		right:-14px;
 	}
-	@media screen and (max-width:820px){
+	/*@media screen and (max-width:820px){
 		.itinerary_image_item{
 			float:none;
 		}
-	}
+	}*/
 	.share_section{
 		font-size:20px;
 		/*padding:15px;*/
@@ -221,10 +222,10 @@ if ( $tour ) {
 	}
 	.itinerary_image{
 		max-width:300px;
+		width:100%;
 		height:300px;
 		float:right;
-		width:100%;
-		margin-left:15px;
+		margin: 20px 0 16px 20px
 	}
 
 	.trip_header_info_text{
@@ -238,14 +239,16 @@ if ( $tour ) {
 	}*/
 	
 	@media screen and (max-width:686px){
+		.accordion_content {
+			padding: 20px 30px;
+		}
 		.itinerary_image {
-    max-width: 100%;
-    height: 300px;
-    float: none;
-    width: 100%;
-    margin: 3px;
-    margin-left: 0;
-}
+		    max-width: 100%;
+		    height: 300px;
+		    float: none;
+		    width: 100%;
+		    margin: 0;
+		}
 	}
 	@media screen and (max-width:420px){
 		.mobile_cta .red_button_cta {
@@ -257,6 +260,9 @@ if ( $tour ) {
     }
 	}
 	@media screen and (max-width: 976px){
+		#chat-widget-push-to-talk {
+			bottom:100px !important;
+		}
 		/*.trip_header_info_text {
 			max-width: calc(100%);
 		}*/
@@ -331,13 +337,14 @@ if ( ! post_password_required() ) {
 			<li class="deals_cta"><a href="#">Deals</a></li>
 			<li class="more_trips"><a href="<?php echo get_permalink($school->ID) ?>">More Trips</a></li>
 			<li class="travel_tools"><a href="#">Travel Tools</a></li>
-			<li class="share_section"><span><i class="fa-solid fa-arrow-up-from-bracket"></i>
-</span><div class="share_options">
-		<?php echo do_shortcode('[DISPLAY_ULTIMATE_SOCIAL_ICONS]') ?></div></li>
+			<li class="share_section"><span><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
+			<div class="share_options">
+				<?php echo do_shortcode('[DISPLAY_ULTIMATE_SOCIAL_ICONS]') ?>
+			</div></li>
 		</ul>
-		<ul class="clearfix list--unstyled trip_anchornav_list">
+		<!--<ul class="clearfix list--unstyled trip_anchornav_list">
 			<li class=""><a href="#"></a></li>
-		</ul>
+		</ul>-->
 	</div>
 </section>
 <section class="tour_area">
@@ -414,8 +421,13 @@ if ( ! post_password_required() ) {
 				<li class="accordion_item">
 					<div class="itinerary_item_content">
 						<div class="accordion_trigger" style="position:relative;"><?php echo $itinerary_item['itinerary_trigger_text']; ?><span class="collapsed_indicator"><?php if($itinerary_item['default_expand'] == "False"){ ?>+<?php }else{ ?>-<?php } ?></span></div>
-						<div class="accordion_content" <?php if($itinerary_item['default_expand'] == "False"){ ?>style="display:none;"<?php }else{ ?>style="display:block;"<?php } ?>>	<div class="itinerary_image" style="background-image:url('<?php echo $itinerary_item['itinerary_image']['url'] ?>');"></div>
-				<?php echo $itinerary_item['itinerary_content']; ?></div>
+
+						<div class="accordion_content" <?php if($itinerary_item['default_expand'] == "False"){ ?>style="display:none;"<?php }else{ ?>style="display:block;"<?php } ?>>	
+
+						<div class="itinerary_image" style="background-image:url('<?php echo $itinerary_item['itinerary_image']['url'] ?>');"></div>
+
+							<?php echo $itinerary_item['itinerary_content']; ?>
+						</div>
 					</div>
 				</li>
 			<?php } ?>
@@ -614,8 +626,10 @@ if ( ! post_password_required() ) {
         display: flex;
       }
       .travel_tools_popup_inner{
-          max-width: 550px;
+          max-width: 650px;
+          max-height: 90%;
           position: relative;
+          overflow: auto;
       }
       .travel_tools_close_popup{
           display: flex;

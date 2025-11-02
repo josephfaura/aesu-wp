@@ -2885,7 +2885,8 @@ aside ul{
 	width:50%;
 }
 .trip_main_content{
-	padding:32px 56px 0 32px;
+	padding:56px;
+	background: #f2f2f2;
 }
 .trip_cta_list{
 	padding:0;
@@ -2982,7 +2983,7 @@ h3.primary-teal{
 	background-size:contain;
 	background-repeat:no-repeat;
 	/*background-color:#F2F2F2;*/
-	margin-left:32px;
+	padding-left:56px;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
@@ -2998,17 +2999,11 @@ h3.primary-teal{
 .trips-template-default ul{
 	margin-left:0;
 }
-.whats_included_accordion_section ul{
 
-}
 .accordion_trigger{
-	padding:8px 15px;
-	margin-bottom:10px;
-	box-shadow:0 3px 10px rgba(0,0,0,.25);
+	padding:14px 30px;
 	font-weight:bold;
-	font-size:18px;
 	color:#2C768E;
-	border:1px solid #dbdbdb
 }
 .trip_highlights_image {
 	height:250px;
@@ -3059,7 +3054,7 @@ i.fa-star{
 	position:relative;
 }
 .collapsed_indicator{
-	    position: absolute;
+	  position: absolute;
     right: 12px;
     font-size: 35px;
     top: -6px;
@@ -3067,7 +3062,10 @@ i.fa-star{
     color: #2C768E;
 }
 .accordion_content{
-	margin-top:15px;
+	padding: 30px 65px;
+}
+.accordion_content ul {
+	padding-left:10px;
 }
 .additional_whats_included_text h4{
 	font-size:24px;
@@ -3190,8 +3188,8 @@ body .subscription_section{
 		flex-direction: column;
 	}
 	.whats_included_image{
-		margin-left:0;
-		height:400px;
+		padding-left:0;
+		height:60vh;
 	}
 }
 @media screen and (max-width:976px){
@@ -3229,6 +3227,9 @@ body .subscription_section{
 }
 .accordion_item{
 	position:relative;
+	margin-bottom:10px;
+	box-shadow:0 3px 10px rgba(0,0,0,.25);
+	border:1px solid #dbdbdb;
 }
 .trip_options_slider {
 	list-style:none;
@@ -3236,12 +3237,14 @@ body .subscription_section{
 	padding:0;
 }
 .hotels_content{
-	max-width:1920px;
-	margin:0 auto;
+	max-width:1250px;
+	margin:0 auto 32px auto;
+	text-align: center;
 }
-.trip_options_content,.itinerary{
-	max-width:1920px;
-	margin:0 auto;
+.trip_options_content {
+	max-width:1250px;
+	margin:0 auto 32px auto;
+	text-align: center;
 }
 .hotels{
 	margin-top:56px;
