@@ -78,3 +78,38 @@
   });
 
 })(jQuery);
+
+
+(function ($) {
+
+  // Decide whether dots should show for the current state
+  function toggleDots(slick) {
+    if (!slick || !slick.$dots) return;
+
+    // Prefer Slick's own page count when available
+    var pages = (typeof slick.getDotCount === 'function') ? slick.getDotCount() : null;
+
+    // Fallback: if total slides <= slidesToShow, no dots needed
+    var show = true;
+    if (pages !== null) {
+      show = pages > 0; // 0 pages => only one "screen", hide dots
+    } else {
+      var toShow = slick.options.slidesToShow || 1;
+      show = slick.slideCount > toShow;
+    }
+
+    $(slick.$dots).toggle(show);
+  }
+
+  // Catch sliders no matter when they initialize
+  $(document).on('init reInit setPosition afterChange breakpoint', '.slick-slider', function (e, slick) {
+    toggleDots(slick);
+  });
+
+  // If any sliders are already initialized before this script runs, handle them now
+  $('.slick-slider.slick-initialized').each(function () {
+    var slick = $(this).slick('getSlick');
+    toggleDots(slick);
+  });
+
+})(jQuery);
