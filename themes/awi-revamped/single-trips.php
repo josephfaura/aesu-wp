@@ -368,7 +368,7 @@ if ( ! post_password_required() ) {
 								$index = 0;
 								while($index < $highlight_stars){
 									?>
-										<i class="fa fa-star"></i>
+										<i class="fa-solid fa-star"></i>
 									<?php
 								$index++;}
 							?>
@@ -390,18 +390,31 @@ if ( ! post_password_required() ) {
 					$accordion_items = $whats_included_accordion_item['accordion_items'];
 					?>
 					<div class="whats_included_accordion_section">
-						<h3><?php echo $whats_included_accordion_title ?></h3>
-						<a href="#" class="toggle_all_trigger">Collapse All -</a>
-						<ul>
-							<?php foreach($whats_included_accordion_item['accordion_items'] as $whats_included_accordion_subitems){ ?>
-								<li class="accordion_item">
-									<div class="accordion_trigger"><?php echo $whats_included_accordion_subitems['accordion_trigger_text']; ?><span class="collapsed_indicator"><?php if($whats_included_accordion_item['expand_all'] == "False"){ ?>+<?php }else{ ?>-<?php } ?></span></div>
-									<div class="accordion_content" <?php if($whats_included_accordion_item['expand_all'] == "False"){ ?>style="display:none"<?php }else{ ?>style="display:block"<?php } ?>><?php echo $whats_included_accordion_subitems['accordion_content']; ?></div>
-								</li>
-							<?php } ?>
-						</ul>
-					</div>
+  <h3><?php echo $whats_included_accordion_title ?></h3>
+
+  <!-- make this label simple; JS will sync it -->
+  <!-- <a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>-->
+
+  <ul>
+    <?php foreach ($whats_included_accordion_item['accordion_items'] as $row) { 
+      $is_open = ($whats_included_accordion_item['expand_all'] !== "False"); ?>
+      <li class="accordion_item">
+        <div class="accordion_trigger">
+          <?php echo $row['accordion_trigger_text']; ?>
+          <span class="collapsed_indicator" aria-hidden="true">
+            <i class="fa-solid <?php echo $is_open ? 'fa-minus' : 'fa-plus'; ?>"></i>
+          </span>
+        </div>
+        <div class="accordion_content" style="display:<?php echo $is_open ? 'block' : 'none'; ?>">
+          <?php echo $row['accordion_content']; ?>
+        </div>
+      </li>
+    <?php } ?>
+  </ul>
+</div>
+
 				<?php } ?>
+
 				<div class="additional_whats_included_text">
 					<?php echo do_shortcode($additional_whats_included_text); ?>
 				</div>
@@ -411,28 +424,50 @@ if ( ! post_password_required() ) {
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="itinerary">
-		<h2><?php echo $iteierary_title ?></h2>
-		<div style="position:relative;height:40px;" class="accordion_collapse_wrap">
-		<a href="#" class="toggle_all_trigger">Collapse All -</a>
-		</div>
-		<ul>
-			<?php foreach($itinerary_items as $itinerary_item){ ?>
-				<li class="accordion_item">
-					<div class="itinerary_item_content">
-						<div class="accordion_trigger" style="position:relative;"><?php echo $itinerary_item['itinerary_trigger_text']; ?><span class="collapsed_indicator"><?php if($itinerary_item['default_expand'] == "False"){ ?>+<?php }else{ ?>-<?php } ?></span></div>
+  <h2><?php echo $iteierary_title ?></h2>
 
-						<div class="accordion_content" <?php if($itinerary_item['default_expand'] == "False"){ ?>style="display:none;"<?php }else{ ?>style="display:block;"<?php } ?>>	
+  <div style="position:relative;height:40px;" class="accordion_collapse_wrap">
+    <a href="#" class="toggle_all_trigger">Collapse All <i class="fa-solid fa-minus"></i></a>
+  </div>
 
-						<div class="itinerary_image" style="background-image:url('<?php echo $itinerary_item['itinerary_image']['url'] ?>');"></div>
+  <ul>
+    <?php foreach($itinerary_items as $itinerary_item){ ?>
+      <li class="accordion_item">
+        <div class="itinerary_item_content">
+          
+          <div class="accordion_trigger" style="position:relative;">
+            <?php echo $itinerary_item['itinerary_trigger_text']; ?>
+            <span class="collapsed_indicator">
+              <?php if($itinerary_item['default_expand'] == "False"){ ?>
+                <i class="fa-solid fa-plus"></i>
+              <?php } else { ?>
+                <i class="fa-solid fa-minus"></i>
+              <?php } ?>
+            </span>
+          </div>
 
-							<?php echo $itinerary_item['itinerary_content']; ?>
-						</div>
-					</div>
-				</li>
-			<?php } ?>
-		</ul>
-	</div>
+          <div class="accordion_content" 
+            <?php if($itinerary_item['default_expand'] == "False"){ ?>
+              style="display:none;"
+            <?php } else { ?>
+              style="display:block;"
+            <?php } ?>>
+            
+            <div class="itinerary_text">
+              <?php echo $itinerary_item['itinerary_content']; ?>
+            </div>
+
+            <div class="itinerary_image" style="background-image:url('<?php echo $itinerary_item['itinerary_image']['url'] ?>');"></div>
+          </div>
+        </div>
+      </li>
+    <?php } ?>
+  </ul>
+</div>
+
 	<div class="hotels" style="clear:both;">
 		<h2><?php echo $hotels_title ?></h2>
 		<div class="hotels_content">
@@ -450,7 +485,7 @@ if ( ! post_password_required() ) {
 									$index = 0;
 									while($index < $hotels_item['hotel_stars']){
 										?>
-											<i class="fa fa-star"></i>
+											<i class="fa-solid fa-star"></i>
 										<?php
 									$index++;}
 								?>
@@ -482,7 +517,7 @@ if ( ! post_password_required() ) {
 									$index = 0;
 									while($index < $trip_option_item['trip_option_stars']){
 										?>
-											<i class="fa fa-star"></i>
+											<i class="fa-solid fa-star"></i>
 										<?php
 									$index++;}
 								?>
@@ -491,7 +526,7 @@ if ( ! post_password_required() ) {
 						<div class="trip_option_item_content">
 							<?php echo do_shortcode($trip_option_item['trip_options_content']); ?>
 							<?php if($trip_option_item['more_info']['url'] ){ ?>
-								<a style="display:block;"href="<?php echo $trip_option_item['more_info']['url'] ?>" target="<?php echo $trip_option_item['more_info']['target'] ?>"><?php echo $trip_option_item['more_info']['title'] ?> <i class="fa fa-arrow-right"></i></a>
+								<a style="display:block;"href="<?php echo $trip_option_item['more_info']['url'] ?>" target="<?php echo $trip_option_item['more_info']['target'] ?>"><?php echo $trip_option_item['more_info']['title'] ?> <i class="fa-solid fa-arrow-right"></i></a>
 							<?php } ?>
 						</div>
 					</div>
@@ -596,7 +631,7 @@ if ( ! post_password_required() ) {
 <div class="tour_deals_popup_wrap">
     <div class="tour_deals_popup_inner">
 	<div class="popup_outline">
-      <a href="#" class="tour_deals_close_popup"><i class="fa fa-close"></i></a>
+      <a href="#" class="tour_deals_close_popup"><i class="fa-solid fa-xmark"></i></a>
       <div class="tour_deals_popup_content">
         <?php if($deals_popup != '' && $deals_popup){ ?>
 			<?php echo do_shortcode($deals_popup); ?>
@@ -665,7 +700,7 @@ if ( ! post_password_required() ) {
 <div class="travel_tools_popup_wrap">
     <div class="travel_tools_popup_inner">
 	<div class="popup_outline">
-      <a href="#" class="travel_tools_close_popup"><i class="fa fa-close"></i></a>
+      <a href="#" class="travel_tools_close_popup"><i class="fa-solid fa-xmark"></i></a>
       <div class="travel_tools_popup_content">
         <?php echo do_shortcode($travel_tools); ?>
 		
