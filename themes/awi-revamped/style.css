@@ -2920,10 +2920,10 @@ h3.primary-teal{
 	font-size:32px;
 	margin:16px 0;
 }
-.p-small{
+/*.p-small{
 	font-size:14px;
 	color:#5E5E5E;
-}
+}*/
 .additional_links{
 	
 }
@@ -3023,7 +3023,7 @@ h3.primary-teal{
 	margin-top:0;
 }
 .trip_highlights_content{
-	padding:24px;
+	padding:32px;
 }
 ul.trip_highlight_items{
 	margin-left:0;
@@ -3041,13 +3041,12 @@ i.fa-star{
 	font-size:12px;
 }
 .highlight_location_days{
-	display:inline-block;
+	display:inline;
 	font-size:14px;
-	color:#5E5E5E;
-	margin-right:10px;
+	margin-right:5px;
 }
 .highlight_stars{
-	display:inline-block;
+	display:inline;
 }
 
 .accodion_item{
@@ -3096,11 +3095,11 @@ body .subscription_section{
 	display:flex;
 }
 .hotel_content_wrap{
-	padding:24px;
+	padding:32px;
 }
 .hotel_content_wrap h3{
 	font-size:1.5em;
-	margin-top:10px;
+	margin-top:0;
 	margin-bottom:5px;
 }
 .hotel_item_image {
@@ -3110,21 +3109,23 @@ body .subscription_section{
 	margin-top:16px;
 }
 .hotel_location{
-	margin-right:15px;
-	display:inline-block;
+	font-size: 14px;
+	margin-right:5px;
+	display:inline;
 }
 .trip_options_wrap{
-	padding:16px;
+	padding:32px;
 }
 .trip_options_item_image {
 	height:250px;
 }
 .trip_options_price{
-	margin-right:15px;
-	display:inline-block;
+	font-size: 14px;
+	margin-right:5px;
+	display:inline;
 }
 .hotel_stars{
-	display:inline-block;
+	display:inline;
 }
 .trip_option_item_content{
 	margin-top:16px;
@@ -3135,7 +3136,7 @@ body .subscription_section{
 }
 .trip_options_wrap h3{
 	font-size: 1.5em;
-	margin-top:16px;
+	margin-top:0;
 	margin-bottom:5px;
 }
 .single-trip .slick-list{
@@ -3882,13 +3883,13 @@ nav{
 
 .itinerary .accordion_content{
   display:flex; align-items:flex-start; justify-content:space-between;
-  gap:30px; padding:18px 65px 25px; overflow:hidden; background:#fff;
+  gap:32px; overflow:hidden; background:#fff;
 }
 
 .itinerary .itinerary_text{ flex:1 1 auto; min-width:0; }
 
 .itinerary .itinerary_image{
-  flex:0 0 340px; height:300px; margin:0 0 30px 0;
+  flex:0 0 340px; height:300px; margin:0 0 16px 0;
   background-size:cover; background-position:center; border-radius:8px;
 }
 
@@ -3969,14 +3970,14 @@ nav{
 }
 
 /* Thicker icon lines */
-.accordion_trigger .collapsed_indicator i {
+/*.accordion_trigger .collapsed_indicator i {
   font-size: 22px !important;
   text-shadow: 0 0 2px #2C768E;
   font-weight: 900;
   color: #2C768E;
   line-height: 1;
   transition: transform 0.2s ease, opacity 0.2s ease;
-}
+}*/
 
 /* === Whats Included accordion icon placement fix === */
 .whats_included_accordion_section .collapsed_indicator {
