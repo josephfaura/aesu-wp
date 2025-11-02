@@ -3971,7 +3971,7 @@ nav{
 /* Thicker icon lines */
 .accordion_trigger .collapsed_indicator i {
   font-size: 22px !important;
-  text-shadow: 0 0 3px #2C768E;
+  text-shadow: 0 0 2px #2C768E;
   font-weight: 900;
   color: #2C768E;
   line-height: 1;
