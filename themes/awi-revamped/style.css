@@ -3897,7 +3897,7 @@ nav{
 /* Title row */
 .itinerary .accordion_trigger{
   display:flex; align-items:center; justify-content:space-between;
-  padding:14px 30px;
+  padding:14px 56px 14px 30px;
 }
 
 /* First paragraph under content: no extra top gap */
@@ -3995,7 +3995,7 @@ nav{
 /* If the trigger container has overflow or padding differences, this helps */
 .whats_included_accordion_section .accordion_trigger {
   position: relative;
-  padding-right: 60px; /* make room for the icon */
+  padding-right: 56px; /* make room for the icon */
 }
 
 /* === What's Included section: keep +/- icons at top-right === */
