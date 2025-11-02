@@ -11,13 +11,11 @@ if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
 	define( '_S_VERSION', '1.0.0' );
 }
-//add_filter('use_block_editor_for_post', '__return_false');
+
+// add_filter('use_block_editor_for_post', '__return_false');
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which
- * runs before the init hook. The init hook is too late for some features, such
- * as indicating support for post thumbnails.
  */
 function awi_revamped_setup() {
 	load_theme_textdomain( 'awi-revamped', get_template_directory() . '/languages' );
@@ -32,9 +30,9 @@ function awi_revamped_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	register_nav_menus( array(
-		'main_nav'      => 'Main Nav',
-		'footer_nav'    => 'Footer Nav',
-		'awt_footer_nav'=> 'AWT Footer Nav',
+		'main_nav'       => 'Main Nav',
+		'footer_nav'     => 'Footer Nav',
+		'awt_footer_nav' => 'AWT Footer Nav',
 	));
 
 	add_theme_support(
@@ -105,41 +103,54 @@ add_action( 'widgets_init', 'awi_revamped_widgets_init' );
  * Enqueue scripts and styles.
  */
 function awi_revamped_scripts() {
-	wp_enqueue_style( 'awi-revamped-style', get_stylesheet_uri(), array(), _S_VERSION );
+	// Theme CSS (cache-bust on file change)
+	wp_enqueue_style(
+		'awi-revamped-style',
+		get_stylesheet_uri(),
+		[],
+		file_exists( get_stylesheet_directory() . '/style.css' ) ? filemtime( get_stylesheet_directory() . '/style.css' ) : _S_VERSION
+	);
 	wp_style_add_data( 'awi-revamped-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'awi-revamped-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'awi-revamped-svg',        get_template_directory_uri() . '/js/svgxuse.min.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'awiNav',                   get_template_directory_uri() . '/js/awiNav-1.2.1.js', array( 'jquery' ), false, true );
+	// Core JS
+	wp_enqueue_script( 'awi-revamped-navigation', get_template_directory_uri() . '/js/navigation.js', [], _S_VERSION, true );
+	wp_enqueue_script( 'awi-revamped-svg',        get_template_directory_uri() . '/js/svgxuse.min.js', [], _S_VERSION, true );
+	wp_enqueue_script( 'awiNav',                  get_template_directory_uri() . '/js/awiNav-1.2.1.js', [ 'jquery' ], false, true );
 
-	wp_enqueue_script( 'flexslider',               get_template_directory_uri() . '/js/jquery.flexslider-min.js', array( 'jquery' ), false, true );
-	wp_enqueue_style ( 'flexslider',               get_template_directory_uri() . '/css/flexslider.css' );
+	// Flexslider
+	wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/js/jquery.flexslider-min.js', [ 'jquery' ], false, true );
+	wp_enqueue_style ( 'flexslider', get_template_directory_uri() . '/css/flexslider.css' );
 
-	wp_enqueue_script( 'fancybox-js-theme',        get_template_directory_uri() . '/js/fancybox.umd.js', array( 'jquery' ), false, true );
-	wp_enqueue_style ( 'fancybox-css-theme',       get_template_directory_uri() . '/css/fancybox.css' );
+	// Fancybox
+	wp_enqueue_script( 'fancybox-js-theme',  get_template_directory_uri() . '/js/fancybox.umd.js', [ 'jquery' ], false, true );
+	wp_enqueue_style ( 'fancybox-css-theme', get_template_directory_uri() . '/css/fancybox.css' );
 
+	// Comments
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	// Font Awesome 6 (needed for + / − icons)
-	wp_enqueue_style(
-	  'fontawesome',
-	  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css',
-	  array(),
-	  '6.5.2'
-	);
+	// Font Awesome is provided by the Font Awesome Official plugin (v6.7.x).
+	// Remove any manual CDN enqueues to avoid duplicates.
 
 	// Slick
-	wp_enqueue_script( 'slick',        get_template_directory_uri() . '/js/slick/slick.min.js', array( 'jquery' ), false, true );
-	wp_enqueue_style ( 'slick',        get_template_directory_uri() . '/js/slick/slick.css' );
-	wp_enqueue_style ( 'slick-theme',  get_template_directory_uri() . '/js/slick/slick-theme.css' );
+	wp_enqueue_style ( 'slick',       get_template_directory_uri() . '/js/slick/slick.css', [], '1.8.1' );
+	wp_enqueue_style ( 'slick-theme', get_template_directory_uri() . '/js/slick/slick-theme.css', [ 'slick' ], '1.8.1' );
+	wp_enqueue_script( 'slick',       get_template_directory_uri() . '/js/slick/slick.min.js', [ 'jquery' ], '1.8.1', true );
 
-	// NEW: Itinerary toggler (Font Awesome icons, expand/collapse all sync)
-	wp_enqueue_script( 'itinerary-toggle', get_template_directory_uri() . '/js/itinerary-toggle.js', array( 'jquery' ), _S_VERSION, true );
+	// Carousel fixes / initialization (depends on slick)
+	wp_enqueue_script(
+		'awi-carousel-fixes',
+		get_stylesheet_directory_uri() . '/js/carousel-fixes.js',
+		[ 'jquery', 'slick' ],
+		file_exists( get_stylesheet_directory() . '/js/carousel-fixes.js' ) ? filemtime( get_stylesheet_directory() . '/js/carousel-fixes.js' ) : _S_VERSION,
+		true
+	);
+
+	// Itinerary toggler (plus/minus icons, a11y)
+	wp_enqueue_script( 'itinerary-toggle', get_template_directory_uri() . '/js/itinerary-toggle.js', [ 'jquery' ], _S_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'awi_revamped_scripts', 1 );
-
 
 /**
  * Implement the Custom Header feature.
@@ -168,75 +179,45 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Footer scripts that are not Slick initializations (Slick is now initialized
+ * exclusively in js/carousel-fixes.js to avoid double-inits).
+ */
 add_action('wp_footer', 'awi_initialize_scripts', 9999);
 function awi_initialize_scripts() { ?>
 <script>
 (function($){
-	$('.trip_highlight_items').slick({
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		autoplay: false,
-		dots:true,
-		arrows:true,
-		responsive: [
-			{ breakpoint: 1023, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-			{ breakpoint:  767, settings: { slidesToShow: 1, slidesToScroll: 1 } }
-		]
-	});
-	$('.hotels_slider').slick({
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		autoplay: false,
-		autoplaySpeed: 2000,
-		dots:true,
-		responsive: [
-			{ breakpoint: 1023, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-			{ breakpoint:  767, settings: { slidesToShow: 1, slidesToScroll: 1 } }
-		]
-	});
-	$('.trip_options_slider').slick({
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		autoplay: false,
-		dots:true,
-		responsive: [
-			{ breakpoint: 1023, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-			{ breakpoint:  767, settings: { slidesToShow: 1, slidesToScroll: 1 } }
-		]
-	});
-})( jQuery );
-</script>
-<script>
-(function($){
-	$('.acc-button-all').click(function() {
+	/* Accordion (legacy simple accordions not managed by itinerary-toggle.js) */
+	$('.acc-button-all').on('click',function() {
 		if ($(this).hasClass('acc-toggle-open')) {
 			$('.acc-button').removeClass('acc-active');
 			$('.acc-content').slideUp('normal');
-			$(this).removeClass('acc-toggle-open')
+			$(this).removeClass('acc-toggle-open');
 		} else {
 			$('.acc-button').addClass('acc-active');
 			$('.acc-content').slideDown('normal');
-			$(this).addClass('acc-toggle-open')
+			$(this).addClass('acc-toggle-open');
 		}
-	});	
-	$('.acc-button').click(function() {
-		if ($(this).next().is(':hidden') == true) {
+	});
+	$('.acc-button').on('click',function() {
+		if ($(this).next().is(':hidden')) {
 			$(this).addClass('acc-active');
 			$(this).next().slideDown('normal');
-		} else { 
+		} else {
 			$(this).next().slideUp('normal');
 			$(this).removeClass('acc-active');
 		}
 	});
 })( jQuery );
 </script>
-<?php if(is_page(898)){ ?>
 <script>
 (function($){
-	$(document).on('change','.interior_banner input',function(e){
+	/* Search/filter & misc UI code (unchanged) */
+	<?php if(is_page(898)){ ?>
+	$(document).on('change','.interior_banner input',function(){
 		var textentered = $(this).val().toLowerCase();
 		var loop_counter = 0;
-		$('.packages li').each(function(index,element){
+		$('.packages li').each(function(){
 			let element_text = $("#"+$(this).attr('id')).text().toLowerCase();
 			if(!element_text.includes(textentered)){
 				$("#"+$(this).attr('id')).css('display','none');
@@ -245,49 +226,29 @@ function awi_initialize_scripts() { ?>
 				loop_counter += 1;
 			}
 		});
-		if(loop_counter == 0){ $('.awt_toc_form').css('display','block'); }
-		else { $('.awt_toc_form').css('display','none'); }
+		$('.awt_toc_form').css('display', loop_counter === 0 ? 'block' : 'none');
 	});
-	$(document).on('click','#search_submit',function(e){
+	$(document).on('click','#search_submit',function(){
 		$([document.documentElement, document.body]).animate({
 			scrollTop: $(".packages").first().offset().top - 260
 		}, 500);
 	});
-})( jQuery );
-</script>
-<?php if($_GET['show_values'] == 'true'){ ?>
-<script>
-(function($){
+	<?php if(isset($_GET['show_values']) && $_GET['show_values'] === 'true'){ ?>
 	$(document).ready(function(){
-		$('.packages li').each(function(index,element){
+		$('.packages li').each(function(){
 			$('footer').append($(this).find('.package_thumbnail img').attr('src') + '<br>');
 		});
 	});
-})( jQuery );
-</script>
-<?php } ?>
-<?php } ?>
-<?php 
-  session_start();
-  if(isset($_GET['utm_source'])){
-    $_SESSION['utm_source'] = $_GET['utm_source'];
-  }elseif(!isset($_GET['utm_source']) && !isset($_SESSION['utm_source'])){
-    $_SESSION['utm_source'] = $_SERVER['HTTP_REFERER'];
-  } ?>
-<script>
-(function($){
-	$(document).ready(function(){
-		$('.load_more_images').on('click',function(e){
-			e.preventDefault();
-			$('.past_tour_gallery li').css('display','block');
-		});
-	});
+	<?php } ?>
+	<?php } ?>
+
+	/* Misc header behavior, events, etc. */
 	var lastScrollTop = 0;
 	if ($(window).width() < 880) { $(".desktop_header").remove(); }
 	else { $(".mobile_header").remove(); }
 
 	<?php if(!is_singular('trips')){ ?>
-	$(window).scroll(function () {
+	$(window).on('scroll', function () {
 		if (window.scrollY > 457) {
 			var st = $(this).scrollTop();
 			if (st < lastScrollTop){ $('header').slideDown(); }
@@ -299,23 +260,23 @@ function awi_initialize_scripts() { ?>
 
 	$(document).ready(function(){
 	  $("a[href^='tel']").on("click",function(){
-	    gtag('event', 'click_to_call', { 'lead_source': '<?php echo $_SESSION['utm_source']; ?>' });
+	    gtag('event', 'click_to_call', { 'lead_source': '<?php echo isset($_SESSION['utm_source']) ? esc_js($_SESSION['utm_source']) : '' ; ?>' });
 	  });
-	  var wpcf7Elm = document.querySelector( '.wpcf7' );
-	  document.addEventListener( 'wpcf7mailsent', function( e ) {
+	  var wpcf7Elm = document.querySelector('.wpcf7');
+	  document.addEventListener('wpcf7mailsent', function(e) {
 	    e.preventDefault();
-	    gtag('event', 'contact_form_submitted', { 'lead_source': '<?php echo $_SESSION['utm_source']; ?>' });
-	  }, false );
+	    gtag('event', 'contact_form_submitted', { 'lead_source': '<?php echo isset($_SESSION['utm_source']) ? esc_js($_SESSION['utm_source']) : '' ; ?>' });
+	  }, false);
 	});
 
-	$(window).load(function() {
+	$(window).on('load', function() {
 		$('.flexslider').flexslider({ animation: "slide" });
 	});
 
-	// NOTE: The old global .accordion_trigger click handler was removed.
-	// Itinerary expand/collapse-all handler was also removed (handled by itinerary-toggle.js).
+	// NOTE: The old global .accordion_trigger handler is removed.
+	// Itinerary accordions are handled by itinerary-toggle.js.
 
-	// Keep What's Included expand/collapse-all as-is
+	// Keep What's Included expand/collapse-all (legacy)
 	$('.whats_included .toggle_all_trigger').on('click',function(e){
 		e.preventDefault();
 		if($(this).text()=="Expand All"){
@@ -337,7 +298,6 @@ function awi_initialize_scripts() { ?>
 		}, 500);
 	});
 
-	// Removed checkAccordionStateItenirary() — itinerary-toggle.js manages state.
 	function checkAccordionStatewhatsincluded() {
 		var allHidden = true;
 		$('.whats_included .accordion_item .accordion_content').each(function() {
@@ -385,7 +345,7 @@ function awi_initialize_scripts() { ?>
 </script>
 <script>
 (function($){
-	$('.play_banner_video').on('click',function(e){
+	$('.play_banner_video').on('click',function(){
 		$(this).parents('.video_wrap').find('video').first().get(0).play();
 		$(this).css('display','none');
 	});
@@ -393,7 +353,9 @@ function awi_initialize_scripts() { ?>
 </script>
 <?php
 }
-if( function_exists('acf_add_options_page') ) {
+
+/* Theme options page (ACF) */
+if ( function_exists('acf_add_options_page') ) {
 	acf_add_options_page(array(
 		'page_title' 	=> 'Theme General Settings',
 		'menu_title'	=> 'Theme Settings',
@@ -402,6 +364,9 @@ if( function_exists('acf_add_options_page') ) {
 		'redirect'		=> false
 	));
 }
+
+/* ---------- Admin list table helpers ---------- */
+
 // Add custom "Template" column to Pages
 add_filter( 'manage_pages_columns', 'custom_add_template_column' );
 function custom_add_template_column( $columns ) {
@@ -446,6 +411,7 @@ function custom_sort_by_template_column( $query ) {
         $query->set( 'orderby', 'meta_value' );
     }
 }
+
 // Add "Header Type" column to Pages admin list
 add_filter( 'manage_pages_columns', function( $columns ) {
     $columns['header_type'] = __( 'Brand', 'textdomain' );
@@ -476,7 +442,8 @@ add_action( 'pre_get_posts', function( $query ) {
         $query->set( 'orderby', 'meta_value' );
     }
 } );
-// Register Custom Taxonomy
+
+// Register Custom Taxonomy for Pages
 function page_category_taxonomy() {
 	$labels = array(
 		'name'                       => _x( 'Page Categories', 'Taxonomy General Name', 'text_domain' ),
@@ -513,13 +480,12 @@ function page_category_taxonomy() {
 }
 add_action( 'init', 'page_category_taxonomy', 0 );
 
-// 1. Make trip_category column sortable in Trips CPT admin
+// Make the taxonomy column sortable in Pages list.
 add_filter( 'manage_edit-page_sortable_columns', function( $columns ) {
     $columns['taxonomy-page_category'] = 'page_category';
     return $columns;
 } );
 
-// 2. Handle sorting by page_category term name
 add_action( 'pre_get_posts', function( $query ) {
     if ( ! is_admin() || ! $query->is_main_query() ) {
         return;
@@ -538,8 +504,6 @@ add_action( 'pre_get_posts', function( $query ) {
         } );
     }
 } );
-
-// (Legacy taxonomy scaffold — still commented out above.)
 
 // Sitemap shortcode
 function generate_sitemap() {
@@ -568,7 +532,7 @@ function generate_sitemap() {
 		$custom_post_type  = get_post_type_object( $post_type );
 		$custom_post_types_args = array(
 			'exclude'        => '',
-			'post_type'      => $post_type,
+			'post_type      '=> $post_type,
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
 		);
@@ -603,6 +567,7 @@ function generate_sitemap() {
 }
 add_shortcode( 'sitemap','generate_sitemap' );
 
+// Small admin CSS tweak
 add_action('admin_head', function () {
     echo '<style>.wp-list-table .column-title{width:25% !important;}</style>';
 });
@@ -615,6 +580,7 @@ add_action('pre_get_posts', function ($query) {
     }
 });
 
+/* ACF preview helpers */
 add_filter( 'acf/pre_load_post_id', function( $post_id ) {
     if ( ! is_preview() || ! isset( $_GET['preview_id'] ) ) {
         return $post_id;
