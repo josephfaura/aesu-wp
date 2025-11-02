@@ -1,42 +1,78 @@
+/**
+ * itinerary-toggle.js
+ * Accordion behaviors for trip itinerary + "What's Included" sections.
+ * - Uses Font Awesome 6 icons (fa-solid fa-plus / fa-solid fa-minus)
+ * - Keeps aria-expanded accurate
+ * - Provides robust "Expand/Collapse All" that does not rely on button text
+ */
 (function ($) {
+  'use strict';
 
-  // Ensure a single FA6 icon exists in the trigger's indicator, then set +/- based on state
+  /**
+   * Ensure one FA6 icon exists in the trigger's indicator,
+   * then set +/- based on the content's visibility.
+   * @param {jQuery} $trigger
+   */
   function setIcon($trigger) {
     var $ind = $trigger.find('.collapsed_indicator');
-    if (!$ind.find('i').length) {
+    if (!$ind.length) return;
+
+    // Create a single FA6 <i> if missing
+    var $i = $ind.find('i.fa-solid');
+    if (!$i.length) {
       $ind.empty().append('<i class="fa-solid" aria-hidden="true"></i>');
+      $i = $ind.find('i.fa-solid');
     }
-    var $i = $ind.find('i');
+
     var isOpen = $trigger.next('.accordion_content').is(':visible');
 
-    // Toggle icon
+    // Toggle icon classes
     $i.toggleClass('fa-plus', !isOpen)
       .toggleClass('fa-minus', isOpen);
 
-    // A11y
+    // A11y state
     $trigger.attr('aria-expanded', String(isOpen));
 
-    // Optional: add/remove .open on the item for CSS hooks
+    // Optional hook for styling
     $trigger.closest('.accordion_item').toggleClass('open', isOpen);
   }
 
-  // Update the "Expand/Collapse All" label (and its icon) for a given wrapper
+  /**
+   * Compute and set the "Expand/Collapse All" button label + icon.
+   * Relies on a data attribute instead of string matching.
+   * @param {jQuery} $wrap
+   */
   function setToggleAllLabel($wrap) {
     var anyOpen = $wrap.find('.accordion_content:visible').length > 0;
     var $btn = $wrap.find('.toggle_all_trigger').first(); // one per group
     if (!$btn.length) return;
 
-    $btn.html(anyOpen
-      ? 'Collapse All <i class="fa-solid fa-minus" aria-hidden="true"></i>'
-      : 'Expand All <i class="fa-solid fa-plus" aria-hidden="true"></i>'
-    );
+    // Store desired action as data, not text
+    $btn.attr('data-expand', anyOpen ? 'false' : 'true');
+
+    var label = anyOpen ? 'Collapse All' : 'Expand All';
+    var iconClass = anyOpen ? 'fa-minus' : 'fa-plus';
+
+    // Render cleanly without innerHTML string concatenation
+    $btn.empty()
+      .append(document.createTextNode(label + ' '))
+      .append($('<i>', {
+        'class': 'fa-solid ' + iconClass,
+        'aria-hidden': 'true'
+      }));
   }
 
-  // Wire up one accordion group (wrapper should contain triggers, contents, and one toggle-all link)
+  /**
+   * Wire up one accordion group wrapper.
+   * Expects:
+   *  - .accordion_trigger elements preceding .accordion_content
+   *  - (optional) a single .toggle_all_trigger button/link inside the wrapper
+   * @param {jQuery} $wrap
+   */
   function setupAccordionGroup($wrap) {
-    if (!$wrap.length) return;
+    if (!$wrap || !$wrap.length) return;
 
-    // Init icons + label on load
+    // Initial state
     $wrap.find('.accordion_trigger').each(function () { setIcon($(this)); });
     setToggleAllLabel($wrap);
 
@@ -49,10 +85,11 @@
       });
     });
 
-    // Expand/Collapse All (scoped to this wrapper only)
+    // Expand/Collapse All (scoped)
     $wrap.on('click', '.toggle_all_trigger', function (e) {
       e.preventDefault();
-      var expandAll = $(this).text().trim().startsWith('Expand');
+      var $btn = $(this);
+      var expandAll = $btn.attr('data-expand') === 'true';
 
       var $contents = $wrap.find('.accordion_content');
       if (expandAll) {
@@ -61,7 +98,7 @@
         $contents.filter(':visible').slideUp(200);
       }
 
-      // Normalize icons & label after animations
+      // Normalize icons/labels after animations complete
       setTimeout(function () {
         $wrap.find('.accordion_trigger').each(function () { setIcon($(this)); });
         setToggleAllLabel($wrap);
@@ -69,47 +106,19 @@
     });
   }
 
-  // Initialize: each itinerary is one group; each "What's Included" section is its own group
+  /**
+   * Init: each itinerary is one group; each "What's Included" section is its own group.
+   */
   $(function () {
-    $('.itinerary').each(function () { setupAccordionGroup($(this)); });
+    // Itinerary sections
+    $('.itinerary').each(function () {
+      setupAccordionGroup($(this));
+    });
+
+    // What's Included sections (each subsection is its own accordion group)
     $('.whats_included .whats_included_accordion_section').each(function () {
       setupAccordionGroup($(this));
     });
-  });
-
-})(jQuery);
-
-
-(function ($) {
-
-  // Decide whether dots should show for the current state
-  function toggleDots(slick) {
-    if (!slick || !slick.$dots) return;
-
-    // Prefer Slick's own page count when available
-    var pages = (typeof slick.getDotCount === 'function') ? slick.getDotCount() : null;
-
-    // Fallback: if total slides <= slidesToShow, no dots needed
-    var show = true;
-    if (pages !== null) {
-      show = pages > 0; // 0 pages => only one "screen", hide dots
-    } else {
-      var toShow = slick.options.slidesToShow || 1;
-      show = slick.slideCount > toShow;
-    }
-
-    $(slick.$dots).toggle(show);
-  }
-
-  // Catch sliders no matter when they initialize
-  $(document).on('init reInit setPosition afterChange breakpoint', '.slick-slider', function (e, slick) {
-    toggleDots(slick);
-  });
-
-  // If any sliders are already initialized before this script runs, handle them now
-  $('.slick-slider.slick-initialized').each(function () {
-    var slick = $(this).slick('getSlick');
-    toggleDots(slick);
   });
 
 })(jQuery);
