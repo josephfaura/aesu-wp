@@ -54,6 +54,9 @@ if(function_exists('get_field')){
         /*padding:0 56px;*/
         padding-bottom:32px;
     }
+    .trip_list .container {
+        padding: 0;
+    }
     .trip_list ul{
         list-style:none;
         margin:0;
@@ -290,6 +293,9 @@ if(function_exists('get_field')){
         margin-top:auto;
     }
     @media screen and (max-width:1120px){
+        .trip_list .container {
+            padding: 0 24px;
+        }
         .trip_post > li{
             width: calc(100% / 2 - 40px);
         }
@@ -353,8 +359,8 @@ if(function_exists('get_field')){
         }
     }
     @media screen and (max-width:550px){
-        .container {
-            padding: 0 24px;
+        .trip_list .container {
+            padding: 0 10px;
         }
         .banner {
             height:100vh
