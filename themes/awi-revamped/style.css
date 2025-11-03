@@ -4183,3 +4183,12 @@ nav{
 
 /* Hide single slick dot if it ever renders */
 .slick-dots li:first-child:last-child { display: none; }
+
+/* --------------------------------------------------------------
+   Hide the share icon on mobile
+   -------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+  .share_section {
+    display: none !important;
+  }
+}
