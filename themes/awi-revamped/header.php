@@ -113,7 +113,7 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 		</style>
 	<?php } ?>
 	<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
-			$contact_link = get_permalink(2359);
+			$contact_link = get_permalink(11601);
 			$home_link = get_home_url();
 		
 		}else{ 
@@ -231,7 +231,7 @@ $is_awt_referrer = true;
 }
 ?>
 				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
-					$contact_link = get_permalink(2359);
+					$contact_link = get_permalink(11601);
 						$home_link = get_home_url();
 					?>
 					<span>Since 1977</span>
@@ -304,7 +304,7 @@ $is_awt_referrer = true;
 }
 ?>
 				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
-					$contact_link = get_permalink(2359);
+					$contact_link = get_permalink(11601);
 						$home_link = get_home_url();
 					?>
 					<span>Expanding Horizons <br/>Since 1977</span>
@@ -337,7 +337,7 @@ https://res.aesu.com/res/STWMain.aspx?Theme=AESU&amp;Action=Home" target="_blank
 					<i class="fa-solid fa-cart-shopping"></i> My Cart</a></span>
 
               	<span class="top_account_area">
-              		<a class="contact_page_link" href="https://www.aesu.com/contact/"><i class="fa-solid fa-message"></i> Contact Us</a></span>
+              		<a class="contact_page_link" href="<?php echo $contact_link; ?>"><i class="fa-solid fa-message"></i> Contact Us</a></span>
 
 				<span class="top_account_area">
 					<a class="header_phone" href="tel:8006387640"><i class="fa-solid fa-phone"></i> 800.638.7640</a></span>
