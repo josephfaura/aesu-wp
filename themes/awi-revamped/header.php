@@ -10,13 +10,19 @@
  */
 GLOBAL $detect;
 if(function_exists('get_field')) {
- 	$header_image = get_field('header_image') ? $header_image = get_field('header_image') : $header_image = get_field('default_header_image', 'option');
- 	//$header_image = ($detect->isMobile() && !$detect->isTablet()) ? $header_image['sizes']['large'] : $header_image['url'];
+  	$header_image = get_field('header_image') ? $header_image = get_field('header_image') : $header_image = get_field('default_header_image', 'option');
+  	//$header_image = ($detect->isMobile() && !$detect->isTablet()) ? $header_image['sizes']['large'] : $header_image['url'];
 	if(is_singular('trips')){
-	$header_type = get_field('header_type',get_the_ID());
+		$header_type = get_field('header_type',get_the_ID());
 	}else{
-	$header_type = get_field('header_type');
+		$header_type = get_field('header_type');
 	}
+}
+
+/* --- FIX: 404s don’t have ACF context, so explicitly use AESU header on 404 --- */
+if ( function_exists('is_404') && is_404() ) {
+  $header_type = 'AESU';
+  $header_type_referrer = 'AESU';
 }
 ?>
 <!doctype html>
@@ -112,7 +118,9 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 			}
 		</style>
 	<?php } ?>
-	<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
+	<?php
+	// --- FIX: add parentheses so the AESU branch only runs when intended ---
+	if( $header_type_referrer != 'AWT' && ( $header_type == "AESU" || $header_type == "aesuaesu" ) ){ 
 			$contact_link = get_permalink(2359);
 			$home_link = get_home_url();
 		
@@ -201,7 +209,7 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 		<header class="mobile_header">
 		<div class="container">
 			<div class="inner-header">
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
+				<?php if( $header_type_referrer != 'AWT' && ( $header_type == "AESU" || $header_type == "aesuaesu" ) ){ ?>
 					<nav>
 						<?php wp_nav_menu( array( 'theme_location' => 'main_nav', 'menu_class' => 'awiNav' ) ); ?>
 					</nav><!-- #site-navigation -->
@@ -230,7 +238,9 @@ $is_awt_referrer = true;
     }
 }
 ?>
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
+				<?php
+				// --- FIX: parentheses here too ---
+				if( $header_type_referrer != 'AWT' && ( $header_type == "AESU" || $header_type == "aesuaesu" ) ){ 
 					$contact_link = get_permalink(2359);
 						$home_link = get_home_url();
 					?>
@@ -303,7 +313,9 @@ $is_awt_referrer = true;
     }
 }
 ?>
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
+				<?php
+				// --- FIX: parentheses here too ---
+				if( $header_type_referrer != 'AWT' && ( $header_type == "AESU" || $header_type == "aesuaesu" ) ){ 
 					$contact_link = get_permalink(2359);
 						$home_link = get_home_url();
 					?>
@@ -320,7 +332,7 @@ $is_awt_referrer = true;
 					if(is_page_template('page-school-landing-page.php') && $school_logo){ ?>
 						<img class="header_school_logo" style="width:auto;" src="<?php echo $school_logo['url'] ?>">
 					<?php } ?>
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
+				<?php if( $header_type_referrer != 'AWT' && ( $header_type == "AESU" || $header_type == "aesuaesu" ) ){ ?>
 					<nav>
 						<?php wp_nav_menu( array( 'theme_location' => 'main_nav', 'menu_class' => 'awiNav' ) ); ?>
 					</nav><!-- #site-navigation -->
