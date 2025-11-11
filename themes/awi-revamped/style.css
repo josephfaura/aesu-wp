@@ -3392,7 +3392,7 @@ article, aside {
 
 .form-list li { margin: 10px 0 0; }
 
-.form-list li:first-child { margin: 0; }
+/*.form-list li:first-child { margin: 0; }*/
 .page-template-default input[type=text],.page-template-default input[type=email] {
 	padding: 8px;
 	width: 100%;
