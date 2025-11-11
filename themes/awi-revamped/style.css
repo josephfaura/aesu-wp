@@ -674,9 +674,9 @@ textarea {
 	width: 100%;
 }
 
-form .list--unstyled {
+/*form .list--unstyled {
 	margin: 0 -6px;
-}
+}*/
 
 form .list--unstyled li {
 	margin: 12px 6px;
@@ -3807,7 +3807,7 @@ label {
 }
 .page-id-2353 article textarea {
     height: 180px;
-	width:100%;
+		width:100%;
 }
 .full-width-field {
     width: calc(100% - 27px) !important;
