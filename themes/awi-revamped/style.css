@@ -694,7 +694,7 @@ form .list--unstyled li {
 	margin: 6px;
 }
 
-form .list--unstyled li:first-child,
+/*form .list--unstyled li:first-child,
 form .list--unstyled .form-field--half:first-child,
 form .list--unstyled .form-field--half:first-child + .form-field--half,
 form .list--unstyled .form-field--third:first-child,
@@ -710,7 +710,7 @@ form .list--unstyled .form-field--third:last-child,
 form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3),
 form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3) + .form-field--third:nth-last-child(2) {
 	margin-bottom: 0;
-}
+}*/
 
 .form-field--half + li:not(.form-field--half):not(.form-field--third),
 .form-field--third + li:not(.form-field--half):not(.form-field--third) {
@@ -3783,7 +3783,7 @@ blockquote {
 input, textarea, select, button, .button {
 	padding: 8px;
 	width: 100%;
-	height: 40px;
+	/*height: 40px;*/
 	height: auto\9;
 	font: inherit;
 	background: #fff;
