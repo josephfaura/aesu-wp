@@ -3435,7 +3435,7 @@ article, aside {
     justify-content: center;
     align-items: center;
 }
-.no-banner { height: 90px; }
+.no-banner { height: 82px; }
 
 .banner_interior {
 	margin: 0 0 30px;
@@ -4183,73 +4183,3 @@ nav{
 
 /* Hide single slick dot if it ever renders */
 .slick-dots li:first-child:last-child { display: none; }
-
-/* ===== Sticky Footer (not fixed, scrolls normally) ===== */
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-#page, .site-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-}
-
-main, .site-main, #primary, .content-area {
-  flex: 1 0 auto;
-}
-
-.site-footer {
-  margin-top: auto; /* pushes footer to bottom when content is short */
-}
-
-/* Remove any leftover fixed/footer rules */
-.site-footer {
-  position: static !important;
-  bottom: auto !important;
-}
-
-/* ---- Stable fixed header + correct WP admin bar offsets ---- */
-
-/* Set your header height once */
-:root { --header-h: 88px; }           /* adjust to your real header height */
-
-/* Default: no admin bar offset for logged-out users */
-:root { --adminbar-h: 0px; }
-
-/* Logged-in desktop/tablet admin bar height */
-.logged-in:root { --adminbar-h: 32px; }
-
-/* Logged-in mobile admin bar height (WP switches at 782px) */
-@media (max-width: 782px) {
-  .logged-in:root { --adminbar-h: 46px; }
-}
-
-/* Keep header visible and above everything */
-header {
-  position: fixed;
-  top: var(--adminbar-h);
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  display: block !important;
-  opacity: 1 !important;
-}
-
-/* Make room so content doesn't sit under the fixed header */
-body {
-  padding-top: calc(var(--header-h) + var(--adminbar-h));
-}
-
-/* If a scroll/hide script is nudging it off-screen, neutralize it */
-header[class*="unpinned"],
-header[style*="transform"] {
-  transform: none !important;
-}
