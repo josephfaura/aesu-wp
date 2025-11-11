@@ -672,6 +672,7 @@ select {
 
 textarea {
 	width: 100%;
+	height: 180px;
 }
 
 /*form .list--unstyled {
@@ -3783,8 +3784,8 @@ blockquote {
 input, textarea, select, button, .button {
 	padding: 8px;
 	width: 100%;
-	/*height: 40px;*/
-	height: auto\9;
+	/*height: 40px;
+	height: auto\9;*/
 	font: inherit;
 	background: #fff;
 	border: 1px solid #ccc;
