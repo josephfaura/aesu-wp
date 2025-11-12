@@ -139,6 +139,8 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				}
 				.nav-logo {
 					display: flex;
+					align-items: center;
+					gap: 18px;
 				}
 				.top_nav_account_wrap{
 					display: flex;
@@ -158,10 +160,10 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 			    padding-right: 10px;
 			    border-right: 2px solid #fff;
 				}
-				.logo_wrap{
+				/*.logo_wrap{
 					margin-left: 18px;
 				}
-				/*.logo_wrap span{
+				.logo_wrap span{
 					padding-right:10px;
 				}
 				.awiNav__trigger {
@@ -228,6 +230,8 @@ $is_awt_referrer = true;
     }
 }
 ?>
+
+<div class="nav-logo">
 				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
 					<nav>
 						<?php wp_nav_menu( array( 'theme_location' => 'main_nav', 'menu_class' => 'awiNav' ) ); ?>
@@ -245,16 +249,18 @@ $is_awt_referrer = true;
 				<?php }else{ 
 					$contact_link = get_permalink(2836);
 						$home_link = get_permalink(898);?>
-						<style>
+						<!--<style>
 							@media screen and (max-width: 879px) {
 								.logo_wrap {
 									margin-left: 0;
 								}
 							}
-						</style>
+						</style>-->
 					<span>Alumni World Travel</span>
 				<?php } ?>
 				</div>
+</div>
+
 				<div class="header_right">
 					<?php
 					$school_logo=get_field('school_logo');
