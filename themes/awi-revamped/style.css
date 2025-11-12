@@ -2216,6 +2216,7 @@ header a{
 header .container .inner-header{
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 /*.header_phone{
 	display: inline-block;
@@ -2465,10 +2466,8 @@ header .container{
 		line-height: 0;
 		position: relative;
 		display: block;
-		/*width: 32px;
+		width: 32px;
     height: 32px;
-		margin: 0 10px 0 0;
-		padding: 0;*/
 		cursor: pointer;
 		border: 0;
 		border-radius: 0;
@@ -2489,10 +2488,10 @@ header .container{
 	.awiNav__trigger span {
 		position: absolute;
 		top: 50%;
-		left: 50%;
+		left: 0;
 		width: 32px;
 		height: 2px;
-		margin: 0 0 0 -20px;
+		/*margin: 0 0 0 -20px;*/
 		border-radius: 2px / 50%;
 		background: #fff;
 		box-shadow: 0 -13px 0 #fff, 0 13px 0 #fff;

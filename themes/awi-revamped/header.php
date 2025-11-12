@@ -110,6 +110,11 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 			header{
 				top:32px;
 			}
+			@media screen and (max-width:879px){
+				header{
+					top:46px;
+				}
+			}	
 		</style>
 	<?php } ?>
 	<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
@@ -147,9 +152,6 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				header .container .inner-header{
 						flex-direction:row;
 					}
-				.logo_wrap span{
-						padding-right:10px;
-					}
 				.logo_wrap svg {
 			    height: 45px;
 			    width: 95px;
@@ -157,14 +159,17 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 			    border-right: 2px solid #fff;
 				}
 				.logo_wrap{
-					padding-left:45px;
+					margin-left: 18px;
+				}
+				/*.logo_wrap span{
+					padding-right:10px;
 				}
 				.awiNav__trigger {
 				    top: 3px;
 				}
 				.awiNav__trigger span{
-				  	margin:0;
-				}
+				  	margin:8px 0 0 0;
+				}*/
 			}
 			@media screen and (max-width:900){
 				.bottom_footer .container {
@@ -175,9 +180,9 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 					.mobile_header{
 						padding:20px;
 					}
-					.awiNav__trigger {
+					/*.awiNav__trigger {
 						top: 0;
-					}
+					}*/
 					.logo_wrap svg {
 					    height: 35px;
 					    width: 85px;
@@ -243,7 +248,7 @@ $is_awt_referrer = true;
 						<style>
 							@media screen and (max-width: 879px) {
 								.logo_wrap {
-									padding-left: 0;
+									margin-left: 0;
 								}
 							}
 						</style>
