@@ -201,15 +201,8 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 		<header class="mobile_header">
 		<div class="container">
 			<div class="inner-header">
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
-					<nav>
-						<?php wp_nav_menu( array( 'theme_location' => 'main_nav', 'menu_class' => 'awiNav' ) ); ?>
-					</nav><!-- #site-navigation -->
-					<?php } ?>
-				<div class="logo_wrap"><a href="<?php echo $home_link; ?>">
-				<svg class="icon">
-<use xlink:href="<?php echo get_template_directory_uri();?>/img/icons.svg#icon-cropped-logo-full"></use>
-</svg></a>	<?php
+
+<?php
 // Get the referrer URL
 $referrer = $_SERVER['HTTP_REFERER'];
 $is_awt_referrer = false;
@@ -230,6 +223,15 @@ $is_awt_referrer = true;
     }
 }
 ?>
+				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
+					<nav>
+						<?php wp_nav_menu( array( 'theme_location' => 'main_nav', 'menu_class' => 'awiNav' ) ); ?>
+					</nav><!-- #site-navigation -->
+					<?php } ?>
+				<div class="logo_wrap"><a href="<?php echo $home_link; ?>">
+				<svg class="icon">
+<use xlink:href="<?php echo get_template_directory_uri();?>/img/icons.svg#icon-cropped-logo-full"></use>
+</svg></a>	
 				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
 					$contact_link = get_permalink(11601);
 						$home_link = get_home_url();
