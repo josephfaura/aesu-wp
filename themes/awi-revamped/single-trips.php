@@ -532,8 +532,10 @@ if ( ! post_password_required() ) {
 							</span>
 						</div>
 						<div class="trip_option_item_content">
+							<?php if($trip_option_item['trip_options_content']){ ?>
 							<?php echo do_shortcode($trip_option_item['trip_options_content']); ?>
-							<?php if($trip_option_item['more_info']['url'] ){ ?>
+							<?php } ?>
+							<?php if($trip_option_item['more_info'] ){ ?>
 								<a style="display:block;"href="<?php echo $trip_option_item['more_info']['url'] ?>" target="<?php echo $trip_option_item['more_info']['target'] ?>"><?php echo $trip_option_item['more_info']['title'] ?> <i class="fa-solid fa-arrow-right"></i></a>
 							<?php } ?>
 						</div>

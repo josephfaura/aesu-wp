@@ -405,7 +405,7 @@ if ( ! post_password_required() ) {
     <div class="container">
         <?php if($banner_title){ ?><h1><?php echo $banner_title; ?></h1><?php } ?>
         <?php if($banner_tagline){ ?><h2><?php echo $banner_tagline; ?></h2><?php } ?>
-        <?php if($banner_cta['url']){ ?><a href="<?php echo $banner_cta['url'] ?>" class="cta-button"><?php echo $banner_cta['title'] ?></a><?php } ?>
+        <?php if($banner_cta){ ?><a href="<?php echo $banner_cta['url'] ?>" class="cta-button"><?php echo $banner_cta['title'] ?></a><?php } ?>
         
     </div>
     <a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
