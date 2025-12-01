@@ -395,7 +395,7 @@ if(function_exists('get_field')){
 if ( ! post_password_required() ) {
     // The password has been entered — show this content
 ?>
-<div class="banner" style="background-image:url('<?php echo $banner_image['url'] ?>)">
+<div class="banner" style="background-image:url(<?php echo $banner_image['url'] ?>)">
     <?php if($banner_video){ ?>
     <video autoplay muted playsinline loop id="video_banner_schools">
   <source src="<?php echo $banner_video ?>" type="video/mp4">
@@ -580,7 +580,7 @@ $trips_query = new WP_Query( $args );
 </section>
 <?php if($welcome_letter_title && $welcome_letter_title !=''){ ?>
 <section class="welcome_letter" id="welcome_letter">
-    <div class="welcome_letter_left" style="background-image:url('<?php echo $welcome_letter_image['url'] ?>);">
+    <div class="welcome_letter_left" style="background-image:url(<?php echo $welcome_letter_image['url'] ?>);">
     </div>
     <div class="welcome_letter_right">
         <div class="welcome_letter_copy">

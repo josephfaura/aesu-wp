@@ -40,7 +40,7 @@ if(function_exists('get_field')){
 		$additional_whats_included_text = get_field('additional_whats_included_text',$tour->ID);
 		$whats_included_image = get_field('whats_included_image',$tour->ID);
 		
-		$iteierary_title = get_field('iteierary_title',$tour->ID);
+		$itinerary_title = get_field('itinerary_title',$tour->ID);
 		$itinerary_items = get_field('itinerary_items',$tour->ID);
 		
 		$hotels_title = get_field('hotels_title',$tour->ID);
@@ -76,7 +76,7 @@ if ( $tour ) {
     $whats_included_accordion = get_field('highlight_accordion', $tour_id);
     $additional_whats_included_text = get_field('additional_whats_included_text', $tour_id);
     $whats_included_image = get_field('whats_included_image', $tour_id);
-    $iteierary_title = get_field('iteierary_title', $tour_id);
+    $itinerary_title = get_field('itinerary_title', $tour_id);
     $itinerary_items = get_field('itinerary_items', $tour_id);
     $hotels_title = get_field('hotels_title', $tour_id);
     $hotels_content = get_field('hotels_content', $tour_id);
@@ -135,7 +135,7 @@ if ( $tour ) {
 		.mobile_cta {
         display: flex;
         justify-content: space-between;
-        padding: 18px!important;
+        padding: 24px 24px 32px 24px !important;
         align-content: center;
         position: fixed;
 				align-items:center;
@@ -200,7 +200,7 @@ if ( $tour ) {
 	}*/
 	.share_section{
 		font-size:20px;
-		/*padding:15px;*/
+		padding:15px 0 15px 15px;
 		position:relative;
 		float:right;
 	}
@@ -208,12 +208,24 @@ if ( $tour ) {
 	display:none;    
     position: absolute;
  	right: -5px;
-    bottom: 50%;
+    bottom: 75%;
     	/*width: 200px;
     	background-color: #fff;
     	box-shadow:0 3px 10px rgba(0,0,0,.25);
     	padding: 10px 10px 2px 10px;*/
 	}
+		@media screen and (max-width:1092px){
+				.share_options{
+					right:30px;
+					bottom:-5px;
+				}
+		}
+		@media screen and (max-width:650px){
+				.share_options{
+					bottom:-15px;
+				}
+		}
+
 	.share_section:hover .share_options{
 		display:block;
 	}
@@ -261,7 +273,7 @@ if ( $tour ) {
 	}
 	@media screen and (max-width: 976px){
 		#chat-widget-push-to-talk {
-			bottom:100px !important;
+			bottom:130px !important;
 		}
 		/*.trip_header_info_text {
 			max-width: calc(100%);
@@ -435,7 +447,7 @@ if ( ! post_password_required() ) {
 	
 	
 	<div class="itinerary">
-  <h2><?php echo $iteierary_title ?></h2>
+  <h2><?php echo $itinerary_title ?></h2>
 
   <div style="position:relative;height:40px;" class="accordion_collapse_wrap">
     <a href="#" class="toggle_all_trigger">Collapse All <i class="fa-solid fa-minus"></i></a>

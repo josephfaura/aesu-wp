@@ -55,7 +55,7 @@ if(function_exists('get_field')){
 	<main id="primary" class="site-main">
 	<?php foreach($home_section_builder as $home_section_builder_item){ ?>
 		<?php if($home_section_builder_item['section_type'] == 'Banner Area'){ ?>
-			<div class="banner" style="background-image:url('<?php echo $home_section_builder_item['banner_area']['banner_image']['url'] ?>)">
+			<div class="banner" style="background-image:url(<?php echo $home_section_builder_item['banner_area']['banner_image']['url'] ?>)">
 				<div class="container">
 					<h1><?php echo $home_section_builder_item['banner_area']['banner_title']; ?></h1>
 					<h2><?php echo $home_section_builder_item['banner_area']['banner_tagline']; ?></h2>
@@ -213,7 +213,7 @@ if(function_exists('get_field')){
 								<div class="lastest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div>
 								<div class="latest_post_item_text">
 									<h3><?php echo get_the_title(); ?></h3>
-									<p><?php echo get_the_excerpt(); ?></p>
+									<p><?php echo wp_trim_words( get_the_excerpt(), 25, '...' ); ?></p>
 									<a href="<?php echo get_the_permalink(); ?>">Read more <i class="fa fa-arrow-right"></i></a>
 								</div>
 							</li>
