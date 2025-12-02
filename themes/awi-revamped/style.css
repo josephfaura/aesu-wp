@@ -772,7 +772,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	background-position: center;
 	background-attachment: fixed;
 	position: relative;
-	margin-bottom:32px;
+	margin-bottom:56px;
 }
 .home .site-main{
 	margin-bottom:56px;
@@ -969,13 +969,13 @@ a:active {
 }
 .young_adult_trips .container{
 	padding:0 56px;
-	max-width:1400px;
+	max-width:100%;
 }
-.young_adult_trips_title{
+/*.young_adult_trips_title{
 	padding:30px 10px;
 	text-align:center;
 	padding-top:0;
-}
+}*/
 .young_adult_trips_title h2{
 	margin:0;
 	font-weight:bold;
@@ -1001,8 +1001,12 @@ a:active {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
-	height:calc(100% - 250px);
+	height:calc(100% - 30vh);
 }
+.young_adult_trip_content > *{
+	max-width: 400px;
+}
+
 /*.young_adult_trip_content .cta-button{
 	margin-top:auto;
 }*/
@@ -1012,7 +1016,7 @@ a:active {
 }
 .young_adult_trip_image{
 	background-color:gray;
-	height:250px;
+	height:30vh;
 	background-size:cover;
 	background-position: center;
 }
@@ -1026,7 +1030,7 @@ a:active {
 }
 @media screen and (max-width:1000px){
 	.young_adult_trips .container {
-		max-width:800px;
+		/*max-width:800px;*/
 		padding:0 56px;
 	}
 	.young_adult_trips_list{
@@ -1256,10 +1260,6 @@ a:active {
 .testimonials_wrap .container {
 	display: flex;
 	flex-wrap:wrap;
-	padding: 0 0 10px 0;
-	max-width: 1300px;
-	padding-bottom:32px;
-	padding:0 56px
 }
 .testimonials_wrap .container > div{
 	width:30%;
@@ -1317,7 +1317,7 @@ a:active {
 	margin-bottom:32px;
 }
 .testimonials_wrap{
-	margin-bottom:56px;
+	margin:56px auto;
 }
 @media screen and (max-width:1000px){
 	.testimonials_wrap .container {
@@ -2895,10 +2895,17 @@ aside ul{
 .trip_cta_list > li{
 	display:inline-block;
 }
-@media screen and (max-width:513px){
+@media screen and (max-width:650px){
 	.trip_cta_list > li{
 		display:block;
 		padding: 10px 0;
+	}
+	.trip_cta_list a {
+		display:block;
+		width:100%;
+		text-align: center;
+		margin: 0;
+		padding:14px;
 	}
 }
 .deals_cta a{
