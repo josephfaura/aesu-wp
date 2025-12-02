@@ -656,9 +656,9 @@ $trips_query = new WP_Query( $args );
         </ul>
     </div>
 </section>
-<!--<div class="container footer_cta_landing_page">
-    <div>Email AESU Alumni World Travel at <a href="mailto:alumni@aesu.com">alumni@aesu.com</a> or call <a href="tel:800-638-7640">800-638-7640</a> and ask one of our reservations agent for more information on any of these programs</div>
-</div>!-->
+<div class="container">
+         <?php echo do_shortcode($footer_cta_text); ?> 
+</div>
 </div>
 <?php } ?>
 <?php
