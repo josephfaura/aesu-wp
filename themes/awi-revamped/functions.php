@@ -242,6 +242,16 @@ function awi_initialize_scripts() { ?>
 	<?php } ?>
 	<?php } ?>
 
+     (function($){
+        $(document).ready(function(){
+            $('.load_more_images').on('click',function(e){
+                e.preventDefault();
+                console.log('clicked');
+                $('.past_tour_gallery li').css('display','block');
+            });
+        });
+    })( jQuery );
+
 	/* Misc header behavior, events, etc. */
 	var lastScrollTop = 0;
 	if ($(window).width() < 880) { $(".desktop_header").remove(); }

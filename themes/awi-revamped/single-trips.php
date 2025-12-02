@@ -450,7 +450,7 @@ if ( ! post_password_required() ) {
   <h2><?php echo $itinerary_title ?></h2>
 
   <div style="position:relative;height:40px;" class="accordion_collapse_wrap">
-    <a href="#" class="toggle_all_trigger">Collapse All <i class="fa-solid fa-minus"></i></a>
+    <a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>
   </div>
 
   <ul>
