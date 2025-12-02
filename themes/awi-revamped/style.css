@@ -1260,8 +1260,6 @@ a:active {
 .testimonials_wrap .container {
 	display: flex;
 	flex-wrap:wrap;
-	max-width: 1300px;
-	padding:0 32px
 }
 .testimonials_wrap .container > div{
 	width:30%;
@@ -1319,7 +1317,7 @@ a:active {
 	margin-bottom:32px;
 }
 .testimonials_wrap{
-	margin-bottom:56px;
+	margin:56px auto;
 }
 @media screen and (max-width:1000px){
 	.testimonials_wrap .container {

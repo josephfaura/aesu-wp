@@ -51,11 +51,7 @@ if(function_exists('get_field')){
         border-right:2px solid white;
     }
     .trip_list{
-        /*padding:0 56px;*/
-        padding-bottom:32px;
-    }
-    .trip_list .container {
-        padding: 0;
+        margin:56px auto;
     }
     .trip_list ul{
         list-style:none;
@@ -64,18 +60,18 @@ if(function_exists('get_field')){
     }
     .trip_year_title{
         text-align:center;
-        margin:32px 0 0 0;
+        /*:32px 0 0 0;*/
     }
     .trip_post {
         display:flex;
         justify-content:center;
         flex-wrap:wrap;
+        gap: 32px;
     }
     .trip_post > li{
         display:flex;
         flex-direction:column;
-            margin: 20px;
-    width: calc(100% / 3 - 40px);
+        width: calc(100% / 3 - 22px);
         text-align:center;
         box-shadow:0 3px 5px rgba(0,0,0,.25)
     }
@@ -84,7 +80,7 @@ if(function_exists('get_field')){
         font-weight:bold;
     }
     .trip_main_image{
-        height:300px;
+        height:350px;
         position:relative;
         width:100%;
     }
@@ -107,13 +103,14 @@ if(function_exists('get_field')){
         padding:3px 10px;
         right:0;
         top:20px;
-        background-color:#FFFFFF;
+        background-color:rgba(255, 255, 255, 0.8);
         color:#3A3A3A;
         font-weight:bold;
     }
     .welcome_letter{
         display:flex;
         flex-wrap:wrap;
+        margin:56px auto;
         /*gap:32px;
         padding-top:24px;*/
     }
@@ -121,7 +118,7 @@ if(function_exists('get_field')){
         display:flex;
         flex-direction:column;
         width:50%;
-        flex:1;
+        /*flex:1;*/
     }
     .welcome_letter_contact{
         display:flex;
@@ -172,17 +169,13 @@ if(function_exists('get_field')){
         padding:24px;
     }
     .welcome_letter_copy h2{
-        font-size:24px;
+        font-size:32px;
         color:#5E5E5E;
     }
-    .testimonials_wrap{
-        padding-top:36px;
-    }
     .testimonials_wrap h2{
-        font-size:32px;
         text-align:center;
-        color:#3A3A3A;
         width:100%;
+        margin-top: 0;
     }
     .past_tour_gallery h2{
         text-align:center;
@@ -201,7 +194,7 @@ if(function_exists('get_field')){
     background-size: cover;
     }
     .past_tour_gallery ul li a{
-        height:250px;
+        height:350px;
         display:block;
     }
     .load_more_images{
@@ -225,15 +218,14 @@ if(function_exists('get_field')){
         flex:1;
     }
     .payment_thumb{
-        height:250px;
+        height:350px;
     }
-    .payment_options .container{
+    /*.payment_options .container{
         max-width:1300px;
         padding:0 56px;
-    }
+    }*/
     .payment_title {
         font-size:24px;
-        color:#3A3A3A;
         margin-top:0;
         margin-bottom:10px
     }
@@ -247,20 +239,22 @@ if(function_exists('get_field')){
         text-align:center;
     }
     .banner {
-        height: calc(100vh - 50px);
-        display: flex;
+        height: calc(100vh - 48px);
+        /*display: flex;
         justify-content: center;
         align-items: center;
         background-size: cover;
         background-position: center;
-        position: relative;
-        margin-bottom: 56px;
+        position: relative;*/
+        margin-bottom: 0;
     }
     .welcome_letter_left {
         max-width:50%;
     }
     .anchor_nav{
-        padding:0 24px;
+        padding:12px 24px;
+        background: #3a3a3a;
+        /*background: <?php echo $school_logo_background; ?>;*/
     }
     .anchor_nav ul{
         list-style:none;
@@ -269,20 +263,16 @@ if(function_exists('get_field')){
         display:flex;
         justify-content:center;
         align-items:center;
-        gap:5px 25px;
+        gap:5px 32px;
         flex-wrap:wrap;
     }
     .anchor_nav ul li a{
-        font-weight:bold;
         text-decoration:none;
-        color:<?php echo $primary_color; ?>;
-        font-size:18px;
+        color:#d7d7d7;
+        
     }
     .anchor_nav ul li{
         text-align:center;
-    }
-    .banner{
-        margin-bottom:12px;
     }
     .trip_text{
         flex:1;
@@ -293,21 +283,15 @@ if(function_exists('get_field')){
         margin-top:auto;
     }
     @media screen and (max-width:1120px){
-        .trip_list .container {
-            padding: 0 24px;
-        }
         .trip_post > li{
-            width: calc(100% / 2 - 40px);
+            width: calc(100% / 2 - 16px);
         }
-    }
-    @media screen and (max-width:800px){
-
+        .past_tour_gallery li{
+            width: calc(100% / 2 - 16px);
+        }
         .welcome_letter_left {
             height:600px;
         }
-        /*.welcome_letter{
-            padding-top:0;
-        }*/
         .welcome_letter > div{
             width:100%;
             flex:none;
@@ -320,6 +304,7 @@ if(function_exists('get_field')){
         .welcome_letter_copy h2{
             margin-top:0;
         }
+
     }
     @media screen and (max-width:720px){
         .trip_post > li{
@@ -338,7 +323,7 @@ if(function_exists('get_field')){
 }
 .testimonial_image{
     width:100%;
-    height:200px;
+    height:350px;
 }
 .payment_options{
     flex-direction:column;
@@ -360,10 +345,13 @@ if(function_exists('get_field')){
     }
     @media screen and (max-width:550px){
         .trip_list .container {
-            padding: 0 10px;
+            padding: 0 24px;
         }
         .banner {
             height:100vh
+        }
+        .anchor_nav {
+            display: none;
         }
         .welcome_letter_contact{
             flex-direction:column;
@@ -372,7 +360,6 @@ if(function_exists('get_field')){
             height:200px;
         }
         .welcome_letter_contact{
-            gap:14px;
             text-align: center;
         }
         .payment_options .container {
@@ -386,9 +373,6 @@ if(function_exists('get_field')){
         min-width: 100%; 
         min-height: 100%;
         z-index:1;
-    }
-    .banner{
-        position:relative;
     }
 </style>
 <?php
@@ -539,7 +523,7 @@ $trips_query = new WP_Query( $args );
         
         if ( $trips_query->have_posts() ) {
         echo '<li>';
-        echo '<h2 id="' . $term->slug . '_trips" class="trip_year_title">' . esc_html( $term->name ) . '</h2>';
+        echo '<h2 id="' . $term->slug . '_trips" class="trip_year_title">' . esc_html( $term->name ) . ' Trips</h2>';
 
         // Query trips assigned to this term
 
