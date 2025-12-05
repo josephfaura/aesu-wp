@@ -421,7 +421,7 @@ button, html input[type="button"], input[type="reset"], input[type="submit"], .b
 							<li id="package_<?php echo $looping_index; ?>">
 								<div class="thumbnail_wrap" style="background-color:<?php echo $school_logo_background; ?>;padding:24px;"><div class="package_thumbnail" style="background-size:80% contain;background-position:center;background-repeat:no-repeat;background-image:url('<?php echo $school_logo['url'] ?>');background-color:<?php echo $school_logo_background; ?>"><a href="<?php echo get_the_permalink(); ?>" class="university_link"><img src="<?php echo $institution['institution_logo']['url'] ?>"></a></div></div>
 								<div class="package_content">
-									<h3><?php echo get_the_title(); ?></h3>
+									<a href="<?php echo get_the_permalink(); ?>"><h3><?php echo get_the_title(); ?></h3></a>
 									
 									<div style="display:none;">
 										<?php echo $institution['manual_search_terms']; ?>
