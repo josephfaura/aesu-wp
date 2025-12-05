@@ -240,6 +240,7 @@ function awi_initialize_scripts() { ?>
 		});
 	});
 	<?php } ?>
+	/* Load more images temporary fix */
 	<?php } ?>
 
      (function($){

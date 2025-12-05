@@ -1672,11 +1672,11 @@ a:active {
     background-color: #e84c3d;
     color: #fff;
     border: none;
-	position: relative;
+		position: relative;
     top: 1px;
-	padding-bottom:7px;
-	width: 130px;
-	font-size:18px;
+		padding-bottom:7px;
+		width: 130px;
+		font-size:18px;
 }
 .subscribe_form > * {
     max-width: 1020px;
@@ -1709,10 +1709,12 @@ a:active {
 		margin: 2px;
 	}
 	.email_subscribe{
+		width: calc(100%);
 		margin:2px;
 	}
-	.email_subscribe{
+	.subscribe_form input[type="submit"]{
 		width: calc(100%);
+		margin:2px;
 	}
 }
 /*Footer CTA*/
@@ -2742,14 +2744,17 @@ aside ul{
 
 .single-post main .container{
 	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .single-post main{
-	padding: 50px 0;
+	/*padding: 32px 0;*/
 }
 
 .single-post h1{
 	margin-top: 0;
+	text-align: center;
 }
 
 .wp-posts-list > li:last-child{
@@ -2817,7 +2822,7 @@ aside ul{
 }
 .single-trips .trip_header{
 	/*margin-top:86px;*/
-	padding:18px 56px 24px 56px;
+	padding:24px 56px 32px;
 	display:flex;
 	justify-content: space-between;
 	align-items: center;
@@ -3445,9 +3450,9 @@ article, aside {
 .no-banner { height: 82px; }
 
 .banner_interior {
-	margin: 0 0 30px;
+	margin: 0 0 32px;
 	background: #fff;
-	height:450px;
+	height:60vh;
 }
 
 .banner_interior .container { padding: 0; }
@@ -3484,7 +3489,7 @@ article, aside {
 	background-size: cover;
 }
 .banner_interior .flexslider{
-	height:450px;
+	height:60vh;
 }
 .page-template-page-sidebar-left article, .page-template-page-sidebar-left-awt article { float: right; }
 

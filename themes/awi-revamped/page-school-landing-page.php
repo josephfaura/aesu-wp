@@ -306,28 +306,31 @@ if(function_exists('get_field')){
         }
 
     }
+    @media screen and (max-width:954px){
+            .payment_options{
+            flex-direction:column;
+        }
+    }
+
     @media screen and (max-width:720px){
         .trip_post > li{
             width: calc(100% / 1 - 10px);
         }
         .past_tour_gallery li {
-    width: calc(100% / 2 - 22px);
-    background-position: center;
-    background-size: cover;
-}
-.testimonials_list_item{
-    flex-direction:column;
-}
-.testimonial_text{
-    width:100%;
-}
-.testimonial_image{
-    width:100%;
-    height:350px;
-}
-.payment_options{
-    flex-direction:column;
-}
+            width: calc(100% / 2 - 22px);
+            background-position: center;
+            background-size: cover;
+        }
+        .testimonials_list_item{
+            flex-direction:column;
+        }
+        .testimonial_text{
+            width:100%;
+        }
+        .testimonial_image{
+            width:100%;
+            height:350px;
+        }
     }
      @media screen and (max-width:527px){
         .trip_post > li{
@@ -656,10 +659,12 @@ $trips_query = new WP_Query( $args );
         </ul>
     </div>
 </section>
+<?php if($footer_cta_text){ ?>
 <div class="container">
          <?php echo do_shortcode($footer_cta_text); ?> 
 </div>
 </div>
+<?php } ?>
 <?php } ?>
 <?php
 if ( post_password_required() ) {
