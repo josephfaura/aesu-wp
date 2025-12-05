@@ -75,15 +75,17 @@ if(function_exists('get_field')){
 	}
 	.interior_banner input{
 		color:#5e5e5e;
-    	padding-left: 44px;
+    	padding: 6px 6px 6px 40px;
+    	border: 0;
+    	border-radius: 0;
 	}
 	.interior_banner i{
 		position: absolute;
 		color:#5e5e5e;
 		left:10px;
-		top:4px;
+		top:8px;
 		z-index:99999;
-		font-size:24px;
+		font-size:20px;
 	}
 	.interior_banner .button{
 		background: #e74c3c;
@@ -235,7 +237,10 @@ if(function_exists('get_field')){
         background-attachment: scroll;
     }
 	@media screen and (max-width:600px){
-
+		.interior_banner .button{
+				width: 100%;
+				max-width: 100%;
+			}
 		.interior_banner h1 {
 			font-size: 42px;
 		}
