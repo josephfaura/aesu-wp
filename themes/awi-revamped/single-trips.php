@@ -84,6 +84,7 @@ if ( $tour ) {
     $trip_options_title = get_field('trip_options_title', $tour_id);
     $trip_options_content = get_field('trip_options_content', $tour_id);
     $trip_option_items = get_field('trip_option_items', $tour_id);
+    $experiences = get_field('experiences' , $tour_id);
     if ( ! $deals_popup || $deals_popup === '' ) {
         $deals_popup = get_field('deals_popup', $tour_id);
     }
@@ -92,6 +93,9 @@ if ( $tour ) {
 }
 ?>
 <style>
+	.experiences {
+		margin: 1em 0;
+	}
 	.whats_included_accordion_section h3{
 		max-width: calc(100% - 109px);
 	}
@@ -345,6 +349,13 @@ if ( ! post_password_required() ) {
 			echo do_shortcode($main_trip_content); 
 			?>
 		</div>
+
+		<?php if($experiences){ ?>
+		<div class="experiences">
+			<strong>Trip Experiences: <?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>&nbsp;';}} ?></strong> | <strong><a href="http://aesu.local/experiences/" target="_blank" rel="noopener">Learn More</a></strong>
+		</div>
+		<?php }?>
+
 		<?php if($e_brochure_link || $webinar_link){ ?>
 		<div class="additional_links">
 			<ul class="additional_link_items">
