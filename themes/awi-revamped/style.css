@@ -2707,6 +2707,13 @@ header .container{
 
 
 /****Blog Styling****/
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
 .blog main .container{
 	display: flex;
 }

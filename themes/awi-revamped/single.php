@@ -13,7 +13,7 @@ get_header();
 <style>
 	.postmetadata-postdate, .postmetadata-taxonomy{
 		font-size: 24px;
-		margin-bottom: 1em;
+		margin: 1em auto;
 		text-align: center;
 	}
 	.sidebar ul{
@@ -100,11 +100,22 @@ get_header();
 		            'next_or_number' => 'number'
 		        ) ); ?>
 
+		        <?php the_taxonomies( 'before=<div class="postmetadata-taxonomy">&after=</div>&sep=  |  &template=<strong>%s:</strong> %l' ); ?>
+
+		        <?php 
+		            // Navigation links
+		            $prev = get_previous_post_link('%link','<i class="fa-solid fa-arrow-left"></i> Previous');
+		            $next = get_next_post_link('%link','Next <i class="fa-solid fa-arrow-right"></i>');
+
+		            if ( $prev || $next ) : ?>
+		                <div class="navigation clearfix">
+		                    <div class="alignleft"><strong><?php echo $prev; ?></strong></div>
+		                    <div class="alignright"><strong><?php echo $next; ?></strong></div>
+		                </div>
+
+		        <?php endif; ?>
 		        <p class="postmetadata alt">
 		            <center><small>
-
-		            <?php the_taxonomies( 'before=<div class="postmetadata-taxonomy">&after=</div>&sep=  |  &template=<strong>%s:</strong> %l' ); ?>
-
 		            This entry was posted on <?php the_time('l, F jS, Y'); ?> at <?php the_time(); ?>.
 
 		            <?php if ( comments_open() && pings_open() ) : ?>
@@ -127,18 +138,6 @@ get_header();
 
 		            </small></center>
 		        </p>
-
-		        <?php 
-		            // Navigation links
-		            $prev = get_previous_post_link('%link','&laquo; Previous');
-		            $next = get_next_post_link('%link','Next &raquo;');
-
-		            if ( $prev || $next ) : ?>
-		                <div class="navigation clearfix">
-		                    <div class="alignleft"><?php echo $prev; ?></div>
-		                    <div class="alignright"><?php echo $next; ?></div>
-		                </div>
-		        <?php endif; ?>
 
 		    </div><!-- .entry -->
 
