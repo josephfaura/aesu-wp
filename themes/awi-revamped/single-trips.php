@@ -451,7 +451,7 @@ if ( ! post_password_required() ) {
 				</div>
 			</div>
 			<div class="whats_included_image">
-				<div class="" style="height:100%;background-size: contain;background-repeat: no-repeat;background-position: center top;background-image:url('<?php echo $whats_included_image['url']; ?>');"></div>
+				<img src="<?php echo $whats_included_image['url']; ?>">
 			</div>
 		</div>
 	</div>
