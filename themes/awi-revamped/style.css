@@ -2993,21 +2993,24 @@ h3.primary-teal{
 }
 .whats_included_content_wrap{
 	display:flex;
+	gap:32px;
 }
 .whats_included_content_wrap > div{
 	display:flex;
 	flex-direction: column;
-	width:100%;
+	width:50%;
 }
 .whats_included_image{
-	padding-left:56px;
+	background:#f2f2f2;
+	padding:32px;
 	position: sticky;
 	top:225px;
 	align-self: flex-start;
 	height:auto;
+	border-radius: 8px;
 }
 .whats_included_image img {
-	max-height: 800px;
+	max-height: 750px;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
@@ -3205,9 +3208,8 @@ body .subscription_section{
 	.whats_included_content_wrap{
 		flex-direction: column;
 	}
-	.whats_included_image{
-		padding-left:0;
-		height:60vh;
+	.whats_included_content_wrap > div{
+		width:100%;
 	}
 }
 @media screen and (max-width:976px){
