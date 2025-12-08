@@ -2674,6 +2674,24 @@ header .container{
 	}
 }
 
+
+/****Page Template Adjustments****/
+
+.carousel__button.is-close {
+	right: -136px !important;
+}
+.fancybox__container {
+	z-index: 99999 !important;
+}
+
+.wp-lightbox-overlay .close-button {
+	justify-content: end !important;
+	fill : #fff !important;
+}
+.wp-lightbox-overlay .scrim {
+	background: rgba(0, 0, 0, 0.8) !important;
+}
+
 	/*.page-template-default article{
 		width:calc(100%);
 		display: inline-block;
