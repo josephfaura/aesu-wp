@@ -116,7 +116,7 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				}
 			}	
 		</style>
-	<?php } ?>
+<?php } ?>
 		<style>
 			.mobile_header{
 				display:none;
