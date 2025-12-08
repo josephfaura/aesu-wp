@@ -3000,10 +3000,14 @@ h3.primary-teal{
 	width:100%;
 }
 .whats_included_image{
-	background-size:contain;
-	background-repeat:no-repeat;
-	/*background-color:#F2F2F2;*/
 	padding-left:56px;
+	position: sticky;
+	top:225px;
+	align-self: flex-start;
+	height:auto;
+}
+.whats_included_image img {
+	max-height: 800px;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
