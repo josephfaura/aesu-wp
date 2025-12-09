@@ -85,6 +85,8 @@ if ( $tour ) {
     $trip_options_content = get_field('trip_options_content', $tour_id);
     $trip_option_items = get_field('trip_option_items', $tour_id);
     $experiences = get_field('experiences' , $tour_id);
+    $level = get_field('activity_level' , $tour_id); 
+		$level = intval($level);
     if ( ! $deals_popup || $deals_popup === '' ) {
         $deals_popup = get_field('deals_popup', $tour_id);
     }
@@ -94,8 +96,36 @@ if ( $tour ) {
 ?>
 <style>
 	.experiences {
-		margin: 1em 0;
+		display: flex;
+		flex-wrap: wrap;
+	  margin: 1rem 0;
+	  gap:.25rem 0;
 	}
+	.experiences-grid {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+	}
+.experiences > .experiences-grid:not(:last-child) {
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-right: 1px solid #5e5e5e;
+}
+	.activity-box {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border-radius: 3px;
+    background: #888; /* gray inactive */
+    color: #fff;
+	}
+	.activity-box.active {
+    background: #2c768e; /* highlight color */
+	}
+
 	.whats_included_accordion_section h3{
 		max-width: calc(100% - 109px);
 	}
@@ -202,37 +232,7 @@ if ( $tour ) {
 			float:none;
 		}
 	}*/
-	.share_section{
-		font-size:20px;
-		padding:15px 0 15px 15px;
-		position:relative;
-		float:right;
-	}
-	.share_options{
-	display:none;    
-    position: absolute;
- 	right: -5px;
-    bottom: 75%;
-    	/*width: 200px;
-    	background-color: #fff;
-    	box-shadow:0 3px 10px rgba(0,0,0,.25);
-    	padding: 10px 10px 2px 10px;*/
-	}
-		@media screen and (max-width:1092px){
-				.share_options{
-					right:30px;
-					bottom:-5px;
-				}
-		}
-		@media screen and (max-width:650px){
-				.share_options{
-					bottom:-15px;
-				}
-		}
 
-	.share_section:hover .share_options{
-		display:block;
-	}
 	.whats_included_accordion_section{
 		margin-bottom:32px
 	}
@@ -350,16 +350,33 @@ if ( ! post_password_required() ) {
 			?>
 		</div>
 
-		<?php if($experiences){ ?>
-		<div class="experiences">
-			<strong>Trip Experiences: <?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>&nbsp;';}} ?></strong> | <strong><a href="http://aesu.local/experiences/" target="_blank" rel="noopener">Learn More</a></strong>
+<?php if($level || $experiences){ ?>
+
+<div class="experiences">
+	<div class="experiences-grid">
+    	<strong>Activity Level:</strong>
+    	<?php for ($i = 1; $i <= 5; $i++): ?>
+        <div class="activity-box <?php echo ($i <= $level) ? 'active' : ''; ?>">
+            <?php echo $i; ?>
+        </div>
+    <?php endfor; ?>
+  </div>
+		<div class="experiences-grid">
+				<strong>Trip Experiences:</strong>
+				<?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>';}} ?>
 		</div>
-		<?php }?>
+		<div class="experiences-grid">
+			<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Learn More</a></strong>
+		</div>
+</div>
+
+<?php }?>
+
 
 		<?php if($e_brochure_link || $webinar_link){ ?>
 		<div class="additional_links">
 			<ul class="additional_link_items">
-				<?php if($e_brochure_link){ ?><li><a target="_blank" href="<?php echo $e_brochure_link; ?>" class="print_brochure">Download a Print Brochure</a></li><?php } ?>
+				<?php if($e_brochure_link){ ?><li><a target="_blank" href="<?php echo $e_brochure_link; ?>" class="print_brochure">Download a Brochure</a></li><?php } ?>
 				<?php if($webinar_link){ ?><li><a target="_blank" href="<?php echo $webinar_link ?>" class="webinar_link">Sign up for a Webinar</a></li><?php } ?>
 			</ul>
 		</div>
