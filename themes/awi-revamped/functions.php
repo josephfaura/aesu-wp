@@ -34,7 +34,10 @@ function awi_revamped_setup() {
 		'footer_nav'     => 'Footer Nav',
 		'awt_footer_nav' => 'AWT Footer Nav',
 	));
-
+	/*
+		* Switch default core markup for search form, comment form, and comments
+		* to output valid HTML5.
+	*/
 	add_theme_support(
 		'html5',
 		array(
@@ -47,7 +50,7 @@ function awi_revamped_setup() {
 			'script',
 		)
 	);
-
+	// Set up the WordPress core custom background feature.
 	add_theme_support(
 		'custom-background',
 		apply_filters(
@@ -58,9 +61,11 @@ function awi_revamped_setup() {
 			)
 		)
 	);
-
+	// Add theme support for selective refresh for widgets.
 	add_theme_support( 'customize-selective-refresh-widgets' );
-
+	/**
+	 * Add support for core custom logo.
+	 */
 	add_theme_support(
 		'custom-logo',
 		array(
@@ -212,7 +217,7 @@ function awi_initialize_scripts() { ?>
 </script>
 <script>
 (function($){
-	/* Search/filter & misc UI code (unchanged) */
+	/* AWT TOC Search/filter & misc UI code (unchanged) */
 	<?php if(is_page(898)){ ?>
 	$(document).on('change','.interior_banner input',function(){
 		var textentered = $(this).val().toLowerCase();
@@ -240,7 +245,7 @@ function awi_initialize_scripts() { ?>
 		});
 	});
 	<?php } ?>
-	/* Load more images temporary fix */
+	/* Load more images fix */
 	<?php } ?>
 
      (function($){
@@ -269,6 +274,7 @@ function awi_initialize_scripts() { ?>
 	});
 	<?php } ?>
 
+	//GA Tracking calls and form submissions
 	$(document).ready(function(){
 	  $("a[href^='tel']").on("click",function(){
 	    gtag('event', 'click_to_call', { 'lead_source': '<?php echo isset($_SESSION['utm_source']) ? esc_js($_SESSION['utm_source']) : '' ; ?>' });
@@ -280,6 +286,7 @@ function awi_initialize_scripts() { ?>
 	  }, false);
 	});
 
+	//Flexslider wait for page to load to animate
 	$(window).on('load', function() {
 		$('.flexslider').flexslider({ animation: "slide" });
 	});
@@ -354,7 +361,10 @@ function awi_initialize_scripts() { ?>
 	});
 })( jQuery );
 </script>
+
+
 <script>
+// Banner Video Plays on Click and Play Button Disappears
 (function($){
 	$('.play_banner_video').on('click',function(){
 		$(this).parents('.video_wrap').find('video').first().get(0).play();
@@ -362,6 +372,7 @@ function awi_initialize_scripts() { ?>
 	});
 })( jQuery );
 </script>
+
 <?php
 }
 
@@ -518,67 +529,83 @@ add_action( 'pre_get_posts', function( $query ) {
 
 // Sitemap shortcode
 function generate_sitemap() {
+
 	$tmp_storage = array();
-	$sitemap  = '<div class="sitemap-wrapper">';
+	// Start sitemap
+	$sitemap = '<div class="sitemap-wrapper">';
  	$sitemap .= '<ul class="sitemap-list clearfix">';
 
 	// Pages
 	$pages_args = array(
-		'exclude'      => '',
-		'post_type'    => 'page',
-		'post_status'  => 'publish',
-		'sort_column'  => 'menu_order'
+		'exclude' => '', // ID of pages to be excluded, separated by comma
+		'post_type' => 'page',
+		'post_status' => 'publish',
+		'sort_column'	=> 'menu_order'
 	);
-	$sitemap .= '<li><h3>Pages</h3><ul class="pages-list clearfix">';
+	$sitemap .= '<li><h3>Pages</h3>';
+	$sitemap .= '<ul class="pages-list clearfix">';
 	$pages = get_pages($pages_args);
+
 	foreach ( $pages as $page ) :
 		$sitemap .= '<li><a href="'.get_permalink( $page->ID ).'" rel="bookmark">'.$page->post_title.'</a></li>';
 	endforeach;
+
 	$sitemap .= '</ul></li>';
 
 	// Custom Post Types
+	$allowed_cpts = array('trips', 'tours'); //only allow these two post types
 	foreach( get_post_types( array('public' => true) ) as $post_type ) {
-		if ( in_array( $post_type, array('post','page','attachment'))) continue;
+		if ( ! in_array( $post_type, $allowed_cpts ) ) continue; //only post types listed above
 
-		$custom_post_type  = get_post_type_object( $post_type );
+		$custom_post_type = get_post_type_object( $post_type );
 		$custom_post_types_args = array(
-			'exclude'        => '',
-			'post_type      '=> $post_type,
-			'post_status'    => 'publish',
-			'posts_per_page' => -1,
+			'post_type' => $post_type,
+			'post_status' => 'publish',
+			'posts_per_page'   => -1	,
 		);
-		$sitemap .= '<li><h3>'.$custom_post_type->labels->name.'</h3><ul class="custom-post-types-list clearfix">';
+		$sitemap .= '<li><h3>'.$custom_post_type->labels->name.'</h3>';
+		$sitemap .= '<ul class="custom-post-types-list clearfix">';
 		$custom_post_types = get_posts($custom_post_types_args);
+
 		foreach ( $custom_post_types as $custom_post_type ) :
 			$sitemap .= '<li><a href="'.get_permalink( $custom_post_type->ID ).'" rel="bookmark">'.$custom_post_type->post_title.'</a></li>';
 		endforeach;
+
 		$sitemap .= '</ul></li>';
 	}
 
-	// Posts
-	$posts_args = array(
-		'exclude'        => '',
-		'post_type'      => 'post',
-		'post_status'    => 'publish',
-		'posts_per_page' => -1,
-	);
-	$sitemap .= '<li><h3>Posts</h3><ul class="posts-list clearfix">';
-	$posts = get_posts($posts_args);
-	foreach ( $posts as $post ) :
-		$tmp_var = get_permalink( $post->ID );
-		if (!in_array($tmp_var, $tmp_storage)) {
-			$sitemap .= '<li><a href="'.get_permalink( $post->ID ).'" rel="bookmark">'.$post->post_title.'</a></li>';
-			$tmp_storage[] = $tmp_var;
-		}
-	endforeach;
-	$sitemap .= '</ul></li>';
+	// Posts by Category
+	//$cats = get_categories();
+	//foreach ($cats as $cat) :
+		$posts_args = array(
+			'exclude' => '', // ID of pages to be excluded, separated by comma
+			'post_type' => 'post',
+			'post_status' => 'publish',
+			'posts_per_page'   => -1	,
+			//'category' => $cat->term_id
+		);
+		$sitemap .= '<li><h3>Posts</h3>';
+		$sitemap .= '<ul class="posts-list clearfix">';
+		$posts = get_posts($posts_args);
+
+		foreach ( $posts as $post ) :
+			$tmp_var = get_permalink( $post->ID );
+			if (!in_array($tmp_var, $tmp_storage)) {
+					$sitemap .= '<li><a href="'.get_permalink( $post->ID ).'" rel="bookmark">'.$post->post_title.'</a></li>';
+					$tmp_storage[] = $tmp_var;
+			}
+		endforeach;
+
+		$sitemap .= '</ul></li>';
+	//endforeach;
 
 	$sitemap .= '</ul></div>';
+
 	return $sitemap;
 }
 add_shortcode( 'sitemap','generate_sitemap' );
 
-// Small admin CSS tweak
+// Small admin CSS tweak - Adjust width as needed
 add_action('admin_head', function () {
     echo '<style>.wp-list-table .column-title{width:25% !important;}</style>';
 });
@@ -593,17 +620,20 @@ add_action('pre_get_posts', function ($query) {
 
 /* ACF preview helpers */
 add_filter( 'acf/pre_load_post_id', function( $post_id ) {
+    // Only run in preview mode
     if ( ! is_preview() || ! isset( $_GET['preview_id'] ) ) {
         return $post_id;
     }
     $preview_id = absint( $_GET['preview_id'] );
     $current_id = get_the_ID();
 
+    // If ACF is trying to load the current post or a revision of it
     if ( in_array( (int) $post_id, [ (int) $current_id, (int) get_post_meta( $preview_id, '_edit_last', true ) ], true )
         || (int) $post_id === (int) $preview_id
         || (int) $post_id === (int) get_post_meta( $preview_id, '_wp_old_slug', true ) ) {
         return $preview_id;
     }
+    // Otherwise, leave other referenced posts untouched
     return $post_id;
 });
 

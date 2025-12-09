@@ -3365,6 +3365,42 @@ section .slick-prev:before,section .slick-next:before {
     -moz-osx-font-smoothing: grayscale;
     font-size: 34px;
 }
+
+
+/* ____________SITE MAP STYLES______________ */
+
+
+.sitemap-wrapper {
+	display: flex;
+}
+.sitemap-list {
+	display: flex;
+	list-style: none;
+	padding: 0;
+	gap: 2rem;
+	margin: 0 auto;
+}
+.pages-list, .custom-post-types-list, .posts-list {
+	list-style: none;
+	padding: 0;
+	margin-left:.25rem;
+	font-weight: 700;
+	max-width: 425px;
+}
+.pages-list li, .custom-post-types-list li , .posts-list li {
+	margin-bottom:1rem;
+}
+.sitemap-list a {
+	color:#5a5a5a;
+}
+@media screen and (max-width:1024px){
+	.sitemap-list {
+		flex-wrap: wrap;
+	}
+}
+
+/* ____________LEGACY STYLES______________ */
+
 /* Sidebar */
 aside {
 	padding: 0 0 0 30px;
@@ -3935,6 +3971,9 @@ label {
         float: none;
     }
 }
+
+/* ____________MISC STYLES______________ */
+
 .travel_tools_popup_content ul{
 	list-style:none;
 	margin:0;
