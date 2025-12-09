@@ -362,11 +362,8 @@ if ( ! post_password_required() ) {
     <?php endfor; ?>
   </div>
 		<div class="experiences-grid">
-				<strong>Trip Experiences:</strong>
+				<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Trip Experiences:</a></strong>
 				<?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>';}} ?>
-		</div>
-		<div class="experiences-grid">
-			<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Learn More</a></strong>
 		</div>
 </div>
 

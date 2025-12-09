@@ -2981,6 +2981,21 @@ background-color:#5E5E5E;
 .travel_tools a{
 background-color:#2C768E
 }
+.deals_cta a:hover{
+	background-color:#d13b2d;
+}
+.more_trips a:hover{
+background-color:#3a3a3a;
+}
+.travel_tools a:hover{
+background-color:#2980B9
+}
+
+.deals_cta .more_trips .travel_tools > a:active {
+	transform:translateY(5px);
+ }
+
+
 .trip_dates{
 	font-size:20px;
 	font-weight:bold
