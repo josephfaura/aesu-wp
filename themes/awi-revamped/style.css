@@ -2921,8 +2921,8 @@ aside ul{
 .trip_cta_list{
 		display: flex;
 		flex-wrap: wrap;
-	  margin: 1rem 0;
-	  gap:.25rem 1rem;
+	  margin: 1.25rem 0 0 0;
+	  gap:1rem;
 		padding:0;
 		align-items: center;
 }
@@ -2942,7 +2942,7 @@ aside ul{
 	display:none;    
   position: absolute;
  	right: -5px;
-  bottom: -75px;
+  bottom: -55px;
 	}
 	.share_section:hover .share_options{
 		display:block;
@@ -3260,7 +3260,7 @@ body .subscription_section{
 }
 .trip_main_content{
 	max-width:100%!important;
-	padding:32px!important;
+	padding:32px 32px 56px 32px !important;
 }
 }
 @media screen and (max-width:900px){
@@ -3292,6 +3292,9 @@ body .subscription_section{
 	.trip_header_logo{
 		width:100px;
 		height:100px;
+	}
+	.trip_main_content{
+		padding:32px !important;
 	}
 	/*.single-trips .trip_header {
         margin-top: 63px;
