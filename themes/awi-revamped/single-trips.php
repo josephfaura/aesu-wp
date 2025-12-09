@@ -17,6 +17,7 @@ if(function_exists('get_field')){
 	$trip_dates = get_field('trip_dates',get_the_ID());
 	$e_brochure_link = get_field('e_brochure_link',get_the_ID());
 	$webinar_link = get_field('webinar_link',get_the_ID());
+	$additional_link = get_field('additional_link',get_the_ID());
 	//$school = get_field('school',get_the_ID());
 	$travel_tools = get_field('travel_tools',get_the_ID());
 	$toc_info = get_field('toc_info',get_the_ID());
@@ -64,6 +65,7 @@ if ( $school ) {
     $school_id = is_object($school) ? $school->ID : (int)$school;
     $school_logo = get_field('school_logo', $school_id);
     $school_logo_background = get_field('school_logo_background', $school_id);
+    $primary_color = get_field('primary_color', $school_id);
 }
 
 // TOUR FIELDS
@@ -95,6 +97,9 @@ if ( $tour ) {
 }
 ?>
 <style>
+	.additional_link a {
+		color:<?php echo $primary_color; ?>;
+	}
 	.experiences {
 		display: flex;
 		flex-wrap: wrap;
@@ -370,11 +375,13 @@ if ( ! post_password_required() ) {
 <?php }?>
 
 
-		<?php if($e_brochure_link || $webinar_link){ ?>
+		<?php if($e_brochure_link || $webinar_link || $additional_link){ ?>
 		<div class="additional_links">
 			<ul class="additional_link_items">
 				<?php if($e_brochure_link){ ?><li><a target="_blank" href="<?php echo $e_brochure_link; ?>" class="print_brochure">Download a Brochure</a></li><?php } ?>
 				<?php if($webinar_link){ ?><li><a target="_blank" href="<?php echo $webinar_link ?>" class="webinar_link">Sign up for a Webinar</a></li><?php } ?>
+				<?php if($additional_link){ ?><li class="additional_link"><a target="_blank" href="<?php echo $additional_link['url'] ?>"><?php echo $additional_link['title'] ?></a></li>
+				<?php } ?>
 			</ul>
 		</div>
 		<?php } ?>
