@@ -3232,6 +3232,7 @@ body .subscription_section{
 	margin-top:16px;
 }
 .trip_option_item_content a {
+	display: block;
 	margin-top:18px;
 	font-weight:700;
 }
