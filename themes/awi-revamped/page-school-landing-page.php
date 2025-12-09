@@ -143,6 +143,9 @@ if(function_exists('get_field')){
         font-size:24px;
         margin-top:0;
     }
+    .contact_info a{
+        font-weight: 700;
+    }
     .testimonial_quote_icon_left i{
         color:<?php echo $primary_color; ?>;
     }
@@ -279,7 +282,7 @@ if(function_exists('get_field')){
         display: flex;
         flex-direction: column;
     }
-    .trip_post > li a{
+    .trip_post > li a:last-child{
         margin-top:auto;
     }
     @media screen and (max-width:1120px){
@@ -544,10 +547,10 @@ $trips_query = new WP_Query( $args );
                 ?>
                 <li>
                     
-                        <div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"><div class="trip_dates_lander"><?php echo $trip_dates; ?></div></div>
+                        <a href="<?php echo esc_url( get_permalink() ); ?>"><div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"><div class="trip_dates_lander"><?php echo $trip_dates; ?></div></div></a>
                         <div class="trip_text">
                         <?php //echo $start_date; ?>
-                        <h3 class="trip_title_lander"><?php echo esc_html( $trip_name ); ?></h3>
+                        <a href="<?php echo esc_url( get_permalink() ); ?>"><h3 class="trip_title_lander"><?php echo esc_html( $trip_name ); ?></h3></a>
                         <div><?php echo do_shortcode($toc_info); ?></div>
                 <a href="<?php echo esc_url( get_permalink() ); ?>">Trip Details <i class="fa fa-arrow-right"></i></a>
             </div>
