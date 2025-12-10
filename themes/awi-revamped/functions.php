@@ -387,6 +387,20 @@ if ( function_exists('acf_add_options_page') ) {
 	));
 }
 
+/* Add Menu Icons to Tours and Trips Custom Post Types */
+add_filter( 'register_post_type_args', 'modify_cpt_icons', 10, 2 );
+function modify_cpt_icons( $args, $post_type ) {
+    // Tours CPT
+    if ( 'tours' === $post_type ) {
+        $args['menu_icon'] = 'dashicons-awards';
+    }
+    // Trips CPT
+    if ( 'trips' === $post_type ) {
+        $args['menu_icon'] = 'dashicons-airplane';
+    }
+    return $args;
+}
+
 /* ---------- Admin list table helpers ---------- */
 
 // Add custom "Template" column to Pages
