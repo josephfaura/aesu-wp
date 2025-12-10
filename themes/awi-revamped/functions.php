@@ -540,7 +540,9 @@ function generate_sitemap() {
 		'exclude' => '', // ID of pages to be excluded, separated by comma
 		'post_type' => 'page',
 		'post_status' => 'publish',
-		'sort_column'	=> 'menu_order'
+		'sort_column' => 'post_title',
+    	'sort_order'  => 'ASC'
+
 	);
 	$sitemap .= '<li><h3>Pages</h3>';
 	$sitemap .= '<ul class="pages-list clearfix">';
@@ -559,9 +561,11 @@ function generate_sitemap() {
 
 		$custom_post_type = get_post_type_object( $post_type );
 		$custom_post_types_args = array(
-			'post_type' => $post_type,
-			'post_status' => 'publish',
-			'posts_per_page'   => -1	,
+			'post_type'      => $post_type,
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'orderby'        => 'title',   // ← alphabetize
+			'order'          => 'ASC'      // ← A → Z
 		);
 		$sitemap .= '<li><h3>'.$custom_post_type->labels->name.'</h3>';
 		$sitemap .= '<ul class="custom-post-types-list clearfix">';
