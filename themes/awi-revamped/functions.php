@@ -392,7 +392,7 @@ add_filter( 'register_post_type_args', 'modify_cpt_icons', 10, 2 );
 function modify_cpt_icons( $args, $post_type ) {
     // Tours CPT
     if ( 'tours' === $post_type ) {
-        $args['menu_icon'] = 'dashicons-awards';
+        $args['menu_icon'] = 'dashicons-location';
     }
     // Trips CPT
     if ( 'trips' === $post_type ) {
