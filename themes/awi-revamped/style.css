@@ -3380,18 +3380,24 @@ section .slick-prev:before,section .slick-next:before {
 	gap: 2rem;
 	margin: 0 auto;
 }
-.pages-list, .custom-post-types-list, .posts-list {
+.sitemap-list h3 {
+	color:#5a5a5a;
+	margin:1em 0 .5em 0;
+}
+.pages-list, .custom-post-types-list, .trip-year-sublist, .posts-list {
 	list-style: none;
 	padding: 0;
 	margin-left:.25rem;
-	font-weight: 700;
 	max-width: 425px;
+}
+.custom-post-types-list h4 {
+	font-size:1.3em;
+	margin:1em 0 .5em 0;
 }
 .pages-list li, .custom-post-types-list li , .posts-list li {
 	margin-bottom:1rem;
-}
-.sitemap-list a {
-	color:#5a5a5a;
+	padding-top:.25rem;
+	border-top: 1px solid #888;
 }
 @media screen and (max-width:1024px){
 	.sitemap-list {
