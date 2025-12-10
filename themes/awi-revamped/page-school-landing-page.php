@@ -190,6 +190,7 @@ if(function_exists('get_field')){
         display:flex;
         gap:32px;
         flex-wrap:wrap;
+        justify-content: center;
     }
     .past_tour_gallery li{
      width: calc(100% / 3 - 22px);

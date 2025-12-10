@@ -2947,31 +2947,6 @@ aside ul{
 	.share_section:hover .share_options{
 		display:block;
 	}
-@container (max-width:425px){
-	.trip_cta_list{
-		display: block;
-	}
-	.trip_cta_list > li{
-		display:block;
-		padding: 10px 0;
-	}
-	.trip_cta_list a {
-		display:block;
-		width:100%;
-		text-align: center;
-		margin: 0;
-		padding:14px;
-	}
-	.trip_cta_list > *:last-child {
-		flex-basis: 100%; /* forces a new row */
-  	display: flex;
-  	justify-content: flex-end; /* aligns content right */
-	}
-	.share_options{
-		right:30px;
-		bottom:-10px;
-	}
-}
 .deals_cta a{
 	background-color:#E74C3C;
 }
@@ -2999,20 +2974,23 @@ background-color:#2980B9
 	font-size:20px;
 	font-weight:bold
 }
-.primary-teal{
+.trip_main_content_text h3 {
+	color:#2C768E;
+	margin:16px 0;
+}
+/*.primary-teal{
 	color:#2C768E;
 }
 h3.primary-teal{
 	font-size:32px;
 	margin:16px 0;
 }
-/*.p-small{
+.p-small{
 	font-size:14px;
 	color:#5E5E5E;
 }*/
 .additional_links{
 		display: flex;
-		flex-wrap: wrap;
 	  margin: 1rem 0;
 	  gap:.25rem 0;
 }
@@ -3025,6 +3003,7 @@ h3.primary-teal{
 	padding:0;
 	font-weight:700;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 0;
 }
@@ -3038,6 +3017,37 @@ h3.primary-teal{
 }
 .additional_link_items .webinar_link{
 	color:#2C768E;
+}
+@container (max-width:425px){
+	.experiences > .experiences-grid:not(:last-child){
+		border-right:0 !important;
+	}
+	.additional_link_items li:not(:last-child){
+		border-right:0 !important;
+	}
+	.trip_cta_list{
+		display: block;
+	}
+	.trip_cta_list > li{
+		display:block;
+		padding: 10px 0;
+	}
+	.trip_cta_list a {
+		display:block;
+		width:100%;
+		text-align: center;
+		margin: 0;
+		padding:10px;
+	}
+	.trip_cta_list > *:last-child {
+		flex-basis: 100%; /* forces a new row */
+  	display: flex;
+  	justify-content: flex-end; /* aligns content right */
+	}
+	.share_options{
+		right:30px;
+		bottom:-15px;
+	}
 }
 
 /*TOURS*/
