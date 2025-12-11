@@ -695,6 +695,10 @@ form .list--unstyled li {
 	margin: 6px;
 }
 
+.wpcf7-not-valid-tip {
+	font-weight: 700 !important;
+}
+
 /*form .list--unstyled li:first-child,
 form .list--unstyled .form-field--half:first-child,
 form .list--unstyled .form-field--half:first-child + .form-field--half,
@@ -1583,20 +1587,16 @@ a:active {
 	display: flex;
 	flex-wrap:wrap
 }
-.subscription_section{
-	color:#fff;
-	font-weight:bold;
-}
 .subscribe_title_area{
-	width: 600px;
-    padding: 100px 40px;
+		/*width: 600px;
+    padding: 100px 40px;*/
+    color:#fff;
     background-color: #e84c3d;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-	color:#fff;
 	width: calc(100% / 3);
 	padding: 32px 56px;
 }
@@ -1606,23 +1606,21 @@ a:active {
 	margin:0;
 }
 .subscribe_form{
-	color:#fff;
 	width: calc(100% / 3*2);
-    background-color: #efba1c;
+  background-color: #efba1c;
 	padding:40px;
 	display: flex;
 	justify-content: center;
 	text-align:center;
-	 display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 	/*max-width: 750px; */
 }
 .subscribe_form h2{
 	font-weight:500;
-	color: #5e5e5e;
 }
 .subscribe-button{
 	background-color: #e84c3d;
@@ -1635,13 +1633,10 @@ a:active {
 .subscribe_form span,.subscribe_form input{
 	/*width: 100%;*/
     display: block;
-    font-weight: 500;
     font-size: 18px;
 }
 .subscribe_form p {
 	font-size:14px;
-	font-weight:500;
-	color:#5e5e5e;
 }
 .subscribe_form a {
 	color:#3a3a3a;
@@ -1651,6 +1646,7 @@ a:active {
 }
 .last_name_subscribe,.first_name_subscribe,.email_subscribe{
 	display: inline-block;
+	vertical-align: top;
 }
 .last_name_subscribe{
 	width: calc(50% - 10px);
@@ -1661,25 +1657,25 @@ a:active {
 	margin: 0 0 18px 5px;
 }
 .email_subscribe{
-	margin:2px;
-}
-.email_subscribe{
 	width: calc(100% - 160px);
 }
 .subscribe_form input[type="submit"]{
     display: inline-block;
+    vertical-align: top;
     font-weight: bold;
     background-color: #e84c3d;
     color: #fff;
     border: none;
 		position: relative;
-    top: 1px;
-		padding-bottom:7px;
 		width: 130px;
 		font-size:18px;
 }
 .subscribe_form > * {
     max-width: 1020px;
+}
+.subscribe_form .wpcf7-response-output{
+	background-color: #ffdd00;
+	font-weight: 700;
 }
 @media screen and (max-width:1200px){
 	.subscribe_form{
