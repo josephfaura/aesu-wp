@@ -3087,13 +3087,15 @@ h3.primary-teal{
 	background:#f2f2f2;
 	padding:32px;
 	position: sticky;
-	top:225px;
+	top:20vh;
 	align-self: flex-start;
+	align-items:center;
 	height:auto;
 	border-radius: 8px;
+	margin-top:50px;
 }
 .whats_included_image img {
-	max-height: 750px;
+	max-height: 70vh;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
@@ -3281,12 +3283,15 @@ body .subscription_section{
 	}
 	
 .trip_main_content_wrap > div{
-	width:100%;
-}
+		width:100%;
+	}
 .trip_main_content{
-	max-width:100%!important;
-	padding:32px 32px 56px 32px !important;
-}
+		max-width:100%!important;
+		padding:32px 32px 56px 32px !important;
+	}
+	.trip_header_cta{
+		display:none;
+	}
 }
 @media screen and (max-width:900px){
 	.whats_included_content_wrap{
@@ -3295,10 +3300,8 @@ body .subscription_section{
 	.whats_included_content_wrap > div{
 		width:100%;
 	}
-}
-@media screen and (max-width:976px){
-		.trip_header_cta{
-		display:none;
+	.whats_included_image {
+		margin-top:0;
 	}
 }
 @media screen and (max-width:676px){
