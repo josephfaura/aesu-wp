@@ -379,7 +379,7 @@ if ( ! post_password_required() ) {
 		<div class="additional_links">
 			<ul class="additional_link_items">
 				<?php if($e_brochure_link){ ?><li><a target="_blank" href="<?php echo $e_brochure_link; ?>" class="print_brochure">Download a Brochure</a></li><?php } ?>
-				<?php if($webinar_link){ ?><li><a target="_blank" href="<?php echo $webinar_link ?>" class="webinar_link">Sign up for a Webinar</a></li><?php } ?>
+				<?php if($webinar_link){ ?><li><a target="_blank" href="<?php echo $webinar_link ?>" class="webinar_link">Sign Up for a Webinar</a></li><?php } ?>
 				<?php if($additional_link){ ?><li class="additional_link"><a target="_blank" href="<?php echo $additional_link['url'] ?>"><?php echo $additional_link['title'] ?></a></li>
 				<?php } ?>
 			</ul>
