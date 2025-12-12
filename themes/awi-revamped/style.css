@@ -610,6 +610,9 @@ input[type="submit"] {
 	line-height: 1;
 	padding: 12px;
 }
+#wpcf7-f13342-p3095-o1 input[type="submit"] {
+	background: #5e5e5e !important;
+}
 
 button:hover,
 input[type="button"]:hover,
