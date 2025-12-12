@@ -236,8 +236,9 @@ if(function_exists('get_field')){
 	<?php } ?>
 	</main><!-- #main -->
 
+<!--NEWSLETTER SIGNUP-->
 
-<section class="subscription_section">
+		<section class="subscription_section">
 			<div class="subscribe_title_area">
 				<h2>Just Go!</h2>
 			</div>
@@ -249,6 +250,9 @@ if(function_exists('get_field')){
 				</div>
 			</div>
 		</section>
+
+<!--CONTACT & SOCIALS-->
+
 		<section class="footer_cta">
 			<h2>Want to Get in Touch?</h2>
 			<a href="<?php echo get_permalink(11601) ?>" class="cta-button">CONTACT US</a>

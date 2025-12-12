@@ -6,7 +6,7 @@
  *
  * @package AWI_Revamped
  * 
- * Template Name: School Landing Page
+ * Template Name: Landing Page
  */
 
 get_header();
