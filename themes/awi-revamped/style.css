@@ -264,9 +264,9 @@ button:-moz-focusring,
 }
 .button,input[type=submit],button{
 	transition:.2s all;
-	background-color:gray;
-	color:#000;
-	padding:7px 15px;
+	background-color:#E74C3C;
+	color:#fff;
+	padding:8px;
 }
 /**
  * Correct the padding in Firefox.
@@ -598,13 +598,16 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	border: 1px solid;
-	border-color: #ccc #ccc #bbb;
-	border-radius: 3px;
-	background: #e6e6e6;
-	color: rgba(0, 0, 0, 0.8);
+	border: 0 !important;
+	/*border-color: #ccc #ccc #bbb;*/
+	border-radius: 0 !important;
+	background: #E74C3C;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 18px;
 	line-height: 1;
-	padding: 0.6em 1em 0.4em;
+	padding: 12px;
 }
 
 button:hover,
@@ -643,7 +646,7 @@ input[type="color"],
 textarea {
 	color: #666;
 	border: 1px solid #ccc;
-	border-radius: 3px;
+	border-radius: 0 !important;
 	padding: 3px;
 }
 
@@ -1665,9 +1668,12 @@ a:active {
     font-weight: bold;
     background-color: #e84c3d;
     color: #fff;
+    text-transform: uppercase;
     border: none;
+    border-radius: 0;
 		position: relative;
 		width: 130px;
+		height:40px;
 		font-size:18px;
 }
 .subscribe_form > * {
@@ -3553,10 +3559,10 @@ article, aside {
 	height: auto\9;
 	font: inherit;
 	background: #fff;
-	border: 1px solid #ccc;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	border: 0 !important;
+	/*-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;*/
+	border-radius: 0 !important;
 }
 .page-template-default .header,.page-template-page-full-width .header,.page-template-page-sidebar-left .header{
     margin: 0 0 40px;
