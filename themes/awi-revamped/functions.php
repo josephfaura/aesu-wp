@@ -387,6 +387,20 @@ if ( function_exists('acf_add_options_page') ) {
 	));
 }
 
+/* Add Menu Icons to Tours and Trips Custom Post Types */
+add_filter( 'register_post_type_args', 'modify_cpt_icons', 10, 2 );
+function modify_cpt_icons( $args, $post_type ) {
+    // Tours CPT
+    if ( 'tours' === $post_type ) {
+        $args['menu_icon'] = 'dashicons-location';
+    }
+    // Trips CPT
+    if ( 'trips' === $post_type ) {
+        $args['menu_icon'] = 'dashicons-airplane';
+    }
+    return $args;
+}
+
 /* ---------- Admin list table helpers ---------- */
 
 // Add custom "Template" column to Pages
@@ -540,7 +554,9 @@ function generate_sitemap() {
 		'exclude' => '', // ID of pages to be excluded, separated by comma
 		'post_type' => 'page',
 		'post_status' => 'publish',
-		'sort_column'	=> 'menu_order'
+		'sort_column' => 'post_title',
+    	'sort_order'  => 'ASC'
+
 	);
 	$sitemap .= '<li><h3>Pages</h3>';
 	$sitemap .= '<ul class="pages-list clearfix">';
@@ -553,26 +569,59 @@ function generate_sitemap() {
 	$sitemap .= '</ul></li>';
 
 	// Custom Post Types
-	$allowed_cpts = array('trips', 'tours'); //only allow these two post types
-	foreach( get_post_types( array('public' => true) ) as $post_type ) {
-		if ( ! in_array( $post_type, $allowed_cpts ) ) continue; //only post types listed above
+$allowed_cpts = array( 'trips' ); // only allow these post types
 
-		$custom_post_type = get_post_type_object( $post_type );
-		$custom_post_types_args = array(
-			'post_type' => $post_type,
-			'post_status' => 'publish',
-			'posts_per_page'   => -1	,
-		);
-		$sitemap .= '<li><h3>'.$custom_post_type->labels->name.'</h3>';
-		$sitemap .= '<ul class="custom-post-types-list clearfix">';
-		$custom_post_types = get_posts($custom_post_types_args);
+foreach ( get_post_types( array( 'public' => true ) ) as $post_type ) {
+    if ( ! in_array( $post_type, $allowed_cpts ) ) continue;
 
-		foreach ( $custom_post_types as $custom_post_type ) :
-			$sitemap .= '<li><a href="'.get_permalink( $custom_post_type->ID ).'" rel="bookmark">'.$custom_post_type->post_title.'</a></li>';
-		endforeach;
+    $cpt_object = get_post_type_object( $post_type );
+    $sitemap .= '<li><h3>' . $cpt_object->labels->name . '</h3>';
+    $sitemap .= '<ul class="custom-post-types-list clearfix">';
 
-		$sitemap .= '</ul></li>';
-	}
+    // 1. Get all Trip Year terms — sort by year DESC (newest first)
+    $years = get_terms( array(
+        'taxonomy'   => 'trip_year',
+        'hide_empty' => true,
+        'orderby'    => 'name',
+        'order'      => 'DESC',   // ← NEWEST → OLDEST
+    ));
+
+    if ( ! empty( $years ) && ! is_wp_error( $years ) ) {
+
+        foreach ( $years as $year ) {
+
+            // Year heading
+            $sitemap .= '<li><h4>' . esc_html( $year->name ) . '</h4>';
+            $sitemap .= '<ul class="trip-year-sublist">';
+
+            // 2. Get alphabetized trips inside this year
+            $posts_in_year = get_posts( array(
+                'post_type'      => 'trips',
+                'post_status'    => 'publish',
+                'posts_per_page' => -1,
+                'orderby'        => 'title',
+                'order'          => 'ASC',
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'trip_year',
+                        'field'    => 'term_id',
+                        'terms'    => $year->term_id,
+                    ),
+                ),
+            ));
+
+            // 3. Output posts
+            foreach ( $posts_in_year as $post_item ) {
+                $sitemap .= '<li><a href="' . get_permalink( $post_item->ID ) . '" rel="bookmark">'
+                          . esc_html( $post_item->post_title ) . '</a></li>';
+            }
+
+            $sitemap .= '</ul></li>'; // end year group
+        }
+    }
+
+    $sitemap .= '</ul></li>'; // end CPT wrapper
+}
 
 	// Posts by Category
 	//$cats = get_categories();

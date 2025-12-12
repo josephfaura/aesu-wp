@@ -264,9 +264,9 @@ button:-moz-focusring,
 }
 .button,input[type=submit],button{
 	transition:.2s all;
-	background-color:gray;
-	color:#000;
-	padding:7px 15px;
+	background-color:#E74C3C;
+	color:#fff;
+	padding:8px;
 }
 /**
  * Correct the padding in Firefox.
@@ -598,13 +598,20 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	border: 1px solid;
-	border-color: #ccc #ccc #bbb;
-	border-radius: 3px;
-	background: #e6e6e6;
-	color: rgba(0, 0, 0, 0.8);
+	cursor: pointer !important;
+	border: 0 !important;
+	/*border-color: #ccc #ccc #bbb;*/
+	border-radius: 0 !important;
+	background: #E74C3C;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 18px;
 	line-height: 1;
-	padding: 0.6em 1em 0.4em;
+	padding: 12px;
+}
+#wpcf7-f13342-p3095-o1 input[type="submit"] {
+	background: #5e5e5e !important;
 }
 
 button:hover,
@@ -643,7 +650,7 @@ input[type="color"],
 textarea {
 	color: #666;
 	border: 1px solid #ccc;
-	border-radius: 3px;
+	border-radius: 0 !important;
 	padding: 3px;
 }
 
@@ -693,6 +700,10 @@ form .list--unstyled li {
 	float: left;
 	width: calc(33.3333% - 12px);
 	margin: 6px;
+}
+
+.wpcf7-not-valid-tip {
+	font-weight: 700 !important;
 }
 
 /*form .list--unstyled li:first-child,
@@ -1583,20 +1594,16 @@ a:active {
 	display: flex;
 	flex-wrap:wrap
 }
-.subscription_section{
-	color:#fff;
-	font-weight:bold;
-}
 .subscribe_title_area{
-	width: 600px;
-    padding: 100px 40px;
+		/*width: 600px;
+    padding: 100px 40px;*/
+    color:#fff;
     background-color: #e84c3d;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-	color:#fff;
 	width: calc(100% / 3);
 	padding: 32px 56px;
 }
@@ -1606,23 +1613,21 @@ a:active {
 	margin:0;
 }
 .subscribe_form{
-	color:#fff;
 	width: calc(100% / 3*2);
-    background-color: #efba1c;
+  background-color: #efba1c;
 	padding:40px;
 	display: flex;
 	justify-content: center;
 	text-align:center;
-	 display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 	/*max-width: 750px; */
 }
 .subscribe_form h2{
 	font-weight:500;
-	color: #5e5e5e;
 }
 .subscribe-button{
 	background-color: #e84c3d;
@@ -1633,15 +1638,12 @@ a:active {
 	padding: 10px 15px;
 }
 .subscribe_form span,.subscribe_form input{
-	width: 100%;
+	/*width: 100%;*/
     display: block;
-    font-weight: 500;
     font-size: 18px;
 }
 .subscribe_form p {
 	font-size:14px;
-	font-weight:500;
-	color:#5e5e5e;
 }
 .subscribe_form a {
 	color:#3a3a3a;
@@ -1651,6 +1653,7 @@ a:active {
 }
 .last_name_subscribe,.first_name_subscribe,.email_subscribe{
 	display: inline-block;
+	vertical-align: top;
 }
 .last_name_subscribe{
 	width: calc(50% - 10px);
@@ -1661,25 +1664,28 @@ a:active {
 	margin: 0 0 18px 5px;
 }
 .email_subscribe{
-	margin:2px;
-}
-.email_subscribe{
 	width: calc(100% - 160px);
 }
 .subscribe_form input[type="submit"]{
     display: inline-block;
+    vertical-align: top;
     font-weight: bold;
     background-color: #e84c3d;
     color: #fff;
+    text-transform: uppercase;
     border: none;
+    border-radius: 0;
 		position: relative;
-    top: 1px;
-		padding-bottom:7px;
 		width: 130px;
+		height:40px;
 		font-size:18px;
 }
 .subscribe_form > * {
     max-width: 1020px;
+}
+.subscribe_form .wpcf7-response-output{
+	background-color: #ffdd00;
+	font-weight: 700;
 }
 @media screen and (max-width:1200px){
 	.subscribe_form{
@@ -2674,6 +2680,24 @@ header .container{
 	}
 }
 
+
+/****Page Template Adjustments****/
+
+.carousel__button.is-close {
+	right: -136px !important;
+}
+.fancybox__container {
+	z-index: 99999 !important;
+}
+
+.wp-lightbox-overlay .close-button {
+	justify-content: end !important;
+	fill : #fff !important;
+}
+.wp-lightbox-overlay .scrim {
+	background: rgba(0, 0, 0, 0.8) !important;
+}
+
 	/*.page-template-default article{
 		width:calc(100%);
 		display: inline-block;
@@ -2838,8 +2862,6 @@ aside ul{
 	font-weight:bold;
 	font-size:18px;
 	display:inline-block;
-	margin-top: 10px;
-	margin-right:18px;
 	padding:8px 15px;
 	color:#fff;
 	box-shadow: 0px 3px 10px rgba(0, 0, 0, .25);
@@ -2900,26 +2922,37 @@ aside ul{
 .trip_main_content{
 	padding:56px;
 	background: #f2f2f2;
+	container-type: inline-size;
 }
 .trip_cta_list{
-	padding:0;
+		display: flex;
+		flex-wrap: wrap;
+	  margin: 1.25rem 0 0 0;
+	  gap:1rem;
+		padding:0;
+		align-items: center;
 }
 .trip_cta_list > li{
 	display:inline-block;
+	align-items: center;
 }
-@media screen and (max-width:650px){
-	.trip_cta_list > li{
-		display:block;
-		padding: 10px 0;
-	}
-	.trip_cta_list a {
-		display:block;
-		width:100%;
-		text-align: center;
-		margin: 0;
-		padding:14px;
-	}
+.trip_cta_list > *:last-child {
+	margin-left:auto;
+	flex-shrink: 0;
 }
+.share_section{
+		font-size:20px;
+		position:relative;
+	}
+	.share_options{
+	display:none;    
+  position: absolute;
+ 	right: -5px;
+  bottom: -55px;
+	}
+	.share_section:hover .share_options{
+		display:block;
+	}
 .deals_cta a{
 	background-color:#E74C3C;
 }
@@ -2929,23 +2962,43 @@ background-color:#5E5E5E;
 .travel_tools a{
 background-color:#2C768E
 }
+.deals_cta a:hover{
+	background-color:#d13b2d;
+}
+.more_trips a:hover{
+background-color:#3a3a3a;
+}
+.travel_tools a:hover{
+background-color:#2980B9
+}
+
+.deals_cta .more_trips .travel_tools > a:active {
+	transform:translateY(5px);
+ }
+
 .trip_dates{
 	font-size:20px;
 	font-weight:bold
 }
-.primary-teal{
+.trip_main_content_text h3 {
+	color:#2C768E;
+	margin:16px 0;
+}
+/*.primary-teal{
 	color:#2C768E;
 }
 h3.primary-teal{
 	font-size:32px;
 	margin:16px 0;
 }
-/*.p-small{
+.p-small{
 	font-size:14px;
 	color:#5E5E5E;
 }*/
 .additional_links{
-	
+		display: flex;
+	  margin: 1rem 0;
+	  gap:.25rem 0;
 }
 .additional_link_items,.trip_cta_list{
 	margin-left:0!important;
@@ -2954,17 +3007,53 @@ h3.primary-teal{
 	list-style: none;
 	margin:0;
 	padding:0;
+	font-weight:700;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0;
 }
-.additional_link_items{
-	font-weight:bold;
-	font-size:18px;
-	margin-bottom:24px;
+.additional_link_items li:not(:last-child) {
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-right: 1px solid #5e5e5e;
 }
 .additional_link_items .print_brochure{
 	color:#E74C3C;
 }
 .additional_link_items .webinar_link{
 	color:#2C768E;
+}
+@container (max-width:425px){
+	.experiences > .experiences-grid:not(:last-child){
+		border-right:0 !important;
+	}
+	.additional_link_items li:not(:last-child){
+		border-right:0 !important;
+	}
+	.trip_cta_list{
+		display: block;
+	}
+	.trip_cta_list > li{
+		display:block;
+		padding: 10px 0;
+	}
+	.trip_cta_list a {
+		display:block;
+		width:100%;
+		text-align: center;
+		margin: 0;
+		padding:10px;
+	}
+	.trip_cta_list > *:last-child {
+		flex-basis: 100%; /* forces a new row */
+  	display: flex;
+  	justify-content: flex-end; /* aligns content right */
+	}
+	.share_options{
+		right:30px;
+		bottom:-15px;
+	}
 }
 
 /*TOURS*/
@@ -2993,17 +3082,26 @@ h3.primary-teal{
 }
 .whats_included_content_wrap{
 	display:flex;
+	gap:32px;
 }
 .whats_included_content_wrap > div{
 	display:flex;
 	flex-direction: column;
-	width:100%;
+	width:50%;
 }
 .whats_included_image{
-	background-size:contain;
-	background-repeat:no-repeat;
-	/*background-color:#F2F2F2;*/
-	padding-left:56px;
+	background:#f2f2f2;
+	padding:32px;
+	position: sticky;
+	top:20vh;
+	align-self: flex-start;
+	align-items:center;
+	height:auto;
+	border-radius: 8px;
+	margin-top:50px;
+}
+.whats_included_image img {
+	max-height: 70vh;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
@@ -3152,6 +3250,7 @@ body .subscription_section{
 	margin-top:16px;
 }
 .trip_option_item_content a {
+	display: block;
 	margin-top:18px;
 	font-weight:700;
 }
@@ -3190,25 +3289,25 @@ body .subscription_section{
 	}
 	
 .trip_main_content_wrap > div{
-	width:100%;
-}
+		width:100%;
+	}
 .trip_main_content{
-	max-width:100%!important;
-	padding:32px!important;
-}
+		max-width:100%!important;
+		padding:32px 32px 56px 32px !important;
+	}
+	.trip_header_cta{
+		display:none;
+	}
 }
 @media screen and (max-width:900px){
 	.whats_included_content_wrap{
 		flex-direction: column;
 	}
-	.whats_included_image{
-		padding-left:0;
-		height:60vh;
+	.whats_included_content_wrap > div{
+		width:100%;
 	}
-}
-@media screen and (max-width:976px){
-		.trip_header_cta{
-		display:none;
+	.whats_included_image {
+		margin-top:0;
 	}
 }
 @media screen and (max-width:676px){
@@ -3227,6 +3326,9 @@ body .subscription_section{
 	.trip_header_logo{
 		width:100px;
 		height:100px;
+	}
+	.trip_main_content{
+		padding:32px !important;
 	}
 	/*.single-trips .trip_header {
         margin-top: 63px;
@@ -3282,6 +3384,48 @@ section .slick-prev:before,section .slick-next:before {
     -moz-osx-font-smoothing: grayscale;
     font-size: 34px;
 }
+
+
+/* ____________SITE MAP STYLES______________ */
+
+
+.sitemap-wrapper {
+	display: flex;
+}
+.sitemap-list {
+	display: flex;
+	list-style: none;
+	padding: 0;
+	gap: 2rem;
+	margin: 0 auto;
+}
+.sitemap-list h3 {
+	color:#5a5a5a;
+	margin:1em 0 .5em 0;
+}
+.pages-list, .custom-post-types-list, .trip-year-sublist, .posts-list {
+	list-style: none;
+	padding: 0;
+	margin-left:.25rem;
+	max-width: 425px;
+}
+.custom-post-types-list h4 {
+	font-size:1.3em;
+	margin:1em 0 .5em 0;
+}
+.pages-list li, .custom-post-types-list li , .posts-list li {
+	margin-bottom:1rem;
+	padding-top:.25rem;
+	border-top: 1px solid #888;
+}
+@media screen and (max-width:1024px){
+	.sitemap-list {
+		flex-wrap: wrap;
+	}
+}
+
+/* ____________LEGACY STYLES______________ */
+
 /* Sidebar */
 aside {
 	padding: 0 0 0 30px;
@@ -3419,10 +3563,10 @@ article, aside {
 	height: auto\9;
 	font: inherit;
 	background: #fff;
-	border: 1px solid #ccc;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	border: 0 !important;
+	/*-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;*/
+	border-radius: 0 !important;
 }
 .page-template-default .header,.page-template-page-full-width .header,.page-template-page-sidebar-left .header{
     margin: 0 0 40px;
@@ -3852,6 +3996,9 @@ label {
         float: none;
     }
 }
+
+/* ____________MISC STYLES______________ */
+
 .travel_tools_popup_content ul{
 	list-style:none;
 	margin:0;
