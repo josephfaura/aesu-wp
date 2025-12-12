@@ -139,32 +139,32 @@ if(function_exists('get_field')){
 						</div>
 					<?php } elseif ( $home_section_builder_item['contentbanner_combo']['banner_type'] == 'Play In Frame Video' ) { ?>
 
-    <?php
-        $video_file      = $home_section_builder_item['contentbanner_combo']['video_file']['url'];
-        $video_poster    = $home_section_builder_item['contentbanner_combo']['video_file_thumbnail']['url'];
-    ?>
+				    <?php
+				        $video_file      = $home_section_builder_item['contentbanner_combo']['video_file']['url'];
+				        $video_poster    = $home_section_builder_item['contentbanner_combo']['video_file_thumbnail']['url'];
+				    ?>
 
-    <div class="video_wrap">
+				    <div class="video_wrap">
 
-        <!-- PLAY BUTTON (mobile only) -->
-        <i class="fa fa-play play_banner_video"></i>
+				        <!-- PLAY BUTTON (mobile only) -->
+				        <i class="fa fa-play play_banner_video"></i>
 
-        <!-- VIDEO (desktop autoplays; mobile waits for click) -->
-        <video 
-            class="banner_video"
-            poster="<?php echo esc_url( $video_poster ); ?>"
-            preload="none"
-            playsinline
-            muted
-            loop
-        >
-            <source src="<?php echo esc_url( $video_file ); ?>" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+				        <!-- VIDEO (desktop autoplays; mobile waits for click) -->
+				        <video 
+				            class="banner_video"
+				            poster="<?php echo esc_url( $video_poster ); ?>"
+				            preload="none"
+				            playsinline
+				            muted
+				            loop
+				        >
+				            <source src="<?php echo esc_url( $video_file ); ?>" type="video/mp4">
+				            Your browser does not support the video tag.
+				        </video>
 
-    </div>
+				    </div>
 
-<?php } ?>
+				<?php } ?>
 				</div>
 			</section>
 

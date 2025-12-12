@@ -363,6 +363,8 @@ function awi_initialize_scripts() { ?>
 </script>
 
 <script>
+
+/* Autoplay Home Page Banner Video on Desktop and Click to Play in Frame on MObile*/
 (function($){
 
     const video = $('.banner_video').get(0);
