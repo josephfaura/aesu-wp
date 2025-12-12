@@ -245,18 +245,35 @@ function awi_initialize_scripts() { ?>
 		});
 	});
 	<?php } ?>
-	/* Load more images fix */
+
 	<?php } ?>
 
+	// Load more images in Landing Page Gallery
+
      (function($){
-        $(document).ready(function(){
-            $('.load_more_images').on('click',function(e){
-                e.preventDefault();
-                console.log('clicked');
-                $('.past_tour_gallery li').css('display','block');
-            });
+    $(document).ready(function(){
+
+        let itemsToShow = 6; // how many to load each click
+        let $items = $('.past_tour_gallery li');
+        let totalItems = $items.length;
+
+        $('.load_more_images').on('click', function(e){
+            e.preventDefault();
+
+            // Find how many are currently visible
+            let visibleCount = $items.filter(':visible').length;
+
+            // Show the next 6
+            $items.slice(visibleCount, visibleCount + itemsToShow).fadeIn();
+
+            // After revealing, check if we reached the end
+            if (visibleCount + itemsToShow >= totalItems) {
+                $(this).hide(); // hide "Load More Images"
+            }
         });
-    })( jQuery );
+
+    });
+})(jQuery);
 
 	/* Misc header behavior, events, etc. */
 	var lastScrollTop = 0;
@@ -362,6 +379,17 @@ function awi_initialize_scripts() { ?>
 })( jQuery );
 </script>
 
+<script>
+	//Back to Top Scroll Behavior on Template pages
+	document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("back_to_top");
+    if (btn) {
+        btn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+});
+</script>
 
 <script>
 // Banner Video Plays on Click and Play Button Disappears

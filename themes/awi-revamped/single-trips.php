@@ -592,7 +592,7 @@ if ( ! post_password_required() ) {
 </section>
 <main>
 	<div class="container">
-		<article>
+		<article class="full-width clearfix">
 		
 			<?php if (have_posts()) : while (have_posts()) : the_post();
 				/*$prev = get_previous_post_link('%link','&laquo; Previous');
@@ -765,7 +765,13 @@ if ( ! post_password_required() ) {
 <?php } ?>
 <?php } ?>
 <div class="container">
-<?php the_content(); ?>
-	</div>
+		<?php the_content(); ?>
+</div>
+
+<div class="container">
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
+</div>
 
 <?php get_footer(); ?>

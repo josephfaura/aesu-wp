@@ -180,6 +180,9 @@ if(function_exists('get_field')){
         width:100%;
         margin-top: 0;
     }
+    .past_tour_gallery{
+        margin:56px auto;
+    }
     .past_tour_gallery h2{
         text-align:center;
     }
@@ -206,12 +209,12 @@ if(function_exists('get_field')){
         color:<?php echo $primary_color; ?>;
         font-weight:bold;
         text-align:center;
-        padding:36px 0;
+        padding:32px 0 0 0;
     }
     .payment_options{
         list-style:none;
         display:flex;
-        margin:0 0 32px 0;
+        margin:0 0 28px 0;
         padding:0;
         gap:32px;
     }
@@ -636,15 +639,20 @@ $trips_query = new WP_Query( $args );
 <section class="past_tour_gallery" id="image_gallery">
     <h2>Photo Gallery</h2>
     <div class="container">
-        <ul>
-            <?php
-            $loop_index = 0;
-            foreach($past_tour_items as $past_tour_item){ ?>
-                <li style="background-image:url('<?php echo $past_tour_item['url'] ?>');<?php if($loop_index > 5){echo "display:none;";} ?>"><a data-fancybox="gallery1" href="<?php echo $past_tour_item['url'] ?>"></a></li>
-            <?php $loop_index++;} ?>
-        </ul>
-        <a href="#" class="load_more_images">Load More Images <i class="fa fa-arrow-right"></i></a>
-    </div>
+    <ul class="past_tour_gallery">
+        <?php
+        $loop_index = 0;
+        foreach ($past_tour_items as $past_tour_item){ ?>
+            <li style="background-image:url('<?php echo $past_tour_item['url'] ?>');<?php if($loop_index > 5){echo "display:none;";} ?>">
+                <a data-fancybox="gallery1" href="<?php echo $past_tour_item['url'] ?>"></a>
+            </li>
+        <?php $loop_index++; } ?>
+    </ul>
+
+    <a href="#" class="load_more_images">
+        Load More Images <i class="fa fa-arrow-right"></i>
+    </a>
+</div>
 </section>
 <?php } ?>
 <section class="payment_options">
@@ -698,5 +706,11 @@ if ( post_password_required() ) {
         </article>
     </div>
 </main>
+
+<div class="container">
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
+</div>
 
 <?php get_footer(); ?>
