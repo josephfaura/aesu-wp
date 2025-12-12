@@ -598,6 +598,7 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
+	cursor: pointer !important;
 	border: 0 !important;
 	/*border-color: #ccc #ccc #bbb;*/
 	border-radius: 0 !important;
