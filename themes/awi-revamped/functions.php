@@ -362,15 +362,36 @@ function awi_initialize_scripts() { ?>
 })( jQuery );
 </script>
 
-
 <script>
-// Banner Video Plays on Click and Play Button Disappears
 (function($){
-	$('.play_banner_video').on('click',function(){
-		$(this).parents('.video_wrap').find('video').first().get(0).play();
-		$(this).css('display','none');
-	});
-})( jQuery );
+
+    const video = $('.banner_video').get(0);
+    const playBtn = $('.play_banner_video');
+
+    // Lazy-load when visible
+    const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                video.load();
+
+                // Desktop autoplay
+                if(window.innerWidth >= 768){
+                    video.play();
+                }
+
+                observer.disconnect();
+            }
+        });
+    });
+    observer.observe(video);
+
+    // MOBILE: click to play
+    playBtn.on('click', function(){
+        video.play();
+        $(this).fadeOut();
+    });
+
+})(jQuery);
 </script>
 
 <?php
