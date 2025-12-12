@@ -2,7 +2,7 @@
 /**
  * @package WordPress
  * @subpackage Default_Theme
- * Template Name: Default Template Left Sidebar
+ * Template Name: Default Left Sidebar
  */
 
 get_header(); ?>
