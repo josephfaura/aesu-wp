@@ -627,7 +627,21 @@ $trips_query = new WP_Query( $args );
             </ul>
         </div>
         <div class="testimonials_video_wrap">
-            <div class="testimonials_video_item" style="background-image:url('<?php echo $testimonial_thumbnail['url']; ?>');"><a data-fancybox href="<?php echo $testimonial_youtube_link ?>" style="color:#fff" class="play_video_testimonials"><i class="fa fa-play"></i></a></div>
+            <div
+                class="testimonials_video_item"
+                style="background-image:url('<?php echo esc_url( $testimonial_thumbnail['url'] ); ?>');"
+            >
+                <a
+                    data-fancybox
+                    data-type="html5video"
+                    data-width="1080"
+                    data-height="1920"
+                    href="<?php echo esc_url( $testimonial_youtube_link ); ?>"
+                    class="play_video_testimonials"
+                >
+                    <i class="fa fa-circle-play"></i>
+                </a>
+            </div>
         </div>
     </div>
     <div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what our past travelers are saying <i class="fa fa-arrow-right"></i></a></div>
