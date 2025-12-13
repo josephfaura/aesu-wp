@@ -1162,9 +1162,9 @@ a:active {
 	overflow: hidden;
 }
 .video_wrap i{
-	font-size:78px;
+	font-size:5rem;
 	position:absolute;
-	color:#fff;
+	color: rgba(255, 255, 255, .7);
 	cursor:pointer;
 	z-index: 9;
 }
@@ -1337,15 +1337,16 @@ a:active {
 	width:100%;
 	height:100%;
 	font-size:51px;
-	color:#fff;
+	color:rgba(255, 255, 255, .7) !important;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 .play_video_testimonials:hover{
-	color:#d4d4d4;
+	color:rgba(255, 255, 255, .5) !important;
 }
 .play_video_testimonials i{
+	font-size: 5rem;
 	width:100px;
 	height:100px;
 	display: flex;
@@ -1354,6 +1355,45 @@ a:active {
 	/*border:2px solid #fff;
 	border-radius:50%;*/
 }
+
+/* Remove Fancybox's calculated size for html5 videos */
+.fancybox__slide.has-html5video .fancybox__content {
+    max-width: none !important;
+    max-height: none !important;
+    width: auto !important;
+    height: 100vh !important;
+    padding: 0;
+}
+
+/* Force vertical video to fill height correctly */
+.fancybox__slide.has-html5video video.fancybox__html5video {
+    height: 100vh;
+    width: auto;
+    max-width: none;
+    object-fit: cover;
+    background: black;
+}
+.fancybox__slide.has-html5video .is-selected {
+    padding: 0 !important;
+}
+@media (min-width: 1024px) {
+    .fancybox__slide.has-html5video {
+        padding: 0 !important;
+      }
+    }
+/* Make content a positioning context */
+.fancybox__slide.has-html5video .fancybox__content {
+    position: relative;
+}
+
+/* Move close button above video */
+.fancybox__slide.has-html5video .carousel__button.is-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 20;
+}
+
 .testimonials_list_item:not(:last-child){
 	margin-bottom:32px;
 }

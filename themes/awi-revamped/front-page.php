@@ -147,7 +147,7 @@ if(function_exists('get_field')){
 				    <div class="video_wrap">
 
 				        <!-- PLAY BUTTON (mobile only) -->
-				        <i class="fa fa-play play_banner_video"></i>
+				        <i class="fa fa-circle-play play_banner_video"></i>
 
 				        <!-- VIDEO (desktop autoplays; mobile waits for click) -->
 				        <video 
@@ -189,9 +189,25 @@ if(function_exists('get_field')){
 						</ul>
 					</div>
 					<div class="testimonials_video_wrap">
-						<?php foreach($home_section_builder_item['testimonials_section']['testimonial_videos'] as $testimonial_video){ ?>
-							<div class="testimonials_video_item" style="background-image:url('<?php echo $testimonial_video['testimonial_video_background']['url']; ?>');"><a data-fancybox href="<?php echo $testimonial_video['testimonial_link'] ?>" class="play_video_testimonials"><i class="fa fa-play"></i></a></div>
-						<?php } ?>
+					    <?php foreach ($home_section_builder_item['testimonials_section']['testimonial_videos'] as $testimonial_video) { ?>
+					        
+					        <div
+					            class="testimonials_video_item"
+					            style="background-image:url('<?php echo esc_url($testimonial_video['testimonial_video_background']['url']); ?>');"
+					        >
+					            <a
+					                data-fancybox
+					                data-type="html5video"
+					                data-width="1080"
+					                data-height="1920"
+					                href="<?php echo esc_url($testimonial_video['testimonial_link']); ?>"
+					                class="play_video_testimonials"
+					            >
+					                <i class="fa fa-circle-play"></i>
+					            </a>
+					        </div>
+
+					    <?php } ?>
 					</div>
 				</div>
 				<div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what other travelers are saying <i class="fa fa-arrow-right"></i></a></div>
