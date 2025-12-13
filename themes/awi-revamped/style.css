@@ -1363,6 +1363,7 @@ a:active {
     width: auto !important;
     height: 100vh !important;
     padding: 0;
+    position: relative;
 }
 
 /* Force vertical video to fill height correctly */
@@ -1373,19 +1374,33 @@ a:active {
     object-fit: cover;
     background: black;
 }
+/* Remove Fancybox's padding on larger screens */
 .fancybox__slide.has-html5video .is-selected {
     padding: 0 !important;
 }
 @media (min-width: 1024px) {
-    .fancybox__slide.has-html5video {
-        padding: 0 !important;
-      }
-    }
-/* Make content a positioning context */
-.fancybox__slide.has-html5video .fancybox__content {
-    position: relative;
+	.fancybox__slide.has-html5video {
+		padding: 0 !important;
+	}
 }
-
+/* Fix Fancybox video size on mobile */
+@media (max-width: 1024px) {
+  /* Kill Fancybox's calculated box */
+  .fancybox__slide.has-html5video .fancybox__content {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: 100% !important;
+      height: auto !important;
+      padding: 0 !important;
+  }
+  /* Let video size itself safely on mobile */
+  .fancybox__slide.has-html5video video.fancybox__html5video {
+      width: 100% !important;
+      height: auto !important;
+      max-height: calc(100svh - 48px) !important;
+      object-fit: contain !important;
+  }
+}
 /* Move close button above video */
 .fancybox__slide.has-html5video .carousel__button.is-close {
     position: absolute;
