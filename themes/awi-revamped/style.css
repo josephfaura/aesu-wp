@@ -1378,13 +1378,13 @@ a:active {
 .fancybox__slide.has-html5video .is-selected {
     padding: 0 !important;
 }
-@media (min-width: 1024px) {
+@media (min-width: 550px) {
 	.fancybox__slide.has-html5video {
 		padding: 0 !important;
 	}
 }
 /* Fix Fancybox video size on mobile */
-@media (max-width: 1024px) {
+@media (max-width: 550px) {
   /* Kill Fancybox's calculated box */
   .fancybox__slide.has-html5video .fancybox__content {
       max-width: 100% !important;
@@ -1404,8 +1404,8 @@ a:active {
 /* Move close button above video */
 .fancybox__slide.has-html5video .carousel__button.is-close {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 16px !important;
+    right: 16px !important;
     z-index: 20;
 }
 
