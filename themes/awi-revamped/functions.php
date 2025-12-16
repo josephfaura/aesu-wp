@@ -364,7 +364,7 @@ function awi_initialize_scripts() { ?>
 
 <script>
 
-/* Autoplay Home Page Banner Video on Desktop and Click to Play in Frame on MObile*/
+/* Autoplay Home Page Banner Video on Desktop and Click to Play in Frame on Mobile*/
 (function($){
 
     const video = $('.banner_video').get(0);
@@ -501,6 +501,46 @@ add_action( 'pre_get_posts', function( $query ) {
         $query->set( 'orderby', 'meta_value' );
     }
 } );
+
+// Add Image column to Testimonial Post admin list
+add_filter('manage_edit-testimonial_columns', function ($columns) {
+    $new = array();
+
+    foreach ($columns as $key => $label) {
+        $new[$key] = $label;
+
+        // Insert thumbnail after checkbox
+        if ($key === 'cb') {
+            $new['thumbnail'] = __('Image');
+        }
+    }
+
+    return $new;
+});
+
+// Populate Image column in Testimonial admin list
+add_action('manage_testimonial_posts_custom_column', function ($column, $post_id) {
+
+    if ($column === 'thumbnail') {
+        if (has_post_thumbnail($post_id)) {
+            echo get_the_post_thumbnail($post_id, array(60, 60));
+        } else {
+            echo '—';
+        }
+    }
+
+}, 10, 2);
+
+// Make Testimonial Image column narrow
+add_action('admin_head', function () {
+    echo '<style>
+        .wp-list-table .column-thumbnail {
+            width: 70px;
+            text-align: center;
+        }
+    </style>';
+});
+
 
 // Register Custom Taxonomy for Pages
 function page_category_taxonomy() {

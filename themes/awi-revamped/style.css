@@ -1267,7 +1267,7 @@ a:active {
 }
 .testimonial_text{
 	width:calc(100% - 40%);
-	padding: 32px 56px;
+	padding: 3rem 4rem;
 	position: relative;
 	text-align:center;
 	background-color:#f2f2f2;
@@ -1284,15 +1284,15 @@ a:active {
 }
 .testimonial_quote_icon_left{
 	position: absolute;
-	top:16px;
-	left:16px;
+	top:24px;
+	left:24px;
 	font-size:32px;
 	color:#2c768e;
 }
 .testimonial_quote_icon_right{
 	position: absolute;
-	bottom:75px;
-	right:16px;
+	bottom:56px;
+	right:24px;
 	font-size:32px;
 	color:#2c768e;
 }
