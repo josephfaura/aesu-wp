@@ -8,6 +8,15 @@
 get_header(); ?>
 
 <style>
+.wp-block-vgb-video-gallery .filter {
+	border-bottom:0;
+	padding:0;
+	margin: 0 0 32px;
+}
+#vgbVideoGallery-3 .vgbVideoGallery .filter button {
+	width:auto;
+	font-weight:700;
+}
 .testimonials-grid {
     display: flex;
     flex-wrap: wrap;
