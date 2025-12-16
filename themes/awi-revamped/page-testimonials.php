@@ -13,7 +13,7 @@ get_header(); ?>
 	padding:0;
 	margin: 0 0 32px;
 }
-#vgbVideoGallery-3 .vgbVideoGallery .filter button {
+.vgbVideoGallery .filter button {
 	width:auto;
 	font-weight:700;
 }

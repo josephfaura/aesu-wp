@@ -1353,60 +1353,6 @@ a:active {
 	/*border:2px solid #fff;
 	border-radius:50%;*/
 }
-
-/* Remove Fancybox's calculated size for html5 videos */
-.fancybox__slide.has-html5video .fancybox__content {
-    max-width: none !important;
-    max-height: none !important;
-    width: auto !important;
-    height: 100vh !important;
-    padding: 0;
-    position: relative;
-}
-
-/* Force vertical video to fill height correctly */
-.fancybox__slide.has-html5video video.fancybox__html5video {
-    height: 100vh;
-    width: auto;
-    max-width: none;
-    object-fit: cover;
-    background: black;
-}
-/* Remove Fancybox's padding on larger screens */
-.fancybox__slide.has-html5video .is-selected {
-    padding: 0 !important;
-}
-@media (min-width: 550px) {
-	.fancybox__slide.has-html5video {
-		padding: 0 !important;
-	}
-}
-/* Fix Fancybox video size on mobile */
-@media (max-width: 550px) {
-  /* Kill Fancybox's calculated box */
-  .fancybox__slide.has-html5video .fancybox__content {
-      max-width: 100% !important;
-      max-height: 100% !important;
-      width: 100% !important;
-      height: auto !important;
-      padding: 0 !important;
-  }
-  /* Let video size itself safely on mobile */
-  .fancybox__slide.has-html5video video.fancybox__html5video {
-      width: 100% !important;
-      height: auto !important;
-      max-height: calc(100svh - 48px) !important;
-      object-fit: contain !important;
-  }
-}
-/* Move close button above video */
-.fancybox__slide.has-html5video .carousel__button.is-close {
-    position: absolute;
-    top: 16px !important;
-    right: 16px !important;
-    z-index: 20;
-}
-
 .testimonials_list_item:not(:last-child){
 	margin-bottom:32px;
 }
