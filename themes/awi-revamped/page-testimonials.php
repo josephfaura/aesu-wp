@@ -17,13 +17,13 @@ get_header(); ?>
 	width:auto;
 	font-weight:700;
 }
+
 .testimonials-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
 }
-
 .testimonial-item {
     display: flex;
     flex-direction: column;
