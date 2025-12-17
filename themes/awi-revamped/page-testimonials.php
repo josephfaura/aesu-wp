@@ -8,6 +8,12 @@
 get_header(); ?>
 
 <style>
+.slider-prev-next-wrapper {
+	display:none;
+}
+#g-review .swiper {
+	padding: 0 0 56px;
+}
 .wp-block-vgb-video-gallery .filter {
 	border-bottom:0;
 	padding:0;
