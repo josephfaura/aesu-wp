@@ -86,6 +86,7 @@ body {
  */
 main {
 	display: block;
+	flex: 1;
 }
 
 /**
@@ -2747,16 +2748,34 @@ header .container{
 		}
 	}
 .full-width{
-	max-width: 54em;
+	width:100%;
+	max-width: 100%;
+	/*max-width: 54em;*/
 }
 .page-template-default .full-width{
 	max-width: 100%;
 	float:none;
 
 }
+h1.page-title {
+	text-align: center;
+}
 /*.page-template-default main{
 	margin-top:30px;
 }*/
+
+.wp-block-embed.is-provider-youtube .wp-block-embed__wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.wp-block-embed.is-provider-youtube iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
 
 
 /****Blog Styling****/
@@ -2802,17 +2821,13 @@ aside ul{
 	margin: 0;
 }
 
-.single-post main .container{
+.single main .container{
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.single-post main{
-	/*padding: 32px 0;*/
-}
-
-.single-post h1{
+.single h1{
 	margin-top: 0;
 	text-align: center;
 }
@@ -2825,7 +2840,7 @@ aside ul{
 	.blog main .container{
 		flex-wrap: wrap;
 	}
-	.single-post main .container{
+	.single main .container{
 		flex-wrap: wrap;
 	}
 	article{
@@ -3155,7 +3170,8 @@ h3.primary-teal{
 .trip_highlights_image {
 	height:250px;
 }
-.single-trips li.slick-slide{
+.single-trips li.slick-slide,
+.single-tours li.slick-slide {
 	margin:0 16px 32px 16px;
 	box-shadow:0 3px 10px rgba(0,0,0,.25);
 	/*border:1px solid #dbdbdb;*/
@@ -3220,7 +3236,8 @@ i.fa-star{
 .slick-dots{
 	margin-left:0!important;;
 }
-.single-trips section{
+.single-trips section,
+.single-tours section{
 	padding-left:56px;
 	padding-right:56px;
 }
@@ -3239,7 +3256,8 @@ body .subscription_section{
 	margin:0;
 	padding:0;
 }
-.single-trips .slick-track{
+.single-trips .slick-track,
+.single-tours .slick-track {
 	display:flex;
 }
 .hotel_content_wrap{
@@ -3627,11 +3645,14 @@ article, aside {
     justify-content: center;
     align-items: center;
 }
-.no-banner { height: 82px; }
+.no-banner { 
+	margin: 0 0 32px;
+	height: 82px;
+}
 
 .banner_interior {
 	margin: 0 0 32px;
-	background: #fff;
+	background-color:rgba(0,0,0,.4);
 	height:60vh;
 }
 
@@ -3662,7 +3683,7 @@ article, aside {
 	min-height: 100%;
 	position: relative;
 	display: none;
-	background: #fff no-repeat center center;
+	background: no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -3952,6 +3973,11 @@ blockquote {
 	background: #fcf1d2;
 	padding-bottom:20px;
 	margin-top:30px;
+}
+.site {
+	min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 /*.site-footer{
 	padding-top:32px;

@@ -68,16 +68,18 @@ get_header();
 	}
 </style>
 
-<div class="banner_interior">
-	<div class="flexslider clearfix">
-		<ul class="slides">
-			
-			<li style="background-image:url(<?php echo get_the_post_thumbnail_url(); ?>);">
-				
-			</li>
-		</ul>
+<?php if ( has_post_thumbnail() ) : ?>
+	<div class="banner_interior">
+		<div class="flexslider clearfix">
+			<ul class="slides">
+				<li style="background-image:url(<?php echo esc_url( get_the_post_thumbnail_url() ); ?>);">
+				</li>
+			</ul>
+		</div>
 	</div>
-</div>
+<?php else : ?>
+	<div class="no-banner"></div>
+<?php endif; ?>
 	<main id="primary" class="site-main">
 	<div class="container">
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
