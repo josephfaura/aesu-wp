@@ -2776,7 +2776,17 @@ h1.page-title {
   width: 100% !important;
   height: 100% !important;
 }
-
+.gkit-video-frame {
+	position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.gkit-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
 
 /****Blog Styling****/
 
@@ -2827,7 +2837,7 @@ aside ul{
 	justify-content: center;
 }
 
-.single h1{
+.single:not(.single-trips) h1 {
 	margin-top: 0;
 	text-align: center;
 }
