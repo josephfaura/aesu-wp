@@ -423,6 +423,82 @@ function modify_cpt_icons( $args, $post_type ) {
     return $args;
 }
 
+/* Search Results Query helper */
+function custom_search_results_count( $query ) {
+    if ( $query->is_search() && $query->is_main_query() ) {
+        $query->set( 'posts_per_page', 9 ); // Change to your desired number
+    }
+}
+add_filter( 'pre_get_posts', 'custom_search_results_count' );
+
+/* Search Results excerpt fields helper */
+function get_search_excerpt( $post_id = null, $word_limit = 25 ) {
+
+	$post_id = $post_id ?: get_the_ID();
+
+	// Try ACF WYSIWYG / Rich Text fields first
+	if ( function_exists( 'get_field_objects' ) ) {
+
+		$fields = get_field_objects( $post_id );
+
+		if ( $fields ) {
+			foreach ( $fields as $field ) {
+
+				// Only crawl rich text fields
+				if ( in_array( $field['type'], [ 'wysiwyg', 'textarea' ], true ) && ! empty( $field['value'] ) ) {
+
+					$text = wp_strip_all_tags( $field['value'] );
+
+					if ( $text ) {
+						return wp_trim_words( $text, $word_limit, '...' );
+					}
+				}
+			}
+		}
+	}
+
+	// Fall back to post content
+	$content = wp_strip_all_tags( get_post_field( 'post_content', $post_id ) );
+
+	if ( $content ) {
+		return wp_trim_words( $content, $word_limit, '...' );
+	}
+
+	// Fall back to manual excerpt
+	$excerpt = wp_strip_all_tags( get_post_field( 'post_excerpt', $post_id ) );
+
+	if ( $excerpt ) {
+		return wp_trim_words( $excerpt, $word_limit, '...' );
+	}
+
+	// Nothing found
+	return '';
+}
+
+/* Search Results image Thumbnail helper */
+function get_first_image_url( $post_id = null ) {
+
+	$post_id = $post_id ?: get_the_ID();
+	$content = get_post_field( 'post_content', $post_id );
+
+	if ( ! $content ) {
+		return false;
+	}
+
+	// Match first <img> tag
+	preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/', $content, $matches );
+
+	return $matches[1] ?? false;
+}
+
+// Cache results
+$thumb = get_post_meta( get_the_ID(), '_first_image', true );
+
+if ( ! $thumb ) {
+	$thumb = get_first_image_url();
+	update_post_meta( get_the_ID(), '_first_image', $thumb );
+}
+
 /* ---------- Admin list table helpers ---------- */
 
 // Add custom "Template" column to Pages

@@ -116,30 +116,6 @@ get_header();
 		                </div>
 
 		        <?php endif; ?>
-		        <p class="postmetadata alt">
-		            <center><small>
-		            This entry was posted on <?php the_time('l, F jS, Y'); ?> at <?php the_time(); ?>.
-
-		            <?php if ( comments_open() && pings_open() ) : ?>
-		                You can follow any responses through <?php post_comments_feed_link('RSS 2.0'); ?>.
-		                You can <a href="#respond">leave a response</a>, or
-		                <a href="<?php trackback_url(); ?>" rel="trackback">trackback</a>.
-		            
-		            <?php elseif ( !comments_open() && pings_open() ) : ?>
-		                Responses are closed, but you can
-		                <a href="<?php trackback_url(); ?>" rel="trackback">trackback</a>.
-		            
-		            <?php elseif ( comments_open() && !pings_open() ) : ?>
-		                You can skip to the end and leave a response. Pinging is not allowed.
-		            
-		            <?php else : ?>
-		                Both comments and pings are currently closed.
-		            <?php endif; ?>
-
-		            <?php edit_post_link( 'Edit this entry', '', '.' ); ?>
-
-		            </small></center>
-		        </p>
 
 		    </div><!-- .entry -->
 

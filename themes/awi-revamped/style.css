@@ -87,6 +87,7 @@ body {
 main {
 	display: block;
 	flex: 1;
+	margin:0 0 32px 0;
 }
 
 /**
@@ -975,7 +976,8 @@ a:active {
 		font-size:42px;
 	}
 }
-/*trips for young adults*/
+
+/*Trips for Young Adults*/
 .young_adult_trips{
 	padding-bottom:56px;
 }
@@ -1018,7 +1020,6 @@ a:active {
 .young_adult_trip_content > *{
 	max-width: 400px;
 }
-
 /*.young_adult_trip_content .cta-button{
 	margin-top:auto;
 }*/
@@ -1068,8 +1069,9 @@ a:active {
 		padding:20px;
 	}
 }
-/*Trips for young adults*/
 
+/*Why Travel with Us*/
+/*
 .why_travel_title{
 	padding:10px;
 	text-align:center;
@@ -1130,6 +1132,7 @@ a:active {
 		margin:20px 0;
 	}
 }
+*/
 
 /* Who We Are*/
 .who_are_we{
@@ -1253,6 +1256,7 @@ a:active {
 		height:300px;
 	}*/
 }
+
 /* Testimonials Section*/
 .testimonials_list{
 	list-style: none;
@@ -1411,6 +1415,7 @@ a:active {
 		height:650px;
 	}
 }
+
 /* Latest From Us*/
 .latest_from_us{
 	margin-bottom:56px;
@@ -1429,15 +1434,19 @@ a:active {
 
 .lastest_posts_list{
 	list-style: none;
-	margin:0;
-	padding:0;
+	margin: 32px 0 0;
+	padding: 0;
 	display: flex;
-	gap:32px;
-	margin-top:32px;
+	flex-wrap: wrap;              /* allow wrapping */
+	gap: 32px;
 }
+
+/* 3 cards per row */
 .lastest_posts_list li{
-	box-shadow:2px 2px 10px #c7c7c7;
-	flex:1;
+	box-shadow: 2px 2px 10px #c7c7c7;
+	flex: 0 0 calc(33.333% - 22px);
+	display: flex;
+	flex-direction: column;
 }
 .lastest_post_item_thumb {
 	height:30vh;
@@ -1473,6 +1482,9 @@ a:active {
 		flex-direction: column;
 		padding:0 56px;
 	}
+	.lastest_posts_list li{
+		flex: 0 0 100%;
+	}
 }
 @media screen and (max-width:500px){
 	.lastest_posts_list{
@@ -1480,7 +1492,7 @@ a:active {
 	}
 }
 
-/* bespoke travel */
+/* Bespoke Travel */
 .bespoke_travel{
 	margin:40px 0
 }
@@ -1619,7 +1631,7 @@ a:active {
 		width: calc(100% - 41px);
 	}
 }
-/* subscription section */
+/* Subscription Section */
 .subscription_section{
 	width:100%;
 	display: flex;
@@ -2791,6 +2803,16 @@ h1.page-title {
 
 /****Blog Styling****/
 
+.posts-navigation {
+	margin:2rem auto;
+}
+.nav-links {
+	display: flex;
+	width:100%;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: 700;
+}
 .clearfix::after {
     content: "";
     display: block;

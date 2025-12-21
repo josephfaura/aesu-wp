@@ -10,44 +10,69 @@
 get_header();
 ?>
 
+<style>
+	.post-type-label{ /* what type of page or post type it is */
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: #777;
+		margin-bottom: 8px;
+		display: inline-block;
+	}
+	.lastest_post_item_thumb{
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-color: #f2f2f2; /* neutral fallback */
+	}
+</style>
+
+
+	<div class="no-banner"></div>
+
 	<main id="primary" class="site-main">
+	<div class="container">
 
 		<?php if ( have_posts() ) : ?>
 
-			<header class="page-header">
-				<h1 class="page-title">
+			<div class="header">
+				<h2 class="page-title">
 					<?php
-					/* translators: %s: search query. */
-					printf( esc_html__( 'Search Results for: %s', 'awi-revamped' ), '<span>' . get_search_query() . '</span>' );
+					printf(
+						esc_html__( 'Search Results: %s', 'awi-revamped' ),
+						'<span>' . get_search_query() . '</span>'
+					);
 					?>
-				</h1>
-			</header><!-- .page-header -->
+				</h2>
+			</div>
+
+
+			<ul class="lastest_posts_list">
+
+				<?php while ( have_posts() ) : the_post(); ?>
+					<?php get_template_part( 'template-parts/content', 'search' ); ?>
+				<?php endwhile; ?>
+
+			</ul>
 
 			<?php
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
+				the_posts_navigation(
+				    array(
+				        'prev_text'          => __( '&#8592; Previous', 'textdomain' ),
+				        'next_text'          => __( 'Next &#8594;', 'textdomain' ),
+				    )
+				);
+			?>
 
-				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', 'search' );
+		<?php else : ?>
 
-			endwhile;
+			<?php get_template_part( 'template-parts/content', 'none' ); ?>
 
-			the_posts_navigation();
+		<?php endif; ?>
 
-		else :
-
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
-
+	</div>
 	</main><!-- #main -->
 
 <?php
-get_sidebar();
 get_footer();
