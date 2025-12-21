@@ -1440,16 +1440,15 @@ a:active {
 	flex:1;
 }
 .lastest_post_item_thumb {
-	height:250px;
+	height:30vh;
 }
 .latest_post_item_text{
 	padding:32px;
 	background-color:#fff;
 	text-align: center;
-	text-align: center;
     display: flex;
     flex-direction: column;
-	height: calc(100% - 250px);
+	height: calc(100% - 30vh);
 }
 .latest_post_item_text h3{
 	margin:0 0 10px 0;
@@ -1464,8 +1463,10 @@ a:active {
 	font-weight: 700;
 }
 .latest_post_item_text a{
-	margin-top:auto;
 	font-weight: 700;
+}
+.latest_post_item_text > a:last-child{
+		margin-top:auto;
 }
 @media screen and (max-width:1000px){
 	.lastest_posts_list{
