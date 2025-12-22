@@ -95,7 +95,7 @@ if(function_exists('get_field')){
 		z-index:99999;
 	}
 	.single-tours h1 {
-		margin-top:.67em !important;
+		margin:.67em !important;
 	}
 	.accordion_item{
 		clear:both;

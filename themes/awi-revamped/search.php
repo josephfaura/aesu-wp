@@ -11,15 +11,6 @@ get_header();
 ?>
 
 <style>
-	.post-type-label{ /* what type of page or post type it is */
-		font-size: 12px;
-		font-weight: 700;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: #777;
-		margin-bottom: 8px;
-		display: inline-block;
-	}
 	.latest_post_item_thumb{
 		background-size: cover;
 		background-position: center;

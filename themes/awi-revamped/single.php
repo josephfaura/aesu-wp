@@ -15,8 +15,74 @@ get_header();
 		font-size: 24px;
 		margin: 1em auto;
 		text-align: center;
+		font-weight: 700;
+		color:#2C768E;
 	}
-	.sidebar ul{
+	.single-post .entry p:first-of-type {
+		font-size: 1.25rem;
+		line-height: 1.75em;
+		font-weight: 500;
+		text-align: justify;
+		text-align-last: center;
+	}
+	.single-post .entry h2{
+		text-align: center;
+		font-size: 2rem;
+		color:#2C768E;
+	}
+	.single-post .entry a{
+		font-weight: 700;
+	}
+	.wp-block-read-more {
+		display: none;
+	}
+	.single-post .entry figure.alignright,
+	.single-post .entry figure.alignleft {
+	    display: block;
+	    float: none !important;        /* cancel any float */
+	    margin-left: auto;
+	    margin-right: auto;
+	    text-align: center;            /* center captions or inline content */
+	}
+
+	.single-post .entry figure.alignright img,
+	.single-post .entry figure.alignleft img {
+	    width: 100% !important;        /* override inline width */
+	    height: auto !important;       /* maintain aspect ratio */
+	}
+
+	.single-post .entry figure.alignright figcaption,
+	.single-post .entry figure.alignleft figcaption {
+		display: block;
+	    text-align: center;            /* center captions */
+		font-size: 14px;
+	    margin-top: 1em;       /* optional spacing above caption */
+	    font-style: italic;      /* optional styling */
+	}
+	.navigation {
+		border-top: 2px solid #e5e5e5;
+		border-bottom: 2px solid #e5e5e5;
+		margin:2rem 0;
+		padding: 1rem 0;
+	}
+	.navigation a {
+		color:#E74C3C !important;
+	}
+	.alignleft {
+		margin-right:0;
+		margin-bottom:0;
+	}
+	.alignright {
+		margin-left:0;
+		margin-bottom:0;
+	}
+	.related-articles-title {
+		text-align: center;
+		font-size: 32px;
+		margin-bottom: 2rem;
+	}
+	
+	/*.sidebar ul{
 		padding:0;
 	}
 	.sidebar{
@@ -38,7 +104,7 @@ get_header();
 	}
 	.blog_thumbnail{
 		min-width:300px;
-	}
+	}*/
 	body main article{
 		width: 80%;
 		max-width: 768px;
@@ -54,7 +120,11 @@ get_header();
 		}
 	}
 	@media screen and (max-width:672px){
-		.wp-posts-list li{
+		.single-post .entry p:first-of-type {
+			font-size: 1rem;
+		    line-height: 1.5em;
+		}
+		/*.wp-posts-list li{
 			display:block;
 		}
 		.blog_thumbnail{
@@ -64,7 +134,7 @@ get_header();
 		}
 		#primary{
 			padding-top:0;
-		}
+		}*/
 	}
 </style>
 
@@ -84,25 +154,19 @@ get_header();
 	<div class="container">
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-		<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+		<h1><?php the_title(); ?></h1>
+			<p class="postmetadata-postdate">
+		         <small><?php the_date(); ?></small>
+		     </p>
 
-		    <h1><?php the_title(); ?></h1>
+	</div>
+
+	<div class="container">
+		<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 
 		    <div class="entry">
 
-		        <p class="postmetadata-postdate">
-		            <small><?php the_date(); ?></small>
-		        </p>
-
 		        <?php the_content(); ?>
-
-		        <?php wp_link_pages( array(
-		            'before' => '<p><strong>Pages:</strong> ',
-		            'after'  => '</p>',
-		            'next_or_number' => 'number'
-		        ) ); ?>
-
-		        <?php the_taxonomies( 'before=<div class="postmetadata-taxonomy">&after=</div>&sep=  |  &template=<strong>%s:</strong> %l' ); ?>
 
 		        <?php 
 		            // Navigation links
@@ -117,6 +181,9 @@ get_header();
 
 		        <?php endif; ?>
 
+
+			<div class="testimonials_cta"><a href="<?php the_permalink(', '); ?>">Explore more stories in this category <i class="fa fa-arrow-right"></i></a></div>
+
 		    </div><!-- .entry -->
 
 		</article>
@@ -128,7 +195,154 @@ get_header();
 		<?php endif; ?>
 	</div>
 
-	</main><!-- #main -->
+<div class="container">
+	<?php
+$categories = wp_get_post_categories( get_the_ID() );
+
+if ( ! empty( $categories ) ) :
+
+	$current_year = date_i18n('Y');
+
+	$related_args = array(
+		'post_type'      => 'post',
+		'posts_per_page' => 3,
+		'post__not_in'   => array( get_the_ID() ),
+		'category__in'   => $categories,
+		'date_query'     => array(
+            array(
+                'year' => $current_year,     // only posts from this year
+            ),
+        ),
+        'orderby'        => 'rand',           // random order
+	);
+
+	$related_query = new WP_Query( $related_args );
+
+	if ( $related_query->have_posts() ) : ?>
+		<section class="related-articles">
+
+			<h2 class="related-articles-title">Other Articles Like This</h2>
+
+			<ul class="latest_posts_list">
+				<?php while ( $related_query->have_posts() ) : $related_query->the_post(); ?>
+
+					<li <?php post_class( 'latest_posts_list_item' ); ?>>
+
+						<?php
+						$thumb = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+						if ( ! $thumb ) {
+							$thumb = get_first_image_url();
+						}
+
+						$post_type = get_post_type_object( get_post_type() );
+						?>
+
+						<a href="<?php the_permalink(); ?>">
+							<div class="latest_post_item_thumb"
+							     style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
+							</div>
+						</a>
+
+						<div class="latest_post_item_text">
+
+							<a href="<?php the_permalink(); ?>">
+								<h3><?php the_title(); ?></h3>
+							</a>
+
+							<span class="post-type-label">Posted <?php the_date(); ?></span>
+
+							<p><?php echo esc_html( get_search_excerpt( get_the_ID(), 25 ) ); ?></p>
+
+							<a href="<?php the_permalink(); ?>">
+								Read more <i class="fa fa-arrow-right"></i>
+							</a>
+
+						</div>
+
+					</li>
+
+				<?php endwhile; ?>
+			</ul>
+
+		</section>
+	<?php
+	endif;
+	wp_reset_postdata();
+endif;
+?>
+</div>
+
+<div class="container">
+
+<?php
+// Arguments for trips with ACF header-type = AESU
+$trips_args = array(
+    'post_type'      => 'trips',          // custom post type
+    'posts_per_page' => 6,                // number of trips to show
+    'post__not_in'   => array( get_the_ID() ), // exclude current post
+    'meta_query'     => array(             // filter by ACF field
+        array(
+            'key'     => 'header_type',
+            'value'   => 'AESU',
+            'compare' => '=',
+        ),
+    ),
+    'orderby'        => 'rand',
+);
+
+$trips_query = new WP_Query( $trips_args );
+
+if ( $trips_query->have_posts() ) : ?>
+    <section class="related-articles">
+
+        <h2 class="related-articles-title">Trips You Might Like</h2>
+
+        <ul class="latest_posts_list">
+            <?php while ( $trips_query->have_posts() ) : $trips_query->the_post(); 
+            	if ( function_exists('get_field') ) {
+		            $hero_image = get_field('trip_hero_image', get_the_ID());
+		            $trip_hero_image_text_url = get_field('trip_hero_image_text_url');
+		            $toc_info = get_field('toc_info', get_the_ID());
+		            $trip_name = get_field('trip_name', get_the_ID());
+		            $trip_dates = get_field('trip_dates', get_the_ID());
+		        }
+            ?>
+
+                <li <?php post_class( 'latest_posts_list_item' ); ?>>
+
+                    <a href="<?php echo esc_url( get_permalink() ); ?>">
+		                <div class="latest_post_item_thumb" style="background-image:url('<?php 
+		                    echo ($hero_image['url'] ?? '') !== '' ? esc_url($hero_image['url']) : esc_url($trip_hero_image_text_url); 
+		                ?>')">
+		                </div>
+		            </a>
+
+                    <div class="latest_post_item_text">
+
+                        <a href="<?php echo esc_url( get_permalink() ); ?>">
+		                    <h3 class="trip_title_lander"><?php echo esc_html($trip_name); ?></h3>
+		                </a>
+		                <span class="post-type-label"><?php echo esc_html($trip_dates); ?></span>
+		                <div><?php echo do_shortcode($toc_info); ?></div>
+		                <a href="<?php echo esc_url( get_permalink() ); ?>">Trip Details <i class="fa fa-arrow-right"></i></a>
+		            </div>
+		        </li>
+
+            <?php endwhile; ?>
+        </ul>
+
+        <h2 class="related-articles-title" style="margin:2em 0 .5rem 0 !important;">Ready for your next adventure?</h2>
+        <div style="text-align: center;"><a class="cta-button" style="font-size:20px;" href="<?php echo get_permalink(824) ?>">View all available trips <i class="fa fa-arrow-right"></i></a></div>
+
+    </section>
+<?php
+endif;
+wp_reset_postdata();
+?>
+
+</div>
+
+</main><!-- #main -->
 
 <?php
 get_footer();
