@@ -97,6 +97,7 @@ if(function_exists('get_field')){
 	}
 	.single-tours h1 {
 		margin-top:.67em !important;
+		text-align: center;
 	}
 	.accordion_item{
 		clear:both;

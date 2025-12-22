@@ -2747,7 +2747,8 @@ header .container{
 		}
 	}
 .full-width{
-	max-width: 54em;
+	max-width: 100%;
+	width:100%;
 }
 .page-template-default .full-width{
 	max-width: 100%;
@@ -3155,7 +3156,8 @@ h3.primary-teal{
 .trip_highlights_image {
 	height:250px;
 }
-.single-trips li.slick-slide{
+.single-trips li.slick-slide,
+.single-tours li.slick-slide{
 	margin:0 16px 32px 16px;
 	box-shadow:0 3px 10px rgba(0,0,0,.25);
 	/*border:1px solid #dbdbdb;*/
@@ -3220,7 +3222,8 @@ i.fa-star{
 .slick-dots{
 	margin-left:0!important;;
 }
-.single-trips section{
+.single-trips section,
+.single-tours section{
 	padding-left:56px;
 	padding-right:56px;
 }
@@ -3239,7 +3242,8 @@ body .subscription_section{
 	margin:0;
 	padding:0;
 }
-.single-trips .slick-track{
+.single-trips .slick-track,
+.single-tours .slick-track{
 	display:flex;
 }
 .hotel_content_wrap{
@@ -3288,7 +3292,8 @@ body .subscription_section{
 	margin-top:0;
 	margin-bottom:5px;
 }
-.single-trip .slick-list{
+.single-trip .slick-list,
+.single-tours .slick-list{
 	margin-bottom:48px;
 }
 
