@@ -2760,15 +2760,14 @@ header .container{
 			max-width:100%;
 		}
 	}
+
 .full-width{
-	width:100%;
 	max-width: 100%;
-	/*max-width: 54em;*/
+	width:100%;
 }
 .page-template-default .full-width{
 	max-width: 100%;
 	float:none;
-
 }
 h1.page-title {
 	text-align: center;
@@ -4008,12 +4007,12 @@ blockquote {
 	padding-bottom:20px;
 	margin-top:30px;
 }
-.site {
+/*.site {
 	min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+	display:flex;
+	flex-direction:column;
 }
-/*.site-footer{
+.site-footer{
 	padding-top:32px;
 }*/
 .page-id-2347 .button {
