@@ -86,6 +86,8 @@ body {
  */
 main {
 	display: block;
+	flex: 1;
+	margin:0 0 32px 0;
 }
 
 /**
@@ -974,7 +976,8 @@ a:active {
 		font-size:42px;
 	}
 }
-/*trips for young adults*/
+
+/*Trips for Young Adults*/
 .young_adult_trips{
 	padding-bottom:56px;
 }
@@ -1017,7 +1020,6 @@ a:active {
 .young_adult_trip_content > *{
 	max-width: 400px;
 }
-
 /*.young_adult_trip_content .cta-button{
 	margin-top:auto;
 }*/
@@ -1067,8 +1069,9 @@ a:active {
 		padding:20px;
 	}
 }
-/*Trips for young adults*/
 
+/*Why Travel with Us*/
+/*
 .why_travel_title{
 	padding:10px;
 	text-align:center;
@@ -1129,6 +1132,7 @@ a:active {
 		margin:20px 0;
 	}
 }
+*/
 
 /* Who We Are*/
 .who_are_we{
@@ -1252,6 +1256,7 @@ a:active {
 		height:300px;
 	}*/
 }
+
 /* Testimonials Section*/
 .testimonials_list{
 	list-style: none;
@@ -1410,6 +1415,7 @@ a:active {
 		height:650px;
 	}
 }
+
 /* Latest From Us*/
 .latest_from_us{
 	margin-bottom:56px;
@@ -1428,27 +1434,30 @@ a:active {
 
 .lastest_posts_list{
 	list-style: none;
-	margin:0;
-	padding:0;
+	margin: 32px 0 0;
+	padding: 0;
 	display: flex;
-	gap:32px;
-	margin-top:32px;
+	flex-wrap: wrap;              /* allow wrapping */
+	gap: 32px;
 }
+
+/* 3 cards per row */
 .lastest_posts_list li{
-	box-shadow:2px 2px 10px #c7c7c7;
-	flex:1;
+	box-shadow: 2px 2px 10px #c7c7c7;
+	flex: 0 0 calc(33.333% - 22px);
+	display: flex;
+	flex-direction: column;
 }
 .lastest_post_item_thumb {
-	height:250px;
+	height:30vh;
 }
 .latest_post_item_text{
 	padding:32px;
 	background-color:#fff;
 	text-align: center;
-	text-align: center;
     display: flex;
     flex-direction: column;
-	height: calc(100% - 250px);
+	height: calc(100% - 30vh);
 }
 .latest_post_item_text h3{
 	margin:0 0 10px 0;
@@ -1463,13 +1472,18 @@ a:active {
 	font-weight: 700;
 }
 .latest_post_item_text a{
-	margin-top:auto;
 	font-weight: 700;
+}
+.latest_post_item_text > a:last-child{
+		margin-top:auto;
 }
 @media screen and (max-width:1000px){
 	.lastest_posts_list{
 		flex-direction: column;
 		padding:0 56px;
+	}
+	.lastest_posts_list li{
+		flex: 0 0 100%;
 	}
 }
 @media screen and (max-width:500px){
@@ -1478,7 +1492,7 @@ a:active {
 	}
 }
 
-/* bespoke travel */
+/* Bespoke Travel */
 .bespoke_travel{
 	margin:40px 0
 }
@@ -1617,7 +1631,7 @@ a:active {
 		width: calc(100% - 41px);
 	}
 }
-/* subscription section */
+/* Subscription Section */
 .subscription_section{
 	width:100%;
 	display: flex;
@@ -2746,6 +2760,7 @@ header .container{
 			max-width:100%;
 		}
 	}
+
 .full-width{
 	max-width: 100%;
 	width:100%;
@@ -2753,15 +2768,50 @@ header .container{
 .page-template-default .full-width{
 	max-width: 100%;
 	float:none;
-
+}
+h1.page-title {
+	text-align: center;
 }
 /*.page-template-default main{
 	margin-top:30px;
 }*/
 
+.wp-block-embed.is-provider-youtube .wp-block-embed__wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.wp-block-embed.is-provider-youtube iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+.gkit-video-frame {
+	position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.gkit-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
 
 /****Blog Styling****/
 
+.posts-navigation {
+	margin:2rem auto;
+}
+.nav-links {
+	display: flex;
+	width:100%;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: 700;
+}
 .clearfix::after {
     content: "";
     display: block;
@@ -2803,17 +2853,13 @@ aside ul{
 	margin: 0;
 }
 
-.single-post main .container{
+.single main .container{
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.single-post main{
-	/*padding: 32px 0;*/
-}
-
-.single-post h1{
+.single:not(.single-trips) h1 {
 	margin-top: 0;
 	text-align: center;
 }
@@ -2826,7 +2872,7 @@ aside ul{
 	.blog main .container{
 		flex-wrap: wrap;
 	}
-	.single-post main .container{
+	.single main .container{
 		flex-wrap: wrap;
 	}
 	article{
@@ -3157,7 +3203,7 @@ h3.primary-teal{
 	height:250px;
 }
 .single-trips li.slick-slide,
-.single-tours li.slick-slide{
+.single-tours li.slick-slide {
 	margin:0 16px 32px 16px;
 	box-shadow:0 3px 10px rgba(0,0,0,.25);
 	/*border:1px solid #dbdbdb;*/
@@ -3243,7 +3289,7 @@ body .subscription_section{
 	padding:0;
 }
 .single-trips .slick-track,
-.single-tours .slick-track{
+.single-tours .slick-track {
 	display:flex;
 }
 .hotel_content_wrap{
@@ -3632,11 +3678,14 @@ article, aside {
     justify-content: center;
     align-items: center;
 }
-.no-banner { height: 82px; }
+.no-banner { 
+	margin: 0 0 32px;
+	height: 82px;
+}
 
 .banner_interior {
 	margin: 0 0 32px;
-	background: #fff;
+	background-color:rgba(0,0,0,.4);
 	height:60vh;
 }
 
@@ -3667,7 +3716,7 @@ article, aside {
 	min-height: 100%;
 	position: relative;
 	display: none;
-	background: #fff no-repeat center center;
+	background: no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -3958,7 +4007,12 @@ blockquote {
 	padding-bottom:20px;
 	margin-top:30px;
 }
-/*.site-footer{
+/*.site {
+	min-height: 100vh;
+	display:flex;
+	flex-direction:column;
+}
+.site-footer{
 	padding-top:32px;
 }*/
 .page-id-2347 .button {
