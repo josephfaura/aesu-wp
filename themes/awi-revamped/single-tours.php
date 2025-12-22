@@ -86,9 +86,8 @@ if(function_exists('get_field')){
 	header{
 		position:static;
 	}
-	.single-trips .trip_header,
-	.single-tours .trip_header {
-		margin-top:0;
+	.single-tours .trip_header{
+		padding:.12px;
 		position:sticky;
 		top:0;
 		background-color:#fff;
