@@ -423,10 +423,31 @@ function modify_cpt_icons( $args, $post_type ) {
     return $args;
 }
 
+
+/* Exclude CPT from Search Querry */
+function exclude_cpt_from_search( $query ) {
+	if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+
+		$post_types = get_post_types(
+			array(
+				'public' => true,
+				'exclude_from_search' => false,
+			),
+			'names'
+		);
+
+		// Removes CPTs you do NOT want searchable
+		unset( $post_types['tours'] );
+
+		$query->set( 'post_type', $post_types );
+	}
+}
+add_action( 'pre_get_posts', 'exclude_cpt_from_search' );
+
 /* Search Results Query helper */
 function custom_search_results_count( $query ) {
     if ( $query->is_search() && $query->is_main_query() ) {
-        $query->set( 'posts_per_page', 9 ); // Change to your desired number
+        $query->set( 'posts_per_page', 9 ); // Number of posts you want to display
     }
 }
 add_filter( 'pre_get_posts', 'custom_search_results_count' );
@@ -434,61 +455,118 @@ add_filter( 'pre_get_posts', 'custom_search_results_count' );
 /* Search Results excerpt fields helper */
 function get_search_excerpt( $post_id = null, $word_limit = 25 ) {
 
+    $post_id = $post_id ?: get_the_ID();
+
+    $clean_text = function( $text ) use ( $word_limit ) {
+        if ( ! $text ) {
+            return false;
+        }
+
+        // 1. Remove shortcodes
+        $text = strip_shortcodes( $text );
+
+        // 2. Replace block-level tags with spaces to prevent word smashing
+        $block_tags = [
+            'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'li', 'ul', 'ol', 'section', 'article', 'header', 'footer', 'blockquote'
+        ];
+
+        foreach ( $block_tags as $tag ) {
+            // Add a space before and after each block tag
+            $text = preg_replace( '#</?' . $tag . '[^>]*>#i', ' ', $text );
+        }
+
+        // 3. Replace <br> and <br /> with space
+        $text = preg_replace( '#<br\s*/?>#i', ' ', $text );
+
+        // 4. Strip any remaining HTML tags
+        $text = wp_strip_all_tags( $text );
+
+        // 5. Collapse multiple spaces
+        $text = trim( preg_replace( '/\s+/', ' ', $text ) );
+
+        // 6. Trim to word limit
+        return wp_trim_words( $text, $word_limit, '...' );
+    };
+
+    // Try ACF WYSIWYG / textarea fields first
+    if ( function_exists( 'get_field_objects' ) ) {
+
+        $fields = get_field_objects( $post_id );
+
+        if ( $fields ) {
+            foreach ( $fields as $field ) {
+
+                if ( in_array( $field['type'], [ 'wysiwyg', 'textarea' ], true ) && ! empty( $field['value'] ) ) {
+
+                    $excerpt = $clean_text( $field['value'] );
+
+                    if ( $excerpt ) {
+                        return $excerpt;
+                    }
+                }
+            }
+        }
+    }
+
+    // Fall back to post content
+    $content = get_post_field( 'post_content', $post_id );
+    $excerpt = $clean_text( $content );
+    if ( $excerpt ) {
+        return $excerpt;
+    }
+
+    // Fall back to manual excerpt
+    $excerpt = $clean_text( get_post_field( 'post_excerpt', $post_id ) );
+    if ( $excerpt ) {
+        return $excerpt;
+    }
+
+    return '';
+}
+
+//* Search Results image Thumbnail helper */
+function get_first_image_url( $post_id = null ) {
+
 	$post_id = $post_id ?: get_the_ID();
 
-	// Try ACF WYSIWYG / Rich Text fields first
-	if ( function_exists( 'get_field_objects' ) ) {
+	// 1. ACF hero image
+	if ( function_exists( 'get_field' ) ) {
 
-		$fields = get_field_objects( $post_id );
+		$hero_image = get_field( 'hero_image', $post_id );
+		if ( ! empty( $hero_image['url'] ) ) {
+			return $hero_image['url'];
+		}
 
-		if ( $fields ) {
-			foreach ( $fields as $field ) {
+		$welcome_letter_image = get_field( 'welcome_letter_image', $post_id );
+		if ( ! empty( $welcome_letter_image['url'] ) ) {
+			return $welcome_letter_image['url'];
+		}
 
-				// Only crawl rich text fields
-				if ( in_array( $field['type'], [ 'wysiwyg', 'textarea' ], true ) && ! empty( $field['value'] ) ) {
+		// Text-based URL fallback
+		$trip_hero_image_text_url = get_field( 'trip_hero_image_text_url', $post_id );
+		if ( ! empty( $trip_hero_image_text_url ) ) {
+			return $trip_hero_image_text_url;
+		}
 
-					$text = wp_strip_all_tags( $field['value'] );
+		// 2. Slider repeater (first slide image)
+		if ( have_rows( 'slider', $post_id ) ) {
+			the_row(); // first row only
+			$image = get_sub_field( 'slide_image' );
 
-					if ( $text ) {
-						return wp_trim_words( $text, $word_limit, '...' );
-					}
-				}
+			if ( ! empty( $image['url'] ) ) {
+				return $image['url'];
 			}
 		}
 	}
 
-	// Fall back to post content
-	$content = wp_strip_all_tags( get_post_field( 'post_content', $post_id ) );
-
-	if ( $content ) {
-		return wp_trim_words( $content, $word_limit, '...' );
-	}
-
-	// Fall back to manual excerpt
-	$excerpt = wp_strip_all_tags( get_post_field( 'post_excerpt', $post_id ) );
-
-	if ( $excerpt ) {
-		return wp_trim_words( $excerpt, $word_limit, '...' );
-	}
-
-	// Nothing found
-	return '';
-}
-
-/* Search Results image Thumbnail helper */
-function get_first_image_url( $post_id = null ) {
-
-	$post_id = $post_id ?: get_the_ID();
+	// 3. Fallback to content <img>
 	$content = get_post_field( 'post_content', $post_id );
-
-	if ( ! $content ) {
-		return false;
+	if ( $content && preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/', $content, $matches ) ) {
+		return $matches[1];
 	}
 
-	// Match first <img> tag
-	preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/', $content, $matches );
-
-	return $matches[1] ?? false;
+	return false;
 }
 
 // Cache results

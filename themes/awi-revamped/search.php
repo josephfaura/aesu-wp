@@ -24,7 +24,7 @@ get_header();
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		background-color: #f2f2f2; /* neutral fallback */
+		background-color:rgba(0,0,0,.4); /* neutral fallback */
 	}
 </style>
 

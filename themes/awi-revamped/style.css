@@ -1433,7 +1433,7 @@ a:active {
 
 .latest_posts_list{
 	list-style: none;
-	margin: 32px 0 0;
+	margin: 32px 0;
 	padding: 0;
 	display: flex;
 	flex-wrap: wrap;              /* allow wrapping */
@@ -1697,16 +1697,13 @@ a:active {
 	display: inline-block;
 	vertical-align: top;
 }
-.last_name_subscribe{
+.last_name_subscribe,.first_name_subscribe{
 	width: calc(50% - 10px);
-	margin: 0 5px 18px 0;
-}
-.first_name_subscribe{
-	width: calc(50% - 20px);
-	margin: 0 0 18px 5px;
+	margin: 5px;
 }
 .email_subscribe{
 	width: calc(100% - 160px);
+	margin: 5px;
 }
 .subscribe_form input[type="submit"]{
     display: inline-block;
@@ -1718,9 +1715,10 @@ a:active {
     border: none;
     border-radius: 0;
 		position: relative;
-		width: 130px;
+		width: 140px;
 		height:40px;
 		font-size:18px;
+		margin:5px;
 }
 .subscribe_form > * {
     max-width: 1020px;
@@ -1752,17 +1750,9 @@ a:active {
 		font-size:20px;
 	}
 	
-	.last_name_subscribe,.first_name_subscribe{
+	.last_name_subscribe,.first_name_subscribe,
+	.email_subscribe,.subscribe_form input[type="submit"]{
 		width: calc(100%);
-		margin: 2px;
-	}
-	.email_subscribe{
-		width: calc(100%);
-		margin:2px;
-	}
-	.subscribe_form input[type="submit"]{
-		width: calc(100%);
-		margin:2px;
 	}
 }
 /*Footer CTA*/
@@ -3351,6 +3341,7 @@ body .subscription_section{
 	
 	.trip_main_image{
 		width:50%;
+		background-color: rgba(0, 0, 0, .4);
 	}
 @media screen and (max-width:976px){
 	.trip_main_content_wrap{
@@ -4051,7 +4042,7 @@ input, textarea, select, button, .button {
 	border-radius: 4px;
 }
 label {
-    margin: 0 0 4px;
+    margin: 5px 0;
     display: block;
 }
 .page-id-2353 article .form-list li {
