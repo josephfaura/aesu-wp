@@ -87,7 +87,6 @@ body {
 main {
 	display: block;
 	flex: 1;
-	margin:0 0 32px 0;
 }
 
 /**
@@ -4007,14 +4006,22 @@ blockquote {
 	padding-bottom:20px;
 	margin-top:30px;
 }
-/*.site {
+body:not(.single-trips):not(.single-tours) .site {
 	min-height: 100vh;
 	display:flex;
 	flex-direction:column;
 }
+body.single-trips .site,
+body.single-tours .site {
+	display: block;
+	min-height: auto;
+}
 .site-footer{
 	padding-top:32px;
-}*/
+}
+.home .site-footer{
+	padding-top:0;
+}
 .page-id-2347 .button {
     padding: 0 60px;
     width: auto;
