@@ -3339,7 +3339,8 @@ body .subscription_section{
 	margin-top:0;
 	margin-bottom:5px;
 }
-.single-trip .slick-list{
+.single-trip .slick-list,
+.single-tours .slick-list{
 	margin-bottom:48px;
 }
 
