@@ -6,7 +6,7 @@
  */
 ?>
 
-<li <?php post_class( 'lastest_posts_list_item' ); ?>>
+<li <?php post_class( 'latest_posts_list_item' ); ?>>
 
 	<?php
 	$thumb = get_the_post_thumbnail_url( get_the_ID(), 'large' );
@@ -18,7 +18,7 @@
 	?>
 
 	<a href="<?php the_permalink(); ?>">
-		<div class="lastest_post_item_thumb"
+		<div class="latest_post_item_thumb"
 		     style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
 		</div>
 	</a>

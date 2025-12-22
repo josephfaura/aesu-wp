@@ -20,7 +20,7 @@ get_header();
 		margin-bottom: 8px;
 		display: inline-block;
 	}
-	.lastest_post_item_thumb{
+	.latest_post_item_thumb{
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -48,7 +48,7 @@ get_header();
 			</div>
 
 
-			<ul class="lastest_posts_list">
+			<ul class="latest_posts_list">
 
 				<?php while ( have_posts() ) : the_post(); ?>
 					<?php get_template_part( 'template-parts/content', 'search' ); ?>
