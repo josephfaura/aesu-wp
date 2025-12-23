@@ -11,12 +11,22 @@ get_header();
 ?>
 
 <style>
+	h4.article-category {
+	    font-weight: 500;
+	    text-transform: uppercase;
+	    letter-spacing: .25em;
+	    line-height: 1.25em;
+	    margin: 1rem auto;
+	    text-align: center;
+	}
 	.postmetadata-postdate, .postmetadata-taxonomy{
-		font-size: 24px;
+		font-size: 18px;
 		margin: 1em auto;
 		text-align: center;
-		font-weight: 700;
-		color:#2C768E;
+		text-transform: uppercase;
+	    letter-spacing: .05em;
+		font-weight: 600;
+		/*color:#2C768E;*/
 	}
 	.single-post .entry p:first-of-type {
 		font-size: 1.25rem;
@@ -28,7 +38,7 @@ get_header();
 	.single-post .entry h2{
 		text-align: center;
 		font-size: 2rem;
-		color:#2C768E;
+		/*color:#2C768E;*/
 	}
 	.single-post .entry a{
 		font-weight: 700;
@@ -153,12 +163,15 @@ get_header();
 	<main id="primary" class="site-main">
 	<div class="container">
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-
+			<?php
+			$categories = get_the_category();
+			$cat = ! empty( $categories ) ? $categories[0] : null;
+			?>
+			<h4 class="article-category"><?php echo esc_html( $cat->name ); ?></h4>
 		<h1><?php the_title(); ?></h1>
 			<p class="postmetadata-postdate">
-		         <small><?php the_date(); ?></small>
+		         <small>Published on <?php echo get_the_date('M j, Y'); ?></small>
 		     </p>
-
 	</div>
 
 	<div class="container">
@@ -181,8 +194,14 @@ get_header();
 
 		        <?php endif; ?>
 
-
-			<div class="testimonials_cta"><a href="<?php the_permalink(', '); ?>">Explore more stories in this category <i class="fa fa-arrow-right"></i></a></div>
+				<?php if ( $cat ) : ?>
+				    <div class="center">
+				        <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+				            Explore more stories in this category
+				            <i class="fa fa-arrow-right"></i>
+				        </a>
+				    </div>
+				<?php endif; ?>
 
 		    </div><!-- .entry -->
 
@@ -197,77 +216,96 @@ get_header();
 
 <div class="container">
 	<?php
-$categories = wp_get_post_categories( get_the_ID() );
+if ( $cat ) :
 
-if ( ! empty( $categories ) ) :
+    $current_year = date_i18n('Y');
 
-	$current_year = date_i18n('Y');
-
-	$related_args = array(
-		'post_type'      => 'post',
-		'posts_per_page' => 3,
-		'post__not_in'   => array( get_the_ID() ),
-		'category__in'   => $categories,
-		'date_query'     => array(
+    $related_args = array(
+        'post_type'      => 'post',
+        'posts_per_page' => 3,
+        'post__not_in'   => array( get_the_ID() ),
+        'category__in'   => array( $cat->term_id ),
+        'date_query'     => array(
             array(
-                'year' => $current_year,     // only posts from this year
+                'after'     => $current_year . '-01-01',
+                'inclusive' => true,
             ),
         ),
-        'orderby'        => 'rand',           // random order
-	);
+        'orderby'        => 'rand',
+    );
 
-	$related_query = new WP_Query( $related_args );
+    $related_query = new WP_Query( $related_args );
 
-	if ( $related_query->have_posts() ) : ?>
-		<section class="related-articles">
+    // If we got fewer than 3 posts, relax the date to include all older posts
+    if ( $related_query->found_posts < 3 ) {
 
-			<h2 class="related-articles-title">Other Articles Like This</h2>
+        $remaining = 3 - $related_query->found_posts;
 
-			<ul class="latest_posts_list">
-				<?php while ( $related_query->have_posts() ) : $related_query->the_post(); ?>
+        $related_args['posts_per_page'] = $remaining;
+        $related_args['date_query'] = array(); // remove year filter
+        $older_query = new WP_Query( $related_args );
 
-					<li <?php post_class( 'latest_posts_list_item' ); ?>>
+        if ( $older_query->have_posts() ) {
+            // Merge post IDs so we can display them in one loop
+            $merged_ids = array_merge(
+                wp_list_pluck( $related_query->posts, 'ID' ),
+                wp_list_pluck( $older_query->posts, 'ID' )
+            );
 
-						<?php
-						$thumb = get_the_post_thumbnail_url( get_the_ID(), 'large' );
-						if ( ! $thumb ) {
-							$thumb = get_first_image_url();
-						}
+            $final_args = array(
+                'post_type' => 'post',
+                'post__in'  => $merged_ids,
+                'orderby'   => 'post__in',
+            );
 
-						$post_type = get_post_type_object( get_post_type() );
-						?>
+            $final_query = new WP_Query( $final_args );
+        }
 
-						<a href="<?php the_permalink(); ?>">
-							<div class="latest_post_item_thumb"
-							     style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
-							</div>
-						</a>
+        wp_reset_postdata();
 
-						<div class="latest_post_item_text">
+    } else {
+        $final_query = $related_query;
+    }
 
-							<a href="<?php the_permalink(); ?>">
-								<h3><?php the_title(); ?></h3>
-							</a>
+    // Display posts if any
+    if ( $final_query->have_posts() ) : ?>
+        <section class="related-articles">
+            <h2 class="related-articles-title">
+                Other Stories Like This
+            </h2>
 
-							<span class="post-type-label">Posted <?php the_date(); ?></span>
+            <ul class="latest_posts_list">
+                <?php while ( $final_query->have_posts() ) : $final_query->the_post(); ?>
+                    <li <?php post_class( 'latest_posts_list_item' ); ?>>
+                        <?php
+                        $thumb = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+                        if ( ! $thumb ) {
+                            $thumb = get_first_image_url();
+                        }
+                        ?>
+                        <a href="<?php the_permalink(); ?>">
+                            <div class="latest_post_item_thumb"
+                                 style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
+                            </div>
+                        </a>
 
-							<p><?php echo esc_html( get_search_excerpt( get_the_ID(), 25 ) ); ?></p>
+                        <div class="latest_post_item_text">
+                            <a href="<?php the_permalink(); ?>">
+                                <h3><?php the_title(); ?></h3>
+                            </a>
+                            <span class="post-type-label">Published on <?php echo get_the_date( 'm.j.y' ); ?></span>
+                            <p><?php echo esc_html( get_search_excerpt( get_the_ID(), 25 ) ); ?></p>
+                            <a href="<?php the_permalink(); ?>">Read more <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+        </section>
+    <?php
+    endif;
 
-							<a href="<?php the_permalink(); ?>">
-								Read more <i class="fa fa-arrow-right"></i>
-							</a>
+    wp_reset_postdata();
 
-						</div>
-
-					</li>
-
-				<?php endwhile; ?>
-			</ul>
-
-		</section>
-	<?php
-	endif;
-	wp_reset_postdata();
 endif;
 ?>
 </div>
@@ -295,7 +333,7 @@ $trips_query = new WP_Query( $trips_args );
 if ( $trips_query->have_posts() ) : ?>
     <section class="related-articles">
 
-        <h2 class="related-articles-title">Trips You Might Like</h2>
+        <h2 class="related-articles-title">Trips You Will Love</h2>
 
         <ul class="latest_posts_list">
             <?php while ( $trips_query->have_posts() ) : $trips_query->the_post(); 
@@ -318,13 +356,12 @@ if ( $trips_query->have_posts() ) : ?>
 		            </a>
 
                     <div class="latest_post_item_text">
-
+                    	<span class="post-type-label"><?php echo esc_html($trip_dates); ?></span>
                         <a href="<?php echo esc_url( get_permalink() ); ?>">
 		                    <h3 class="trip_title_lander"><?php echo esc_html($trip_name); ?></h3>
 		                </a>
-		                <span class="post-type-label"><?php echo esc_html($trip_dates); ?></span>
 		                <div><?php echo do_shortcode($toc_info); ?></div>
-		                <a href="<?php echo esc_url( get_permalink() ); ?>">Trip Details <i class="fa fa-arrow-right"></i></a>
+		                <a href="<?php echo esc_url( get_permalink() ); ?>">Explore this AESU trip <i class="fa fa-arrow-right"></i></a>
 		            </div>
 		        </li>
 
@@ -332,7 +369,7 @@ if ( $trips_query->have_posts() ) : ?>
         </ul>
 
         <h2 class="related-articles-title" style="margin:2em 0 .5rem 0 !important;">Ready for your next adventure?</h2>
-        <div style="text-align: center;"><a class="cta-button" style="font-size:20px;" href="<?php echo get_permalink(824) ?>">View all available trips <i class="fa fa-arrow-right"></i></a></div>
+        <div style="text-align: center;"><a class="cta-button" style="font-size:20px;" href="<?php echo get_permalink(824) ?>">View all AESU trips <i class="fa fa-arrow-right"></i></a></div>
 
     </section>
 <?php

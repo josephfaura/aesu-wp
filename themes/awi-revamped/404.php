@@ -48,10 +48,16 @@ get_header();
 	  align-items: center;
 	}
 	.btn-primary {
-	  padding: 0.75rem 2rem;
-	  border:2px solid #2c768e;
+	  padding: 0.5em 0.8em;
+	  min-width: 2em;
+	  border:1px solid #2c768e;
+	  border-radius: 3px;
 	  text-decoration: none;
 	  font-weight: 600;
+	}
+	.btn-primary:hover {
+		background-color: #2c768e;
+		color: white;
 	}
 	.search-form {
 	  display: flex;
@@ -100,7 +106,7 @@ get_header();
 		    <div class="error-actions">
 		    	<?php get_search_form(); ?>
 
-		      	<a href="<?php echo esc_url( home_url('/') ); ?>" class="btn-primary">Return Home</a>
+		      	<a href="<?php echo esc_url( home_url('/') ); ?>" class="btn-primary">&#8592; Return Home</a>
 		    </div>
 
 		  </div>
