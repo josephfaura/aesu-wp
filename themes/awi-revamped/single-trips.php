@@ -184,9 +184,6 @@ if ( $tour ) {
         background-color: #fff;
 				box-shadow:0px -3px 10px rgba(0,0,0,.25)
     }
-	.single-trips .trip_header{
-		position:static!important;
-	}
 		.mobile_cta .red_button_cta{
 			  font-size: 18px;
         /*padding: 14px 25px;*/
@@ -198,9 +195,9 @@ if ( $tour ) {
 	.single-trips .trip_header{
 		padding:18px;
 	}
-	.trip_header{
+	/*.trip_header{
 		display:block!important;
-	}
+	}*/
 	.trip_header_info {
 		flex-wrap: nowrap;
 		gap:18px;
@@ -342,6 +339,7 @@ if ( ! post_password_required() ) {
 		<a href="<?php echo $cta_button['url'] ?>" class="red_button_cta" target="_blank"><?php echo $cta_button['title'] ?></a>
 	</div>
 </section>
+
 <section class="trip_main_content_wrap">
 	<div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"></div>
 	<div class="trip_main_content">

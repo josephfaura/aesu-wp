@@ -215,9 +215,11 @@ function awi_initialize_scripts() { ?>
 	});
 })( jQuery );
 </script>
+
+
 <script>
 (function($){
-	/* AWT TOC Search/filter & misc UI code (unchanged) */
+	//AWT TOC Search/filter & misc UI code (unchanged)
 	<?php if(is_page(898)){ ?>
 	$(document).on('change','.interior_banner input',function(){
 		var textentered = $(this).val().toLowerCase();
@@ -245,9 +247,9 @@ function awi_initialize_scripts() { ?>
 		});
 	});
 	<?php } ?>
-	/* Load more images fix */
 	<?php } ?>
 
+	//Load more images behavior in Landing Page Gallery
      (function($){
         $(document).ready(function(){
             $('.load_more_images').on('click',function(e){
@@ -257,22 +259,6 @@ function awi_initialize_scripts() { ?>
             });
         });
     })( jQuery );
-
-	/* Misc header behavior, events, etc. */
-	var lastScrollTop = 0;
-	if ($(window).width() < 880) { $(".desktop_header").remove(); }
-	else { $(".mobile_header").remove(); }
-
-	<?php if(!is_singular('trips')){ ?>
-	$(window).on('scroll', function () {
-		if (window.scrollY > 457) {
-			var st = $(this).scrollTop();
-			if (st < lastScrollTop){ $('header').slideDown(); }
-			else { $('header').slideUp(); }
-			lastScrollTop = st;
-		}
-	});
-	<?php } ?>
 
 	//GA Tracking calls and form submissions
 	$(document).ready(function(){
@@ -360,6 +346,78 @@ function awi_initialize_scripts() { ?>
 		e.stopPropagation();
 	});
 })( jQuery );
+</script>
+
+<script>
+  /* New Header scroll behavior for top nav and trip headers */
+document.addEventListener("DOMContentLoaded", function() {
+
+    let lastScrollTop = 0;
+    const triggerRatio = 0.25; // 25vh trigger
+    let isTripPage = <?php echo is_singular('trips') ? 'true' : 'false'; ?>;
+
+    // Determine scroll target dynamically
+    function getScrollTarget() {
+	    if (!isTripPage) {
+	        // Non-trip pages → target the visible header class
+	        if (window.innerWidth < 880) {
+	            return document.querySelector('.mobile_header');
+	        } else {
+	            return document.querySelector('.desktop_header');
+	        }
+	    } else {
+	        // Single trip pages → only mobile/tablet <=976px
+	        if (window.innerWidth <= 976) {
+	            return document.querySelector('.trip_header');
+	        } else {
+	            return null; // Desktop trip pages → sticky, no scroll behavior
+	        }
+	    }
+	}
+
+    // Initialize element style for smooth transform
+    function initStyle(el) {
+        if (!el) return;
+        el.style.transition = "transform 0.3s ease";
+        el.style.willChange = "transform";
+        el.style.transform = "translateY(0)";
+    }
+
+    // Scroll handler
+    function onScroll() {
+        const currentScroll = window.scrollY;
+        const triggerPoint = window.innerHeight * triggerRatio;
+        const target = getScrollTarget();
+
+        if (!target || currentScroll < triggerPoint) {
+            return; // No element or not past trigger point
+        }
+
+        if (currentScroll < lastScrollTop) {
+            // Scrolling UP → show
+            target.style.transform = "translateY(0)";
+        } else {
+            // Scrolling DOWN → hide
+            target.style.transform = `translateY(-${target.offsetHeight}px)`;
+        }
+
+        lastScrollTop = currentScroll;
+    }
+
+    // Run init
+    const initialTarget = getScrollTarget();
+    initStyle(initialTarget);
+
+    // Listen to scroll and resize
+    window.addEventListener('scroll', onScroll);
+
+    // Re-init on resize (important for trip pages)
+    window.addEventListener('resize', function() {
+        const target = getScrollTarget();
+        initStyle(target);
+    });
+
+});
 </script>
 
 <script>
