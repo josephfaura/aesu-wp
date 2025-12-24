@@ -86,9 +86,8 @@ if(function_exists('get_field')){
 	header{
 		position:static;
 	}
-	.single-trips .trip_header,
-	.single-tours .trip_header {
-		margin-top:0;
+	.single-tours .trip_header{
+		padding:.12px;
 		position:sticky;
 		top:0;
 		background-color:#fff;
@@ -96,8 +95,7 @@ if(function_exists('get_field')){
 		z-index:99999;
 	}
 	.single-tours h1 {
-		margin-top:.67em !important;
-		text-align: center;
+		margin:.67em !important;
 	}
 	.accordion_item{
 		clear:both;

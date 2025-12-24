@@ -902,12 +902,13 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 
 }
 .cta-button{    
-	background-color: #e84c3d;
-    padding:12px 24px;
+	background-color: #E74C3C;
+    padding:.8rem 1.6rem;
     color: #fff;
-    font-weight: bold;
+    font-weight: 800;
 	transition:.2s all;
 	text-transform: uppercase;
+	letter-spacing: .05rem;
     margin-bottom: 28px;
 	display: inline-block;
 	font-size: 24px;
@@ -1042,10 +1043,6 @@ a:active {
 	}
 }
 @media screen and (max-width:1000px){
-	.young_adult_trips .container {
-		/*max-width:800px;*/
-		padding:0 56px;
-	}
 	.young_adult_trips_list{
 		flex-direction: column;
 	}
@@ -1053,12 +1050,12 @@ a:active {
 		margin-bottom:20px;
 	}
 }
-@media screen and (max-width:705px){
+@media screen and (max-width:720px){
 	.young_adult_trips_list{
 		flex-direction: column;
 	}
 }
-@media screen and (max-width:449px){
+@media screen and (max-width:527px){
 	.young_adult_trips .container {
 		padding: 0 24px;
 	}
@@ -1272,24 +1269,27 @@ a:active {
 }
 .testimonial_text{
 	width:calc(100% - 40%);
-	padding: 3rem 4rem;
+	padding: 3rem 5rem;
 	position: relative;
-	text-align:center;
 	background-color:#f2f2f2;
-}
-.testimonial_author{
-	font-size:14px!important;
-	margin:0;
+	flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .testimonial_text p{
-	font-size: 24px;
-	font-weight: 600;
-	margin-bottom: 18px
+	font-weight: 500;
+	font-size: 1.25rem;
 
+}
+.testimonial_author{
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	margin-top:auto;
+	max-width: 75%;
 }
 .testimonial_quote_icon_left{
 	position: absolute;
-	top:24px;
+	top:16px;
 	left:24px;
 	font-size:32px;
 	color:#2c768e;
@@ -1297,7 +1297,7 @@ a:active {
 .testimonial_quote_icon_right{
 	position: absolute;
 	bottom:56px;
-	right:24px;
+	right:32px;
 	font-size:32px;
 	color:#2c768e;
 }
@@ -1375,24 +1375,25 @@ a:active {
 		padding: 0;
 	}
 	.testimonials_wrap .container >div {
-		width:426px !important;
+		width:60% !important;
 	}
 	.testimonials_video_item {
-		height: 760px;
+		aspect-ratio: 9 / 16;
 		margin-top: 32px;
 	}
 	.testimonial_text {
 		width: calc(100% - 50%);
 	}
-	.testimonial_text p {
-		font-size: 18px;
-		font-weight: 600;
-		margin-bottom: 18px;
+	.testimonial_author {
+		max-width: 100%;
 	}
 }
-@media screen and (max-width:625px){
+@media screen and (max-width:720px){
 	.testimonials_wrap .container {
-		padding:0 24px;
+		padding:0 32px;
+	}
+	.testimonials_wrap .container >div {
+		width:80% !important;
 	}
 	.testimonials_list li{
 		flex-direction: column;
@@ -1401,18 +1402,18 @@ a:active {
 		width:100%;
 	}
 	.testimonial_image {
-		height:300px;
+		height:30vh;
 	}
 }
-@media screen and (max-width:477px){
+@media screen and (max-width:527px){
 	.testimonials_wrap .container >div {
 		width:100% !important;
 	}
+	.testimonials_wrap .container {
+		padding:0 24px;
+	}
 	.testimonials_video_wrap{
 		flex-direction: column;
-	}
-	.testimonials_video_item{
-		height:650px;
 	}
 }
 
@@ -1420,7 +1421,7 @@ a:active {
 .latest_from_us{
 	margin-bottom:56px;
 }
-.lastest_post_list_item{
+.latest_post_list_item{
 	box-shadow: 0px 3px 10px rgba(0,0,0,0.25);
 }
 .latest_post_header{
@@ -1432,9 +1433,9 @@ a:active {
 	margin-top:0;
 }
 
-.lastest_posts_list{
+.latest_posts_list{
 	list-style: none;
-	margin: 32px 0 0;
+	margin: 32px 0;
 	padding: 0;
 	display: flex;
 	flex-wrap: wrap;              /* allow wrapping */
@@ -1442,13 +1443,13 @@ a:active {
 }
 
 /* 3 cards per row */
-.lastest_posts_list li{
+.latest_posts_list li{
 	box-shadow: 2px 2px 10px #c7c7c7;
 	flex: 0 0 calc(33.333% - 22px);
 	display: flex;
 	flex-direction: column;
 }
-.lastest_post_item_thumb {
+.latest_post_item_thumb {
 	height:30vh;
 }
 .latest_post_item_text{
@@ -1477,17 +1478,28 @@ a:active {
 .latest_post_item_text > a:last-child{
 		margin-top:auto;
 }
+.post-type-label{
+		font-size: 80%;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: #777;
+		margin-bottom: 8px;
+		display: inline-block;
+}
 @media screen and (max-width:1000px){
-	.lastest_posts_list{
+	.latest_posts_list{
 		flex-direction: column;
-		padding:0 56px;
+	}
+	.latest_posts_list li{
+		flex: 0 0 100%;
 	}
 	.lastest_posts_list li{
 		flex: 0 0 100%;
 	}
 }
 @media screen and (max-width:500px){
-	.lastest_posts_list{
+	.latest_posts_list{
 		padding:0;
 	}
 }
@@ -1698,16 +1710,13 @@ a:active {
 	display: inline-block;
 	vertical-align: top;
 }
-.last_name_subscribe{
+.last_name_subscribe,.first_name_subscribe{
 	width: calc(50% - 10px);
-	margin: 0 5px 18px 0;
-}
-.first_name_subscribe{
-	width: calc(50% - 20px);
-	margin: 0 0 18px 5px;
+	margin: 5px;
 }
 .email_subscribe{
 	width: calc(100% - 160px);
+	margin: 5px;
 }
 .subscribe_form input[type="submit"]{
     display: inline-block;
@@ -1719,9 +1728,10 @@ a:active {
     border: none;
     border-radius: 0;
 		position: relative;
-		width: 130px;
+		width: 140px;
 		height:40px;
 		font-size:18px;
+		margin:5px;
 }
 .subscribe_form > * {
     max-width: 1020px;
@@ -1753,17 +1763,9 @@ a:active {
 		font-size:20px;
 	}
 	
-	.last_name_subscribe,.first_name_subscribe{
+	.last_name_subscribe,.first_name_subscribe,
+	.email_subscribe,.subscribe_form input[type="submit"]{
 		width: calc(100%);
-		margin: 2px;
-	}
-	.email_subscribe{
-		width: calc(100%);
-		margin:2px;
-	}
-	.subscribe_form input[type="submit"]{
-		width: calc(100%);
-		margin:2px;
 	}
 }
 /*Footer CTA*/
@@ -2214,6 +2216,10 @@ a:active {
 	margin-right: auto;
 	margin-bottom: 1.5em;
 }
+.center {
+	text-align: center;
+}
+
 .container {
 	margin:0 auto;
 	position: relative;
@@ -2855,13 +2861,15 @@ aside ul{
 
 .single main .container{
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
 
 .single:not(.single-trips) h1 {
-	margin-top: 0;
+	margin: 0;
 	text-align: center;
+	color:#2C768E;
 }
 
 .wp-posts-list > li:last-child{
@@ -2975,8 +2983,9 @@ aside ul{
 	background-color:#E74C3C;
 	color:#fff;
 	font-size:20px;
-	padding:10px 16px;
-	font-weight:bold;
+	letter-spacing: .05rem;
+	padding:.8rem 1.6rem;
+	font-weight:800;
 	text-transform: uppercase;
 	box-shadow: 0px 3px 10px rgba(0, 0, 0, .25);
 }
@@ -2991,14 +3000,23 @@ aside ul{
 }
 .trip_main_content_wrap{
 	display:flex;
+	flex-wrap: wrap;
+	min-height: 50vh;
 }
 .trip_main_content_wrap > div{
 	width:50%;
 }
+.trip_main_image{
+		width:50%;
+		background-color: rgba(0, 0, 0, .4);
+	}
 .trip_main_content{
 	padding:56px;
 	background: #f2f2f2;
 	container-type: inline-size;
+	  display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .trip_cta_list{
 		display: flex;
@@ -3200,7 +3218,7 @@ h3.primary-teal{
 	color:#2C768E;
 }
 .trip_highlights_image {
-	height:250px;
+	height:30vh;
 }
 .single-trips li.slick-slide,
 .single-tours li.slick-slide {
@@ -3235,10 +3253,14 @@ i.fa-star{
 	color:#f2b039;
 	font-size:12px;
 }
-.highlight_location_days{
-	display:inline;
-	font-size:14px;
-	margin-right:5px;
+.highlight_location{
+	  font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #777;
+    margin-bottom: 8px;
+    display: inline;
 }
 .highlight_stars{
 	display:inline;
@@ -3301,26 +3323,34 @@ body .subscription_section{
 	margin-bottom:5px;
 }
 .hotel_item_image {
-	height:250px;
+	height:30vh;
 }
 .hotel_content{
 	margin-top:16px;
 }
 .hotel_location{
-	font-size: 14px;
-	margin-right:5px;
-	display:inline;
+	font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #777;
+    margin-bottom: 8px;
+    display: inline;
 }
 .trip_options_wrap{
 	padding:32px;
 }
 .trip_options_item_image {
-	height:250px;
+	height:30vh;
 }
 .trip_options_price{
-	font-size: 14px;
-	margin-right:5px;
-	display:inline;
+	font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #777;
+    margin-bottom: 8px;
+    display: inline;
 }
 .hotel_stars{
 	display:inline;
@@ -3342,23 +3372,14 @@ body .subscription_section{
 .single-tours .slick-list{
 	margin-bottom:48px;
 }
-
-	/*.trip_main_content{
-		max-width:1000px;
-	}*/
-	.trip_main_content_wrap{
-		flex-wrap:wrap;
-	}
 	
-	.trip_main_image{
-		width:50%;
-	}
+
 @media screen and (max-width:976px){
 	.trip_main_content_wrap{
 		flex-direction: column;
 	}
 	.trip_main_image {
-		height:500px;
+		height:50vh;
 	}
 	/*.single-trips section{
 		padding:0;
@@ -4007,14 +4028,22 @@ blockquote {
 	padding-bottom:20px;
 	margin-top:30px;
 }
-/*.site {
+body:not(.single-trips):not(.single-tours) .site {
 	min-height: 100vh;
 	display:flex;
 	flex-direction:column;
 }
+body.single-trips .site,
+body.single-tours .site {
+	display: block;
+	min-height: auto;
+}
 .site-footer{
 	padding-top:32px;
-}*/
+}
+.home .site-footer{
+	padding-top:0;
+}
 .page-id-2347 .button {
     padding: 0 60px;
     width: auto;
@@ -4044,7 +4073,7 @@ input, textarea, select, button, .button {
 	border-radius: 4px;
 }
 label {
-    margin: 0 0 4px;
+    margin: 5px 0;
     display: block;
 }
 .page-id-2353 article .form-list li {

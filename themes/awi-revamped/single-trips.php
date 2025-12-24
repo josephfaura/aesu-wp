@@ -414,8 +414,8 @@ if ( ! post_password_required() ) {
 					<div class="trip_highlights_image" style="background-image:url('<?php echo $highlight_image['url'] ?>');"></div>
 					<div class="trip_highlights_content">
 						<h3><?php echo $highlight_title; ?></h3>
-						<div class="highlight_location_days"><?php echo $highlight_location ?></div>
-						<div class="highlight_stars">
+						<span class="highlight_location"><?php echo $highlight_location ?></span>
+						<span class="highlight_stars">
 							<?php
 								$index = 0;
 								while($index < $highlight_stars){
@@ -424,7 +424,7 @@ if ( ! post_password_required() ) {
 									<?php
 								$index++;}
 							?>
-						</div>
+						</span>
 						<div class="trip_highlight_content">
 							<?php echo $highlight_description; ?>
 						</div>
