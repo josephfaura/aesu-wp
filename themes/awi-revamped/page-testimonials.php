@@ -25,6 +25,7 @@ get_header(); ?>
 }
 
 .testimonials-grid {
+	margin:32px auto;
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;

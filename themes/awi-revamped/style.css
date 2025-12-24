@@ -87,6 +87,7 @@ body {
 main {
 	display: block;
 	flex: 1;
+	margin:0 0 32px 0;
 }
 
 /**
@@ -1491,6 +1492,9 @@ a:active {
 		flex-direction: column;
 	}
 	.latest_posts_list li{
+		flex: 0 0 100%;
+	}
+	.lastest_posts_list li{
 		flex: 0 0 100%;
 	}
 }
