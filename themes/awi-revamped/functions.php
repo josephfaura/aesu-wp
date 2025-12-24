@@ -392,13 +392,36 @@ function awi_initialize_scripts() { ?>
 </script>
 
 <script>
-// Banner Video Plays on Click and Play Button Disappears
+/* Autoplay Home Page Banner Video on Desktop and Click to Play in Frame on Mobile*/
 (function($){
-	$('.play_banner_video').on('click',function(){
-		$(this).parents('.video_wrap').find('video').first().get(0).play();
-		$(this).css('display','none');
-	});
-})( jQuery );
+
+    const video = $('.banner_video').get(0);
+    const playBtn = $('.play_banner_video');
+
+    // Lazy-load when visible
+    const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                video.load();
+
+                // Desktop autoplay
+                if(window.innerWidth >= 768){
+                    video.play();
+                }
+
+                observer.disconnect();
+            }
+        });
+    });
+    observer.observe(video);
+
+    // MOBILE: click to play
+    playBtn.on('click', function(){
+        video.play();
+        $(this).fadeOut();
+    });
+
+})(jQuery);
 </script>
 
 <?php
@@ -427,6 +450,160 @@ function modify_cpt_icons( $args, $post_type ) {
         $args['menu_icon'] = 'dashicons-airplane';
     }
     return $args;
+}
+
+
+/* Exclude CPT from Search Querry */
+function exclude_cpt_from_search( $query ) {
+	if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+
+		$post_types = get_post_types(
+			array(
+				'public' => true,
+				'exclude_from_search' => false,
+			),
+			'names'
+		);
+
+		// Removes CPTs you do NOT want searchable
+		unset( $post_types['tours'] );
+
+		$query->set( 'post_type', $post_types );
+	}
+}
+add_action( 'pre_get_posts', 'exclude_cpt_from_search' );
+
+/* Search Results Query helper */
+function custom_search_results_count( $query ) {
+    if ( $query->is_search() && $query->is_main_query() ) {
+        $query->set( 'posts_per_page', 9 ); // Number of posts you want to display
+    }
+}
+add_filter( 'pre_get_posts', 'custom_search_results_count' );
+
+/* Search Results excerpt fields helper */
+function get_search_excerpt( $post_id = null, $word_limit = 25 ) {
+
+    $post_id = $post_id ?: get_the_ID();
+
+    $clean_text = function( $text ) use ( $word_limit ) {
+        if ( ! $text ) {
+            return false;
+        }
+
+        // 1. Remove shortcodes
+        $text = strip_shortcodes( $text );
+
+        // 2. Replace block-level tags with spaces to prevent word smashing
+        $block_tags = [
+            'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'li', 'ul', 'ol', 'section', 'article', 'header', 'footer', 'blockquote'
+        ];
+
+        foreach ( $block_tags as $tag ) {
+            // Add a space before and after each block tag
+            $text = preg_replace( '#</?' . $tag . '[^>]*>#i', ' ', $text );
+        }
+
+        // 3. Replace <br> and <br /> with space
+        $text = preg_replace( '#<br\s*/?>#i', ' ', $text );
+
+        // 4. Strip any remaining HTML tags
+        $text = wp_strip_all_tags( $text );
+
+        // 5. Collapse multiple spaces
+        $text = trim( preg_replace( '/\s+/', ' ', $text ) );
+
+        // 6. Trim to word limit
+        return wp_trim_words( $text, $word_limit, '...' );
+    };
+
+    // Try ACF WYSIWYG / textarea fields first
+    if ( function_exists( 'get_field_objects' ) ) {
+
+        $fields = get_field_objects( $post_id );
+
+        if ( $fields ) {
+            foreach ( $fields as $field ) {
+
+                if ( in_array( $field['type'], [ 'wysiwyg', 'textarea' ], true ) && ! empty( $field['value'] ) ) {
+
+                    $excerpt = $clean_text( $field['value'] );
+
+                    if ( $excerpt ) {
+                        return $excerpt;
+                    }
+                }
+            }
+        }
+    }
+
+    // Fall back to post content
+    $content = get_post_field( 'post_content', $post_id );
+    $excerpt = $clean_text( $content );
+    if ( $excerpt ) {
+        return $excerpt;
+    }
+
+    // Fall back to manual excerpt
+    $excerpt = $clean_text( get_post_field( 'post_excerpt', $post_id ) );
+    if ( $excerpt ) {
+        return $excerpt;
+    }
+
+    return '';
+}
+
+//* Search Results image Thumbnail helper */
+function get_first_image_url( $post_id = null ) {
+
+	$post_id = $post_id ?: get_the_ID();
+
+	// 1. ACF hero image
+	if ( function_exists( 'get_field' ) ) {
+
+		$hero_image = get_field( 'hero_image', $post_id );
+		if ( ! empty( $hero_image['url'] ) ) {
+			return $hero_image['url'];
+		}
+
+		$welcome_letter_image = get_field( 'welcome_letter_image', $post_id );
+		if ( ! empty( $welcome_letter_image['url'] ) ) {
+			return $welcome_letter_image['url'];
+		}
+
+		// Text-based URL fallback
+		$trip_hero_image_text_url = get_field( 'trip_hero_image_text_url', $post_id );
+		if ( ! empty( $trip_hero_image_text_url ) ) {
+			return $trip_hero_image_text_url;
+		}
+
+		// 2. Slider repeater (first slide image)
+		if ( have_rows( 'slider', $post_id ) ) {
+			the_row(); // first row only
+			$image = get_sub_field( 'slide_image' );
+
+			if ( ! empty( $image['url'] ) ) {
+				return $image['url'];
+			}
+		}
+	}
+
+	// 3. Fallback to content <img>
+	$content = get_post_field( 'post_content', $post_id );
+	if ( $content && preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/', $content, $matches ) ) {
+		return $matches[1];
+	}
+
+	return false;
+}
+
+// Cache results
+$thumb = get_post_meta( get_the_ID(), '_first_image', true );
+
+if ( ! $thumb ) {
+	$thumb = get_first_image_url();
+	update_post_meta( get_the_ID(), '_first_image', $thumb );
 }
 
 /* ---------- Admin list table helpers ---------- */
@@ -506,6 +683,46 @@ add_action( 'pre_get_posts', function( $query ) {
         $query->set( 'orderby', 'meta_value' );
     }
 } );
+
+// Add Image column to Testimonial Post admin list
+add_filter('manage_edit-testimonial_columns', function ($columns) {
+    $new = array();
+
+    foreach ($columns as $key => $label) {
+        $new[$key] = $label;
+
+        // Insert thumbnail after checkbox
+        if ($key === 'cb') {
+            $new['thumbnail'] = __('Image');
+        }
+    }
+
+    return $new;
+});
+
+// Populate Image column in Testimonial admin list
+add_action('manage_testimonial_posts_custom_column', function ($column, $post_id) {
+
+    if ($column === 'thumbnail') {
+        if (has_post_thumbnail($post_id)) {
+            echo get_the_post_thumbnail($post_id, array(60, 60));
+        } else {
+            echo '—';
+        }
+    }
+
+}, 10, 2);
+
+// Make Testimonial Image column narrow
+add_action('admin_head', function () {
+    echo '<style>
+        .wp-list-table .column-thumbnail {
+            width: 70px;
+            text-align: center;
+        }
+    </style>';
+});
+
 
 // Register Custom Taxonomy for Pages
 function page_category_taxonomy() {

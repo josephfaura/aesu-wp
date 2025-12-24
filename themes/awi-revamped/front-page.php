@@ -137,14 +137,34 @@ if(function_exists('get_field')){
 					<?php }elseif($home_section_builder_item['contentbanner_combo']['banner_type'] == 'Static Image'){ ?>
 						<div class="video_wrap" style="background-image:url('<?php echo $home_section_builder_item['contentbanner_combo']['contentbanner_combo_background']['url'] ?>')">
 						</div>
-					<?php }elseif($home_section_builder_item['contentbanner_combo']['banner_type'] == 'Play In Frame Video'){ ?>
-						<div class="video_wrap" style="background-image:url('<?php //echo $home_section_builder_item['contentbanner_combo']['contentbanner_combo_background']['url'] ?>')">
-							<i class="fa fa-play play_banner_video"></i>
-						<video poster="<?php echo $home_section_builder_item['contentbanner_combo']['video_file_thumbnail']['url']  ?>">
-  <source src="<?php echo $home_section_builder_item['contentbanner_combo']['video_file']['url'] ?>" type="video/mp4">
-  Your browser does not support the video tag.
-</video></div>
-					<?php } ?>
+					<?php } elseif ( $home_section_builder_item['contentbanner_combo']['banner_type'] == 'Play In Frame Video' ) { ?>
+
+				    <?php
+				        $video_file      = $home_section_builder_item['contentbanner_combo']['video_file']['url'];
+				        $video_poster    = $home_section_builder_item['contentbanner_combo']['video_file_thumbnail']['url'];
+				    ?>
+
+				    <div class="video_wrap">
+
+				        <!-- PLAY BUTTON (mobile only) -->
+				        <i class="fa fa-circle-play play_banner_video"></i>
+
+				        <!-- VIDEO (desktop autoplays; mobile waits for click) -->
+				        <video 
+				            class="banner_video"
+				            poster="<?php echo esc_url( $video_poster ); ?>"
+				            preload="none"
+				            playsinline
+				            muted
+				            loop
+				        >
+				            <source src="<?php echo esc_url( $video_file ); ?>" type="video/mp4">
+				            Your browser does not support the video tag.
+				        </video>
+
+				    </div>
+
+				<?php } ?>
 				</div>
 			</section>
 
@@ -169,9 +189,25 @@ if(function_exists('get_field')){
 						</ul>
 					</div>
 					<div class="testimonials_video_wrap">
-						<?php foreach($home_section_builder_item['testimonials_section']['testimonial_videos'] as $testimonial_video){ ?>
-							<div class="testimonials_video_item" style="background-image:url('<?php echo $testimonial_video['testimonial_video_background']['url']; ?>');"><a data-fancybox href="<?php echo $testimonial_video['testimonial_link'] ?>" class="play_video_testimonials"><i class="fa fa-play"></i></a></div>
-						<?php } ?>
+					    <?php foreach ($home_section_builder_item['testimonials_section']['testimonial_videos'] as $testimonial_video) { ?>
+					        
+					        <div
+					            class="testimonials_video_item"
+					            style="background-image:url('<?php echo esc_url($testimonial_video['testimonial_video_background']['url']); ?>');"
+					        >
+					            <a
+					                data-fancybox
+					                data-type="html5video"
+					                data-width="1080"
+                    				data-height="1920"
+					                href="<?php echo esc_url($testimonial_video['testimonial_link']); ?>"
+					                class="play_video_testimonials"
+					            >
+					                <i class="fa fa-circle-play"></i>
+					            </a>
+					        </div>
+
+					    <?php } ?>
 					</div>
 				</div>
 				<div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what other travelers are saying <i class="fa fa-arrow-right"></i></a></div>
@@ -204,7 +240,7 @@ if(function_exists('get_field')){
 				<div class="latest_post_header">
 					<h2>Stories from Us</h2>
 				</div>
-				<ul class="lastest_posts_list">
+				<ul class="latest_posts_list">
 					<?php 
 					$args = array( 
 						'post_type'   => 'post',
@@ -216,10 +252,10 @@ if(function_exists('get_field')){
 					if ( $latest_from_us->have_posts() ) : 
 					?>
 						<?php while( $latest_from_us->have_posts() ) : $latest_from_us->the_post() ?>
-							<li class="lastest_posts_list_item">
-								<div class="lastest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div>
+							<li class="latest_posts_list_item">
+								<a href="<?php echo get_the_permalink(); ?>"><div class="latest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div></a>
 								<div class="latest_post_item_text">
-									<h3><?php echo get_the_title(); ?></h3>
+									<a href="<?php echo get_the_permalink(); ?>"><h3><?php echo get_the_title(); ?></h3></a>
 									<p><?php echo wp_trim_words( get_the_excerpt(), 25, '...' ); ?></p>
 									<a href="<?php echo get_the_permalink(); ?>">Read more <i class="fa fa-arrow-right"></i></a>
 								</div>
@@ -236,8 +272,9 @@ if(function_exists('get_field')){
 	<?php } ?>
 	</main><!-- #main -->
 
+<!--NEWSLETTER SIGNUP-->
 
-<section class="subscription_section">
+		<section class="subscription_section">
 			<div class="subscribe_title_area">
 				<h2>Just Go!</h2>
 			</div>
@@ -249,6 +286,9 @@ if(function_exists('get_field')){
 				</div>
 			</div>
 		</section>
+
+<!--CONTACT & SOCIALS-->
+
 		<section class="footer_cta">
 			<h2>Want to Get in Touch?</h2>
 			<a href="<?php echo get_permalink(11601) ?>" class="cta-button">CONTACT US</a>

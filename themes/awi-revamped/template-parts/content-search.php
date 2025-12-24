@@ -1,35 +1,44 @@
 <?php
 /**
- * Template part for displaying results in search pages
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * Template part for displaying results in search pages (card layout)
  *
  * @package AWI_Revamped
  */
-
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+<li <?php post_class( 'latest_posts_list_item' ); ?>>
 
-		<?php if ( 'post' === get_post_type() ) : ?>
-		<div class="entry-meta">
-			<?php
-			awi_revamped_posted_on();
-			awi_revamped_posted_by();
-			?>
-		</div><!-- .entry-meta -->
-		<?php endif; ?>
-	</header><!-- .entry-header -->
+	<?php
+	$thumb = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+	if ( ! $thumb ) {
+		$thumb = get_first_image_url();
+	}
 
-	<?php awi_revamped_post_thumbnail(); ?>
+	$post_type = get_post_type_object( get_post_type() );
+	?>
 
-	<div class="entry-summary">
-		<?php the_excerpt(); ?>
-	</div><!-- .entry-summary -->
+	<a href="<?php the_permalink(); ?>">
+		<div class="latest_post_item_thumb"
+		     style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
+		</div>
+	</a>
 
-	<footer class="entry-footer">
-		<?php awi_revamped_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
-</article><!-- #post-<?php the_ID(); ?> -->
+	<div class="latest_post_item_text">
+
+		<span class="post-type-label">
+			<?php echo esc_html( $post_type->labels->singular_name ); ?>
+		</span>
+
+		<a href="<?php the_permalink(); ?>">
+			<h3><?php the_title(); ?></h3>
+		</a>
+
+		<p><?php echo esc_html( get_search_excerpt( get_the_ID(), 25 ) ); ?></p>
+
+		<a href="<?php the_permalink(); ?>">
+			Read more <i class="fa fa-arrow-right"></i>
+		</a>
+
+	</div>
+
+</li>

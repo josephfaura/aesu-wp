@@ -2,7 +2,7 @@
 /**
  * @package WordPress
  * @subpackage Default_Theme
- * Template Name: AWT TOC
+ * Template Name: Alumni World Travel
  */
 
 get_header(); ?>
