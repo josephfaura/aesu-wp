@@ -80,16 +80,15 @@ if(function_exists('get_field')){
         font-weight:bold;
     }
     .trip_main_image{
-        height:350px;
         position:relative;
         width:100%;
+        height:30vh;
     }
     .trip_title_lander{
-        margin-bottom:5px;
+        margin:0 0 10px;
         text-align:center;
         font-size:24px;
         color:<?php echo $primary_color; ?>;
-        margin-top:0;
     }
     .school_custom_wrap a{
         color:<?php echo $primary_color; ?>;
@@ -99,13 +98,13 @@ if(function_exists('get_field')){
         padding:36px;
     }
     .trip_dates_lander{
-        position:absolute;
-        padding:3px 10px;
-        right:0;
-        top:20px;
-        background-color:rgba(255, 255, 255, 0.8);
-        color:#3A3A3A;
-        font-weight:bold;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #777;
+        margin-bottom: 8px;
+        display: inline-block;
     }
     .welcome_letter{
         display:flex;
@@ -198,7 +197,7 @@ if(function_exists('get_field')){
     background-size: cover;
     }
     .past_tour_gallery ul li a{
-        height:350px;
+        height:30vh;
         display:block;
     }
     .load_more_images{
@@ -222,7 +221,7 @@ if(function_exists('get_field')){
         flex:1;
     }
     .payment_thumb{
-        height:350px;
+        height:30vh;
     }
     /*.payment_options .container{
         max-width:1300px;
@@ -267,12 +266,16 @@ if(function_exists('get_field')){
         display:flex;
         justify-content:center;
         align-items:center;
-        gap:5px 32px;
+        gap:5px 42px;
         flex-wrap:wrap;
     }
     .anchor_nav ul li a{
         text-decoration:none;
         color:#d7d7d7;
+        text-transform: uppercase;
+        font-size: 80%;
+        letter-spacing: .05em;
+        font-weight: 600;
         
     }
     .anchor_nav ul li{
@@ -311,6 +314,9 @@ if(function_exists('get_field')){
 
     }
     @media screen and (max-width:954px){
+            .anchor_nav {
+                padding:12px;
+            }
             .payment_options{
             flex-direction:column;
         }
@@ -324,16 +330,6 @@ if(function_exists('get_field')){
             width: calc(100% / 2 - 22px);
             background-position: center;
             background-size: cover;
-        }
-        .testimonials_list_item{
-            flex-direction:column;
-        }
-        .testimonial_text{
-            width:100%;
-        }
-        .testimonial_image{
-            width:100%;
-            height:350px;
         }
     }
      @media screen and (max-width:527px){
@@ -351,7 +347,7 @@ if(function_exists('get_field')){
         }
     }
     @media screen and (max-width:550px){
-        .trip_list .container {
+        .trip_list .container,  .testimonials_wrap .container, .past_tour_gallery .container, .payment_options .container {
             padding: 0 24px;
         }
         .banner {
@@ -368,10 +364,7 @@ if(function_exists('get_field')){
         }
         .welcome_letter_contact{
             text-align: center;
-        }
-        .payment_options .container {
-            padding:0 24px;
-        }
+        }sdxz z  
     }
     #video_banner_schools {
         position: absolute;
@@ -403,7 +396,7 @@ if ( ! post_password_required() ) {
 </div>
 <div id="skip_banner"></div>
 <section class="anchor_nav">
-    <ul class="clearfix list-unstyled">
+    <ul class="list-unstyled">
         <?php $terms = get_terms( array(
     'taxonomy'   => 'trip_year',
     'hide_empty' => false,
@@ -548,12 +541,13 @@ $trips_query = new WP_Query( $args );
                 ?>
                 <li>
                     
-                        <a href="<?php echo esc_url( get_permalink() ); ?>"><div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"><div class="trip_dates_lander"><?php echo $trip_dates; ?></div></div></a>
+                        <a href="<?php echo esc_url( get_permalink() ); ?>"><div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"></div></a>
                         <div class="trip_text">
                         <?php //echo $start_date; ?>
+                        <div class="trip_dates_lander"><?php echo $trip_dates; ?></div>
                         <a href="<?php echo esc_url( get_permalink() ); ?>"><h3 class="trip_title_lander"><?php echo esc_html( $trip_name ); ?></h3></a>
                         <div><?php echo do_shortcode($toc_info); ?></div>
-                <a href="<?php echo esc_url( get_permalink() ); ?>">Trip Details <i class="fa fa-arrow-right"></i></a>
+                <a href="<?php echo esc_url( get_permalink() ); ?>">Explore this trip <i class="fa fa-arrow-right"></i></a>
             </div>
             </li>
                 <?php
@@ -644,7 +638,7 @@ $trips_query = new WP_Query( $args );
             </div>
         </div>
     </div>
-    <div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what our past travelers are saying <i class="fa fa-arrow-right"></i></a></div>
+    <div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what our other travelers are saying <i class="fa fa-arrow-right"></i></a></div>
 </section>
 <?php if($past_tour_items){ ?>
 <section class="past_tour_gallery" id="image_gallery">
@@ -657,7 +651,7 @@ $trips_query = new WP_Query( $args );
                 <li style="background-image:url('<?php echo $past_tour_item['url'] ?>');<?php if($loop_index > 5){echo "display:none;";} ?>"><a data-fancybox="gallery1" href="<?php echo $past_tour_item['url'] ?>"></a></li>
             <?php $loop_index++;} ?>
         </ul>
-        <a href="#" class="load_more_images">Load More Images <i class="fa fa-arrow-right"></i></a>
+        <a href="#" class="load_more_images">Load more images to view <i class="fa fa-arrow-right"></i></a>
     </div>
 </section>
 <?php } ?>
@@ -670,7 +664,7 @@ $trips_query = new WP_Query( $args );
                 <div class="payment_info_text">
                     <h2 class="payment_title"><?php echo $payment_info_item['payment_info_title'] ?></h2>
                     <?php echo do_shortcode($payment_info_item['payment_info_content']) ?>
-                    <a style="font-weight:bold;" href="<?php echo $payment_info_item['learn_more_cta_url'] ?>" class="button_cta">Learn More <i class="fa fa-arrow-right"></i></a>
+                    <a style="font-weight:bold;" href="<?php echo $payment_info_item['learn_more_cta_url'] ?>" class="button_cta">Learn more <i class="fa fa-arrow-right"></i></a>
                 </div>
             </li>
             <?php } ?>
