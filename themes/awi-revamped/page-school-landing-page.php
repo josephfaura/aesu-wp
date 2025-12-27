@@ -71,9 +71,10 @@ if(function_exists('get_field')){
     .trip_post > li{
         display:flex;
         flex-direction:column;
-        width: calc(100% / 3 - 22px);
+        width: calc(100% / 3 - 32px);
         text-align:center;
-        box-shadow:0 3px 5px rgba(0,0,0,.25)
+        border-radius: 6px;
+        box-shadow:0 3px 10px rgba(0,0,0,.25)
     }
     .trip_post > li a{
         font-size:18px;
@@ -83,6 +84,8 @@ if(function_exists('get_field')){
         position:relative;
         width:100%;
         height:30vh;
+        border-radius: 6px 6px 0 0;
+        overflow:hidden;
     }
     .trip_title_lander{
         margin:0 0 10px;
@@ -169,6 +172,7 @@ if(function_exists('get_field')){
     .contact_logo_wrap{
         background-color:<?php echo $school_logo_background; ?>;
         padding:24px;
+        border-radius: 6px;
     }
     .welcome_letter_copy h2{
         font-size:32px;
@@ -195,6 +199,7 @@ if(function_exists('get_field')){
      width: calc(100% / 3 - 22px);
      background-position: center;
     background-size: cover;
+    border-radius:6px;
     }
     .past_tour_gallery ul li a{
         height:30vh;
@@ -541,7 +546,7 @@ $trips_query = new WP_Query( $args );
                 ?>
                 <li>
                     
-                        <a href="<?php echo esc_url( get_permalink() ); ?>"><div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"></div></a>
+                        <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>"><div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"></div></a>
                         <div class="trip_text">
                         <?php //echo $start_date; ?>
                         <div class="trip_dates_lander"><?php echo $trip_dates; ?></div>

@@ -15,7 +15,7 @@ if(function_exists('get_field')){
 ?>
 <style>
 	.interior_banner {
-		height:calc(100vh - 100px);
+		height:60vh;
 		display: flex;
 		justify-content: center;
 		align-items:center;
@@ -98,7 +98,7 @@ if(function_exists('get_field')){
 	    text-transform: uppercase;
 	    padding: 0px 20px;
 	    border:0;
-	    border-radius:0;
+	    border-radius:3px;
 	}
 	.interior_banner .button:hover{
 	color:#fff!important;
@@ -109,35 +109,45 @@ if(function_exists('get_field')){
   	}
 	.packages{
 		list-style: none;
-		margin:0;
+		margin:32px 0;
 		display: flex;
 		flex-wrap:wrap;
 		justify-content: center;
+		gap:32px;
 	}
 	.packages li {
-		width:calc(100% / 3 - 20px);
-		margin:10px;
+		width:calc(100% / 3 - 32px);
 		display: flex;
 		flex-direction: column;
+		box-shadow: 0 3px 10px rgba(0,0,0,.25);
+		border-radius: 6px;
 	}
-	.packages li > a{
+	/*.packages li > a{
 		display: flex;
 		flex-direction: column;
-		color:#5e5e5e;
 		height:100%;
-		transition:.3s all;
+		transition:.25s all;
 	}
 	.packages li > a:hover{
-		text-decoration: none;
 		transform:translateY(-10px);
+	}*/
+	.packages div.thumbnail_wrap{
+		border-radius:6px 6px 0 0;
+		padding: 32px;
 	}
 	.packages div.package_thumbnail{
-		height:250px;
-		background-size: contain;
-		background-position: center;
-		background-repeat: no-repeat;
-		flex-shrink: 0;
+		height:20vh;
 		position: relative;
+		background-size:contain;
+		background-position:center;
+		background-repeat:no-repeat;
+		transition:.25s all;
+	}
+	.packages a:hover div.package_thumbnail{
+		transform: scale(.975);
+	}
+	/*.packages li > a:hover div.package_thumbnail{
+		background-color:#f5f5f5;
 	}
 	.university_link{
 		display: flex;
@@ -153,20 +163,17 @@ if(function_exists('get_field')){
 	}
 	.university_link img{
    	 	max-height: 100%;
-	}
+	}*/
 	.packages div.package_content{
-		padding:24px;
+		padding:32px;
 		text-align: center;
-		background-color:#f2f2f2;
+		/*background-color:#f2f2f2;*/
 		height:100%;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
 		transition:.3s all;
-	}
-	.packages li > a:hover div.package_content{
-		background-color:#f5f5f5;
 	}
 	article{
 		width:100%!important;
@@ -196,7 +203,8 @@ if(function_exists('get_field')){
 		color:#5e5e5e;
 	}
 	.package_content h3{
-		margin:10px 0;
+		font-size:1.5em;
+		margin-top:0;
 		color:#5e5e5e;
 	}
 	main article h2{
@@ -224,9 +232,6 @@ if(function_exists('get_field')){
 		text-decoration:none;
 	}
 	@media screen and (max-width:998px){
-		.package_content h3{
-			font-size: 24px;
-		}
 		.packages li {
 			width:calc(100% / 2 - 20px);
 		}
@@ -422,11 +427,19 @@ button, html input[type="button"], input[type="reset"], input[type="submit"], .b
 							 if(get_field('exclude_from_archive',get_the_ID()) != 'True' && get_the_ID()!= 824 && get_the_ID()!=1705){
 							 $school_logo = get_field('school_logo', get_the_ID());
 							 $school_logo_background = get_field('school_logo_background', get_the_ID());
+							 $primary_color = get_field('primary_color', get_the_ID());
 							?>
 							<li id="package_<?php echo $looping_index; ?>">
-								<div class="thumbnail_wrap" style="background-color:<?php echo $school_logo_background; ?>;padding:24px;"><div class="package_thumbnail" style="background-size:80% contain;background-position:center;background-repeat:no-repeat;background-image:url('<?php echo $school_logo['url'] ?>');background-color:<?php echo $school_logo_background; ?>"><a href="<?php echo get_the_permalink(); ?>" class="university_link"><img src="<?php echo $institution['institution_logo']['url'] ?>"></a></div></div>
+								<div class="thumbnail_wrap" style="background-color:<?php echo $school_logo_background; ?>;">
+									<a class="card_image_link" href="<?php echo get_the_permalink(); ?>">
+										<div class="package_thumbnail" style="background-image:url('<?php echo $school_logo['url'] ?>');background-color:<?php echo $school_logo_background; ?>">
+										</div>
+									</a>
+								</div>
 								<div class="package_content">
 									<a href="<?php echo get_the_permalink(); ?>"><h3><?php echo get_the_title(); ?></h3></a>
+
+									 <a style="color:<?php echo $primary_color; ?> !important;font-weight:700;" href="<?php echo get_the_permalink(); ?>">Explore our trips <i class="fa fa-arrow-right"></i></a>
 									
 									<div style="display:none;">
 										<?php echo $institution['manual_search_terms']; ?>

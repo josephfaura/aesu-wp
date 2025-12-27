@@ -26,7 +26,6 @@ get_header();
 		text-transform: uppercase;
 	    letter-spacing: .05em;
 		font-weight: 600;
-		/*color:#2C768E;*/
 	}
 	.single-post .entry p:first-of-type {
 		font-size: 1.25rem;
@@ -38,7 +37,6 @@ get_header();
 	.single-post .entry h2{
 		text-align: center;
 		font-size: 2rem;
-		/*color:#2C768E;*/
 	}
 	.single-post .entry a{
 		font-weight: 700;
@@ -283,7 +281,7 @@ if ( $cat ) :
                             $thumb = get_first_image_url();
                         }
                         ?>
-                        <a href="<?php the_permalink(); ?>">
+                        <a class="card_image_link" href="<?php the_permalink(); ?>">
                             <div class="latest_post_item_thumb"
                                  style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
                             </div>
@@ -293,7 +291,7 @@ if ( $cat ) :
                             <a href="<?php the_permalink(); ?>">
                                 <h3><?php the_title(); ?></h3>
                             </a>
-                            <span class="post-type-label">Published on <?php echo get_the_date( 'm.j.y' ); ?></span>
+                            <span class="post-type-label">Published on <?php echo get_the_date( 'm.d.y' ); ?></span>
                             <p><?php echo esc_html( get_search_excerpt( get_the_ID(), 25 ) ); ?></p>
                             <a href="<?php the_permalink(); ?>">Read more <i class="fa fa-arrow-right"></i></a>
                         </div>
@@ -348,7 +346,7 @@ if ( $trips_query->have_posts() ) : ?>
 
                 <li <?php post_class( 'latest_posts_list_item' ); ?>>
 
-                    <a href="<?php echo esc_url( get_permalink() ); ?>">
+                    <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>">
 		                <div class="latest_post_item_thumb" style="background-image:url('<?php 
 		                    echo ($hero_image['url'] ?? '') !== '' ? esc_url($hero_image['url']) : esc_url($trip_hero_image_text_url); 
 		                ?>')">

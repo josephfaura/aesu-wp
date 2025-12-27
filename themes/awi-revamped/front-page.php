@@ -222,7 +222,9 @@ if(function_exists('get_field')){
 					<ul class="travel_for_good_list">
 						<?php foreach($home_section_builder_item['travel_for_good']['travel_for_good_items'] as $travel_for_good_item){ ?>
 							<li class="travel_for_good_item">
-								<div class="travel_for_good_item_image" style="background-image:url('<?php echo $travel_for_good_item['travel_for_good_item_image']['url'] ?>')"></div>
+								<a href="<?php echo $travel_for_good_item['travel_for_good_item_link']['url'] ?>">
+									<div class="travel_for_good_item_image" style="background-image:url('<?php echo $travel_for_good_item['travel_for_good_item_image']['url'] ?>')"></div>
+								</a>
 								<h3><?php echo $travel_for_good_item['travel_for_good_item_title'] ?></h3>
 								<p><?php echo $travel_for_good_item['travel_for_good_item_text'] ?></p>
 								<?php if($travel_for_good_item['travel_for_good_item_link']['url']){ ?><a href="<?php echo $travel_for_good_item['travel_for_good_item_link']['url'] ?>"><?php echo $travel_for_good_item['travel_for_good_item_link']['title'] ?> <i class="fa fa-arrow-right"></i></a><?php } ?>
@@ -253,7 +255,7 @@ if(function_exists('get_field')){
 					?>
 						<?php while( $latest_from_us->have_posts() ) : $latest_from_us->the_post() ?>
 							<li class="latest_posts_list_item">
-								<a href="<?php echo get_the_permalink(); ?>"><div class="latest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div></a>
+								<a class="card_image_link" href="<?php echo get_the_permalink(); ?>"><div class="latest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div></a>
 								<div class="latest_post_item_text">
 									<a href="<?php echo get_the_permalink(); ?>"><h3><?php echo get_the_title(); ?></h3></a>
 									<p><?php echo wp_trim_words( get_the_excerpt(), 25, '...' ); ?></p>
