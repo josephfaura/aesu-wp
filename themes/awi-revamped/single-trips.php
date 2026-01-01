@@ -39,7 +39,7 @@ if ( $school ) {
 // TOUR FIELDS
 if ( $tour ) {
     $tour_id = is_object($tour) ? $tour->ID : (int)$tour;
-    $trip_name = get_field('trip_name', $tour_id);
+    //$trip_name = get_field('trip_name', $tour_id);
     $destinations = get_field('citiescountries', $tour_id);
     $description = get_field('description', $tour_id);
     	$tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
