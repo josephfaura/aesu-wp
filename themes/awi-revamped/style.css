@@ -1472,6 +1472,60 @@ a:not(.card_image_link):active {
 	/*border:2px solid #fff;
 	border-radius:50%;*/
 }
+
+/* Remove Fancybox's calculated size for html5 videos */
+.fancybox__slide.has-html5video .fancybox__content {
+    max-width: none !important;
+    max-height: none !important;
+    width: auto !important;
+    height: 100vh !important;
+    padding: 0;
+    position: relative;
+}
+
+/* Force vertical video to fill height correctly */
+.fancybox__slide.has-html5video video.fancybox__html5video {
+    height: 100vh;
+    width: auto;
+    max-width: none;
+    object-fit: cover;
+    background: black;
+}
+/* Remove Fancybox's padding on larger screens */
+.fancybox__slide.has-html5video .is-selected {
+    padding: 0 !important;
+}
+@media (min-width: 550px) {
+	.fancybox__slide.has-html5video {
+		padding: 0 !important;
+	}
+}
+/* Fix Fancybox video size on mobile */
+@media (max-width: 550px) {
+  /* Kill Fancybox's calculated box */
+  .fancybox__slide.has-html5video .fancybox__content {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: 100% !important;
+      height: auto !important;
+      padding: 0 !important;
+  }
+  /* Let video size itself safely on mobile */
+  .fancybox__slide.has-html5video video.fancybox__html5video {
+      width: 100% !important;
+      height: auto !important;
+      max-height: calc(100svh - 48px) !important;
+      object-fit: contain !important;
+  }
+}
+/* Move close button above video */
+.fancybox__slide.has-html5video .carousel__button.is-close {
+    position: absolute;
+    top: 16px !important;
+    right: 16px !important;
+    z-index: 20;
+}
+
 .testimonials_list_item:not(:last-child){
 	margin-bottom:32px;
 }
@@ -2012,7 +2066,7 @@ a:not(.card_image_link):active {
 	opacity:60%;
 }
 .footer_info a {
-	color: #d7d7d7;
+	color: #d7d7d7 !important;
 	font-size: 14px;
 	text-align: right;
 }
@@ -2061,7 +2115,7 @@ a:not(.card_image_link):active {
     text-align: right;
 }
 .copyright a{
-	color: #d7d7d7;
+	color: #d7d7d7 !important;
 }
 .bottom_footer_logos ul{
 	list-style: none;
@@ -2921,6 +2975,22 @@ h1.page-title {
 /*.page-template-default main{
 	margin-top:30px;
 }*/
+
+		.back-to-top-inline {
+        text-align: center;
+        margin: 56px auto; /* spacing above/below as needed */
+        cursor: pointer;
+    }
+
+    .back-to-top-inline i {
+        font-size: 32px;
+        color: #5e5e5e;
+        transition: color 0.2s ease;
+    }
+
+    .back-to-top-inline:hover i {
+        color: #3a3a3a; /* optional hover styling */
+    }
 
 .wp-block-embed.is-provider-youtube .wp-block-embed__wrapper {
   position: relative;
@@ -3944,9 +4014,9 @@ article, aside {
 	width: calc(100% - 360px);
 	float: left;
 }
-.full-width article, .page-template-page-full-width article, .page-template-page-full-width-awt article, .page-template-page-educational-travel article, .search article {
+.full-width, .full-width article, .page-template-page-full-width article, .page-template-page-full-width-awt article, .page-template-page-educational-travel article, .search article {
 	width: 100%;
-	float: none;
+	float: none !important;
 }
 
 /* Newsletter/Just Go */

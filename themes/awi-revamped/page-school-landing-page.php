@@ -182,6 +182,9 @@ if(function_exists('get_field')){
         text-align:center;
         width:100%;
     }
+    .past_tour_gallery{
+        margin:56px auto;
+    }
     .past_tour_gallery h2{
         text-align:center;
     }
@@ -214,7 +217,7 @@ if(function_exists('get_field')){
     .payment_options{
         list-style:none;
         display:flex;
-        margin:0 0 32px 0;
+        margin:0 0 28px 0;
         padding:0;
         gap:32px;
     }
@@ -714,5 +717,11 @@ if ( post_password_required() ) {
         </article>
     </div>
 </main>
+
+<div class="container">
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
+</div>
 
 <?php get_footer(); ?>

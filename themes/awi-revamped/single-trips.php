@@ -249,6 +249,7 @@ if ( ! post_password_required() ) {
 		<a href="<?php echo $cta_button['url'] ?>" class="red_button_cta" target="_blank"><?php echo $cta_button['title'] ?></a>
 	</div>
 </section>
+
 <section class="trip_main_content_wrap">
 	<div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"></div>
 	<div class="trip_main_content">
@@ -695,5 +696,11 @@ if ( ! post_password_required() ) {
 </div>
 <?php } ?>
 <?php } ?>
+
+<div class="container">
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
+</div>
 
 <?php get_footer(); ?>

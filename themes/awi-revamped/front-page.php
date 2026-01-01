@@ -209,7 +209,7 @@ if(function_exists('get_field')){
 					                data-fancybox
 					                data-type="html5video"
 					                data-width="1080"
-                    				data-height="1920"
+					                data-height="1920"
 					                href="<?php echo esc_url($testimonial_video['testimonial_link']); ?>"
 					                class="play_video_testimonials"
 					            >
