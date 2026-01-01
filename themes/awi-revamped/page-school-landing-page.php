@@ -51,16 +51,16 @@ if(function_exists('get_field')){
         border-right:2px solid white;
     }
     .trip_list{
-        margin:56px auto;
+        margin:32px auto;
     }
     .trip_list ul{
         list-style:none;
-        margin:0;
+        margin:0 0 32px;
         padding:0;
     }
     .trip_year_title{
         text-align:center;
-        /*:32px 0 0 0;*/
+        margin:0 0 32px;
     }
     .trip_post {
         display:flex;
@@ -181,7 +181,6 @@ if(function_exists('get_field')){
     .testimonials_wrap h2{
         text-align:center;
         width:100%;
-        margin-top: 0;
     }
     .past_tour_gallery h2{
         text-align:center;
@@ -210,7 +209,7 @@ if(function_exists('get_field')){
         color:<?php echo $primary_color; ?>;
         font-weight:bold;
         text-align:center;
-        padding:36px 0;
+        padding:32px 0;
     }
     .payment_options{
         list-style:none;
@@ -233,13 +232,17 @@ if(function_exists('get_field')){
         padding:0 56px;
     }*/
     .payment_title {
-        font-size:24px;
-        margin-top:0;
-        margin-bottom:10px
+        font-size:2rem;
+        margin:.5em auto;
     }
     .payment_info_text{
         padding:32px 56px;
         text-align:center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height:calc(100% - 30vh);
     }
     .footer_cta_landing_page{
         padding:56px 24px;
@@ -282,6 +285,9 @@ if(function_exists('get_field')){
         letter-spacing: .05em;
         font-weight: 600;
         
+    }
+    .anchor_nav ul li a:hover{
+        color:#f2f2f2;
     }
     .anchor_nav ul li{
         text-align:center;
@@ -338,17 +344,13 @@ if(function_exists('get_field')){
         }
     }
      @media screen and (max-width:527px){
-        .trip_post > li{
+        .trip_post > li {
             width: calc(100% / 1 - 10px);
         }
         .past_tour_gallery li {
             width:100%;
             background-position: center;
             background-size: cover;
-}
-        .trip_list {
-            /*padding: 0 26px;*/
-            padding-bottom: 32px;
         }
     }
     @media screen and (max-width:550px){
@@ -459,6 +461,7 @@ $terms = get_terms( array(
 ) );
 
 if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+    echo ' <h4 class="blog-type-label">Trips</h4>';
     echo '<ul>';
     foreach ( $terms as $term ) {
         
@@ -528,7 +531,7 @@ $trips_query = new WP_Query( $args );
         
         if ( $trips_query->have_posts() ) {
         echo '<li>';
-        echo '<h2 id="' . $term->slug . '_trips" class="trip_year_title">' . esc_html( $term->name ) . ' Trips</h2>';
+        echo '<h2 id="' . $term->slug . '_trips" class="trip_year_title">' . esc_html( $term->name ) . '</h2>';
 
         // Query trips assigned to this term
 
@@ -669,7 +672,7 @@ $trips_query = new WP_Query( $args );
                 <div class="payment_info_text">
                     <h2 class="payment_title"><?php echo $payment_info_item['payment_info_title'] ?></h2>
                     <?php echo do_shortcode($payment_info_item['payment_info_content']) ?>
-                    <a style="font-weight:bold;" href="<?php echo $payment_info_item['learn_more_cta_url'] ?>" class="button_cta">Learn more <i class="fa fa-arrow-right"></i></a>
+                    <a style="color:#fff !important; font-size: 18px;" href="<?php echo $payment_info_item['learn_more_cta_url'] ?>" class="cta-button">Learn more <i class="fa fa-arrow-right"></i></a>
                 </div>
             </li>
             <?php } ?>

@@ -8,53 +8,21 @@
 
 <?php get_header(); 
 if(function_exists('get_field')){
+	$school_shortcode = get_field('school_shortcode',get_the_ID());
+	$trip_name = get_field('trip_name',get_the_ID());
 	$citiescountries = get_field('citiescountries',get_the_ID());
 	$days_price = get_field('days__price',get_the_ID());
 	$cta_button = get_field('cta_button',get_the_ID());
 	$hero_image = get_field('trip_hero_image',get_the_ID());
 	$trip_hero_image_text_url = get_field('trip_hero_image_text_url',get_the_ID());
-	$school_shortcode = get_field('school_shortcode',get_the_ID());
 	$trip_dates = get_field('trip_dates',get_the_ID());
+	$main_trip_content = get_field('main_trip_content',get_the_ID());
 	$e_brochure_link = get_field('e_brochure_link',get_the_ID());
 	$webinar_link = get_field('webinar_link',get_the_ID());
 	$additional_link = get_field('additional_link',get_the_ID());
-	//$school = get_field('school',get_the_ID());
 	$travel_tools = get_field('travel_tools',get_the_ID());
 	$toc_info = get_field('toc_info',get_the_ID());
-	$main_trip_content = get_field('main_trip_content',get_the_ID());
-	//$tour = get_field('tour',get_the_ID());
-	$trip_name = get_field('trip_name',get_the_ID());
 	$deals_popup = get_field('deals_popup',get_the_ID());
-	//school fields
-	/*if($school){
-		$school_logo = get_field('school_logo',$school->ID);
-		$school_logo_background = get_field('school_logo_background',$school->ID);
-		
-	}
-	if($tour){
-		$tour_trip_highlights_title = get_field('trip_highlights_title',$tour->ID);
-		$trip_highlights = get_field('trip_highlights',$tour->ID);
-		$travel_tools = get_field('travel_tools',$tour->ID);
-		
-		$whats_included_title = get_field('whats_included_title',$tour->ID);
-		$whats_included_accordion = get_field('highlight_accordion',$tour->ID);
-		$additional_whats_included_text = get_field('additional_whats_included_text',$tour->ID);
-		$whats_included_image = get_field('whats_included_image',$tour->ID);
-		
-		$itinerary_title = get_field('itinerary_title',$tour->ID);
-		$itinerary_items = get_field('itinerary_items',$tour->ID);
-		
-		$hotels_title = get_field('hotels_title',$tour->ID);
-		$hotels_content = get_field('hotels_content',$tour->ID);
-		$hotels_items = get_field('hotels_items',$tour->ID);
-		
-		$trip_options_title = get_field('trip_options_title',$tour->ID);
-		$trip_options_content = get_field('trip_options_content',$tour->ID);
-		$trip_option_items = get_field('trip_option_items',$tour->ID);
-		
-		if(!$deals_popup || $deals_popup == ''){$deals_popup = get_field('deals_popup',$tour->ID);}
-		
-	}*/
 	$trip_id = acf_preview_id_safe( get_the_ID() );
 
 $school = get_field('school', $trip_id);
@@ -71,9 +39,11 @@ if ( $school ) {
 // TOUR FIELDS
 if ( $tour ) {
     $tour_id = is_object($tour) ? $tour->ID : (int)$tour;
-    $tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
+    $trip_name = get_field('trip_name', $tour_id);
+    $destinations = get_field('citiescountries', $tour_id);
+    $description = get_field('description', $tour_id);
+    	$tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
     $trip_highlights = get_field('trip_highlights', $tour_id);
-    $travel_tools = get_field('travel_tools', $tour_id);
     $whats_included_title = get_field('whats_included_title', $tour_id);
     $whats_included_accordion = get_field('highlight_accordion', $tour_id);
     $additional_whats_included_text = get_field('additional_whats_included_text', $tour_id);
@@ -89,6 +59,7 @@ if ( $tour ) {
     $experiences = get_field('experiences' , $tour_id);
     $level = get_field('activity_level' , $tour_id); 
 		$level = intval($level);
+		$travel_tools = get_field('travel_tools', $tour_id);
     if ( ! $deals_popup || $deals_popup === '' ) {
         $deals_popup = get_field('deals_popup', $tour_id);
     }
@@ -96,7 +67,7 @@ if ( $tour ) {
 	
 }
 ?>
-<style>	
+<style>
 	.trip_header_cta{
 		text-align:right;
 	}
@@ -597,10 +568,14 @@ if ( ! post_password_required() ) {
           height: 40px;
           justify-content: center;
           align-items: center;
+          color:#aaa;
           text-decoration: none;
           position: absolute;
           top: 0;
           right: 0;
+      }
+      .tour_deals_close_popup:hover{
+      	color:#888;
       }
       .tour_deals_popup_content a{
         color:#2C768E;
@@ -684,9 +659,12 @@ if ( ! post_password_required() ) {
       	color:#aaa;
       }
       .travel_tools_popup_content a{
-        color:#aaa;
-        display: block;
-        margin: 1em 0;
+        color: #d7d7d7;
+		    display: block;
+		    font-size: 80%;
+		    margin: 1.5em 0;
+		    text-transform: uppercase;
+		    letter-spacing: .05rem;
       }
       .travel_tools_popup_content a:hover{
       	color:#f2f2f2;

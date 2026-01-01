@@ -23,6 +23,9 @@ get_header(); ?>
 	width:auto;
 	font-weight:700;
 }
+.galleryItem {
+	border-radius:6px;
+}
 
 .testimonials-grid {
 	margin:32px auto;

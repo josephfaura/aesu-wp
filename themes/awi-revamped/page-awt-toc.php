@@ -82,10 +82,12 @@ if(function_exists('get_field')){
 	.interior_banner i{
 		position: absolute;
 		color:#5e5e5e;
-		left:10px;
-		top:8px;
-		z-index:99999;
-		font-size:20px;
+	    top: 50%;
+	    left: 15px;
+	    transform: translateY(-50%);
+	    pointer-events: none;
+	    font-size: 1rem;
+	    z-index:99999;
 	}
 	.interior_banner .button{
 		background: #e74c3c;
@@ -105,7 +107,7 @@ if(function_exists('get_field')){
 	background-color:#d13b2d;
 	}
 	a:active {
-	transform:translateY(5px);
+	transform:translateY(3px);
   	}
 	.packages{
 		list-style: none;

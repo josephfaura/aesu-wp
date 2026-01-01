@@ -65,6 +65,16 @@ if(function_exists('get_field')){
 					<h1><?php echo $home_section_builder_item['banner_area']['banner_title']; ?></h1>
 					<h2><?php echo $home_section_builder_item['banner_area']['banner_tagline']; ?></h2>
 					<a href="<?php echo $home_section_builder_item['banner_area']['banner_cta']['url'] ?>" class="cta-button"><?php echo $home_section_builder_item['banner_area']['banner_cta']['title'] ?></a>
+
+					<!--<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
+						<label>
+							<span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
+							<i class="fa fa-search"></i>
+							<input type="search" id="trip-search" class="search-field" placeholder="Where would you like to go?" value="" name="s">
+						</label>
+						<input type="submit" class="search-submit" value="Start Here">
+						<input type="hidden" name="post_type" value="trips" />
+					</form>-->
 					
 				</div>
 				<a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
@@ -90,7 +100,7 @@ if(function_exists('get_field')){
 				</div>
 			</section>
 
-<!--Main Card Section-->
+<!--MAIN CARDS SECTION-->
 
 		<?php }elseif($home_section_builder_item['section_type'] == 'Main Cards Section'){ ?>
 			<section class="young_adult_trips">
@@ -240,7 +250,7 @@ if(function_exists('get_field')){
 		<section class="latest_from_us">
 			<div class="container">
 				<div class="latest_post_header">
-					<h2>Stories from Us</h2>
+					<h2>Our Latest Stories</h2>
 				</div>
 				<ul class="latest_posts_list">
 					<?php 
