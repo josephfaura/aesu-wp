@@ -649,6 +649,35 @@ if ( ! $thumb ) {
 	update_post_meta( get_the_ID(), '_first_image', $thumb );
 }
 
+/* Admin Bar in Single Trip - Allow to Edit Tour Post Type */
+function add_edit_post_type_a_link($wp_admin_bar) {
+
+    // Only show for logged-in users who can edit posts
+    if (!is_user_logged_in() || !current_user_can('edit_posts')) {
+        return;
+    }
+
+    // Only show on single trips CPT
+    if (is_singular('trips')) {
+        global $post;
+
+        // Get the linked Tour ID from the ACF field "tour"
+        $tour_id = get_field('tour', $post->ID);
+
+        if ($tour_id) {
+            $wp_admin_bar->add_node(array(
+                'id'    => 'edit_tour_post',
+                'title' => '<span class="ab-icon dashicons dashicons-edit"></span> Edit Tour',
+                'href'  => get_edit_post_link($tour_id),
+                'meta'  => array(
+                    'title' => 'Edit Tour',
+                ),
+            ));
+        }
+    }
+}
+add_action('admin_bar_menu', 'add_edit_post_type_a_link', 100);
+
 /* ---------- Admin list table helpers ---------- */
 
 // Add custom "Template" column to Pages
