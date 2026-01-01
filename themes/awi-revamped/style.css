@@ -1944,7 +1944,7 @@ a:active {
 	opacity:60%;
 }
 .footer_info a {
-	color: #d7d7d7;
+	color: #d7d7d7 !important;
 	font-size: 14px;
 	text-align: right;
 }
@@ -1988,7 +1988,7 @@ a:active {
     text-align: right;
 }
 .copyright a{
-	color: #d7d7d7;
+	color: #d7d7d7 !important;
 }
 .bottom_footer_logos ul{
 	list-style: none;
@@ -2836,6 +2836,22 @@ h1.page-title {
 	margin-top:30px;
 }*/
 
+		.back-to-top-inline {
+        text-align: center;
+        margin: 56px auto; /* spacing above/below as needed */
+        cursor: pointer;
+    }
+
+    .back-to-top-inline i {
+        font-size: 32px;
+        color: #5e5e5e;
+        transition: color 0.2s ease;
+    }
+
+    .back-to-top-inline:hover i {
+        color: #3a3a3a; /* optional hover styling */
+    }
+
 .wp-block-embed.is-provider-youtube .wp-block-embed__wrapper {
   position: relative;
   width: 100%;
@@ -3610,9 +3626,9 @@ article, aside {
 	width: calc(100% - 360px);
 	float: left;
 }
-.full-width article, .page-template-page-full-width article, .page-template-page-full-width-awt article, .page-template-page-educational-travel article, .search article {
+.full-width, .full-width article, .page-template-page-full-width article, .page-template-page-full-width-awt article, .page-template-page-educational-travel article, .search article {
 	width: 100%;
-	float: none;
+	float: none !important;
 }
 
 /* Newsletter/Just Go */

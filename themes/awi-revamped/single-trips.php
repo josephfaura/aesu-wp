@@ -771,4 +771,10 @@ if ( ! post_password_required() ) {
 <?php } ?>
 <?php } ?>
 
+<div class="container">
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
+</div>
+
 <?php get_footer(); ?>

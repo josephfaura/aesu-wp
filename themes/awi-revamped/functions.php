@@ -251,14 +251,29 @@ function awi_initialize_scripts() { ?>
 
 	//Load more images behavior in Landing Page Gallery
      (function($){
-        $(document).ready(function(){
-            $('.load_more_images').on('click',function(e){
-                e.preventDefault();
-                console.log('clicked');
-                $('.past_tour_gallery li').css('display','block');
-            });
+    $(document).ready(function(){
+
+        let itemsToShow = 6; // how many to load each click
+        let $items = $('.past_tour_gallery li');
+        let totalItems = $items.length;
+
+        $('.load_more_images').on('click', function(e){
+            e.preventDefault();
+
+            // Find how many are currently visible
+            let visibleCount = $items.filter(':visible').length;
+
+            // Show the next 6
+            $items.slice(visibleCount, visibleCount + itemsToShow).fadeIn();
+
+            // After revealing, check if we reached the end
+            if (visibleCount + itemsToShow >= totalItems) {
+                $(this).hide(); // hide "Load More Images"
+            }
         });
-    })( jQuery );
+
+    });
+})(jQuery);
 
 	//GA Tracking calls and form submissions
 	$(document).ready(function(){
