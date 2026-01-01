@@ -114,6 +114,10 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				header{
 					top:46px;
 				}
+				.single-trips .trip_header{
+					top:0 !important;
+				}
+				}
 			}	
 		</style>
 <?php } ?>
