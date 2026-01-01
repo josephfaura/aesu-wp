@@ -456,4 +456,11 @@ button, html input[type="button"], input[type="reset"], input[type="submit"], .b
 		</article>
 	</div>
 </main>
+
+<div class="container">
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
+</div>
+
 <?php get_footer(); ?>
