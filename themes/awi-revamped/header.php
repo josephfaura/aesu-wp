@@ -114,17 +114,13 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				header{
 					top:46px;
 				}
+				.single-trips .trip_header{
+					top:0 !important;
+				}
+				}
 			}	
 		</style>
-	<?php } ?>
-	<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
-			$contact_link = get_permalink(11601);
-			$home_link = get_home_url();
-		
-		}else{ 
-			$contact_link = get_permalink(2836);
-			$home_link = get_permalink(898);
-		} ?>
+<?php } ?>
 		<style>
 			.mobile_header{
 				display:none;
@@ -205,161 +201,219 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
    			}
 		</style>
 		
-		<header class="mobile_header">
-		<div class="container">
-			<div class="inner-header">
+<?php
+// --------------------------------------
+// Determine referrer header type
+// --------------------------------------
+$referrer = $_SERVER['HTTP_REFERER'] ?? '';
+$referrer_header = null;
+
+if ($referrer) {
+    $ref_post_id = url_to_postid($referrer);
+    if ($ref_post_id) {
+        $referrer_header = get_field('header_type', $ref_post_id);
+    }
+}
+
+// --------------------------------------
+// Determine current post header type
+// --------------------------------------
+$current_header = get_field('header_type'); // AESU, AWT, or empty
+
+// --------------------------------------
+// FINAL LOGIC:
+// AWT wins when:
+//   - referrer header == AWT
+//   - OR current header == AWT
+// Otherwise default = AESU
+// --------------------------------------
+$is_awt = (
+    $referrer_header === 'AWT'
+    || $current_header === 'AWT'
+);
+
+// --------------------------------------
+// Set links and labels
+// --------------------------------------
+if ($is_awt) {
+    // AWT SETTINGS
+    $contact_link = get_permalink(2836);
+    $home_link    = get_permalink(898);
+    $mobile_tag   = "Alumni World Travel";
+} else {
+    // DEFAULT = AESU SETTINGS
+    $contact_link = get_permalink(11601);
+    $home_link    = get_home_url();
+    $mobile_tag   = "Since 1977";
+}
+?>
+
+<header class="mobile_header">
+    <div class="container">
+        <div class="inner-header">
+
+            <div class="nav-logo">
+
+                <?php if (! $is_awt) : ?>
+                    <nav>
+                        <?php wp_nav_menu([
+                            'theme_location' => 'main_nav',
+                            'menu_class'     => 'awiNav'
+                        ]); ?>
+                    </nav>
+                <?php endif; ?>
+
+                <div class="logo_wrap">
+                    <a href="<?php echo $home_link; ?>">
+                        <svg class="icon">
+                            <use xlink:href="<?php echo get_template_directory_uri(); ?>/img/icons.svg#icon-cropped-logo-full"></use>
+                        </svg>
+                    </a>
+
+                    <span><?php echo $mobile_tag; ?></span>
+                </div>
+
+            </div>
+
+            <div class="header_right">
+
+                <div class="top_nav_account_wrap">
+
+                    <span class="top_account_area">
+                        <a href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                            <i class="fa-solid fa-circle-user"></i>
+                        </a>
+                    </span>
+
+                    <span class="top_account_area">
+                        <a class="header_phone" href="tel:8006387640">
+                            <i class="fa-solid fa-phone"></i>
+                        </a>
+                    </span>
+
+                    <span class="top_account_area">
+                        <a class="contact_page_link" href="<?php echo $contact_link; ?>">
+                            <i class="fa-solid fa-message"></i>
+                        </a>
+                    </span>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
 
 <?php
-// Get the referrer URL
-$referrer = $_SERVER['HTTP_REFERER'];
-$is_awt_referrer = false;
-if ( $referrer ) {
-    // Convert referrer into post/page ID
-    $referrer_id = url_to_postid( $referrer );
+// --------------------------------------
+// Determine referrer header type
+// --------------------------------------
+$referrer = $_SERVER['HTTP_REFERER'] ?? '';
+$referrer_header = null;
 
-    if ( $referrer_id ) {
-        // Get the ACF field value
-        $header_type_referrer = get_field( 'header_type', $referrer_id );
-		//echo $header_type_referrer;
-        if ( $header_type_referrer === 'AWT' ) {
-            // Do something if the header_type is AESU
-            //echo "Referring page has header_type = AESU";
-			//echo $header_type_referrer;
-$is_awt_referrer = true;
-        }
+if ($referrer) {
+    $ref_post_id = url_to_postid($referrer);
+    if ($ref_post_id) {
+        $referrer_header = get_field('header_type', $ref_post_id);
     }
+}
+
+// --------------------------------------
+// Determine current post header type
+// --------------------------------------
+$current_header = get_field('header_type'); // AESU, AWT, or empty
+
+// --------------------------------------
+// FINAL LOGIC:
+// AWT wins when:
+//   - referrer header == AWT
+//   - OR current header == AWT
+// Otherwise default = AESU
+// --------------------------------------
+$is_awt = (
+    $referrer_header === 'AWT'
+    || $current_header === 'AWT'
+);
+
+// --------------------------------------
+// Set links and titles
+// --------------------------------------
+if ($is_awt) {
+    // AWT SETTINGS
+    $contact_link = get_permalink(2836);
+    $home_link    = get_permalink(898);
+    $tagline      = "Alumni World Travel<br />Expanding Horizons Since 1977";
+} else {
+    // DEFAULT = AESU SETTINGS
+    $contact_link = get_permalink(11601);
+    $home_link    = get_home_url();
+    $tagline      = "Expanding Horizons <br/>Since 1977";
 }
 ?>
 
-<div class="nav-logo">
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
-					<nav>
-						<?php wp_nav_menu( array( 'theme_location' => 'main_nav', 'menu_class' => 'awiNav' ) ); ?>
-					</nav><!-- #site-navigation -->
-					<?php } ?>
-				<div class="logo_wrap"><a href="<?php echo $home_link; ?>">
-				<svg class="icon">
-<use xlink:href="<?php echo get_template_directory_uri();?>/img/icons.svg#icon-cropped-logo-full"></use>
-</svg></a>	
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
-					$contact_link = get_permalink(11601);
-						$home_link = get_home_url();
-					?>
-					<span>Since 1977</span>
-				<?php }else{ 
-					$contact_link = get_permalink(2836);
-						$home_link = get_permalink(898);?>
-						<!--<style>
-							@media screen and (max-width: 879px) {
-								.logo_wrap {
-									margin-left: 0;
-								}
-							}
-						</style>-->
-					<span>Alumni World Travel</span>
-				<?php } ?>
-				</div>
-</div>
+<header class="desktop_header">
+    <div class="container">
+        <div class="inner-header">
 
-				<div class="header_right">
-					<?php
-					$school_logo=get_field('school_logo');
-					if(is_page_template('page-school-landing-page.php') && $school_logo){ ?>
-					<!--<style>
-						.header_school_logo {
-							max-height:35px;
-							padding-right:7px;
-							border-right:2px solid white;
-						}
-					</style>-->
-						<?php /* ?><img class="header_school_logo" src="<?php echo $school_logo['url'] ?>"><?php */ ?>
-					<?php } ?>
-					<div class="top_nav_account_wrap">
-					
-						<span class="top_account_area"><a href="https://res.aesu.com/res/STWMain.aspx?Theme=AWT&Action=Home" target="_blank"><i class="fa-solid fa-circle-user"></i></a></span>
+            <div class="logo_wrap">
+                <a href="<?php echo $home_link; ?>">
+                    <svg class="icon">
+                        <use xlink:href="<?php echo get_template_directory_uri();?>/img/icons.svg#icon-cropped-logo-full"></use>
+                    </svg>
+                </a>
 
-						<span class="top_account_area"><a class="header_phone" href="tel:8006387640"><i class="fa-solid fa-phone"></i></a></span>
+                <span><?php echo $tagline; ?></span>
+            </div>
 
-						<span class="top_account_area"><a class="contact_page_link" href="<?php echo $contact_link; ?>"><i class="fa-solid fa-message"></i></a></span>
+            <div class="header_right">
 
-						
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</header><!-- #masthead -->
-	<header class="desktop_header">
-		<div class="container">
-			<div class="inner-header">
-				<div class="logo_wrap"><a href="<?php echo $home_link; ?>">
-				<svg class="icon">
-<use xlink:href="<?php echo get_template_directory_uri();?>/img/icons.svg#icon-cropped-logo-full"></use>
-</svg></a>	<?php
-// Get the referrer URL
-$referrer = $_SERVER['HTTP_REFERER'];
-$is_awt_referrer = false;
-if ( $referrer ) {
-    // Convert referrer into post/page ID
-    $referrer_id = url_to_postid( $referrer );
+                <?php
+                $school_logo = get_field('school_logo');
+                if (is_page_template('page-school-landing-page.php') && $school_logo) : ?>
+                    <img class="header_school_logo" style="width:auto;" src="<?php echo $school_logo['url'] ?>">
+                <?php endif; ?>
 
-    if ( $referrer_id ) {
-        // Get the ACF field value
-        $header_type_referrer = get_field( 'header_type', $referrer_id );
-		//echo $header_type_referrer;
-        if ( $header_type_referrer === 'AWT' ) {
-            // Do something if the header_type is AESU
-            //echo "Referring page has header_type = AESU";
-			//echo $header_type_referrer;
-$is_awt_referrer = true;
-        }
-    }
-}
-?>
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ 
-					$contact_link = get_permalink(11601);
-						$home_link = get_home_url();
-					?>
-					<span>Expanding Horizons <br/>Since 1977</span>
-				<?php }else{ 
-					$contact_link = get_permalink(2836);
-						$home_link = get_permalink(898);?>
-					<span>Alumni World Travel<br />Expanding Horizons Since 1977</span>
-				<?php } ?>
-				</div>
-				<div class="header_right">
-					<?php
-					$school_logo=get_field('school_logo');
-					if(is_page_template('page-school-landing-page.php') && $school_logo){ ?>
-						<img class="header_school_logo" style="width:auto;" src="<?php echo $school_logo['url'] ?>">
-					<?php } ?>
-				<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
-					<nav>
-						<?php wp_nav_menu( array( 'theme_location' => 'main_nav', 'menu_class' => 'awiNav' ) ); ?>
-					</nav><!-- #site-navigation -->
-					<?php } ?>
-			<div class="top_nav_account_wrap">
-            	<span class="top_account_area">
-            		<a href="https://res.aesu.com/res/STWMain.aspx?Theme=AWT&amp;Action=Home
-https://res.aesu.com/res/STWMain.aspx?Theme=AESU&amp;Action=Home" target="_blank">
-					<i class="fa-solid fa-circle-user"></i>  My Account</a></span>
+                <?php if (! $is_awt) : ?>
+                    <nav>
+                        <?php wp_nav_menu([
+                            'theme_location' => 'main_nav',
+                            'menu_class'     => 'awiNav'
+                        ]); ?>
+                    </nav>
+                <?php endif; ?>
 
-              	<span class="top_account_area">
-              		<a class="header_cart" href="https://res.aesu.com/res/STWMain.aspx?Theme=AWT&amp;Action=Home
-https://res.aesu.com/res/STWMain.aspx?Theme=AESU&amp;Action=Home" target="_blank">
-					<i class="fa-solid fa-cart-shopping"></i> My Cart</a></span>
+                <div class="top_nav_account_wrap">
+                    <span class="top_account_area">
+                        <a href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                            <i class="fa-solid fa-circle-user"></i> My Account
+                        </a>
+                    </span>
 
-              	<span class="top_account_area">
-              		<a class="contact_page_link" href="<?php echo $contact_link; ?>"><i class="fa-solid fa-message"></i> Contact Us</a></span>
+                    <span class="top_account_area">
+                        <a class="header_cart" href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                            <i class="fa-solid fa-cart-shopping"></i> My Cart
+                        </a>
+                    </span>
 
-				<span class="top_account_area">
-					<a class="header_phone" href="tel:8006387640"><i class="fa-solid fa-phone"></i> 800.638.7640</a></span>
-          	</div>
-					
-				</div>
-			</div>
-		</div>
-	</header><!-- #masthead -->
+                    <span class="top_account_area">
+                        <a class="contact_page_link" href="<?php echo $contact_link; ?>">
+                            <i class="fa-solid fa-message"></i> Contact Us
+                        </a>
+                    </span>
+
+                    <span class="top_account_area">
+                        <a class="header_phone" href="tel:8006387640">
+                            <i class="fa-solid fa-phone"></i> 800.638.7640
+                        </a>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+
 
 <?php if($header_image && !is_front_page()) { ?>
 	<div class="interior-banner" style="background-image:url('<?php echo $header_image; ?>');"></div>
