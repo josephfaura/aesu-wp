@@ -481,6 +481,36 @@ function modify_cpt_icons( $args, $post_type ) {
     return $args;
 }
 
+/* Admin Bar in Single Trip - Allow to Edit Tour Post Type */
+
+add_action('admin_bar_menu', 'add_edit_post_type_a_link', 100);
+
+function add_edit_post_type_a_link($wp_admin_bar) {
+
+    // Only show for logged-in users who can edit posts
+    if (!is_user_logged_in() || !current_user_can('edit_posts')) {
+        return;
+    }
+
+    // Only show on singular Trip Page
+    if (is_singular('trips')) {
+
+        global $post;
+
+        // Get the selected post-type-a ID from your ACF field
+        $post_type_a_id = get_field('tour', $post->ID);
+
+        if ($post_type_a_id) {
+            $wp_admin_bar->add_node(array(
+                'id'    => 'tours',
+                'title' => '<span style="top:2px" class="ab-icon dashicons dashicons-edit"></span> Edit Tour',
+                'href'  => get_edit_post_link($post_type_a_id),
+                'meta'  => array(
+                    'title' => 'Edit Tour', 
+                ),
+            ));
+        }
+    }
 
 /* Exclude CPT from Search Querry */
 function exclude_cpt_from_search( $query ) {
