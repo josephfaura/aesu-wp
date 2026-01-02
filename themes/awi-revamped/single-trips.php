@@ -541,71 +541,6 @@ if ( ! post_password_required() ) {
 	</div>
 </main>
 <?php if($deals_popup || get_field('deals_popup',$tour->ID)){ ?>
-<style>
-  .tour_deals_popup_wrap{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0,0,0,.5);
-        z-index: 99999999999999;
-      }
-      .tour_deals_popup_wrap.active_tour_deals_popup{
-        display: flex;
-      }
-      .tour_deals_popup_inner{
-          max-width: 650px;
-          max-height:90%;
-          position: relative;
-          overflow: auto;
-      }
-      .tour_deals_close_popup{
-          display: flex;
-          width: 40px;
-          height: 40px;
-          justify-content: center;
-          align-items: center;
-          color:#aaa;
-          text-decoration: none;
-          position: absolute;
-          top: 0;
-          right: 0;
-      }
-      .tour_deals_close_popup:hover{
-      	color:#888;
-      }
-      .tour_deals_popup_content a{
-        color:#2C768E;
-      }
-      .tour_deals_popup_content a,.tour_deals_popup_content strong{
-          display: block;
-          margin: 15px 0;
-      }
-      .tour_deals_popup_content h1{
-      	font-size: 2.6rem;
-      	color:#E74C3C;
-      }
-      .tour_deals_popup_content h2{
-        font-size: 2rem;
-        color:#2C768E;
-      }
-      .tour_deals_popup_content h3{
-        font-size: 1.5rem;
-        color:#2C768E;
-      }
-	  	.tour_deals_popup_inner .popup_outline{ 
-	  		background: #fff;   
-				padding: 56px 56px 32px;
-    		margin: .8rem;
-    		/*border: 1px solid #bebebe;*/
-				box-shadow:0px 3px 10px rgba(0,0,0,.25);
-				position:relative;
-	  }
-</style>
 <div class="tour_deals_popup_wrap">
     <div class="tour_deals_popup_inner">
 	<div class="popup_outline">
@@ -622,67 +557,6 @@ if ( ! post_password_required() ) {
 </div>
 <?php } ?>
 <?php if($travel_tools){ ?>
-<style>
-  .travel_tools_popup_wrap{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0,0,0,.6);
-        z-index: 99999999999999;
-      }
-      .travel_tools_popup_wrap.active_travel_tools_popup{
-        display: flex;
-      }
-      .travel_tools_popup_inner{
-          max-width:95%;
-          max-height:95%;
-          position: relative;
-          overflow: auto;
-      }
-      .travel_tools_close_popup{
-          display: flex;
-          width: 40px;
-          height: 40px;
-          color:#888;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          position: absolute;
-          top: 0;
-          right: 0;
-      }
-      .travel_tools_close_popup:hover{
-      	color:#aaa;
-      }
-      .travel_tools_popup_content a{
-        color: #d7d7d7;
-		    display: block;
-		    font-size: 80%;
-		    margin: 1.5em 0;
-		    text-transform: uppercase;
-		    letter-spacing: .05rem;
-      }
-      .travel_tools_popup_content a:hover{
-      	color:#f2f2f2;
-      }
-      .travel_tools_popup_content h2{
-        font-size: 2rem;
-        color:#2C768E;
-      }
-	  .travel_tools_popup_inner .popup_outline{
-		  background: #3a3a3a;  
-			padding: 75px;
-	    margin: .8rem;
-	    /*border: 1px solid #bebebe;*/
-			box-shadow:0px 3px 10px rgba(0,0,0,.25);
-			position:relative;
-	  }
-</style>
 <div class="travel_tools_popup_wrap">
     <div class="travel_tools_popup_inner">
 	<div class="popup_outline">

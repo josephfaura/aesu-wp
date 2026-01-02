@@ -375,7 +375,7 @@ if ($is_awt) {
 				if (
 				    is_page_template('page-school-landing-page.php')
 				    && $school_logo
-				    && strtolower($school_shortcode) !== 'awt'
+				    && strtolower($school_shortcode) !== 'awt' //if field is set to awt do not show the school_logo
 				) : ?>
 				    <img
 				        class="header_school_logo"
