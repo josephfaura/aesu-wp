@@ -368,11 +368,22 @@ if ($is_awt) {
 
             <div class="header_right">
 
-                <?php
-                $school_logo = get_field('school_logo');
-                if (is_page_template('page-school-landing-page.php') && $school_logo) : ?>
-                    <img class="header_school_logo" style="width:auto;" src="<?php echo $school_logo['url'] ?>">
-                <?php endif; ?>
+				<?php
+				$school_logo     = get_field('school_logo');
+				$school_shortcode = get_field('school_shortcode');
+
+				if (
+				    is_page_template('page-school-landing-page.php')
+				    && $school_logo
+				    && strtolower($school_shortcode) !== 'awt'
+				) : ?>
+				    <img
+				        class="header_school_logo"
+				        style="width:auto;"
+				        src="<?php echo esc_url($school_logo['url']); ?>"
+				        alt=""
+				    >
+				<?php endif; ?>
 
                 <?php if (! $is_awt) : ?>
                     <nav>

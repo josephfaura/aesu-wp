@@ -126,8 +126,10 @@ if ( ! post_password_required() ) {
 <section class="trip_main_content_wrap">
 	<div class="trip_main_image" style="background-image:url(<?php echo esc_url( get_the_post_thumbnail_url() ); ?>);"></div>
 	<div class="trip_main_content">
+		<?php if($trip_name || $destinations){ ?>
 		<h2><?php echo $trip_name; ?></h2>
 		<div class="trip_dates"><?php echo $destinations; ?></div>
+		<?php }?>
 		<div class="trip_main_content_text">
 			
 			<?php
@@ -354,27 +356,35 @@ if ( ! post_password_required() ) {
 </section>
 <main>
 	<div class="container">
-		<article>
+		<article class="full-width" style="width:100%;max-width:100%;">
 		
-			<?php if (have_posts()) : while (have_posts()) : the_post();
-				/*$prev = get_previous_post_link('%link','&laquo; Previous');
-				$next = get_next_post_link('%link','Next &raquo;');
-
-				if ($prev || $next) { ?>
-					<div class="navigation clearfix">
-						<div class="alignleft"><?php echo $prev; ?></div>
-						<div class="alignright"><?php echo $next; ?></div>
-					</div>
-				<?php } */ ?>
+			<?php if (have_posts()) : while (have_posts()) : the_post();?>
 
 				<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
-					<h1><?php //the_title(); ?></h1>
 					<div class="entry">
-						<?php //the_content(); ?>
+						
+						<?php
+						$post_type = get_post_type();
+
+						// show Tour Content first
+						if ( $post_type === 'trips' && ! empty( $tour_id ) ) {
+
+							$tour_post = get_post( $tour_id );
+
+							if ( $tour_post ) {
+								setup_postdata( $tour_post );
+								the_content(); // ← Tour content
+								wp_reset_postdata();
+							}
+						}
+						// show Trip Content second
+						if ( $post_type === 'trips' ) {
+							the_content();
+						}
+						?>
+
 					</div>
 				</div>
-
-				<?php //comments_template(); ?>
 
 			<?php endwhile; else: ?>
 			
@@ -406,7 +416,7 @@ if ( ! post_password_required() ) {
           position: relative;
           overflow: auto;
       }
-       .tour_deals_close_popup{
+      .tour_deals_close_popup{
           display: flex;
           width: 40px;
           height: 40px;
@@ -539,8 +549,11 @@ if ( ! post_password_required() ) {
 </div>
 <?php } ?>
 <?php } ?>
+
 <div class="container">
-<?php the_content(); ?>
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
 </div>
 
 <?php get_footer(); ?>

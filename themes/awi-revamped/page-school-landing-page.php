@@ -212,12 +212,12 @@ if(function_exists('get_field')){
         color:<?php echo $primary_color; ?>;
         font-weight:bold;
         text-align:center;
-        padding:32px 0;
+        margin:32px auto;
     }
     .payment_options{
         list-style:none;
         display:flex;
-        margin:0 0 28px 0;
+        margin:32px auto;
         padding:0;
         gap:32px;
     }

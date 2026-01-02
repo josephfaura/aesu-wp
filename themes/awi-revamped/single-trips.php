@@ -140,9 +140,9 @@ if ( $tour ) {
         background-color: #fff;
 				box-shadow:0px -3px 10px rgba(0,0,0,.25);
     }
-		.single-trips .trip_header{
+		/*.single-trips .trip_header{
 				position:static!important;
-		}
+		}*/
 		.mobile_cta .red_button_cta{
 				font-size: 18px;
 	      /*padding: 14px 25px;*/
@@ -632,7 +632,7 @@ if ( ! post_password_required() ) {
         height: 100%;
         top: 0;
         left: 0;
-        background: rgba(0,0,0,.5);
+        background: rgba(0,0,0,.6);
         z-index: 99999999999999;
       }
       .travel_tools_popup_wrap.active_travel_tools_popup{

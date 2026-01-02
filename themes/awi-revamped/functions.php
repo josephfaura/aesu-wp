@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let lastScrollTop = 0;
     const triggerRatio = 0.25; // 25vh trigger
-    let isTripPage = <?php echo is_singular('trips') ? 'true' : 'false'; ?>;
+    let isTripPage = <?php echo ( is_singular('trips') || is_singular('tours') ) ? 'true' : 'false'; ?>;
 
     // Determine scroll target dynamically
     function getScrollTarget() {
@@ -413,7 +413,7 @@ document.addEventListener("DOMContentLoaded", function() {
             target.style.transform = "translateY(0)";
         } else {
             // Scrolling DOWN → hide
-            target.style.transform = `translateY(-${target.offsetHeight}px)`;
+            target.style.transform = `translateY(-${target.offsetHeight + 4}px)`;
         }
 
         lastScrollTop = currentScroll;

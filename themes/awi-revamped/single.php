@@ -314,7 +314,7 @@ endif;
 // Arguments for trips with ACF header-type = AESU
 $trips_args = array(
     'post_type'      => 'trips',          // custom post type
-    'posts_per_page' => 6,                // number of trips to show
+    'posts_per_page' => 3,                // number of trips to show
     'post__not_in'   => array( get_the_ID() ), // exclude current post
     'meta_query'     => array(             // filter by ACF field
         array(

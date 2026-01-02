@@ -1430,7 +1430,7 @@ a:not(.card_image_link):active {
 .testimonials_cta{
 	text-align:center;
 	font-weight:bold;
-	margin-top:32px;
+	margin:32px auto;
 }
 .testimonials_video_wrap{
 	display: flex;
@@ -2978,7 +2978,7 @@ h1.page-title {
 
 		.back-to-top-inline {
         text-align: center;
-        margin: 56px auto; /* spacing above/below as needed */
+        margin: 1rem auto; /* spacing above/below as needed */
         cursor: pointer;
     }
 
@@ -3126,7 +3126,12 @@ h4.first-post-category {
 		text-align: center;
 		font-size: 32px;
 		margin-bottom: 2rem;
-	}
+}
+
+figcaption{
+	font-size: 14px;
+	font-style: italic;
+}
 
 /*article{
 	float: left;
