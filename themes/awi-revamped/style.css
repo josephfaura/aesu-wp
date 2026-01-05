@@ -2575,13 +2575,20 @@ header .container{
 		padding:18px 32px;
 	}
 }
-@media screen and (max-width:311px){
+@media screen and (max-width: 350px) {
+	.inner-header {
+		flex-direction: column !important;
+	}
+}
+/*@media screen and (max-width:311px){
 	.header_phone{
 		display: inline-block;
 		padding-left:0;
 		display:block;
 	}
-}
+}*/
+
+
 /* Navigation */
 .awiNav__trigger,
 .awiNav-wrap .awiNav__close,
@@ -2623,13 +2630,13 @@ header .container{
 }
 
 .awiNav a {
-	font-size: 18px;
+	/*font-size: 18px;
 	display: block;
 	padding: 0 15px;
-	white-space: nowrap;
+	white-space: nowrap;*/
 	text-decoration: none;
-	text-transform: uppercase;
-	color: #444;
+	/*text-transform: uppercase;
+	color: #444;*/
 }
 
 .awiNav a:hover {
@@ -2675,7 +2682,7 @@ header .container{
 	background-color: #b0101b;
 }
 
-@media screen and (min-width: 4000px) {
+/*@media screen and (min-width: 4000px) {
 	.awiNav li:hover > ul {
 		display: block;
 	}
@@ -2696,7 +2703,7 @@ header .container{
 		text-transform: uppercase;
 		color: #444;
 	}
-}
+}*/
 
 @media screen and (max-width: 3999px) {
 	.awiNav-cover {
@@ -2750,10 +2757,10 @@ header .container{
 		z-index: 999999;
 		top: 0;
 		left: 100%;
-		width: calc(100% - 45px);
-		max-width: 320px;
-		height: calc(100vh + 200px);
-		padding-bottom: 200px;
+		/*width: calc(100% - 45px);
+		max-width: 320px;*/
+		height: 100vh;
+		/*padding-bottom: 200px;*/
 		-webkit-transition: -webkit-transform .3s ease-out;
 			 -o-transition:         transform .3s ease-out;
 				transition: -webkit-transform .3s ease-out;
@@ -2769,11 +2776,11 @@ header .container{
 	}
 
 	.awiNav-wrap .awiNav__close {
-		font-size: .9rem;
+		/*font-size: .9rem;
 		font-weight: 700;
-		position: relative;
+		position: relative;*/
 		display: block;
-		width: 100%;
+		/*width: 100%;
 		height: 45px;
 		padding-left: 50px;
 		text-align: left;
@@ -2781,12 +2788,13 @@ header .container{
 		border-bottom: 1px solid #fff;
 		border-radius: 0;
 		background: none;
-		color:#fff;
+		color:#fff;*/
 	}
 
 	.awiNav-wrap .awiNav__close:hover,
 	.awiNav a:hover {
-		background: rgba(255, 255, 255, .1);
+		background: transparent;
+		/*background: rgba(255, 255, 255, .1);*/
 	}
 
 	.awiNav-wrap .awiNav__close:active {
@@ -2822,9 +2830,9 @@ header .container{
 
 	.awiNav {
 		overflow-y: auto;
-		width: 100%;
+		/*width: 100%;*/
 		max-height: calc(100% - 45px);
-		text-align: left;
+		text-align: center;
 	}
 
 	.awiNav.nav-hidden,
@@ -2839,12 +2847,12 @@ header .container{
 
 	.awiNav li,
 	.awiNav > li {
-		font-size: 0;
-		line-height: 1.2;
-		display: block;
+		/*font-size: 0;*/
+		line-height: 3rem;
+		/*display: block;*/
 		width: 100%;
 		height: auto;
-		border-bottom: 1px dotted rgba(255, 255, 255, .1);
+		/*border-bottom: 1px dotted rgba(255, 255, 255, .1);*/
 	}
 
 	.awiNav__links {
@@ -2854,10 +2862,10 @@ header .container{
 	.awiNav a,
 	.awiNav ul a {
 		font-size: 1rem;
-		display: block;
-		padding: calc(22.5px - .6rem) 15px;
+		/*display: block;
+		padding: calc(22.5px - .6rem) 15px;*/
 		white-space: normal;
-		color: #fff;
+		/*color: #fff;*/
 	}
 
 	.awiNav a:hover {
@@ -2920,7 +2928,100 @@ header .container{
 	}
 }
 
+/* ===============================
+   AWI NAV → MODAL-STYLE SKIN
+   Matches travel_tools modal UI
+   =============================== */
 
+/* Overlay */
+.awiNav-cover {
+  background: rgba(0,0,0,.6);
+}
+
+/* Center the nav like a modal */
+.awiNav-wrap {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Keep existing slide logic intact */
+.awiNav-wrap.nav-shown {
+  transform: translateX(-100%);
+}
+
+/* Modal “outline” look */
+.awiNav {
+  background: #3a3a3a;
+  box-shadow: 0 3px 10px rgba(0,0,0,.25);
+  margin: 1rem;
+  min-width: 350px;
+  /*width: calc(100% - 50%);*/
+}
+
+/* Close button – modal style */
+.awiNav__close {
+  height: auto;
+  padding: 24px; /* so the close button doesn't go over the modal */
+  border: 0;
+  font-size: 0;
+  background: transparent;
+}
+
+/* Keep existing X icon (spans) */
+.awiNav__close span {
+  top: 18px;
+  right: 18px;
+  left: auto;
+  z-index: 99999999;
+}
+
+/* Hamburger unchanged, slight polish */
+.awiNav__trigger {
+  width: 44px;
+  height: 44px;
+}
+
+.awiNav__trigger span {
+  left: 6px;
+}
+
+/* Menu links – travel_tools feel */
+.awiNav a,
+.awiNav ul a {
+  color: #d7d7d7;
+  display: block;
+  /*font-size: 80%;*/
+  padding: 2rem 5rem;
+  text-transform: uppercase;
+  letter-spacing: .05rem;
+}
+
+.awiNav a:hover {
+  color: #f2f2f2;
+  background: #444;
+}
+
+/* Submenus – grouped like modal sections */
+.awiNav ul {
+  background: rgba(255,255,255,.08);
+}
+
+.awiNav ul a {
+  padding-left: 3.5rem;
+}
+@media screen and (max-width: 375px) {
+	.awiNav-wrap.nav-shown {
+		transform: translateX(-110%);
+	}
+	.awiNav {
+		min-width: 100%;
+	}
+}
 /****Page Template Adjustments****/
 
 .wp-block-image img {
@@ -3558,9 +3659,9 @@ color:#fff;
 .whats_included_accordion_section{
 	position:relative;
 }
-.trips-template-default ul{
+/*.trips-template-default ul{
 	margin-left:0;
-}
+}*/
 
 .accordion_trigger{
 	padding:14px 30px;
