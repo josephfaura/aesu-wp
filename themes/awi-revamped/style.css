@@ -2791,12 +2791,13 @@ header .container{
 		color:#fff;*/
 	}
 
-	.awiNav-wrap .awiNav__close:hover,
+	.awiNav-wrap,
 	.awiNav a:hover {
-		background: transparent;
-		/*background: rgba(255, 255, 255, .1);*/
+		background: rgba(255, 255, 255, .1);
 	}
-
+	.awiNav__close:hover {
+			background: transparent !important;
+	}
 	.awiNav-wrap .awiNav__close:active {
 		-webkit-transform: none;
 			-ms-transform: none;
