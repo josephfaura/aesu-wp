@@ -60,7 +60,7 @@ if(function_exists('get_field')){
     }
     .trip_year_title{
         text-align:center;
-        margin:0 0 32px;
+        margin:0 0 24px;
     }
     .trip_post {
         display:flex;
