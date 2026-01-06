@@ -217,7 +217,6 @@ if ( ! empty( $top_tags ) && ! is_wp_error( $top_tags ) ) : ?>
     </ul>
 <?php endif; ?>
 
-</div>
 
 
 
@@ -273,7 +272,7 @@ foreach ( $top_cat_ids as $cat_id ) :
 
     if ( $query->have_posts() ) : ?>
 
-<div class="container">
+
 <section class="related-articles">
     <h2 class="related-articles-title">Latest in <?php echo esc_html( $cat->name ); ?></h2>
 
@@ -372,9 +371,7 @@ if ( ! empty( $top_cats ) ) : ?>
 
 <?php endif; ?>
 
-</div>
 
-<div class="container">
 
 <?php
 

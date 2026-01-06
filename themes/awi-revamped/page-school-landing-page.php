@@ -71,7 +71,8 @@ if(function_exists('get_field')){
     .trip_post > li{
         display:flex;
         flex-direction:column;
-        width: calc(100% / 3 - 32px);
+        width: calc(34% - 32px);
+        /* width: calc(100% / 3 - 32px); // can't understand why this math produces a narrow grid and 34% - 32px fits perfect when the math doesn't add up ¯\_(ツ)_/¯ */
         text-align:center;
         border-radius: 6px;
         box-shadow:0 3px 10px rgba(0,0,0,.25)

@@ -1625,7 +1625,8 @@ a:not(.card_image_link):active {
 .latest_posts_list li{
 	box-shadow: 0 3px 10px rgba(0,0,0,.25);
 	border-radius: 6px;
-	flex: 0 0 calc(33.333% - 32px);
+	flex: 0 0 calc(34% - 32px);
+	/*flex: 0 0 calc(33.333% - 32px); //this makes the width of the container look narrower */
 	display: flex;
 	flex-direction: column;
 }
