@@ -1835,6 +1835,10 @@ a:not(.card_image_link):active {
 	display: flex;
 	flex-wrap:wrap
 }
+/*body .subscription_section{
+	padding-left:0;
+	padding-right:0;
+}*/
 .subscribe_title_area{
 		/*width: 600px;
     padding: 100px 40px;*/
@@ -3755,18 +3759,10 @@ i.fa-star{
 .slick-dots{
 	margin-left:0!important;;
 }
-.single-trips section,
-.single-tours section{
-	padding-left:56px;
-	padding-right:56px;
-}
-body .subscription_section{
-	padding-left:0;
-	padding-right:0;
-}
 .hotels_slider {
 
 }
+
 .trip_highlight_items {
 	margin:0;
 	padding:0;
@@ -3839,8 +3835,19 @@ body .subscription_section{
 .single-tours .slick-list{
 	margin-bottom:48px;
 }
-	
-@media screen and (max-width:1200px){
+
+
+@media screen and (min-width:1300px){
+	.single-trips section,
+	.single-tours section{
+		padding-left:56px;
+		padding-right:56px;
+	}
+}
+@media screen and (max-width:1300px){
+	.single-trips .trip_header{
+		padding:24px 32px 32px;
+	}
 	.trip_name {
 		font-size: 3em;
 	}
