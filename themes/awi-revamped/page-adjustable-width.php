@@ -17,8 +17,18 @@ if(function_exists('get_field')){
 }
 ?>
 <style>
+	body main {
+		margin:0;
+	}
 	body main .container{
 		max-width:<?php echo $page_width ?>;
+		padding:0;
+	}
+	.no-banner{
+		margin:0
+	}
+	.site-footer{
+		padding:0;
 	}
 </style>
 <?php if(have_rows('slider',$dupID)) { ?>
@@ -53,13 +63,6 @@ if(function_exists('get_field')){
 <main>
     
     <div class="container">
-        <?php if (the_field('h1_page_title')){ ?>
-		<div class="header">
-			<h1>
-				<?php the_field('h1_page_title'); ?>
-			</h1>
-		</div>
-		<?php } ?>
         <article class="full-width" style="width:100%;max-width:100%;">
 
             <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -67,7 +70,6 @@ if(function_exists('get_field')){
                 <div class="post" id="post-<?php the_ID(); ?>">
                     <div class="entry">
                         <?php the_content(); ?>
-						<?php get_template_part('inc/flexible-content'); ?>
                     </div>
                 </div>
                 
