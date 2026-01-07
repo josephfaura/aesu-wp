@@ -44,13 +44,6 @@ get_header();
 <main>
     
     <div class="container">
-        <?php if (the_field('h1_page_title')){ ?>
-		<div class="header">
-			<h1>
-				<?php the_field('h1_page_title'); ?>
-			</h1>
-		</div>
-		<?php } ?>
         <article class="full-width" style="width:100%;max-width:100%;">
 
             <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -58,7 +51,6 @@ get_header();
                 <div class="post" id="post-<?php the_ID(); ?>">
                     <div class="entry">
                         <?php the_content(); ?>
-						<?php get_template_part('inc/flexible-content'); ?>
                     </div>
                 </div>
                 

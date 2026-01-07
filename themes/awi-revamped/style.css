@@ -3040,9 +3040,10 @@ header .container{
 }
 /****Page Template Adjustments****/
 
-.wp-block-image img {
-	border-radius: 6px;
+.is-layout-grid{
+	gap:32px; /* increases the size of the gap in gutenberg grid blocks */
 }
+
 .carousel__button.is-close {
 	right: -136px !important;
 }
@@ -3245,6 +3246,9 @@ h4.first-post-category {
 		margin-bottom: 2rem;
 }
 
+.single-post .wp-block-image img {
+	border-radius: 6px;
+}
 figcaption{
 	font-size: 14px;
 	font-style: italic;
