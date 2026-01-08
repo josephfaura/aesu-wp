@@ -37,29 +37,22 @@ if ( $wp_query->have_posts() ) {
 // If we found any usable image, show banner; otherwise show no-banner
 if ( ! empty( $thumb_url ) ) : ?>
     
-    <div class="banner_interior">
-        <div class="flexslider clearfix">
-            <ul class="slides">
-                <li style="background-image:url('<?php echo esc_url( $thumb_url ); ?>');">
-                    <div class="flex-caption">
-                        <div>
-                        	<h3><?php echo esc_html( get_search_query() ); ?></h3>
-                        	<!--<a href="<?php echo get_permalink(824) ?>" class="button cta-button">Search Other Trips</a>-->
+    <div class="banner_interior" style="background-image:url('<?php echo esc_url( $thumb_url ); ?>');">
+        <div class="container">
+            <h3><?php echo esc_html( get_search_query() ); ?></h3>
+            
+            <!--<a href="<?php echo get_permalink(824) ?>" class="button cta-button">Search Other Trips</a>-->
 
 
-                        	<p><form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
-								<label>
-									<span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
-									<i class="fa fa-search"></i>
-									<input type="search" id="trip-search" class="search-field" placeholder="Where would you like to go?" value="" name="s">
-								</label>
-								<input type="submit" class="search-submit" value="Search">
-								<input type="hidden" name="post_type" value="trips" />
-							</form></p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            <p><form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
+			<label>
+			<span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
+			<i class="fa fa-search"></i>
+			<input type="search" id="trip-search" class="search-field" placeholder="Where would you like to go?" value="" name="s">
+			</label>
+			<input type="submit" class="search-submit" value="Search">
+			<input type="hidden" name="post_type" value="trips" />
+			</form></p>
         </div>
     </div>
 

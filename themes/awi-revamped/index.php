@@ -126,12 +126,7 @@ $banner_img = get_the_post_thumbnail_url( $posts_page_id, 'full' );
 
 <?php if ( $banner_img ) : ?>
 
-	<div class="banner_interior">
-		<div class="flexslider clearfix">
-			<ul class="slides">
-				<li style="background-image:url('<?php echo esc_url( $banner_img ); ?>');"></li>
-			</ul>
-		</div>
+	<div class="banner_interior" style="background-image:url('<?php echo esc_url( $banner_img ); ?>');">
 	</div>
 
 <?php else : ?>

@@ -149,12 +149,7 @@ if ( $thumb_id && $thumb_url ) {
 }
 
 if ( $valid ) : ?>
-	<div class="banner_interior">
-		<div class="flexslider clearfix">
-			<ul class="slides">
-				<li style="background-image:url('<?php echo esc_url( $thumb_url ); ?>');"></li>
-			</ul>
-		</div>
+	<div class="banner_interior"style="background-image:url('<?php echo esc_url( $thumb_url ); ?>');">
 	</div>
 <?php else : ?>
 	<div class="no-banner"></div>

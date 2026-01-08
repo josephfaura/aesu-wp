@@ -203,7 +203,7 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 		
 <?php
 // --------------------------------------
-// Determine referrer header type
+// Determine referrer header type (RUN ONCE)
 // --------------------------------------
 $referrer = $_SERVER['HTTP_REFERER'] ?? '';
 $referrer_header = null;
@@ -233,19 +233,26 @@ $is_awt = (
 );
 
 // --------------------------------------
-// Set links and labels
+// Shared links + labels (DEFINE ONCE)
 // --------------------------------------
 if ($is_awt) {
     // AWT SETTINGS
+    $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AWT&Action=Home';
     $contact_link = get_permalink(2836);
     $home_link    = get_permalink(898);
     $mobile_tag   = "Alumni World Travel";
+    $tagline      = "Alumni World Travel<br />Expanding Horizons Since 1977";
 } else {
     // DEFAULT = AESU SETTINGS
+    $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home';
     $contact_link = get_permalink(11601);
     $home_link    = get_home_url();
     $mobile_tag   = "Since 1977";
+    $tagline      = "Expanding Horizons <br/>Since 1977";
 }
+
+// Defensive cleanup (kept)
+$account_link = strtok($account_link, "\n");
 ?>
 
 <header class="mobile_header">
@@ -280,7 +287,7 @@ if ($is_awt) {
                 <div class="top_nav_account_wrap">
 
                     <span class="top_account_area">
-                        <a href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                        <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                     </span>
@@ -303,54 +310,6 @@ if ($is_awt) {
         </div>
     </div>
 </header>
-
-
-<?php
-// --------------------------------------
-// Determine referrer header type
-// --------------------------------------
-$referrer = $_SERVER['HTTP_REFERER'] ?? '';
-$referrer_header = null;
-
-if ($referrer) {
-    $ref_post_id = url_to_postid($referrer);
-    if ($ref_post_id) {
-        $referrer_header = get_field('header_type', $ref_post_id);
-    }
-}
-
-// --------------------------------------
-// Determine current post header type
-// --------------------------------------
-$current_header = get_field('header_type'); // AESU, AWT, or empty
-
-// --------------------------------------
-// FINAL LOGIC:
-// AWT wins when:
-//   - referrer header == AWT
-//   - OR current header == AWT
-// Otherwise default = AESU
-// --------------------------------------
-$is_awt = (
-    $referrer_header === 'AWT'
-    || $current_header === 'AWT'
-);
-
-// --------------------------------------
-// Set links and titles
-// --------------------------------------
-if ($is_awt) {
-    // AWT SETTINGS
-    $contact_link = get_permalink(2836);
-    $home_link    = get_permalink(898);
-    $tagline      = "Alumni World Travel<br />Expanding Horizons Since 1977";
-} else {
-    // DEFAULT = AESU SETTINGS
-    $contact_link = get_permalink(11601);
-    $home_link    = get_home_url();
-    $tagline      = "Expanding Horizons <br/>Since 1977";
-}
-?>
 
 <header class="desktop_header">
     <div class="container">
@@ -396,13 +355,13 @@ if ($is_awt) {
 
                 <div class="top_nav_account_wrap">
                     <span class="top_account_area">
-                        <a href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                        <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-circle-user"></i> My Account
                         </a>
                     </span>
 
                     <span class="top_account_area">
-                        <a class="header_cart" href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                        <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-cart-shopping"></i> My Cart
                         </a>
                     </span>

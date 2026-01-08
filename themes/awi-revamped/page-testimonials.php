@@ -102,35 +102,38 @@ get_header(); ?>
 }
 </style>
 
-<?php if(have_rows('slider',$dupID)) { ?>
-<div class="banner_interior">
-	<div class="flexslider clearfix">
-		<ul class="slides">
-			<?php while( have_rows('slider',$dupID) ): the_row();
-				$image = get_sub_field('slide_image');
-				$title = get_sub_field('slide_title');
-				$subtitle = get_sub_field('slide_subtitle');
-				$link = get_sub_field('slide_link'); ?>
-			<li style="background-image:url(<?php echo $image['url']; ?>);">
-				<div class="flex-caption">
-					<div>
-						<?php if($title) { ?>
-						<h3><?php echo $title; ?></h3>
-						<?php } if($subtitle) { ?>
-						<p><?php echo $subtitle; ?></p>
-						<?php } if($link) { ?>
-						<a href="<?php echo $link; ?>" class="button">Deals</a>
-						<?php } ?>
-					</div>
-				</div>
-			</li>
-			<?php endwhile; ?>
-		</ul>
+<?php if ( have_rows('slider', $dupID) ) : ?>
+	<?php
+	the_row(); // ← advance to FIRST slide only
+
+	$image    = get_sub_field('slide_image');
+	$title    = get_sub_field('slide_title');
+	$subtitle = get_sub_field('slide_subtitle');
+	$link     = get_sub_field('slide_link');
+	$copy	  = get_sub_field('slide_link_copy');
+	?>
+	
+	<div class="banner_interior" style="background-image:url(<?php echo esc_url($image['url']); ?>);">
+		<div class="container">
+			<?php if ( $title ) : ?>
+				<h3><?php echo esc_html($title); ?></h3>
+			<?php endif; ?>
+
+			<?php if ( $subtitle ) : ?>
+				<p><?php echo esc_html($subtitle); ?></p>
+			<?php endif; ?>
+
+			<?php if ( $link ) : ?>
+				<a href="<?php echo esc_url($link); ?>" class="cta-button">
+					<?php echo esc_html($copy); ?>
+				</a>
+			<?php endif; ?>
+		</div>
 	</div>
-</div>
-<?php } else { ?>
-<div class="no-banner"></div>
-<?php } ?>
+
+<?php else : ?>
+	<div class="no-banner"></div>
+<?php endif; ?>
 <main>
     
     <div class="container">
