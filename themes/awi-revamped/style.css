@@ -567,7 +567,7 @@ img {
 }
 
 figure {
-	margin: 1em 0;
+	margin: 1.5rem 0;
 }
 
 table {
@@ -3246,6 +3246,9 @@ h4.first-post-category {
 		margin-bottom: 2rem;
 }
 
+.wp-block-image figure {
+	margin: 1.5rem auto !important;
+}
 .single-post .wp-block-image img {
 	border-radius: 6px;
 }
@@ -4456,7 +4459,7 @@ article, aside {
 .banner_interior .container { padding: 0; }
 
 .banner_interior h3 {
-	margin:0;
+	margin:1rem auto;
 	font-size: 56px;
 	line-height: 1.25em;
 	color: #fff;
@@ -4468,10 +4471,8 @@ article, aside {
 }
 
 .banner_interior p {
-	margin: 0;
-	font-weight: 800;
-	font-size: 30px;
-	line-height: 1.1;
+	font-size: 1.5rem;
+	letter-spacing: .05rem;
 }
 .banner_interior .flexslider .slides > li{
 	height:100%;
