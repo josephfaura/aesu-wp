@@ -30,7 +30,7 @@ if(function_exists('get_field')){
 	.site-footer{
 		padding:0;
 	}
-	@media and screen(max-width: 875px){
+	@media screen and (max-width: 875px) {
 		body main .container{
 			max-width:100%;
 		}
