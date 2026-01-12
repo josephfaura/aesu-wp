@@ -1769,7 +1769,7 @@ a:not(.card_image_link):active {
   bottom: 1em;
   transform: translateX(-50%);
   white-space: nowrap;
-	color:#fff;
+	color:#f2f2f2;
 	text-align:center;
 	font-size: 1.5rem;
   letter-spacing: .15rem;
