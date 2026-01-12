@@ -227,8 +227,10 @@ if(function_exists('get_field')){
 
 		<?php }elseif($home_section_builder_item['section_type'] == 'Card Grid'){ ?>
 			<section class="travel_for_good">
-				<div class="travel_for_good_title"><h2><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_title'] ?></h2><p><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_text'] ?></p></div>
 				<div class="container">
+
+					<div class="travel_for_good_title"><h2><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_title'] ?></h2><p><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_text'] ?></p></div>
+				
 					<ul class="travel_for_good_list">
 						<?php foreach($home_section_builder_item['travel_for_good']['travel_for_good_items'] as $travel_for_good_item){ ?>
 							<li class="travel_for_good_item">

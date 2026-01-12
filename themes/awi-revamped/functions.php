@@ -289,7 +289,11 @@ function awi_initialize_scripts() { ?>
 
 	//Flexslider wait for page to load to animate
 	$(window).on('load', function() {
-		$('.flexslider').flexslider({ animation: "slide" });
+		$('.flexslider').flexslider({
+			animation: "slide",
+			prevText: '<i class="fa-solid fa-angle-left"></i>',
+			nextText: '<i class="fa-solid fa-angle-right"></i>'
+		});
 	});
 
 	// NOTE: The old global .accordion_trigger handler is removed.
