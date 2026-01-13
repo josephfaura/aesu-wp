@@ -922,8 +922,13 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
   .banner_arrow {
     bottom: 150px;
   }
-
 }
+@media screen and (max-width: 360px) {
+  .banner h1 {
+    font-size:42px;
+  }
+}
+
 /* Featured Trip */
 .featured_trip_title{
 	padding:0;
@@ -959,12 +964,8 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 .trip_details * {
 	max-width:600px
 }
-.trip_details p{
-	font-size:16px
-}
 .trip_featured_image{
 	background-color:gray;
-
 }
 .cta-button{    
 	background-color: #E74C3C;
@@ -989,6 +990,11 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 }
 a:not(.card_image_link):active {
   transform: translateY(3px);
+}
+@media screen and (max-width: 320px){
+	.cta-button {
+  	font-size: 1rem;
+  }
 }
 
 /* Card Image Links Hover State Hack */
@@ -1172,11 +1178,13 @@ a:not(.card_image_link):active {
 	.young_adult_trips .container {
 		padding: 0 24px;
 	}
-	.young_adult_trips h3{
-		font-size:32px;
-	}
 	.young_adult_trip_content{
 		padding:20px;
+	}
+}
+@media screen and (max-width:350px){
+	.young_adult_trips h3{
+		font-size:24px;
 	}
 }
 
@@ -1362,6 +1370,11 @@ a:not(.card_image_link):active {
 	/*.video_wrap{
 		height:300px;
 	}*/
+}
+@media screen and (max-width:425px){
+	.who_are_we_content{
+		padding:32px;
+	}
 }
 
 /* Testimonials Section*/
@@ -1591,6 +1604,14 @@ a:not(.card_image_link):active {
 		flex-direction: column;
 	}
 }
+@media screen and (max-width:375px){
+	.testimonial_text {
+		padding: 3rem 4rem;
+	}
+	.testimonial_text p{
+		font-size: 1.125rem;
+	}
+}
 
 /* Latest From Us*/
 .latest_from_us{
@@ -1768,7 +1789,7 @@ a:not(.card_image_link):active {
   left: 50%;
   bottom: 1em;
   transform: translateX(-50%);
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 	color:#f2f2f2;
 	text-align:center;
 	font-size: 1.5rem;
@@ -1983,7 +2004,8 @@ a:not(.card_image_link):active {
 	
 	.last_name_subscribe,.first_name_subscribe,
 	.email_subscribe,.subscribe_form input[type="submit"]{
-		width: calc(100%);
+		width: 100%;
+		margin: 5px 0;
 	}
 }
 /*Footer CTA*/
@@ -2252,7 +2274,7 @@ a:not(.card_image_link):active {
 /* Interior banner
 --------------------------------------------- */
 .interior-banner {
-	height: 500px;
+	height: 60vh;
 	position: relative;
 }
 
@@ -2622,6 +2644,9 @@ header .container{
 	.inner-header {
 		flex-direction: column !important;
 	}
+	.container {
+		padding: 0 24px;
+	}
 }
 /*@media screen and (max-width:311px){
 	.header_phone{
@@ -2756,7 +2781,7 @@ header .container{
 		left: 0;
 		width: 100%;
 		height: calc(100vh + 200px);
-		cursor: pointer;
+		/*cursor: pointer;*/
 		background: rgba(0, 0, 0, .6);
 	}
 
@@ -2977,11 +3002,6 @@ header .container{
    Matches travel_tools modal UI
    =============================== */
 
-/* Overlay */
-.awiNav-cover {
-  background: rgba(0,0,0,.6);
-}
-
 /* Center the nav like a modal */
 .awiNav-wrap {
   background: transparent;
@@ -3067,6 +3087,23 @@ header .container{
 	}
 }
 /****Page Template Adjustments****/
+
+.wp-block-heading,
+.gkit-heading-title { 
+	overflow-wrap: break-word; /* Breaks long words in titles so there is no overflow margin */
+  word-break: break-word;
+}
+.gkit-btn{
+	white-space: normal !important; /* Allows buttons to break into two lines */
+}
+@media screen and (max-width:350px){
+	.gkit-btn{
+		font-size: 1rem !important;
+	}
+	.wp-block-gutenkit-button{
+		width:auto !important; /* asjust a margin bug that pushes buttons out of their containers */
+	}
+}
 
 .is-layout-grid{
 	gap:32px; /* increases the size of the gap in gutenberg grid blocks */
@@ -3191,7 +3228,7 @@ h1.page-title {
 
 .blog .banner_interior,
 .blog .banner_interior .flexslider{
-		height:50vh;
+		height:40vh;
 }
 
 .blog h1{
@@ -3308,10 +3345,10 @@ aside ul{
 	margin: 0;
 }*/
 
-.single .banner_interior,
+/*.single .banner_interior,
 .single .banner_interior .flexslider{
 		height:50vh;
-}
+}*/
 
 .single main .container{
 	display: flex;
@@ -4496,7 +4533,7 @@ article, aside {
 	z-index:99;
 }
 
-.banner_interior .container { padding: 0; }
+/*.banner_interior .container { padding: 0; }*/
 
 .banner_interior h3 {
 	margin:1rem auto;
@@ -4504,7 +4541,11 @@ article, aside {
 	line-height: 1.25em;
 	color: #fff;
 }
-
+@media screen and (max-width: 350px){
+	.banner_interior h3 {
+		font-size: 42px;
+	}
+}
 .banner_interior .button { 
 	margin: 2rem auto 0;
 	font-size: 1.125rem;
