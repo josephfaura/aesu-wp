@@ -2962,8 +2962,12 @@ a.header_cart.:hover, a.header_cart:active {
   background: #3a3a3a;
   box-shadow: 0 3px 10px rgba(0,0,0,.25);
   margin: 1rem;
-
-  /*width: calc(100% - 50%);*/
+  min-width: 0;
+  max-width: 100%;
+}
+/* ONLY enforce modal width when menu is open */
+.awiNav-wrap.nav-shown .awiNav {
+  min-width: 350px;
 }
 
 /* Close button – modal style */

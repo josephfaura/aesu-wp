@@ -127,19 +127,20 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 					display: flex;
 					align-items: center;
 					gap: 18px;
+					min-width: 0;
 				}
 				.top_nav_account_wrap{
 					display: flex;
 					flex-direction: row;
+					gap:18px;
 				}
 				.top_nav_account_wrap .top_account_area i {
 					font-size: 24px;
 					padding-right:0;
-					padding-left:10px;
 				}
 				header .container .inner-header{
-						flex-direction:row;
-					}
+					flex-direction:row;
+				}
 			}
 			@media screen and (max-width:443px){
 				.mobile_header{
@@ -150,10 +151,6 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 					width: 85px;
 				}
 			}
-
-			a.header_cart.:hover, a.header_cart:active {
-   				color: #fff;
-   			}
 		</style>
 		
 <?php
