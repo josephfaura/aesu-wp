@@ -151,6 +151,11 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 					width: 85px;
 				}
 			}
+			@media screen and (max-width:350px){
+			    .inner-header {
+			        flex-direction: column !important;
+			    }
+			}
 		</style>
 		
 <?php
