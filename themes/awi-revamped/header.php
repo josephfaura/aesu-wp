@@ -144,7 +144,7 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 			}
 			@media screen and (max-width:443px){
 				.mobile_header{
-					padding:20px;
+					padding:24px;
 				}
 				.logo_wrap svg {
 					height: 35px;
