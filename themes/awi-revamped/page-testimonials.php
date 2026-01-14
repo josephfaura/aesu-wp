@@ -8,25 +8,6 @@
 get_header(); ?>
 
 <style>
-.slider-prev-next-wrapper {
-	display:none;
-}
-#g-review .swiper {
-	padding: 0 0 56px;
-}
-.wp-block-vgb-video-gallery .filter {
-	border-bottom:0;
-	padding:0;
-	margin: 0 0 32px;
-}
-.vgbVideoGallery .filter button {
-	width:auto;
-	font-weight:700;
-}
-.galleryItem {
-	border-radius:6px;
-}
-
 .testimonials-grid {
 	margin:32px auto;
     display: flex;
@@ -102,6 +83,7 @@ get_header(); ?>
 }
 </style>
 
+<main>
 <?php if ( have_rows('slider', $dupID) ) : ?>
 	<?php
 	the_row(); // ← advance to FIRST slide only
@@ -134,7 +116,6 @@ get_header(); ?>
 <?php else : ?>
 	<div class="no-banner"></div>
 <?php endif; ?>
-<main>
     
     <div class="container">
         <article class="full-width" style="width:100%;max-width:100%;">

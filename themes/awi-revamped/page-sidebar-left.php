@@ -6,6 +6,7 @@
  */
 
 get_header(); ?>
+<main>
 <?php if ( have_rows('slider', $dupID) ) : ?>
 	<?php
 	the_row(); // ← advance to FIRST slide only
@@ -38,7 +39,7 @@ get_header(); ?>
 <?php else : ?>
 	<div class="no-banner"></div>
 <?php endif; ?>
-<main>
+
 	<div class="container">
 		<article>
 			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>

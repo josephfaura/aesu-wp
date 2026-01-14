@@ -8,16 +8,6 @@
  *
  * @package AWI_Revamped
  */
-GLOBAL $detect;
-if(function_exists('get_field')) {
- 	$header_image = get_field('header_image') ? $header_image = get_field('header_image') : $header_image = get_field('default_header_image', 'option');
- 	//$header_image = ($detect->isMobile() && !$detect->isTablet()) ? $header_image['sizes']['large'] : $header_image['url'];
-	if(is_singular('trips')){
-	$header_type = get_field('header_type',get_the_ID());
-	}else{
-	$header_type = get_field('header_type');
-	}
-}
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -383,8 +373,3 @@ $account_link = strtok($account_link, "\n");
         </div>
     </div>
 </header>
-
-
-<?php if($header_image && !is_front_page()) { ?>
-	<div class="interior-banner" style="background-image:url('<?php echo $header_image; ?>');"></div>
-<?php } ?>

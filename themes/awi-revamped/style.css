@@ -3172,9 +3172,6 @@ header .container{
 			max-width:100%;
 		}
 	}
-	h1.page-title {
-		text-align: center;
-	}
 	*/
 
 .full-width{
@@ -3236,6 +3233,10 @@ iframe[src*="youtu.be"] {
 
 /****Blog Styling****/
 
+	h1.page-title {
+		text-align: center;
+	}
+	
 .posts-navigation {
 	margin:2rem auto;
 }

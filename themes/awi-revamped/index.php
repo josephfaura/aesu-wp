@@ -43,79 +43,9 @@ get_header();
 	    background: #2c768e;
 	    color: #fff;
 	}
-
-	/*.wp-posts-list{
-		list-style: none;
-		margin:0;
-		padding:0;
-	}
-	.wp-posts-list > li{
-		margin-left:0;
-		text-align: left;
-		margin-bottom:15px;
-		padding-bottom:15px;
-		border-bottom:1px solid #000;
-	}
-	.wp-posts-list p{
-		margin:10px 0;
-	}
-	.post_list article{
-		width:100%!important;
-	}
-	.postmetadata-list{
-		list-style: none;
-		display: flex;
-		gap:10px;
-		margin-left:0;
-		padding-left:0;
-	}
-	.sidebar ul{
-		padding:0;
-	}
-	.sidebar{
-		max-width:300px;
-		margin-left:20px;
-	}
-	.wp-block-search__button{
-		max-width:71px;
-	}
-	.sidebar h2{
-		font-size:26px;
-	}
-	.wp-posts-list h2{
-		font-size:26px;
-		margin-top:0;
-	}
-	.wp-posts-list li{
-		display:flex;
-		gap:30px;
-	}
-	.blog_thumbnail{
-		min-width:300px;
-	}
-	body main article{
-		width: calc(100% - 286px);
-	}
-	@media screen and (max-width:982px){
-		#primary .container{
-			display:block;
-		}
-		article, .sidebar{
-			float:none!important;
-			width:100%!important;
-		}
-	}
-	@media screen and (max-width:672px){
-		.wp-posts-list li{
-			display:block;
-		}
-		.blog_thumbnail{
-			height:200px;
-			min-width:100%;
-			margin-bottom:20px;
-		}
-	}*/
 </style>
+
+<main id="primary" class="site-main">
 
 <!-- Hiding top banner for now but keeping it in case we want it back
 <?php
@@ -134,7 +64,6 @@ $banner_img = get_the_post_thumbnail_url( $posts_page_id, 'full' );
 
 <div class="no-banner"></div>
 
-<main id="primary" class="site-main">
 <div class="container">
 
 	<h4 class="blog-type-label">Latest From Us</h4>

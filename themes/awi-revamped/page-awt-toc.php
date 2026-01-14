@@ -6,13 +6,7 @@
  */
 
 get_header(); ?>
-<?php
-if(function_exists('get_field')){
-	$banner_background = get_field('banner_background');
-	$institutions = get_field('institutions');
-	$banner_text = get_field('banner_text');
-}
-?>
+
 <style>
 	.interior_banner {
 		height:60vh;
@@ -25,7 +19,7 @@ if(function_exists('get_field')){
 		position: relative;
 		margin-bottom:32px;
 	}
-	main .interior_banner .container{
+	.interior_banner .container{
 		width:100%;
 		display: flex;
     	flex-direction: column;
@@ -34,7 +28,7 @@ if(function_exists('get_field')){
 	}
 	.interior_banner *{
 		position: relative;
-		z-index:9;
+		z-index:999;
 		color:#fff;
 	}
 	.interior_banner:after{
@@ -45,17 +39,6 @@ if(function_exists('get_field')){
 		width:100%;
 		background-color:rgba(0,0,0,.4);
 		height:100%;
-	}
-	.interior_banner h1{
-		font-weight:bold;
-		font-size:56px;
-		line-height:1.25em;
-		color:#fff;
-		position: relative;
-		z-index:9;
-	}
-	.interior_banner p{
-		font-size:24px;
 	}
 	.interior_banner .form_banner{
 		display: flex;
@@ -80,7 +63,7 @@ if(function_exists('get_field')){
 	    /*transform: translateY(-50%);*/
 	    pointer-events: none;
 	    font-size: 1rem;
-	    z-index:99999;
+	    z-index:9999;
 	}
 	.interior_banner .button{
 		background: #e74c3c;
@@ -91,6 +74,7 @@ if(function_exists('get_field')){
 	    line-height: 37px;
 		text-align: center;
 	    text-transform: uppercase;
+	    margin: 0;
 	    padding: 0px 20px;
 	    border:0;
 	    border-radius:3px;
@@ -172,7 +156,7 @@ if(function_exists('get_field')){
 				width: 100%;
 				max-width: 100%;
 			}
-		.interior_banner h1 {
+		.interior_banner h3 {
 			font-size: 42px;
 		}
 		.interior_banner .form_banner {
@@ -195,18 +179,34 @@ if(function_exists('get_field')){
 		}
 	}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <main>
-	<div class="interior_banner" style="background-image:url('<?php echo $banner_background['url'] ?>');">
+
+<?php if ( have_rows('slider', $dupID) ) : ?>
+	<?php
+	the_row(); // ← advance to FIRST slide only
+
+	$image    = get_sub_field('slide_image');
+	$title    = get_sub_field('slide_title');
+	?>
+	
+	<div class="banner_interior interior_banner" style="background-image:url(<?php echo esc_url($image['url']); ?>);">
 		<div class="container">
-			<?php echo do_shortcode($banner_text); ?>
-			<div class="form_banner">
-				<i class="fa fa-search"></i>
-				<input type="text" id="search_packages" placeholder="What school are you looking for?">
-				<a href="#" id="search_submit" class="button">Search</a>
-			</div>
+			<?php if ( $title ) : ?>
+				<h3><?php echo esc_html($title); ?></h3>
+			<?php endif; ?>
+				<div class="form_banner">
+					<i class="fa fa-search"></i>
+					<input type="text" id="search_packages" placeholder="What school are you looking for?">
+					<a href="#" id="search_submit" class="button">Search</a>
+				</div>
 		</div>
 	</div>
+
+<?php else : ?>
+	<div class="no-banner"></div>
+<?php endif; ?>
+
 	<div class="container">
 		<article class="full-width" style="max-width:100%;">
 			<?php

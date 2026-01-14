@@ -11,7 +11,7 @@
 
 get_header();
 ?>
-
+<main>
 <?php if ( have_rows('slider', $dupID) ) : ?>
 	<?php
 	the_row(); // ← advance to FIRST slide only
@@ -45,7 +45,6 @@ get_header();
 	<div class="no-banner"></div>
 <?php endif; ?>
 
-<main>
     <div class="container">
         <article class="full-width" style="width:100%;max-width:100%;">
 
@@ -62,5 +61,4 @@ get_header();
         </article>
     </div>
 </main>
-
 <?php get_footer(); ?>

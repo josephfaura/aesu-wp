@@ -11,6 +11,7 @@
 
 get_header();
 ?>
+
 <?php
 if(function_exists('get_field')){
 	$page_width = get_field('page_width');
@@ -36,6 +37,8 @@ if(function_exists('get_field')){
 		}
 	}
 </style>
+
+<main>
 <?php if ( have_rows('slider', $dupID) ) : ?>
 	<?php
 	the_row(); // ← advance to FIRST slide only
@@ -68,7 +71,6 @@ if(function_exists('get_field')){
 <?php else : ?>
 	<div class="no-banner"></div>
 <?php endif; ?>
-<main>
     
     <div class="container">
         <article class="full-width" style="width:100%;max-width:100%;">
