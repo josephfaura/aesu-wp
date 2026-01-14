@@ -116,24 +116,23 @@ get_header();
 		}
 	}*/
 </style>
+
+<!-- Hiding top banner for now but keeping it in case we want it back
 <?php
 // Get the ID of the Posts Page (from Settings → Reading)
 $posts_page_id = get_option('page_for_posts');
-
 // Get the featured image URL for that page
 $banner_img = get_the_post_thumbnail_url( $posts_page_id, 'full' );
 ?>
-
 <?php if ( $banner_img ) : ?>
-
 	<div class="banner_interior" style="background-image:url('<?php echo esc_url( $banner_img ); ?>');">
 	</div>
-
 <?php else : ?>
-
 	<div class="no-banner"></div>
-
 <?php endif; ?>
+-->
+
+<div class="no-banner"></div>
 
 <main id="primary" class="site-main">
 <div class="container">

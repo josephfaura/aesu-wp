@@ -132,6 +132,12 @@ get_header();
 			padding-top:0;
 		}*/
 	}
+	@media screen and (max-width: 350px) {
+		.single-post .entry h2{
+			font-size: 1.5rem;
+		}
+	}
+
 </style>
 
 <?php

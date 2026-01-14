@@ -46,7 +46,6 @@ get_header();
 <?php endif; ?>
 
 <main>
-    
     <div class="container">
         <article class="full-width" style="width:100%;max-width:100%;">
 

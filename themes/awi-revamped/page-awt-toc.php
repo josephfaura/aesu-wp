@@ -37,12 +37,6 @@ if(function_exists('get_field')){
 		z-index:9;
 		color:#fff;
 	}
-
-	.interior_banner h1{
-		position: relative;
-		z-index:9;
-		color:#fff!important;
-	}
 	.interior_banner:after{
 		content:'';
 		position: absolute;
@@ -52,14 +46,13 @@ if(function_exists('get_field')){
 		background-color:rgba(0,0,0,.4);
 		height:100%;
 	}
-	.packages{
-		padding-left:0;
-	}
 	.interior_banner h1{
 		font-weight:bold;
 		font-size:56px;
 		line-height:1.25em;
 		color:#fff;
+		position: relative;
+		z-index:9;
 	}
 	.interior_banner p{
 		font-size:24px;
@@ -82,9 +75,9 @@ if(function_exists('get_field')){
 	.interior_banner i{
 		position: absolute;
 		color:#5e5e5e;
-	    top: 50%;
+	    /*top: 50%;*/
 	    left: 15px;
-	    transform: translateY(-50%);
+	    /*transform: translateY(-50%);*/
 	    pointer-events: none;
 	    font-size: 1rem;
 	    z-index:99999;
@@ -116,6 +109,7 @@ if(function_exists('get_field')){
 		flex-wrap:wrap;
 		justify-content: center;
 		gap:32px;
+		padding-left:0;
 	}
 	.packages li {
 		width:calc(100% / 3 - 32px);
@@ -124,15 +118,6 @@ if(function_exists('get_field')){
 		box-shadow: 0 3px 10px rgba(0,0,0,.25);
 		border-radius: 6px;
 	}
-	/*.packages li > a{
-		display: flex;
-		flex-direction: column;
-		height:100%;
-		transition:.25s all;
-	}
-	.packages li > a:hover{
-		transform:translateY(-10px);
-	}*/
 	.packages div.thumbnail_wrap{
 		border-radius:6px 6px 0 0;
 		padding: 32px;
@@ -148,24 +133,6 @@ if(function_exists('get_field')){
 	.packages a:hover div.package_thumbnail{
 		transform: scale(.975);
 	}
-	/*.packages li > a:hover div.package_thumbnail{
-		background-color:#f5f5f5;
-	}
-	.university_link{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		position: absolute;
-		left:0;
-		top:0;
-		width:100%;
-		height:100%;
-		background:none!important;
-		padding:25px;
-	}
-	.university_link img{
-   	 	max-height: 100%;
-	}*/
 	.packages div.package_content{
 		padding:32px;
 		text-align: center;
@@ -182,56 +149,12 @@ if(function_exists('get_field')){
 		max-width:100%;
 	}
 	main .container{
-		max-width:1400px;
-	}
-	.package_price{    
-		margin-top: auto;
-	    font-size: 18px;
-	    color: #646464;
-	}
-	.package_overlayed_text{
-		color:#5e5e5e;
-		position: absolute;
-		right:0;
-		top:10px;
-		padding:5px 10px;
-		font-weight:bold;
-		background-color:rgba(255,255,255,.8);
-		text-transform:uppercase;
-	}
-	.package_description{
-		margin-bottom:10px;
-		font-size:16px;
-		color:#5e5e5e;
+		max-width:1300px;
 	}
 	.package_content h3{
 		font-size:1.5em;
 		margin-top:0;
 		color:#5e5e5e;
-	}
-	main article h2{
-		font-weight:bold;
-		margin:0;
-	}
-	.header {
-		border:none;
-	}
-	.no-banner{
-		display: none;
-	}
-	.individual_trips{
-		background:#b5b5b5;
-		color:#5e5e5e;
-		font-weight:bold;
-		padding:5px;
-		text-align: center;
-		display: block;
-		margin-bottom:5px;
-		transition:.2s all;
-	}
-	.individual_trips:hover{
-		background-color:#cbcbcb;
-		text-decoration:none;
 	}
 	@media screen and (max-width:998px){
 		.packages li {
@@ -239,10 +162,11 @@ if(function_exists('get_field')){
 		}
 	}
 	@media screen and (max-width: 767px) {
-    .interior_banner {
-    	height:100vh;
-        background-attachment: scroll;
-    }
+	    .interior_banner {
+	    	height:100vh;
+	        background-attachment: scroll;
+	    }
+	}
 	@media screen and (max-width:600px){
 		.interior_banner .button{
 				width: 100%;
@@ -254,6 +178,9 @@ if(function_exists('get_field')){
 		.interior_banner .form_banner {
 			flex-direction:column;
 			gap:20px;
+		}
+		.interior_banner i {
+			transform:translateY(-175%);
 		}
 		.packages li {
 			width:calc(100% / 1 - 20px);
@@ -267,120 +194,6 @@ if(function_exists('get_field')){
 			width:100%;
 		}
 	}
-
-form .list--unstyled {
-	margin: 0 -6px;
-	list-style:none;
-}
-
-form .list--unstyled li {
-	margin: 12px 6px;
-}
-
-.list--unstyled .form-field--half {
-	float: left;
-	width: calc(50% - 12px);
-	margin: 6px;
-}
-
-.list--unstyled .form-field--third {
-	float: left;
-	width: calc(33.3333% - 12px);
-	margin: 6px;
-}
-
-form .list--unstyled li:first-child,
-form .list--unstyled .form-field--half:first-child,
-form .list--unstyled .form-field--half:first-child + .form-field--half,
-form .list--unstyled .form-field--third:first-child,
-form .list--unstyled .form-field--third:first-child + .form-field--third,
-form .list--unstyled .form-field--third:first-child + .form-field--third + .form-field--third {
-	margin-top: 0;
-}
-
-form .list--unstyled li:last-child,
-form .list--unstyled .form-field--half:last-child,
-form .list--unstyled li:not(.form-field--half) + .form-field--half:nth-last-child(2),
-form .list--unstyled .form-field--third:last-child,
-form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3),
-form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3) + .form-field--third:nth-last-child(2) {
-	margin-bottom: 0;
-}
-
-.form-field--half + li:not(.form-field--half):not(.form-field--third),
-.form-field--third + li:not(.form-field--half):not(.form-field--third) {
-	clear: both;
-	margin-top: 0;
-	padding-top: 6px;
-}
-
-li:not(.form-field--half):not(.form-field--third) + .form-field--half,
-li:not(.form-field--half):not(.form-field--third) + .form-field--half + .form-field--half,
-li:not(.form-field--half):not(.form-field--third) + .form-field--third,
-li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-field--third,
-li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-field--third + .form-field--third {
-	margin-top: 0;
-}
-
-@media screen and (max-width: 567px) {
-	.list--unstyled .form-field--half,
-	.list--unstyled .form-field--third {
-		float: none;
-		width: auto;
-		margin: 12px 6px;
-	}
-
-	.form-field--half + li:not(.form-field--half):not(.form-field--third),
-	.form-field--third + li:not(.form-field--half):not(.form-field--third) {
-		margin-top: 12px;
-		padding-top: 0;
-	}
-
-	form .list--unstyled .form-field--half:first-child + .form-field--half,
-	form .list--unstyled .form-field--third:first-child + .form-field--third,
-	form .list--unstyled .form-field--third:first-child + .form-field--third + .form-field--third,
-	li:not(.form-field--half):not(.form-field--third) + .form-field--half,
-	li:not(.form-field--half):not(.form-field--third) + .form-field--half + .form-field--half,
-	li:not(.form-field--half):not(.form-field--third) + .form-field--third,
-	li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-field--third,
-	li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-field--third + .form-field--third {
-		margin-top: 12px;
-	}
-
-	form .list--unstyled li:not(.form-field--half) + .form-field--half:nth-last-child(2),
-	form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3),
-	form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3) + .form-field--third:nth-last-child(2) {
-		margin-bottom: 12px;
-	}
-}
-input, textarea, select, button, .button {
-    padding: 8px;
-    width: 100%;
-    height: 40px;
-    height: auto\9;
-    font: inherit;
-    background: #fff;
-    /*border: 1px solid #ccc;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;*/
-}
-button, html input[type="button"], input[type="reset"], input[type="submit"], .button {
-    padding: 0 60px;
-    width: auto;
-    height: 56px;
-    font-weight: 600;
-    font-size: 26px;
-    color: #fff;
-    text-transform: uppercase;
-    background: #e74c3c;
-    border: none;
-    /*border-bottom: 3px solid #c0392b;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;*/
-    cursor: pointer;
-}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <main>
@@ -395,11 +208,6 @@ button, html input[type="button"], input[type="reset"], input[type="submit"], .b
 		</div>
 	</div>
 	<div class="container">
-		<!--<div class="header">
-			<h1 style="color:#666 !important;">
-				<?php the_field('h1_page_title'); ?>
-			</h1>
-		</div>-->
 		<article class="full-width" style="max-width:100%;">
 			<?php
 			$args = [

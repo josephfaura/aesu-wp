@@ -15,66 +15,32 @@
 get_header();
 if(function_exists('get_field')){
 
-/*	//banner
-	$banner_image = get_field('banner_image');
-	$banner_title = get_field('banner_title');
-	$banner_tagline = get_field('banner_tagline');
-	$banner_cta = get_field('banner_cta');
-	//featured trip
-	$featured_trip_title = get_field('featured_trip_title');
-	$featured_trip = get_field('featured_trip_group');
-	//why travel
-	$why_travel_with_us_title = get_field('why_travel_with_us_title');
-	$why_travel_items = get_field('why_travel_items');
-	//trips for young adults
-	$trips_for_young_adults_title = get_field('trips_for_young_adults_title');
-	$trips_for_young_adults = get_field('trips_for_young_adults');
-	//who we are
-	$who_are_we_title = get_field('who_are_we_title');
-	$who_are_we_text = get_field('who_are_we_text');
-	$who_are_we_cta = get_field('who_are_we_cta');
-	$who_are_we_video_background = get_field('who_are_we_video_background');
-	$who_are_we_video_youtube_link = get_field('who_are_we_video_youtube_link');
-	//testimonials
-	$testimonials = get_field('testimonials');
-	$testimonial_cta = get_field('testimonial_cta');
-	$testimonial_videos = get_field('testimonial_videos');
-	//bespoke travel
-	$bespoke_travel_title = get_field('bespoke_travel_title');
-	$bespoke_travel_text = get_field('bespoke_travel_text');
-	$bespoke_travel_cta = get_field('bespoke_travel_cta');
-	$bespoke_travel_slider = get_field('bespoke_travel_slider');
-	//travel for good
-	$travel_for_good_title = get_field('travel_for_good_title');
-	$travel_for_good_text = get_field('travel_for_good_text');
-	$travel_for_good_items = get_field('travel_for_good_items');*/
-
-	//Homepage Builder
 	$home_section_builder = get_field('home_section_builder');
 }
 ?>
 
 	<main id="primary" class="site-main">
 
+	<?php foreach($home_section_builder as $home_section_builder_item){ ?>
+
 <!--BANNER SECTION-->
 
-	<?php foreach($home_section_builder as $home_section_builder_item){ ?>
 		<?php if($home_section_builder_item['section_type'] == 'Banner Area'){ ?>
 			<div class="banner" style="background-image:url(<?php echo $home_section_builder_item['banner_area']['banner_image']['url'] ?>)">
 				<div class="container">
 					<h1><?php echo $home_section_builder_item['banner_area']['banner_title']; ?></h1>
 					<h2><?php echo $home_section_builder_item['banner_area']['banner_tagline']; ?></h2>
-					<a href="<?php echo $home_section_builder_item['banner_area']['banner_cta']['url'] ?>" class="cta-button"><?php echo $home_section_builder_item['banner_area']['banner_cta']['title'] ?></a>
+					<!--<a href="<?php echo $home_section_builder_item['banner_area']['banner_cta']['url'] ?>" class="cta-button"><?php echo $home_section_builder_item['banner_area']['banner_cta']['title'] ?></a>-->
 
-					<!--<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
+					<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
 						<label>
 							<span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
 							<i class="fa fa-search"></i>
 							<input type="search" id="trip-search" class="search-field" placeholder="Where would you like to go?" value="" name="s">
 						</label>
-						<input type="submit" class="search-submit" value="Start Here">
+						<input type="submit" class="search-submit" value="Begin Your Story">
 						<input type="hidden" name="post_type" value="trips" />
-					</form>-->
+					</form>
 					
 				</div>
 				<a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
