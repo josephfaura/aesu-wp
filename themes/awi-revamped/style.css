@@ -3067,10 +3067,17 @@ a.header_cart.:hover, a.header_cart:active {
 	border-radius:6px;
 }
 
+/* Load More Button Adjustments */
+
 .ytvgbLoadMoreBtn button {
 	width:auto;
 	font-weight:700 !important;
   border-radius:3px !important;
+}
+.sbi_load_btn {
+	width:auto;
+	font-weight:700;
+	border-radius:3px !important;
 }
 
 .wp-block-heading,
