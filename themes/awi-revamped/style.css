@@ -843,6 +843,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
   }
 	.search-form .search-submit {
 		width:auto;
+		min-width: 30%;
 		font-size:1rem;
 	}
 
@@ -3026,6 +3027,24 @@ a.header_cart.:hover, a.header_cart:active {
 
 /****Page Template Adjustments****/
 
+.blue-primary-button{
+    display:block;
+    width:auto;
+    font-size: 1.25rem;
+    padding: .5rem .8rem;
+    border: 1px solid #2c768e;
+    border-radius: 3px;
+    font-weight: 700;
+    color: #2c768e;
+  }
+.blue-primary-button:hover{
+	background:#2c768e;
+	color:#fff;
+}
+.blue-primary-button a:hover{
+	color:#fff;
+}
+
 /* Google Review Embed Adjustments */
 .slider-prev-next-wrapper {
 	display:none;
@@ -3046,6 +3065,12 @@ a.header_cart.:hover, a.header_cart:active {
 }
 .galleryItem {
 	border-radius:6px;
+}
+
+.ytvgbLoadMoreBtn button {
+	width:auto;
+	font-weight:700 !important;
+  border-radius:3px !important;
 }
 
 .wp-block-heading,
@@ -3139,7 +3164,7 @@ a.header_cart.:hover, a.header_cart:active {
 .wp-embed-responsive iframe,
 iframe[src*="youtube.com"],
 iframe[src*="youtu.be"] {
-  width: 100% !important;
+  width: 100vw !important;
   height: auto !important;
   aspect-ratio: 16 / 9;
 }
