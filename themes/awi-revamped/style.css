@@ -3028,20 +3028,18 @@ a.header_cart.:hover, a.header_cart:active {
 /****Page Template Adjustments****/
 
 .blue-primary-button{
-    display:block;
-    width:auto;
+    display:table;
     font-size: 1.25rem;
     padding: .5rem .8rem;
     border: 1px solid #2c768e;
     border-radius: 3px;
     font-weight: 700;
     color: #2c768e;
+    margin: 1em auto;
   }
-.blue-primary-button:hover{
-	background:#2c768e;
-	color:#fff;
-}
+.blue-primary-button:hover,
 .blue-primary-button a:hover{
+	background:#2c768e;
 	color:#fff;
 }
 
@@ -3055,9 +3053,9 @@ a.header_cart.:hover, a.header_cart:active {
 
 /* Video Testimonials Adjustments */
 .wp-block-vgb-video-gallery .filter {
-	border-bottom:0;
-	padding:0;
-	margin: 0 0 32px;
+	border-bottom:0 !important;
+	padding:0 !important;
+	margin: 0 0 32px !important;
 }
 .vgbVideoGallery .filter button {
 	width:auto;
