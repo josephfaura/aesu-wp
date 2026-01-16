@@ -3167,6 +3167,8 @@ a.header_cart.:hover, a.header_cart:active {
     }
 
 /* Video iFrame Width Overrides */
+
+/*
 .wp-block-embed iframe,
 .wp-embed-responsive iframe,
 iframe[src*="youtube.com"],
@@ -3197,6 +3199,8 @@ iframe[src*="youtu.be"] {
   width: 100% !important;
   height: 100% !important;
 }
+*/
+
 
 /****Blog Styling****/
 
