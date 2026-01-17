@@ -650,7 +650,7 @@ $trips_query = new WP_Query( $args );
             </div>
         </div>
     </div>
-    <div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what our other travelers are saying <i class="fa fa-arrow-right"></i></a></div>
+    <div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">What our past travelers are saying <i class="fa fa-arrow-right"></i></a></div>
 </section>
 <?php if($past_tour_items){ ?>
 <section class="past_tour_gallery" id="image_gallery">

@@ -186,7 +186,7 @@ if(function_exists('get_field')){
 					    <?php } ?>
 					</div>
 				</div>
-				<div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what other travelers are saying <i class="fa fa-arrow-right"></i></a></div>
+				<div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">What our past travelers are saying <i class="fa fa-arrow-right"></i></a></div>
 			</section>
 
 <!--CARD GRID SECTION-->
