@@ -3048,7 +3048,7 @@ a.header_cart.:hover, a.header_cart:active {
 	display:none;
 }
 #g-review .swiper {
-	padding: 0 0 56px;
+	padding: 0 0 56px !important;
 }
 
 /* Video Testimonials Adjustments */
@@ -3066,7 +3066,6 @@ a.header_cart.:hover, a.header_cart:active {
 }
 
 /* Load More Button Adjustments */
-
 .ytvgbLoadMoreBtn button {
 	width:auto;
 	font-weight:700 !important;
@@ -3097,6 +3096,18 @@ a.header_cart.:hover, a.header_cart:active {
 
 .is-layout-grid{
 	gap:32px; /* increases the size of the gap in gutenberg grid blocks */
+}
+
+/* Responsive Gutenberg Gallery Overrides */
+@media screen and (max-width: 780px){
+	.wp-block-gallery.has-nested-images figure.wp-block-image:not(#individual-image){
+		width:calc(50% - var(--wp--style--unstable-gallery-gap, 16px)*.66667) !important;
+	}
+}
+@media screen and (max-width: 480px){
+	.wp-block-gallery.has-nested-images figure.wp-block-image:not(#individual-image){
+		width:100% !important;
+	}
 }
 
 .carousel__button.is-close {
@@ -3394,10 +3405,10 @@ aside ul{
 	}*/
 }
 @media screen and (max-width: 527px) {
-	.single .banner_interior,
+	/*.single .banner_interior,
 	.single .banner_interior .flexslider{
 			height:40vh;
-	}
+	}*/
 	.first-post-cta {
 		font-size: 1rem;
 	}
@@ -4535,7 +4546,7 @@ article, aside {
 	color:#fff;
 	text-align: center;
 }
-.banner_interior:after{
+body:not(.single) .banner_interior:after{
 	content:'';
 	position: absolute;
 	top:0;
