@@ -114,7 +114,7 @@ if (function_exists('get_field') && !$is_awt) {
 					</div>
 					<div class="bottom_footer_copyright">
 					<p class="copyright">© <?php echo date('Y'); ?> <span itemprop="name">AESU, Inc.</span> All Rights Reserved.<br>
-					Website Development provided by <a href="http://www.advp.com" target="_blank">Adventure Web Digital</a></p>
+					Website development in collaboration with <a href="http://www.advp.com" target="_blank">Adventure Web Digital</a></p>
 					</div>
 				</div>
 			</div>

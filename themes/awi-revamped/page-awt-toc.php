@@ -140,6 +140,13 @@ get_header(); ?>
 		margin-top:0;
 		color:#5e5e5e;
 	}
+	.search-terms {
+	    display: none;
+	}
+	.awt_toc_form {
+		width:80%;
+		margin: auto;
+	}
 	@media screen and (max-width:998px){
 		.packages li {
 			width:calc(100% / 2 - 20px);
@@ -171,6 +178,9 @@ get_header(); ?>
 		}
 		.packages div.package_thumbnail{
 			height:200px;
+		}
+		.awt_toc_form {
+			width:100%;
 		}
 	}
 	@media screen and (max-width:450px){
@@ -251,13 +261,24 @@ get_header(); ?>
 
 									 <a style="color:<?php echo $primary_color; ?> !important;font-weight:700;" href="<?php echo get_the_permalink(); ?>">Explore our trips <i class="fa fa-arrow-right"></i></a>
 									
-									<div style="display:none;">
-										<?php echo $institution['manual_search_terms']; ?>
-									</div>
+									<?php if ( have_rows('search_terms') ) : ?>
+									    <div class="search-terms">
+									        <?php while ( have_rows('search_terms') ) : the_row(); ?>
+									            <span><?php echo esc_html( get_sub_field('term') ); ?></span>
+									        <?php endwhile; ?>
+									    </div>
+									<?php endif; ?>
 								</div>
 							</li>
 						<?php }$looping_index++;} ?>
 					</ul>
+
+					<!-- Fallback form -->
+				<div class="awt_toc_form" style="display:none;">
+					<h3 class="center">Can’t find your school? Fill out this form and we’ll help:</h3>
+					<?php echo do_shortcode('[contact-form-7 id="a3118b0" title="Contact Alumni"]'); ?>
+				</div>
+
 				</div>
 			</div>
 			<?php wp_reset_postdata();} ?>

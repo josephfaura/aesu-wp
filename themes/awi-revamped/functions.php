@@ -219,7 +219,7 @@ function awi_initialize_scripts() { ?>
 
 <script>
 (function($){
-	//AWT TOC Search/filter & misc UI code (unchanged)
+	//AWT TOC Search/filter
 	<?php if(is_page(898)){ ?>
 	$(document).on('change','.interior_banner input',function(){
 		var textentered = $(this).val().toLowerCase();
@@ -975,6 +975,42 @@ add_action('admin_head', function () {
     </style>';
 });
 
+// Makes AWT TOC Search Terms in Landing Pages align as Rows
+add_action('acf/input/admin_head', function () {
+    ?>
+    <style>
+        /* Inline layout for manual search terms repeater */
+        .inline-search-terms .acf-repeater table.acf-table > tbody {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .inline-search-terms .acf-repeater tr.acf-row {
+            display: inline-flex;
+            width: auto !important;
+            border: 1px solid #ccd0d4;
+            border-radius: 6px;
+            padding: 6px 8px;
+            background: #fff;
+        }
+        .inline-search-terms .acf-repeater td {
+            padding: 0 !important;
+            border: none !important;
+        }
+        .inline-search-terms .acf-repeater input[type="text"] {
+            width: auto !important;
+            min-width: 60px;
+            max-width: 240px;
+        }
+        .inline-search-terms .acf-repeater .acf-row-handle {
+            display: none;
+        }
+        .inline-search-terms .acf-repeater .acf-icon.-minus {
+            margin-left: 6px;
+        }
+    </style>
+    <?php
+});
 
 // Register Custom Taxonomy for Pages
 function page_category_taxonomy() {
