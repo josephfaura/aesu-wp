@@ -16,7 +16,7 @@ $(
 var navTrigger = $(".awiNav__trigger");
 
 navWrap.prepend(
-  '<button class="awiNav__close"><span></span><span></span>Close Menu</button>'
+  '<button class="awiNav__close"><span></span><span></span></button>'
 );
 var navClose = $(".awiNav__close");
 

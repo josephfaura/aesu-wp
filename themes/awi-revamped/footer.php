@@ -10,62 +10,96 @@
  */
 
 ?>
-<?php
-if(function_exists('get_field')){
-	$header_type = get_field('header_type');
-}
-?><?php
-// Get the referrer URL
-$referrer = $_SERVER['HTTP_REFERER'];
-$is_awt_referrer = false;
-if ( $referrer ) {
-    // Convert referrer into post/page ID
-    $referrer_id = url_to_postid( $referrer );
 
-    if ( $referrer_id ) {
-        // Get the ACF field value
-        $header_type_referrer = get_field( 'header_type', $referrer_id );
-		//echo $header_type_referrer;
-        if ( $header_type_referrer === 'AWT' ) {
-            // Do something if the header_type is AESU
-            //echo "Referring page has header_type = AESU";
-			//echo $header_type_referrer;
-$is_awt_referrer = true;
-        }
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("back_to_top");
+
+  if (!btn) return; // if the markup isn't on the page, stop.
+
+  btn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+});
+</script>
+
+<?php
+// --------------------------------------------------
+// Match header logic in footer (do NOT touch header)
+// --------------------------------------------------
+
+// Referrer check
+$referrer = $_SERVER['HTTP_REFERER'] ?? '';
+$referrer_header = null;
+
+if ($referrer) {
+    $ref_post_id = url_to_postid($referrer);
+    if ($ref_post_id) {
+        $referrer_header = get_field('header_type', $ref_post_id);
     }
 }
+
+// Current page header type
+$current_header = get_field('header_type'); // AESU, AWT, empty
+
+// Final logic: AWT wins if either is AWT, else AESU
+$is_awt = (
+    $referrer_header === 'AWT'
+    || $current_header === 'AWT'
+);
+
+// Set footer values exactly like header logic
+if ($is_awt) {
+    // AWT
+    $home_link = get_permalink(898);
+    $footer_menu = 'awt_footer_nav';
+    $show_social = false;
+    $footer_label = 'Alumni World Travel';
+} else {
+    // AESU default
+    $home_link = get_home_url();
+    $footer_menu = 'footer_nav';
+    $show_social = true;
+    $footer_label = false;
+}
+
+// Check for social links //
+$social_links = [];
+if (function_exists('get_field') && !$is_awt) {
+    $social_links = get_field('social_links', 'options') ?: [];
+}
 ?>
-<?php if(function_exists('get_field')){
-	$social_links = get_field('social_links','options');
-} ?>
 	<footer class="site-footer">
 		
 		<section class="bottom_footer">
 			<div class="container">
 				<div class="bottom_footer_navinfo">
 					<div class="footer_nav">
-					<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){
-						$home_link = get_home_url();
-						wp_nav_menu( array( 'theme_location' => 'footer_nav') ); 
-					}else{
-						wp_nav_menu( array( 'theme_location' => 'awt_footer_nav') ); 
-						$home_link = get_permalink(898);
-					}
-					?>
+					    <?php wp_nav_menu( array( 'theme_location' => $footer_menu ) ); ?>
 					</div>
+
 					<div class="footer_info">
-					<?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
-						<ul class="bottom_footer_roundlinks">
-							<?php foreach($social_links as $social_link){ ?>
-							<li><a href="<?php echo $social_link['social_link_url'] ?>" target="_blank"><img src="<?php echo $social_link['social_link_image']['url'] ?>"></a></li>
-							<?php } ?>
-						</ul>
-						<?php } ?><?php if($header_type_referrer != 'AWT' && $header_type == "AESU" || $header_type == "aesuaesu"){ ?>
-							<a href="<?php echo $home_link ?>"><img src="<?php echo get_template_directory_uri() ?>/img/logo_footer.png" class="footer_logo"></a>
-						<?php }else{ ?>
-							<a href="<?php echo $home_link ?>"><img src="<?php echo get_template_directory_uri() ?>/img/logo_footer.png" class="footer_logo"><br><span>Alumni World Travel</span></a>
-						<?php } ?>
-						
+
+					    <?php if ( $show_social && !empty($social_links) ) : ?>
+					        <ul class="bottom_footer_roundlinks">
+					            <?php foreach ($social_links as $social_link) : ?>
+					                <li><a href="<?php echo $social_link['social_link_url']; ?>" target="_blank">
+					                    <img src="<?php echo $social_link['social_link_image']['url']; ?>">
+					                </a></li>
+					            <?php endforeach; ?>
+					        </ul>
+					    <?php endif; ?>
+
+					    <a href="<?php echo $home_link; ?>">
+					        <img src="<?php echo get_template_directory_uri() ?>/img/logo_footer.png" class="footer_logo">
+					        <?php if ( $footer_label ) : ?>
+					            <br><span><?php echo $footer_label; ?></span>
+					        <?php endif; ?>
+					    </a>
+
 					</div>
 				</div>
 				<div class="bottom_footer_copyright_logos">
@@ -80,7 +114,7 @@ $is_awt_referrer = true;
 					</div>
 					<div class="bottom_footer_copyright">
 					<p class="copyright">© <?php echo date('Y'); ?> <span itemprop="name">AESU, Inc.</span> All Rights Reserved.<br>
-					Website Development provided by <a href="http://www.advp.com" target="_blank">Adventure Web Digital</a></p>
+					Website development in collaboration with <a href="http://www.advp.com" target="_blank">Adventure Web Digital</a></p>
 					</div>
 				</div>
 			</div>

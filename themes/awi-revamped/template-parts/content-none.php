@@ -9,9 +9,12 @@
 
 ?>
 
+	<div class="container">
+
 <section class="no-results not-found">
 
-	<div class="page-content">
+		<h1>Nothing Here</h1>
+
 		<?php
 		if ( is_home() && current_user_can( 'publish_posts' ) ) :
 
@@ -44,5 +47,9 @@
 
 		endif;
 		?>
-	</div><!-- .page-content -->
+
+		<a href="<?php echo esc_url( home_url('/') ); ?>" class="btn-primary">&#8592; Return Home</a>
+
 </section><!-- .no-results -->
+
+	</div><!-- .page-content -->

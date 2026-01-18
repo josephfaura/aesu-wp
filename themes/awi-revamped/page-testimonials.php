@@ -8,22 +8,6 @@
 get_header(); ?>
 
 <style>
-.slider-prev-next-wrapper {
-	display:none;
-}
-#g-review .swiper {
-	padding: 0 0 56px;
-}
-.wp-block-vgb-video-gallery .filter {
-	border-bottom:0;
-	padding:0;
-	margin: 0 0 32px;
-}
-.vgbVideoGallery .filter button {
-	width:auto;
-	font-weight:700;
-}
-
 .testimonials-grid {
 	margin:32px auto;
     display: flex;
@@ -99,36 +83,39 @@ get_header(); ?>
 }
 </style>
 
-<?php if(have_rows('slider',$dupID)) { ?>
-<div class="banner_interior">
-	<div class="flexslider clearfix">
-		<ul class="slides">
-			<?php while( have_rows('slider',$dupID) ): the_row();
-				$image = get_sub_field('slide_image');
-				$title = get_sub_field('slide_title');
-				$subtitle = get_sub_field('slide_subtitle');
-				$link = get_sub_field('slide_link'); ?>
-			<li style="background-image:url(<?php echo $image['url']; ?>);">
-				<div class="flex-caption">
-					<div>
-						<?php if($title) { ?>
-						<h3><?php echo $title; ?></h3>
-						<?php } if($subtitle) { ?>
-						<p><?php echo $subtitle; ?></p>
-						<?php } if($link) { ?>
-						<a href="<?php echo $link; ?>" class="button">Deals</a>
-						<?php } ?>
-					</div>
-				</div>
-			</li>
-			<?php endwhile; ?>
-		</ul>
-	</div>
-</div>
-<?php } else { ?>
-<div class="no-banner"></div>
-<?php } ?>
 <main>
+<?php if ( have_rows('slider', $dupID) ) : ?>
+	<?php
+	the_row(); // ← advance to FIRST slide only
+
+	$image    = get_sub_field('slide_image');
+	$title    = get_sub_field('slide_title');
+	$subtitle = get_sub_field('slide_subtitle');
+	$link     = get_sub_field('slide_link');
+	$copy	  = get_sub_field('slide_link_copy');
+	?>
+	
+	<div class="banner_interior" style="background-image:url(<?php echo esc_url($image['url']); ?>);">
+		<div class="container">
+			<?php if ( $title ) : ?>
+				<h3><?php echo esc_html($title); ?></h3>
+			<?php endif; ?>
+
+			<?php if ( $subtitle ) : ?>
+				<p><?php echo esc_html($subtitle); ?></p>
+			<?php endif; ?>
+
+			<?php if ( $link ) : ?>
+				<a href="<?php echo esc_url($link); ?>" class="cta-button">
+					<?php echo esc_html($copy); ?>
+				</a>
+			<?php endif; ?>
+		</div>
+	</div>
+
+<?php else : ?>
+	<div class="no-banner"></div>
+<?php endif; ?>
     
     <div class="container">
         <article class="full-width" style="width:100%;max-width:100%;">
@@ -213,4 +200,11 @@ get_header(); ?>
 		</article>
 	</div>
 </main>
+
+<div class="container">
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
+</div>
+
 <?php get_footer(); ?>

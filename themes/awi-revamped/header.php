@@ -8,16 +8,6 @@
  *
  * @package AWI_Revamped
  */
-GLOBAL $detect;
-if(function_exists('get_field')) {
- 	$header_image = get_field('header_image') ? $header_image = get_field('header_image') : $header_image = get_field('default_header_image', 'option');
- 	//$header_image = ($detect->isMobile() && !$detect->isTablet()) ? $header_image['sizes']['large'] : $header_image['url'];
-	if(is_singular('trips')){
-	$header_type = get_field('header_type',get_the_ID());
-	}else{
-	$header_type = get_field('header_type');
-	}
-}
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -137,73 +127,40 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 					display: flex;
 					align-items: center;
 					gap: 18px;
+					min-width: 0;
 				}
 				.top_nav_account_wrap{
 					display: flex;
 					flex-direction: row;
+					gap:18px;
 				}
 				.top_nav_account_wrap .top_account_area i {
 					font-size: 24px;
 					padding-right:0;
-					padding-left:10px;
 				}
 				header .container .inner-header{
-						flex-direction:row;
-					}
+					flex-direction:row;
+				}
+			}
+			@media screen and (max-width:443px){
+				.mobile_header{
+					padding:24px;
+				}
 				.logo_wrap svg {
-			    height: 45px;
-			    width: 95px;
-			    padding-right: 10px;
-			    border-right: 2px solid #fff;
-				}
-				/*.logo_wrap{
-					margin-left: 18px;
-				}
-				.logo_wrap span{
-					padding-right:10px;
-				}
-				.awiNav__trigger {
-				    top: 3px;
-				}
-				.awiNav__trigger span{
-				  	margin:8px 0 0 0;
-				}*/
-			}
-			@media screen and (max-width:900){
-				.bottom_footer .container {
-	    				padding-top:30px;
-					}
-				}
-				@media screen and (max-width:443px){
-					.mobile_header{
-						padding:20px;
-					}
-					/*.awiNav__trigger {
-						top: 0;
-					}*/
-					.logo_wrap svg {
-					    height: 35px;
-					    width: 85px;
-					    padding-right: 10px;
-					    border-right: 2px solid #fff;
-					}
-				}
-				@media screen and (max-width:420px){
-			    header .container{
-					padding:0
-				}
-				.bottom_footer .container {
-	    			padding-top:15px;
+					height: 35px;
+					width: 85px;
 				}
 			}
-			a.header_cart.:hover, a.header_cart:active {
-   				color: #fff;
-   			}
+			@media screen and (max-width:350px){
+			    .inner-header {
+			        flex-direction: column !important;
+			    }
+			}
 		</style>
 		
 <?php
 // --------------------------------------
-// Determine referrer header type
+// Determine referrer header type (RUN ONCE)
 // --------------------------------------
 $referrer = $_SERVER['HTTP_REFERER'] ?? '';
 $referrer_header = null;
@@ -233,19 +190,26 @@ $is_awt = (
 );
 
 // --------------------------------------
-// Set links and labels
+// Shared links + labels (DEFINE ONCE)
 // --------------------------------------
 if ($is_awt) {
     // AWT SETTINGS
+    $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AWT&Action=Home';
     $contact_link = get_permalink(2836);
     $home_link    = get_permalink(898);
     $mobile_tag   = "Alumni World Travel";
+    $tagline      = "Alumni World Travel<br />Expanding Horizons Since 1977";
 } else {
     // DEFAULT = AESU SETTINGS
+    $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home';
     $contact_link = get_permalink(11601);
     $home_link    = get_home_url();
     $mobile_tag   = "Since 1977";
+    $tagline      = "Expanding Horizons <br/>Since 1977";
 }
+
+// Defensive cleanup (kept)
+$account_link = strtok($account_link, "\n");
 ?>
 
 <header class="mobile_header">
@@ -280,7 +244,7 @@ if ($is_awt) {
                 <div class="top_nav_account_wrap">
 
                     <span class="top_account_area">
-                        <a href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                        <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                     </span>
@@ -304,54 +268,6 @@ if ($is_awt) {
     </div>
 </header>
 
-
-<?php
-// --------------------------------------
-// Determine referrer header type
-// --------------------------------------
-$referrer = $_SERVER['HTTP_REFERER'] ?? '';
-$referrer_header = null;
-
-if ($referrer) {
-    $ref_post_id = url_to_postid($referrer);
-    if ($ref_post_id) {
-        $referrer_header = get_field('header_type', $ref_post_id);
-    }
-}
-
-// --------------------------------------
-// Determine current post header type
-// --------------------------------------
-$current_header = get_field('header_type'); // AESU, AWT, or empty
-
-// --------------------------------------
-// FINAL LOGIC:
-// AWT wins when:
-//   - referrer header == AWT
-//   - OR current header == AWT
-// Otherwise default = AESU
-// --------------------------------------
-$is_awt = (
-    $referrer_header === 'AWT'
-    || $current_header === 'AWT'
-);
-
-// --------------------------------------
-// Set links and titles
-// --------------------------------------
-if ($is_awt) {
-    // AWT SETTINGS
-    $contact_link = get_permalink(2836);
-    $home_link    = get_permalink(898);
-    $tagline      = "Alumni World Travel<br />Expanding Horizons Since 1977";
-} else {
-    // DEFAULT = AESU SETTINGS
-    $contact_link = get_permalink(11601);
-    $home_link    = get_home_url();
-    $tagline      = "Expanding Horizons <br/>Since 1977";
-}
-?>
-
 <header class="desktop_header">
     <div class="container">
         <div class="inner-header">
@@ -368,11 +284,22 @@ if ($is_awt) {
 
             <div class="header_right">
 
-                <?php
-                $school_logo = get_field('school_logo');
-                if (is_page_template('page-school-landing-page.php') && $school_logo) : ?>
-                    <img class="header_school_logo" style="width:auto;" src="<?php echo $school_logo['url'] ?>">
-                <?php endif; ?>
+				<?php
+				$school_logo     = get_field('school_logo');
+				$school_shortcode = get_field('school_shortcode');
+
+				if (
+				    is_page_template('page-school-landing-page.php')
+				    && $school_logo
+				    && strtolower($school_shortcode) !== 'awt' //if field is set to awt do not show the school_logo
+				) : ?>
+				    <img
+				        class="header_school_logo"
+				        style="width:auto;"
+				        src="<?php echo esc_url($school_logo['url']); ?>"
+				        alt=""
+				    >
+				<?php endif; ?>
 
                 <?php if (! $is_awt) : ?>
                     <nav>
@@ -385,13 +312,13 @@ if ($is_awt) {
 
                 <div class="top_nav_account_wrap">
                     <span class="top_account_area">
-                        <a href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                        <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-circle-user"></i> My Account
                         </a>
                     </span>
 
                     <span class="top_account_area">
-                        <a class="header_cart" href="https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home" target="_blank">
+                        <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-cart-shopping"></i> My Cart
                         </a>
                     </span>
@@ -413,8 +340,3 @@ if ($is_awt) {
         </div>
     </div>
 </header>
-
-
-<?php if($header_image && !is_front_page()) { ?>
-	<div class="interior-banner" style="background-image:url('<?php echo $header_image; ?>');"></div>
-<?php } ?>

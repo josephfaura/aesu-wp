@@ -10,80 +10,16 @@
 get_header();
 ?>
 
-<style>
-	.search-results .header {
-		text-align: center;
-	}
-	.search-results .page-title {
-		display: inline-block;
-		font-size: 1.25rem;
-		padding: 0.5rem 0.8rem;
-		border:1px solid #2c768e;
-		border-radius: 3px;
-		font-weight: 600;
-		color:#2c768e;
-		box-decoration-break: clone;
-	}
-	.latest_post_item_thumb{
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-color:rgba(0,0,0,.4); /* neutral fallback */
-	}
-	.pagination-wrapper {
-	    text-align: center;
-	    margin: 2em 0;
-		}
+<?php
+$post_type = get_query_var('post_type');
 
-	.pagination {
-	    list-style: none;
-	    padding: 0;
-	    display: inline-flex;
-	    flex-wrap: wrap;       /* allow wrapping on small screens */
-	    gap: 0.5em;
-	    justify-content: center; /* center the links */
-	    align-items: center;
-	}
+if ( $post_type === 'trips' ) {
+    get_template_part( 'template-parts/search', 'trips' );
+    return; // stop normal search.php from continuing
+}
 
-	.pagination li a,
-	.pagination li span {
-	    display: block;
-	    padding: 0.4em 0.6em;
-	    border: 1px solid #2C768E;
-	    text-decoration: none;
-	    border-radius: 3px;
-	    min-width: 2em;
-	    text-align: center;
-	}
-
-	.pagination li .current {
-	    font-weight: bold;
-	    background-color:#2C768E;
-	    color: #fff;
-	}
-	.pagination li :hover {
-	    font-weight: bold;
-	    background-color:#2C768E;
-	    color: #fff;
-	}
-
-	/* Optional: make Previous/Next links slightly bolder */
-	.pagination li:first-child a,
-	.pagination li:last-child a {
-	    font-weight: bold;
-	}
-
-	/* Mobile tweaks */
-	@media (max-width: 480px) {
-	    .pagination li a,
-	    .pagination li span {
-	        padding: 0.2em 0.4em;
-	        min-width: 1.6em;
-	        font-size: 0.8em;
-	    }
-	}
-</style>
-
+// Otherwise use normal search template
+?>
 
 	<div class="no-banner"></div>
 

@@ -9,9 +9,11 @@
 <?php get_header(); 
 if(function_exists('get_field')){
     $tour_id = is_object($tour) ? $tour->ID : (int)$tour;
+    $trip_name = get_field('trip_name', $tour_id);
+    $destinations = get_field('citiescountries', $tour_id);
+    $description = get_field('description', $tour_id);
     $tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
     $trip_highlights = get_field('trip_highlights', $tour_id);
-    $travel_tools = get_field('travel_tools', $tour_id);
     $whats_included_title = get_field('whats_included_title', $tour_id);
     $whats_included_accordion = get_field('highlight_accordion', $tour_id);
     $additional_whats_included_text = get_field('additional_whats_included_text', $tour_id);
@@ -27,9 +29,8 @@ if(function_exists('get_field')){
     $experiences = get_field('experiences' , $tour_id);
     $level = get_field('activity_level' , $tour_id); 
 		$level = intval($level);
-    if ( ! $deals_popup || $deals_popup === '' ) {
-        $deals_popup = get_field('deals_popup', $tour_id);
-    }
+		$travel_tools = get_field('travel_tools', $tour_id);
+    $deals_popup = get_field('deals_popup', $tour_id);
 }
 
 ?>
@@ -41,35 +42,7 @@ if(function_exists('get_field')){
 		margin-left: 0;
 	}
 	.experiences {
-		display: flex;
-		flex-wrap: wrap;
 		justify-content: center;
-	  margin: 1rem 0;
-	  gap:.25rem 0;
-	}
-	.experiences-grid {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-	}
-.experiences > .experiences-grid:not(:last-child) {
-  margin-right: 1rem;
-  padding-right: 1rem;
-  border-right: 1px solid #5e5e5e;
-}
-	.activity-box {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    border-radius: 3px;
-    background: #888; /* gray inactive */
-    color: #fff;
-	}
-	.activity-box.active {
-    background: #2c768e; /* highlight color */
 	}
 
 	.whats_included_accordion_section h3{
@@ -153,30 +126,41 @@ if ( ! post_password_required() ) {
 <section class="trip_main_content_wrap">
 	<div class="trip_main_image" style="background-image:url(<?php echo esc_url( get_the_post_thumbnail_url() ); ?>);"></div>
 	<div class="trip_main_content">
-		<h2><?php the_title(); ?></h2>
+		<?php if($trip_name || $destinations){ ?>
+		<h2><?php echo $trip_name; ?></h2>
+		<div class="trip_dates"><?php echo $destinations; ?></div>
+		<?php }?>
+		<div class="trip_main_content_text">
+			
+			<?php
+			//change to custom field 
+			//
+			echo do_shortcode($description); 
+			?>
+		</div>
 
 <?php if($level || $experiences){ ?>
 
 <div class="experiences">
-	<div class="experiences-grid">
-    	<strong>Activity Level:</strong>
-    	<?php for ($i = 1; $i <= 5; $i++): ?>
-        <div class="activity-box <?php echo ($i <= $level) ? 'active' : ''; ?>">
-            <?php echo $i; ?>
-        </div>
-    <?php endfor; ?>
-  </div>
 		<div class="experiences-grid">
-				<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Trip Experiences:</a></strong>
+			<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Trip Experiences:</a></strong>
 				<?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>';}} ?>
 		</div>
+		<div class="experiences-grid">
+	  	<strong>Activity Level:</strong>
+	    	<?php for ($i = 1; $i <= 5; $i++): ?>
+	        <div class="activity-box <?php echo ($i <= $level) ? 'active' : ''; ?>">
+	            <?php echo $i; ?>
+	  </div>
+	    <?php endfor; ?>
+	  </div>
 </div>
 
 <?php }?>
 
-		<ul class="clearfix list--unstyled trip_cta_list">
-			<li class="deals_cta"><a href="#">Deals</a></li>
+		<ul class="list--unstyled trip_cta_list">
 			<li class="travel_tools"><a href="#">Travel Tools</a></li>
+			<li class="deals_cta"><a href="#">Deals</a></li>
 	</div>
 </section>
 <section class="tour_area">
@@ -372,27 +356,35 @@ if ( ! post_password_required() ) {
 </section>
 <main>
 	<div class="container">
-		<article>
+		<article class="full-width" style="width:100%;max-width:100%;">
 		
-			<?php if (have_posts()) : while (have_posts()) : the_post();
-				/*$prev = get_previous_post_link('%link','&laquo; Previous');
-				$next = get_next_post_link('%link','Next &raquo;');
-
-				if ($prev || $next) { ?>
-					<div class="navigation clearfix">
-						<div class="alignleft"><?php echo $prev; ?></div>
-						<div class="alignright"><?php echo $next; ?></div>
-					</div>
-				<?php } */ ?>
+			<?php if (have_posts()) : while (have_posts()) : the_post();?>
 
 				<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
-					<h1><?php //the_title(); ?></h1>
 					<div class="entry">
-						<?php //the_content(); ?>
+						
+						<?php
+						$post_type = get_post_type();
+
+						// show Tour Content first
+						if ( $post_type === 'trips' && ! empty( $tour_id ) ) {
+
+							$tour_post = get_post( $tour_id );
+
+							if ( $tour_post ) {
+								setup_postdata( $tour_post );
+								the_content(); // ← Tour content
+								wp_reset_postdata();
+							}
+						}
+						// show Trip Content second
+						if ( $post_type === 'trips' ) {
+							the_content();
+						}
+						?>
+
 					</div>
 				</div>
-
-				<?php //comments_template(); ?>
 
 			<?php endwhile; else: ?>
 			
@@ -402,66 +394,6 @@ if ( ! post_password_required() ) {
 	</div>
 </main>
 <?php if($deals_popup || get_field('deals_popup',$tour->ID)){ ?>
-<style>
-  .tour_deals_popup_wrap{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0,0,0,.5);
-        z-index: 99999999999999;
-      }
-      .tour_deals_popup_wrap.active_tour_deals_popup{
-        display: flex;
-      }
-      .tour_deals_popup_inner{
-          max-width: 650px;
-          max-height:90%;
-          position: relative;
-          overflow: auto;
-      }
-      .tour_deals_close_popup{
-          display: flex;
-          width: 40px;
-          height: 40px;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          position: absolute;
-          top: 0;
-          right: 0;
-      }
-      .tour_deals_popup_content a{
-        color:#2C768E;
-      }
-      .tour_deals_popup_content a,.tour_deals_popup_content strong{
-          display: block;
-          margin: 15px 0;
-      }
-      .tour_deals_popup_content h1{
-      	font-size: 42px;
-      	color:#E74C3C;
-      }
-      .tour_deals_popup_content h2{
-        font-size: 32px;
-        color:#2C768E;
-      }
-      .tour_deals_popup_content h3{
-        font-size: 24px;
-        color:#2C768E;
-      }
-	  	.popup_outline{    
-				padding: 20px 42px;
-    		margin: 12px;
-    		/*border: 1px solid #bebebe;*/
-				box-shadow:0px 3px 10px rgba(0,0,0,.25);
-				position:relative;
-	  }
-</style>
 <div class="tour_deals_popup_wrap">
     <div class="tour_deals_popup_inner">
 	<div class="popup_outline">
@@ -478,59 +410,6 @@ if ( ! post_password_required() ) {
 </div>
 <?php } ?>
 <?php if($travel_tools){ ?>
-<style>
-  .travel_tools_popup_wrap{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0,0,0,.5);
-        z-index: 99999999999999;
-      }
-      .travel_tools_popup_wrap.active_travel_tools_popup{
-        display: flex;
-      }
-      .travel_tools_popup_inner{
-          max-width: 650px;
-          max-height: 90%;
-          position: relative;
-          overflow: auto;
-      }
-      .travel_tools_close_popup{
-          display: flex;
-          width: 40px;
-          height: 40px;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          position: absolute;
-          top: 0;
-          right: 0;
-      }
-      .travel_tools_popup_content a{
-        color:#2C768E;
-      }
-      .travel_tools_popup_content a,.travel_tools_popup_content strong{
-          display: block;
-          margin: 15px 0;
-      }
-      .travel_tools_popup_content h2{
-        font-size: 32px;
-        color:#2C768E;
-      }
-	  .popup_outline{
-	  background: #fff;  
-		padding: 20px 42px;
-    margin: 12px;
-    /*border: 1px solid #bebebe;*/
-		box-shadow:0px 3px 10px rgba(0,0,0,.25);
-		position:relative;
-	  }
-</style>
 <div class="travel_tools_popup_wrap">
     <div class="travel_tools_popup_inner">
 	<div class="popup_outline">
@@ -544,8 +423,11 @@ if ( ! post_password_required() ) {
 </div>
 <?php } ?>
 <?php } ?>
+
 <div class="container">
-<?php the_content(); ?>
+    <div id="back_to_top" class="back-to-top-inline">
+        <i class="fa-solid fa-angle-up"></i>
+    </div>
 </div>
 
 <?php get_footer(); ?>

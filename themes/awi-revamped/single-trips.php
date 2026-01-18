@@ -8,53 +8,21 @@
 
 <?php get_header(); 
 if(function_exists('get_field')){
+	$school_shortcode = get_field('school_shortcode',get_the_ID());
+	$trip_name = get_field('trip_name',get_the_ID());
 	$citiescountries = get_field('citiescountries',get_the_ID());
 	$days_price = get_field('days__price',get_the_ID());
 	$cta_button = get_field('cta_button',get_the_ID());
 	$hero_image = get_field('trip_hero_image',get_the_ID());
 	$trip_hero_image_text_url = get_field('trip_hero_image_text_url',get_the_ID());
-	$school_shortcode = get_field('school_shortcode',get_the_ID());
 	$trip_dates = get_field('trip_dates',get_the_ID());
+	$main_trip_content = get_field('main_trip_content',get_the_ID());
 	$e_brochure_link = get_field('e_brochure_link',get_the_ID());
 	$webinar_link = get_field('webinar_link',get_the_ID());
 	$additional_link = get_field('additional_link',get_the_ID());
-	//$school = get_field('school',get_the_ID());
 	$travel_tools = get_field('travel_tools',get_the_ID());
 	$toc_info = get_field('toc_info',get_the_ID());
-	$main_trip_content = get_field('main_trip_content',get_the_ID());
-	//$tour = get_field('tour',get_the_ID());
-	$trip_name = get_field('trip_name',get_the_ID());
 	$deals_popup = get_field('deals_popup',get_the_ID());
-	//school fields
-	/*if($school){
-		$school_logo = get_field('school_logo',$school->ID);
-		$school_logo_background = get_field('school_logo_background',$school->ID);
-		
-	}
-	if($tour){
-		$tour_trip_highlights_title = get_field('trip_highlights_title',$tour->ID);
-		$trip_highlights = get_field('trip_highlights',$tour->ID);
-		$travel_tools = get_field('travel_tools',$tour->ID);
-		
-		$whats_included_title = get_field('whats_included_title',$tour->ID);
-		$whats_included_accordion = get_field('highlight_accordion',$tour->ID);
-		$additional_whats_included_text = get_field('additional_whats_included_text',$tour->ID);
-		$whats_included_image = get_field('whats_included_image',$tour->ID);
-		
-		$itinerary_title = get_field('itinerary_title',$tour->ID);
-		$itinerary_items = get_field('itinerary_items',$tour->ID);
-		
-		$hotels_title = get_field('hotels_title',$tour->ID);
-		$hotels_content = get_field('hotels_content',$tour->ID);
-		$hotels_items = get_field('hotels_items',$tour->ID);
-		
-		$trip_options_title = get_field('trip_options_title',$tour->ID);
-		$trip_options_content = get_field('trip_options_content',$tour->ID);
-		$trip_option_items = get_field('trip_option_items',$tour->ID);
-		
-		if(!$deals_popup || $deals_popup == ''){$deals_popup = get_field('deals_popup',$tour->ID);}
-		
-	}*/
 	$trip_id = acf_preview_id_safe( get_the_ID() );
 
 $school = get_field('school', $trip_id);
@@ -71,9 +39,11 @@ if ( $school ) {
 // TOUR FIELDS
 if ( $tour ) {
     $tour_id = is_object($tour) ? $tour->ID : (int)$tour;
-    $tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
+    //$trip_name = get_field('trip_name', $tour_id);
+    $destinations = get_field('citiescountries', $tour_id);
+    $description = get_field('description', $tour_id);
+    	$tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
     $trip_highlights = get_field('trip_highlights', $tour_id);
-    $travel_tools = get_field('travel_tools', $tour_id);
     $whats_included_title = get_field('whats_included_title', $tour_id);
     $whats_included_accordion = get_field('highlight_accordion', $tour_id);
     $additional_whats_included_text = get_field('additional_whats_included_text', $tour_id);
@@ -89,6 +59,7 @@ if ( $tour ) {
     $experiences = get_field('experiences' , $tour_id);
     $level = get_field('activity_level' , $tour_id); 
 		$level = intval($level);
+		$travel_tools = get_field('travel_tools', $tour_id);
     if ( ! $deals_popup || $deals_popup === '' ) {
         $deals_popup = get_field('deals_popup', $tour_id);
     }
@@ -97,52 +68,14 @@ if ( $tour ) {
 }
 ?>
 <style>
-	.additional_link a {
-		color:<?php echo $primary_color; ?>;
-	}
-	.experiences {
-		display: flex;
-		flex-wrap: wrap;
-	  margin: 1rem 0;
-	  gap:.25rem 0;
-	}
-	.experiences-grid {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-	}
-.experiences > .experiences-grid:not(:last-child) {
-  margin-right: 1rem;
-  padding-right: 1rem;
-  border-right: 1px solid #5e5e5e;
-}
-	.activity-box {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    border-radius: 3px;
-    background: #888; /* gray inactive */
-    color: #fff;
-	}
-	.activity-box.active {
-    background: #2c768e; /* highlight color */
-	}
-
-	.whats_included_accordion_section h3{
-		max-width: calc(100% - 109px);
-	}
-	.trip_header_info{
-		width:100%;
-	}
 	.trip_header_cta{
-		min-width:260px;
 		text-align:right;
 	}
 	#page section.trip_main_content_wrap{
 		padding:0;
+	}
+	.trip_header_logo_wrap{
+		background-color:<?php echo $school_logo_background; ?>;
 	}
 	.trip_header_logo{
 		background-color:<?php echo $school_logo_background; ?>;
@@ -167,94 +100,74 @@ if ( $tour ) {
 	}
 	.red_button_cta{
 		display:inline-block;
+		text-align: center;
 		white-space: nowrap;
 	}
-
-@media screen and (max-width:976px){
-		.mobile_cta {
-        display: flex;
-        justify-content: space-between;
-        padding: 24px 24px 32px 24px !important;
-        align-content: center;
-        position: fixed;
-				align-items:center;
-        bottom: 0;
-        width: 100%;
-        z-index: 9999999;
-        background-color: #fff;
-				box-shadow:0px -3px 10px rgba(0,0,0,.25)
-    }
-		.mobile_cta .red_button_cta{
-			  font-size: 18px;
-        /*padding: 14px 25px;*/
-		}
-		.trip_days_price {
-        	margin-bottom: 0;
-        	font-size: 16px;
-    	}
-	.single-trips .trip_header{
-		padding:18px;
+	.additional_link a {
+		color:<?php echo $primary_color; ?>;
 	}
-	/*.trip_header{
-		display:block!important;
-	}*/
-	.trip_header_info {
-		flex-wrap: nowrap;
-		gap:18px;
-
-	}
-	/*.trip_header_info{
-		display:block!important;
-	}
-	.trip_header_info > div{
-		display:inline-block;
-		vertical-align:middle;
-	}
-	.trip_header_info_text{
-		padding-left:16px;
-	}
-	*/
-}
-
-	/*.whats_included_image{
-		padding:20px;
-	}
-	.itinerary_image_item{
-		float:right;
-		max-height:400px;
-	}*/
 	.accordion_item{
 		clear:both;
 	}
 	.slick-next{
 		right:-14px;
 	}
-	/*@media screen and (max-width:820px){
-		.itinerary_image_item{
-			float:none;
-		}
-	}*/
-
 	.whats_included_accordion_section{
-		margin-bottom:32px
+		margin-bottom:32px;
+	}
+	.whats_included_accordion_section h3{
+		max-width: calc(100% - 109px);
 	}
 	.itinerary_image{
 		max-width:300px;
 		width:100%;
 		height:300px;
 		float:right;
-		margin: 20px 0 16px 20px
+		margin: 20px 0 16px 20px;
 	}
 
-	.trip_header_info_text{
-		/*max-width: calc(100% - 256px);*/
-	}
-	/*@media screen and (max-width:530px){
-		.share_options{
-			right:auto;
-			left:0;
+@media screen and (max-width:976px){
+		.mobile_cta {
+        display: flex;
+        justify-content: space-between;
+        gap:18px;
+        padding: 24px 24px 32px 24px !important;
+        position: fixed;
+				align-items:center;
+        bottom: 0;
+        width: 100%;
+        z-index: 9999999;
+        background-color: #fff;
+				box-shadow:0px -3px 10px rgba(0,0,0,.25);
+    }
+		/*.single-trips .trip_header{
+				position:static!important;
+		}*/
+		.mobile_cta .red_button_cta{
+				font-size: 18px;
+	      /*padding: 14px 25px;*/
 		}
-	}*/
+		.trip_days_price {
+	      margin:0 .5rem 0 0
+	   }
+	   #chat-widget-push-to-talk {
+			bottom:130px !important;
+		}
+		/*.trip_header{
+			display:block!important;
+		}
+		.trip_header_info{
+			display:block!important;
+		}
+		.trip_header_info > div{
+			display:inline-block;
+			vertical-align:middle;
+		}
+		.trip_header_info_text{
+			padding-left:16px;
+		}
+		*/
+}
 	
 	@media screen and (max-width:686px){
 		.accordion_content {
@@ -272,33 +185,25 @@ if ( $tour ) {
 		.mobile_cta .red_button_cta {
 			font-size: 14px;
 		}
-		    .trip_days_price {
-        margin-bottom: 0;
-        font-size: 14px;
+		.trip_days_price {
+        font-size: 80%;
+    }
+    .trip_name {
+    	font-size: 2em;
     }
 	}
-	@media screen and (max-width: 976px){
-		#chat-widget-push-to-talk {
-			bottom:130px !important;
+	@media screen and (max-width: 320px) {
+		.inner-header {
+			flex-direction: column !important;
 		}
-		/*.trip_header_info_text {
-			max-width: calc(100%);
-		}*/
-	}
-	@media screen and (max-width: 343px) {
     .mobile_cta {
-        display: flex;
-        justify-content: space-between;
-        padding:15px 5px !important;
-        align-content: center;
-        position: fixed;
-        align-items: center;
-        bottom: 0;
-        width: 100%;
-        z-index: 9999999;
-        background-color: #fff;
-        box-shadow: 0px -3px 5px rgba(0, 0, 0, .25);
+    	display: block;
     }
+    .trip_days_price {
+       margin-bottom: .5rem;
+    .red_button_cta{
+			white-space: wrap;
+		}
 }
 /*.trip_main_image{
 	box-shadow: 0px 3px 5px rgba(0, 0, 0, .25); 
@@ -324,9 +229,14 @@ if ( ! post_password_required() ) {
 <section class="trip_header">
 	<div class="trip_header_info">
 		<?php if($school_logo['url']){ ?>
-		<div style="background-color:<?php echo $school_logo_background; ?>;padding:18px;">
-		<div class="trip_header_logo" style="background-position:center;background-repeat:no-repeat;background-image:url('<?php echo $school_logo['url'] ?>')"></div>
-		</div>
+			<div class="trip_header_logo_wrap">
+				<a
+		    class="trip_header_logo"
+		    href="<?php echo get_permalink($school->ID); ?>"
+		    style="background-image:url('<?php echo esc_url($school_logo['url']); ?>')"
+		    aria-label="<?php echo esc_attr($school->post_title); ?>"
+		  ></a>
+			</div>
 		<?php } ?>
 		<div class="trip_header_info_text">
 			<?php if($school->ID != 824){ ?><h2 class="trip_school_name"><?php echo $school->post_title ?></h2><?php } ?>
@@ -353,49 +263,52 @@ if ( ! post_password_required() ) {
 			?>
 		</div>
 
-<?php if($level || $experiences){ ?>
+		<div class="trip_main_content_links">
 
-<div class="experiences">
-	<div class="experiences-grid">
-    	<strong>Activity Level:</strong>
-    	<?php for ($i = 1; $i <= 5; $i++): ?>
-        <div class="activity-box <?php echo ($i <= $level) ? 'active' : ''; ?>">
-            <?php echo $i; ?>
-        </div>
-    <?php endfor; ?>
-  </div>
-		<div class="experiences-grid">
-				<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Trip Experiences:</a></strong>
-				<?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>';}} ?>
+			<?php if($e_brochure_link || $webinar_link || $additional_link){ ?>
+					<div class="additional_links">
+						<ul class="additional_link_items">
+							<?php if($e_brochure_link){ ?><li><a target="_blank" href="<?php echo $e_brochure_link; ?>" class="print_brochure">Download Brochure</a></li><?php } ?>
+							<?php if($webinar_link){ ?><li><a target="_blank" href="<?php echo $webinar_link ?>" class="webinar_link">Live Webinars</a></li><?php } ?>
+							<?php if($additional_link){ ?><li class="additional_link"><a target="_blank" href="<?php echo $additional_link['url'] ?>"><?php echo $additional_link['title'] ?></a></li><?php } ?>
+						</ul>
+					</div>
+			<?php } ?>
+
+			<?php if($level || $experiences){ ?>
+
+			<div class="experiences">
+				<div class="experiences-grid">
+							<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Trip Experiences:</a></strong>
+							<?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>';}} ?>
+				</div>
+				<div class="experiences-grid">
+			    	<strong>Activity Level:</strong>
+			    	<?php for ($i = 1; $i <= 5; $i++): ?>
+			        <div class="activity-box <?php echo ($i <= $level) ? 'active' : ''; ?>">
+			            <?php echo $i; ?>
+			        </div>
+			    <?php endfor; ?>
+			  </div>
+			</div>
+
+			<?php }?>
+
+					<ul class="trip_cta_list">
+						<li class="more_trips"><a href="<?php echo get_permalink($school->ID) ?>"><i class="fa-solid fa-arrow-left"></i> More Trips</a></li>
+						<li class="travel_tools"><a href="#">Travel Tools</a></li>
+						<li class="deals_cta"><a href="#">Deals</a></li>
+						
+						<li class="share_section"><span><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
+						<div class="share_options">
+							<?php echo do_shortcode('[DISPLAY_ULTIMATE_SOCIAL_ICONS]') ?>
+						</div></li>
+					</ul>
+					<!--<ul class="clearfix list--unstyled trip_anchornav_list">
+						<li class=""><a href="#"></a></li>
+					</ul>-->
+				</div>
 		</div>
-</div>
-
-<?php }?>
-
-
-		<?php if($e_brochure_link || $webinar_link || $additional_link){ ?>
-		<div class="additional_links">
-			<ul class="additional_link_items">
-				<?php if($e_brochure_link){ ?><li><a target="_blank" href="<?php echo $e_brochure_link; ?>" class="print_brochure">Download a Brochure</a></li><?php } ?>
-				<?php if($webinar_link){ ?><li><a target="_blank" href="<?php echo $webinar_link ?>" class="webinar_link">Sign Up for a Webinar</a></li><?php } ?>
-				<?php if($additional_link){ ?><li class="additional_link"><a target="_blank" href="<?php echo $additional_link['url'] ?>"><?php echo $additional_link['title'] ?></a></li>
-				<?php } ?>
-			</ul>
-		</div>
-		<?php } ?>
-		<ul class="clearfix list--unstyled trip_cta_list">
-			<li class="deals_cta"><a href="#">Deals</a></li>
-			<li class="more_trips"><a href="<?php echo get_permalink($school->ID) ?>">More Trips</a></li>
-			<li class="travel_tools"><a href="#">Travel Tools</a></li>
-			<li class="share_section"><span><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
-			<div class="share_options">
-				<?php echo do_shortcode('[DISPLAY_ULTIMATE_SOCIAL_ICONS]') ?>
-			</div></li>
-		</ul>
-		<!--<ul class="clearfix list--unstyled trip_anchornav_list">
-			<li class=""><a href="#"></a></li>
-		</ul>-->
-	</div>
 </section>
 <section class="tour_area">
 	<div class="trip_highlights">
@@ -628,66 +541,6 @@ if ( ! post_password_required() ) {
 	</div>
 </main>
 <?php if($deals_popup || get_field('deals_popup',$tour->ID)){ ?>
-<style>
-  .tour_deals_popup_wrap{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0,0,0,.5);
-        z-index: 99999999999999;
-      }
-      .tour_deals_popup_wrap.active_tour_deals_popup{
-        display: flex;
-      }
-      .tour_deals_popup_inner{
-          max-width: 650px;
-          max-height:90%;
-          position: relative;
-          overflow: auto;
-      }
-      .tour_deals_close_popup{
-          display: flex;
-          width: 40px;
-          height: 40px;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          position: absolute;
-          top: 0;
-          right: 0;
-      }
-      .tour_deals_popup_content a{
-        color:#2C768E;
-      }
-      .tour_deals_popup_content a,.tour_deals_popup_content strong{
-          display: block;
-          margin: 15px 0;
-      }
-      .tour_deals_popup_content h1{
-      	font-size: 42px;
-      	color:#E74C3C;
-      }
-      .tour_deals_popup_content h2{
-        font-size: 32px;
-        color:#2C768E;
-      }
-      .tour_deals_popup_content h3{
-        font-size: 24px;
-        color:#2C768E;
-      }
-	  	.popup_outline{    
-				padding: 20px 42px;
-    		margin: 12px;
-    		/*border: 1px solid #bebebe;*/
-				box-shadow:0px 3px 10px rgba(0,0,0,.25);
-				position:relative;
-	  }
-</style>
 <div class="tour_deals_popup_wrap">
     <div class="tour_deals_popup_inner">
 	<div class="popup_outline">
@@ -704,59 +557,6 @@ if ( ! post_password_required() ) {
 </div>
 <?php } ?>
 <?php if($travel_tools){ ?>
-<style>
-  .travel_tools_popup_wrap{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0,0,0,.5);
-        z-index: 99999999999999;
-      }
-      .travel_tools_popup_wrap.active_travel_tools_popup{
-        display: flex;
-      }
-      .travel_tools_popup_inner{
-          max-width: 650px;
-          max-height: 90%;
-          position: relative;
-          overflow: auto;
-      }
-      .travel_tools_close_popup{
-          display: flex;
-          width: 40px;
-          height: 40px;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          position: absolute;
-          top: 0;
-          right: 0;
-      }
-      .travel_tools_popup_content a{
-        color:#2C768E;
-      }
-      .travel_tools_popup_content a,.travel_tools_popup_content strong{
-          display: block;
-          margin: 15px 0;
-      }
-      .travel_tools_popup_content h2{
-        font-size: 32px;
-        color:#2C768E;
-      }
-	  .popup_outline{
-	  background: #fff;  
-		padding: 20px 42px;
-    margin: 12px;
-    /*border: 1px solid #bebebe;*/
-		box-shadow:0px 3px 10px rgba(0,0,0,.25);
-		position:relative;
-	  }
-</style>
 <div class="travel_tools_popup_wrap">
     <div class="travel_tools_popup_inner">
 	<div class="popup_outline">

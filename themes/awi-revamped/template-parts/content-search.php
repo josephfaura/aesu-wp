@@ -17,7 +17,7 @@
 	$post_type = get_post_type_object( get_post_type() );
 	?>
 
-	<a href="<?php the_permalink(); ?>">
+	<a class="card_image_link" href="<?php the_permalink(); ?>">
 		<div class="latest_post_item_thumb"
 		     style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
 		</div>

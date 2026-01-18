@@ -47,47 +47,6 @@ get_header();
 	  gap: 2rem;
 	  align-items: center;
 	}
-	.btn-primary {
-	  padding: 0.5em 0.8em;
-	  min-width: 2em;
-	  border:1px solid #2c768e;
-	  border-radius: 3px;
-	  text-decoration: none;
-	  font-weight: 600;
-	}
-	.btn-primary:hover {
-		background-color: #2c768e;
-		color: white;
-	}
-	.search-form {
-	  display: flex;
-	  align-items: center;
-	  gap: 0.75rem;
-	  width:600px;
-	  max-width: 100%;
-	}
-	.search-form label {
-	  width: 100%;
-	  display: block;
-	  margin:0;
-	}
-	.search-form .search-field {
-		padding:8px;
-	}
-	.search-form .search-submit {
-		width:30%;
-	}
-	@media (max-width: 600px) {
-	  .search-form {
-	    flex-direction: column;
-	    align-items: stretch;
-	    width:100%;
-	  }
-
-	  .search-form .search-submit {
-	    width: 100%;
-	  }
-	}
 </style>
 <main>
     <div class="container">

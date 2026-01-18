@@ -11,22 +11,13 @@ get_header();
 ?>
 
 <style>
-	h4.article-category {
-	    font-weight: 500;
-	    text-transform: uppercase;
-	    letter-spacing: .25em;
-	    line-height: 1.25em;
-	    margin: 1rem auto;
-	    text-align: center;
-	}
 	.postmetadata-postdate, .postmetadata-taxonomy{
-		font-size: 18px;
 		margin: 1em auto;
 		text-align: center;
 		text-transform: uppercase;
 	    letter-spacing: .05em;
 		font-weight: 600;
-		/*color:#2C768E;*/
+		color:#777;
 	}
 	.single-post .entry p:first-of-type {
 		font-size: 1.25rem;
@@ -38,7 +29,6 @@ get_header();
 	.single-post .entry h2{
 		text-align: center;
 		font-size: 2rem;
-		/*color:#2C768E;*/
 	}
 	.single-post .entry a{
 		font-weight: 700;
@@ -72,7 +62,7 @@ get_header();
 	.navigation {
 		border-top: 2px solid #e5e5e5;
 		border-bottom: 2px solid #e5e5e5;
-		margin:2rem 0;
+		margin:2rem 0 0;
 		padding: 1rem 0;
 	}
 	.navigation a {
@@ -85,11 +75,6 @@ get_header();
 	.alignright {
 		margin-left:0;
 		margin-bottom:0;
-	}
-	.related-articles-title {
-		text-align: center;
-		font-size: 32px;
-		margin-bottom: 2rem;
 	}
 	
 	/*.sidebar ul{
@@ -118,16 +103,17 @@ get_header();
 	body main article{
 		width: 80%;
 		max-width: 768px;
+		margin-bottom: 0;
 	}
 
 	@media screen and (max-width:982px){
-		.single-post main .container{
+		/*.single-post main .container{
 			display:block;
 		}
 		article, aside{
 			float:none;
 			width:100%!important;
-		}
+		}*/
 	}
 	@media screen and (max-width:672px){
 		.single-post .entry p:first-of-type {
@@ -146,16 +132,30 @@ get_header();
 			padding-top:0;
 		}*/
 	}
+	@media screen and (max-width: 350px) {
+		.single-post .entry h2{
+			font-size: 1.5rem;
+		}
+	}
+
 </style>
 
-<?php if ( has_post_thumbnail() ) : ?>
-	<div class="banner_interior">
-		<div class="flexslider clearfix">
-			<ul class="slides">
-				<li style="background-image:url(<?php echo esc_url( get_the_post_thumbnail_url() ); ?>);">
-				</li>
-			</ul>
-		</div>
+<?php
+$thumb_id  = get_post_thumbnail_id();
+$thumb_url = get_the_post_thumbnail_url();
+$valid     = false;
+
+if ( $thumb_id && $thumb_url ) {
+    // Try to verify file exists on server
+    $file_path = get_attached_file( $thumb_id );
+
+    if ( $file_path && file_exists( $file_path ) ) {
+        $valid = true;
+    }
+}
+
+if ( $valid ) : ?>
+	<div class="banner_interior"style="background-image:url('<?php echo esc_url( $thumb_url ); ?>');">
 	</div>
 <?php else : ?>
 	<div class="no-banner"></div>
@@ -167,11 +167,11 @@ get_header();
 			$categories = get_the_category();
 			$cat = ! empty( $categories ) ? $categories[0] : null;
 			?>
-			<h4 class="article-category"><?php echo esc_html( $cat->name ); ?></h4>
+			<h4 class="blog-type-label"><?php echo esc_html( $cat->name ); ?></h4>
 		<h1><?php the_title(); ?></h1>
 			<p class="postmetadata-postdate">
-		         <small>Published on <?php echo get_the_date('M j, Y'); ?></small>
-		     </p>
+		         <small>Published on <?php echo get_the_date('M j, Y'); ?> | <?php echo get_reading_time(); ?>-min read</small>
+		    </p>
 	</div>
 
 	<div class="container">
@@ -193,15 +193,6 @@ get_header();
 		                </div>
 
 		        <?php endif; ?>
-
-				<?php if ( $cat ) : ?>
-				    <div class="center">
-				        <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
-				            Explore more stories in this category
-				            <i class="fa fa-arrow-right"></i>
-				        </a>
-				    </div>
-				<?php endif; ?>
 
 		    </div><!-- .entry -->
 
@@ -271,7 +262,7 @@ if ( $cat ) :
     if ( $final_query->have_posts() ) : ?>
         <section class="related-articles">
             <h2 class="related-articles-title">
-                Other Stories Like This
+                Similar <?php echo esc_html( $cat->name ); ?> Stories
             </h2>
 
             <ul class="latest_posts_list">
@@ -283,7 +274,7 @@ if ( $cat ) :
                             $thumb = get_first_image_url();
                         }
                         ?>
-                        <a href="<?php the_permalink(); ?>">
+                        <a class="card_image_link" href="<?php the_permalink(); ?>">
                             <div class="latest_post_item_thumb"
                                  style="background-image:url(<?php echo esc_url( $thumb ); ?>)">
                             </div>
@@ -293,13 +284,21 @@ if ( $cat ) :
                             <a href="<?php the_permalink(); ?>">
                                 <h3><?php the_title(); ?></h3>
                             </a>
-                            <span class="post-type-label">Published on <?php echo get_the_date( 'm.j.y' ); ?></span>
+                            <span class="post-type-label">Published on <?php echo get_the_date( 'm.d.y' ); ?></span>
                             <p><?php echo esc_html( get_search_excerpt( get_the_ID(), 25 ) ); ?></p>
                             <a href="<?php the_permalink(); ?>">Read more <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </li>
                 <?php endwhile; ?>
             </ul>
+
+            <?php if ( $cat ) : ?>
+				    <div class="center">
+				        <strong><a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+				            Explore more stories in <?php echo esc_html( $cat->name ); ?> <i class="fa fa-arrow-right"></i></a></strong>
+				    </div>
+			<?php endif; ?>
+
         </section>
     <?php
     endif;
@@ -316,7 +315,7 @@ endif;
 // Arguments for trips with ACF header-type = AESU
 $trips_args = array(
     'post_type'      => 'trips',          // custom post type
-    'posts_per_page' => 6,                // number of trips to show
+    'posts_per_page' => 3,                // number of trips to show
     'post__not_in'   => array( get_the_ID() ), // exclude current post
     'meta_query'     => array(             // filter by ACF field
         array(
@@ -333,7 +332,7 @@ $trips_query = new WP_Query( $trips_args );
 if ( $trips_query->have_posts() ) : ?>
     <section class="related-articles">
 
-        <h2 class="related-articles-title">Trips You Will Love</h2>
+        <h2 class="related-articles-title">Trips We Think You&rsquo;ll Love</h2>
 
         <ul class="latest_posts_list">
             <?php while ( $trips_query->have_posts() ) : $trips_query->the_post(); 
@@ -348,7 +347,7 @@ if ( $trips_query->have_posts() ) : ?>
 
                 <li <?php post_class( 'latest_posts_list_item' ); ?>>
 
-                    <a href="<?php echo esc_url( get_permalink() ); ?>">
+                    <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>">
 		                <div class="latest_post_item_thumb" style="background-image:url('<?php 
 		                    echo ($hero_image['url'] ?? '') !== '' ? esc_url($hero_image['url']) : esc_url($trip_hero_image_text_url); 
 		                ?>')">
@@ -368,8 +367,8 @@ if ( $trips_query->have_posts() ) : ?>
             <?php endwhile; ?>
         </ul>
 
-        <h2 class="related-articles-title" style="margin:2em 0 .5rem 0 !important;">Ready for your next adventure?</h2>
-        <div style="text-align: center;"><a class="cta-button" style="font-size:20px;" href="<?php echo get_permalink(824) ?>">View all AESU trips <i class="fa fa-arrow-right"></i></a></div>
+        <h2 class="related-articles-title" style="margin:2em 0 .5rem 0 !important;">Ready for Your Next Adventure?</h2>
+        <div style="text-align: center;"><a class="cta-button" style="font-size:20px;" href="<?php echo get_permalink(824) ?>">View all trips <i class="fa fa-arrow-right"></i></a></div>
 
     </section>
 <?php

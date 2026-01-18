@@ -15,56 +15,32 @@
 get_header();
 if(function_exists('get_field')){
 
-/*	//banner
-	$banner_image = get_field('banner_image');
-	$banner_title = get_field('banner_title');
-	$banner_tagline = get_field('banner_tagline');
-	$banner_cta = get_field('banner_cta');
-	//featured trip
-	$featured_trip_title = get_field('featured_trip_title');
-	$featured_trip = get_field('featured_trip_group');
-	//why travel
-	$why_travel_with_us_title = get_field('why_travel_with_us_title');
-	$why_travel_items = get_field('why_travel_items');
-	//trips for young adults
-	$trips_for_young_adults_title = get_field('trips_for_young_adults_title');
-	$trips_for_young_adults = get_field('trips_for_young_adults');
-	//who we are
-	$who_are_we_title = get_field('who_are_we_title');
-	$who_are_we_text = get_field('who_are_we_text');
-	$who_are_we_cta = get_field('who_are_we_cta');
-	$who_are_we_video_background = get_field('who_are_we_video_background');
-	$who_are_we_video_youtube_link = get_field('who_are_we_video_youtube_link');
-	//testimonials
-	$testimonials = get_field('testimonials');
-	$testimonial_cta = get_field('testimonial_cta');
-	$testimonial_videos = get_field('testimonial_videos');
-	//bespoke travel
-	$bespoke_travel_title = get_field('bespoke_travel_title');
-	$bespoke_travel_text = get_field('bespoke_travel_text');
-	$bespoke_travel_cta = get_field('bespoke_travel_cta');
-	$bespoke_travel_slider = get_field('bespoke_travel_slider');
-	//travel for good
-	$travel_for_good_title = get_field('travel_for_good_title');
-	$travel_for_good_text = get_field('travel_for_good_text');
-	$travel_for_good_items = get_field('travel_for_good_items');*/
-
-	//Homepage Builder
 	$home_section_builder = get_field('home_section_builder');
 }
 ?>
 
 	<main id="primary" class="site-main">
 
+	<?php foreach($home_section_builder as $home_section_builder_item){ ?>
+
 <!--BANNER SECTION-->
 
-	<?php foreach($home_section_builder as $home_section_builder_item){ ?>
 		<?php if($home_section_builder_item['section_type'] == 'Banner Area'){ ?>
 			<div class="banner" style="background-image:url(<?php echo $home_section_builder_item['banner_area']['banner_image']['url'] ?>)">
 				<div class="container">
 					<h1><?php echo $home_section_builder_item['banner_area']['banner_title']; ?></h1>
 					<h2><?php echo $home_section_builder_item['banner_area']['banner_tagline']; ?></h2>
-					<a href="<?php echo $home_section_builder_item['banner_area']['banner_cta']['url'] ?>" class="cta-button"><?php echo $home_section_builder_item['banner_area']['banner_cta']['title'] ?></a>
+					<!--<a href="<?php echo $home_section_builder_item['banner_area']['banner_cta']['url'] ?>" class="cta-button"><?php echo $home_section_builder_item['banner_area']['banner_cta']['title'] ?></a>-->
+
+					<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
+						<label>
+							<span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
+							<i class="fa fa-search"></i>
+							<input type="search" id="trip-search" class="search-field" placeholder="Where would you like to go?" value="" name="s">
+						</label>
+						<input type="submit" class="search-submit" value="Find your trip">
+						<input type="hidden" name="post_type" value="trips" />
+					</form>
 					
 				</div>
 				<a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
@@ -90,7 +66,7 @@ if(function_exists('get_field')){
 				</div>
 			</section>
 
-<!--Main Card Section-->
+<!--MAIN CARDS SECTION-->
 
 		<?php }elseif($home_section_builder_item['section_type'] == 'Main Cards Section'){ ?>
 			<section class="young_adult_trips">
@@ -210,19 +186,23 @@ if(function_exists('get_field')){
 					    <?php } ?>
 					</div>
 				</div>
-				<div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">Read what other travelers are saying <i class="fa fa-arrow-right"></i></a></div>
+				<div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">What our past travelers are saying <i class="fa fa-arrow-right"></i></a></div>
 			</section>
 
 <!--CARD GRID SECTION-->
 
 		<?php }elseif($home_section_builder_item['section_type'] == 'Card Grid'){ ?>
 			<section class="travel_for_good">
-				<div class="travel_for_good_title"><h2><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_title'] ?></h2><p><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_text'] ?></p></div>
 				<div class="container">
+
+					<div class="travel_for_good_title"><h2><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_title'] ?></h2><p><?php echo $home_section_builder_item['travel_for_good']['travel_for_good_text'] ?></p></div>
+				
 					<ul class="travel_for_good_list">
 						<?php foreach($home_section_builder_item['travel_for_good']['travel_for_good_items'] as $travel_for_good_item){ ?>
 							<li class="travel_for_good_item">
-								<div class="travel_for_good_item_image" style="background-image:url('<?php echo $travel_for_good_item['travel_for_good_item_image']['url'] ?>')"></div>
+								<a href="<?php echo $travel_for_good_item['travel_for_good_item_link']['url'] ?>">
+									<div class="travel_for_good_item_image" style="background-image:url('<?php echo $travel_for_good_item['travel_for_good_item_image']['url'] ?>')"></div>
+								</a>
 								<h3><?php echo $travel_for_good_item['travel_for_good_item_title'] ?></h3>
 								<p><?php echo $travel_for_good_item['travel_for_good_item_text'] ?></p>
 								<?php if($travel_for_good_item['travel_for_good_item_link']['url']){ ?><a href="<?php echo $travel_for_good_item['travel_for_good_item_link']['url'] ?>"><?php echo $travel_for_good_item['travel_for_good_item_link']['title'] ?> <i class="fa fa-arrow-right"></i></a><?php } ?>
@@ -238,7 +218,7 @@ if(function_exists('get_field')){
 		<section class="latest_from_us">
 			<div class="container">
 				<div class="latest_post_header">
-					<h2>Stories from Us</h2>
+					<h2>Our Latest Stories</h2>
 				</div>
 				<ul class="latest_posts_list">
 					<?php 
@@ -253,7 +233,7 @@ if(function_exists('get_field')){
 					?>
 						<?php while( $latest_from_us->have_posts() ) : $latest_from_us->the_post() ?>
 							<li class="latest_posts_list_item">
-								<a href="<?php echo get_the_permalink(); ?>"><div class="latest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div></a>
+								<a class="card_image_link" href="<?php echo get_the_permalink(); ?>"><div class="latest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div></a>
 								<div class="latest_post_item_text">
 									<a href="<?php echo get_the_permalink(); ?>"><h3><?php echo get_the_title(); ?></h3></a>
 									<p><?php echo wp_trim_words( get_the_excerpt(), 25, '...' ); ?></p>
