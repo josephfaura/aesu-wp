@@ -902,7 +902,9 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
     position: relative;
     top: -2px;
 }
-.banner_arrow:hover{
+.banner_arrow:hover,
+.banner_arrow:focus,
+.banner_arrow:active {
 	color:white;
 	opacity: .9;
 }
