@@ -843,7 +843,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
   }
 	.search-form .search-submit {
 		width:auto;
-		min-width: 30%;
+		/*min-width: 30%;*/
 		font-size:1rem;
 	}
 
@@ -980,7 +980,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	letter-spacing: .05rem;
     /*margin-bottom: 28px;*/
 	display: inline-block;
-	font-size: 20px;
+	font-size: 18px;
 	line-height: 1.25em;
 	/*white-space: nowrap;*/
 	margin: 18px 0; 
