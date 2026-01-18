@@ -154,9 +154,10 @@ get_header(); ?>
 	}
 	@media screen and (max-width: 767px) {
 	    .interior_banner {
-	    	height:100vh;
+	    	height: calc(100vh - 124px);
 	        background-attachment: scroll;
-	    }
+	        margin-bottom: 24px;
+		    }
 	}
 	@media screen and (max-width:600px){
 		.interior_banner .button{
