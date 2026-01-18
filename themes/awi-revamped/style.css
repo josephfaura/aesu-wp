@@ -927,9 +927,12 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
   }
 }
 @media screen and (max-width: 360px) {
-  .banner h1 {
+	.banner h1 {
     font-size:42px;
   }
+	.banner .container {
+		padding: 0 24px;
+	}
 }
 
 /* Featured Trip */

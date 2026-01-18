@@ -38,7 +38,7 @@ if(function_exists('get_field')){
 							<i class="fa fa-search"></i>
 							<input type="search" id="trip-search" class="search-field" placeholder="Where do you want to go?" value="" name="s">
 						</label>
-						<input type="submit" class="search-submit" value="Find My Trip">
+						<input type="submit" class="search-submit" value="Explore Trips">
 						<input type="hidden" name="post_type" value="trips" />
 					</form>
 					
