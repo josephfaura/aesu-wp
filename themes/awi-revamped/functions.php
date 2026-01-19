@@ -475,38 +475,113 @@ document.addEventListener("DOMContentLoaded", function() {
 <?php
 }
 
+
+/* ---------- AESU Trips Home Page Search Functions  ---------- */
+
+/* ---------------------------------------------------------------
+ * Build a search index for Trip CPT including linked Tour content
+ * --------------------------------------------------------------- */
+add_action('acf/save_post', 'awi_build_trip_search_index', 20);
+function awi_build_trip_search_index($post_id) {
+
+    // Only target Trips
+    if (get_post_type($post_id) !== 'trips') return;
+
+    // Prevent autosave / revisions
+    if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) return;
+
+    // Slight delay to ensure all ACF fields (including Post Objects) are saved
+    // This avoids timing issues
+    // Run in the next tick
+    add_action('shutdown', function() use ($post_id) {
+
+        $index = [];
+
+        // Trip-native content
+        $index[] = get_the_title($post_id);
+        $content = get_post_field('post_content', $post_id);
+        if (!empty($content)) $index[] = $content;
+
+        // Get the Tour Post Object
+        $tour_obj = get_field('tour', $post_id);
+        if ($tour_obj instanceof WP_Post) {
+            $tour_id = $tour_obj->ID;
+
+            // Tour title
+            $index[] = get_the_title($tour_id);
+
+            // Top-level fields
+            $description  = get_field('description', $tour_id);
+            $destinations = get_field('destinations', $tour_id);
+            if (!empty($description)) $index[] = $description;
+            if (!empty($destinations)) $index[] = $destinations;
+
+            // Repeaters
+            $repeaters = [
+                'trip_highlights',
+                'highlight_accordion',
+                'itinerary_items',
+                'hotels_items',
+                'manual_search_terms'
+            ];
+
+            foreach ($repeaters as $repeater) {
+                $rows = get_field($repeater, $tour_id);
+                if (empty($rows) || !is_array($rows)) continue;
+
+                foreach ($rows as $row) {
+                    if (!is_array($row)) continue;
+                    foreach ($row as $value) {
+                        if (is_string($value) && trim($value) !== '') {
+                            $index[] = $value;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Normalize + save
+        $index_string = strtolower(
+            wp_strip_all_tags(
+                implode(' ', $index)
+            )
+        );
+        update_field('search_index', $index_string, $post_id);
+
+    }, 0);
+}
+
+
 /**
  * Force the front-page search to ONLY return Trips with header_type = AESU
  */
 function awi_force_trips_search_query( $query ) {
-	if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+        if ( isset($_GET['post_type']) && $_GET['post_type'] === 'trips' ) {
+            $query->set( 'post_type', 'trips' );
 
-		if ( isset($_GET['post_type']) && $_GET['post_type'] === 'trips' ) {
-			$query->set( 'post_type', 'trips' );
+            // Filter to only AESU trips
+            $meta_query = array(
+                array(
+                    'key'     => 'header_type',
+                    'value'   => 'AESU',
+                    'compare' => '=',
+                ),
+            );
 
-			// Filter to only AESU trips
-			$meta_query = array(
-				array(
-					'key'     => 'header_type',
-					'value'   => 'AESU',
-					'compare' => '=',
-				),
-			);
-
-			$query->set( 'meta_query', $meta_query );
-			$query->set( 'post_status', 'publish' );
-		}
-	}
+            $query->set( 'meta_query', $meta_query );
+            $query->set( 'post_status', 'publish' );
+        }
+    }
 }
 add_action( 'pre_get_posts', 'awi_force_trips_search_query', 999 );
 
+
 /**
  * Custom search for Trips CPT
- * - Searches post_title, post_content
- * - Searches ACF fields: citiescountries + main_trip_content
- * - Expands keywords via synonyms
- * - Fuzzy matching (basic stemming)
- * - Relevance scoring: title > content > ACF fields
+ * - Searches Trip fields exactly: title, post_content, citiescountries, main_trip_content
+ * - Searches Tour content (search_index) with fuzzy matching
+ * - Includes optional manual_search_terms repeater
  */
 add_filter( 'posts_search', 'awi_trips_acf_search', 10, 2 );
 function awi_trips_acf_search( $search, $query ) {
@@ -519,52 +594,36 @@ function awi_trips_acf_search( $search, $query ) {
     $raw_search = trim( $query->get('s') );
     if ( empty($raw_search) ) return $search;
 
-    // Split into keywords
+    // Split keywords (no synonyms yet — we’ll use manual_search_terms in Tours instead)
     $keywords = explode( ' ', $raw_search );
-    $keywords_expanded = [];
 
-    // Synonyms expansion function
-    $synonyms_map = [
-        'uk'      => ['england','britain','united kingdom'],
-        'italy'   => ['italian','italian countryside','roma'],
-        'peru'    => ['machu picchu','cusco'],
-        'greece'  => ['greek','athens','crete'],
-        // add more as needed
-    ];
-
-    foreach ( $keywords as $word ) {
-        $word = strtolower($word);
-        if ( isset($synonyms_map[$word]) ) {
-            $keywords_expanded = array_merge( $keywords_expanded, $synonyms_map[$word] );
-        }
-        $keywords_expanded[] = $word;
-    }
-
-    $keywords_expanded = array_unique( $keywords_expanded );
-
-    // Build search clauses with fuzzy matching
     $keyword_clauses = [];
-    foreach ( $keywords_expanded as $word ) {
+    foreach ( $keywords as $word ) {
         $word_esc = esc_sql( $word );
-        // simple fuzzy: strip common endings
+
+        // Fuzzy version only for search_index
         $fuzzy = preg_replace('/(s|es|ed|ing|ian|ianan)$/i', '', $word_esc);
 
         $keyword_clauses[] = "
             (
                 {$wpdb->posts}.post_title LIKE '%{$word_esc}%'
-                OR {$wpdb->posts}.post_title LIKE '%{$fuzzy}%'
                 OR {$wpdb->posts}.post_content LIKE '%{$word_esc}%'
-                OR {$wpdb->posts}.post_content LIKE '%{$fuzzy}%'
                 OR EXISTS (
                     SELECT 1 FROM {$wpdb->postmeta} 
                     WHERE post_id = {$wpdb->posts}.ID 
                     AND meta_key = 'citiescountries' 
-                    AND (meta_value LIKE '%{$word_esc}%' OR meta_value LIKE '%{$fuzzy}%')
+                    AND meta_value LIKE '%{$word_esc}%'
                 )
                 OR EXISTS (
                     SELECT 1 FROM {$wpdb->postmeta} 
                     WHERE post_id = {$wpdb->posts}.ID 
                     AND meta_key = 'main_trip_content' 
+                    AND meta_value LIKE '%{$word_esc}%'
+                )
+                OR EXISTS (
+                    SELECT 1 FROM {$wpdb->postmeta}
+                    WHERE post_id = {$wpdb->posts}.ID
+                    AND meta_key = 'search_index'
                     AND (meta_value LIKE '%{$word_esc}%' OR meta_value LIKE '%{$fuzzy}%')
                 )
             )
@@ -572,15 +631,16 @@ function awi_trips_acf_search( $search, $query ) {
     }
 
     if ( !empty($keyword_clauses) ) {
-        // Use OR logic to match any keyword
         $search = " AND (" . implode( " OR ", $keyword_clauses ) . ")";
     }
 
     return $search;
 }
 
+
 /**
- * Add relevance scoring: title > content > ACF fields
+ * Relevance scoring: title > content > Trip ACF fields > search_index
+ * Exact match for Trip fields, fuzzy match on search_index
  */
 add_filter( 'posts_clauses', 'awi_trips_relevance_order', 10, 2 );
 function awi_trips_relevance_order( $clauses, $query ) {
@@ -597,19 +657,35 @@ function awi_trips_relevance_order( $clauses, $query ) {
 
     foreach ( $words as $word ) {
         $word_esc = esc_sql($word);
+        $fuzzy = preg_replace('/(s|es|ed|ing|ian|ianan)$/i', '', $word_esc);
+
+        // Trip title (highest weight)
         $relevance_sql[] = "(CASE WHEN {$wpdb->posts}.post_title LIKE '%{$word_esc}%' THEN 5 ELSE 0 END)";
+
+        // Trip content
         $relevance_sql[] = "(CASE WHEN {$wpdb->posts}.post_content LIKE '%{$word_esc}%' THEN 2 ELSE 0 END)";
+
+        // Trip ACF fields
         $relevance_sql[] = "(CASE WHEN EXISTS (
             SELECT 1 FROM {$wpdb->postmeta} 
             WHERE post_id = {$wpdb->posts}.ID 
             AND meta_key = 'citiescountries' 
             AND meta_value LIKE '%{$word_esc}%'
         ) THEN 1 ELSE 0 END)";
+
         $relevance_sql[] = "(CASE WHEN EXISTS (
             SELECT 1 FROM {$wpdb->postmeta} 
             WHERE post_id = {$wpdb->posts}.ID 
             AND meta_key = 'main_trip_content' 
             AND meta_value LIKE '%{$word_esc}%'
+        ) THEN 1 ELSE 0 END)";
+
+        // Search index (Tour content + manual_search_terms) with fuzzy
+        $relevance_sql[] = "(CASE WHEN EXISTS (
+            SELECT 1 FROM {$wpdb->postmeta} 
+            WHERE post_id = {$wpdb->posts}.ID 
+            AND meta_key = 'search_index' 
+            AND (meta_value LIKE '%{$word_esc}%' OR meta_value LIKE '%{$fuzzy}%')
         ) THEN 1 ELSE 0 END)";
     }
 
@@ -621,30 +697,7 @@ function awi_trips_relevance_order( $clauses, $query ) {
 }
 
 
-/* Theme options page (ACF) */
-if ( function_exists('acf_add_options_page') ) {
-	acf_add_options_page(array(
-		'page_title' 	=> 'Theme General Settings',
-		'menu_title'	=> 'Theme Settings',
-		'menu_slug' 	=> 'theme-general-settings',
-		'capability'	=> 'edit_posts',
-		'redirect'		=> false
-	));
-}
-
-/* Add Menu Icons to Tours and Trips Custom Post Types */
-add_filter( 'register_post_type_args', 'modify_cpt_icons', 10, 2 );
-function modify_cpt_icons( $args, $post_type ) {
-    // Tours CPT
-    if ( 'tours' === $post_type ) {
-        $args['menu_icon'] = 'dashicons-location';
-    }
-    // Trips CPT
-    if ( 'trips' === $post_type ) {
-        $args['menu_icon'] = 'dashicons-airplane';
-    }
-    return $args;
-}
+/* ---------- General Search Parameters and Helper Functions  ---------- */
 
 /* Exclude CPT from Search Querry */
 function exclude_cpt_from_search( $query ) {
@@ -817,6 +870,35 @@ if ( ! $thumb ) {
 }
 																									     																																																																	
 
+
+
+/* ---------- Misc. Options and Backend Functions  ---------- */
+
+/* Theme options page (ACF) */
+if ( function_exists('acf_add_options_page') ) {
+	acf_add_options_page(array(
+		'page_title' 	=> 'Theme General Settings',
+		'menu_title'	=> 'Theme Settings',
+		'menu_slug' 	=> 'theme-general-settings',
+		'capability'	=> 'edit_posts',
+		'redirect'		=> false
+	));
+}
+
+/* Add Menu Icons to Tours and Trips Custom Post Types */
+add_filter( 'register_post_type_args', 'modify_cpt_icons', 10, 2 );
+function modify_cpt_icons( $args, $post_type ) {
+    // Tours CPT
+    if ( 'tours' === $post_type ) {
+        $args['menu_icon'] = 'dashicons-location';
+    }
+    // Trips CPT
+    if ( 'trips' === $post_type ) {
+        $args['menu_icon'] = 'dashicons-airplane';
+    }
+    return $args;
+}
+
 // Calculate reading time in Single Posts
 function get_reading_time( $post_id = null ) {
     $post_id = $post_id ?: get_the_ID();
@@ -857,6 +939,7 @@ function add_edit_post_type_a_link($wp_admin_bar) {
     }
 }
 add_action('admin_bar_menu', 'add_edit_post_type_a_link', 100);
+
 
 /* ---------- Admin list table helpers ---------- */
 
