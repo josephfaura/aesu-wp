@@ -10,7 +10,7 @@
 if(function_exists('get_field')){
     $tour_id = is_object($tour) ? $tour->ID : (int)$tour;
     $trip_name = get_field('trip_name', $tour_id);
-    $destinations = get_field('citiescountries', $tour_id);
+    $destinations = get_field('destinations', $tour_id);
     $description = get_field('description', $tour_id);
     $tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
     $trip_highlights = get_field('trip_highlights', $tour_id);
