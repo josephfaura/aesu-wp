@@ -5041,6 +5041,9 @@ label {
 	background-position:center;
 }
 
+.is-hidden{
+	display: none;
+}
 .lazyload {
   background-color: rgba(0, 0, 0, .4);
 }
