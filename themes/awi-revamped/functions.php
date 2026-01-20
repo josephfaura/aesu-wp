@@ -874,6 +874,44 @@ if ( ! $thumb ) {
 
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
+// Require SMS consent only when phone number is entered 
+add_filter('wpcf7_validate_tel', 'require_sms_consent_if_phone', 10, 2);
+add_filter('wpcf7_validate_tel*', 'require_sms_consent_if_phone', 10, 2);
+function require_sms_consent_if_phone($result, $tag) {
+	if ($tag->name !== 'sms-phone') {
+		return $result;
+	}
+	$phone   = isset($_POST['sms-phone']) ? trim($_POST['sms-phone']) : '';
+	$consent = isset($_POST['sms-consent']) ? $_POST['sms-consent'] : '';
+	if ($phone && empty($consent)) {
+		$result->invalidate(
+			$tag,
+			'Please agree to receive text messages if you provide a phone number.'
+		);
+	}
+	return $result;
+}
+// Validate US phone numbers in forms
+add_filter('wpcf7_validate_tel', 'validate_us_phone_number', 20, 2);
+add_filter('wpcf7_validate_tel*', 'validate_us_phone_number', 20, 2);
+function validate_us_phone_number($result, $tag) {
+	if ($tag->name !== 'sms-phone') {
+		return $result;
+	}
+	$phone = isset($_POST['sms-phone']) ? trim($_POST['sms-phone']) : '';
+	if ($phone === '') {
+		return $result; // optional field
+	}
+	// Strip non-digits
+	$digits = preg_replace('/\D/', '', $phone);
+
+	// US NANP: must be 10 digits and not start with 0 or 1
+	if (!preg_match('/^[2-9][0-9]{2}[0-9]{3}[0-9]{4}$/', $digits)) {
+		$result->invalidate($tag, 'Please enter a valid 10-digit U.S. phone number.');
+	}
+	return $result;
+}
+
 /* Theme options page (ACF) */
 if ( function_exists('acf_add_options_page') ) {
 	acf_add_options_page(array(
@@ -1058,7 +1096,7 @@ add_action('admin_head', function () {
     </style>';
 });
 
-// Makes AWT TOC Search Terms in Landing Pages align as Rows
+// Makes ACF Field Search Terms align as Rows on the backend
 add_action('acf/input/admin_head', function () {
     ?>
     <style>

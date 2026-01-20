@@ -1966,9 +1966,7 @@ a:not(.card_image_link):active {
 .left-label_subscribe,.right-label_subscribe{
 	display: inline-block;
 	vertical-align: top;
-}
-.left-label_subscribe,.right-label_subscribe{
-	width: calc(50% - 10px);
+	width: calc(50% - 20px);
 	margin: 5px;
 }
 /*.email_subscribe{
@@ -2002,16 +2000,8 @@ a:not(.card_image_link):active {
 }
 .subscribe_form input[type="submit"]{
     display: inline-block;
-    vertical-align: top;
-    font-weight: bold;
-    background-color: #e84c3d;
-    color: #fff;
-    text-transform: uppercase;
-		position: relative;
-		width: calc(100% - 10px);
-		height:40px;
-		font-size:18px;
-		margin:5px;
+		width: calc(100% - 20px);
+		margin: 10px auto;
 }
 .subscribe_form > * {
     max-width: 1020px;
@@ -2032,6 +2022,9 @@ a:not(.card_image_link):active {
 		padding:50px 10px;
 	}
 }
+.wpcf7-spinner {
+	position: absolute !important;
+}
 @media screen and (max-width:800px){
 	.subscription_section >div{
 		width:100%;
@@ -2045,7 +2038,6 @@ a:not(.card_image_link):active {
 	.left-label_subscribe,.right-label_subscribe,
 	.subscribe_form input[type="submit"]{
 		width: 100%;
-		margin: 5px 0;
 	}
 }
 /*Footer CTA*/
@@ -5039,15 +5031,20 @@ label {
   text-align: center;
   font-size: 80%;
 }
+.just-go_modal-body .subscribe_form {
+	width: 100%;
+	padding: 0;
+}
 .just-go_modal-body label {
 	font-size: 1rem;
+	margin:5px auto;
 }
 .just-go_modal-body .email_subscribe {
 	width: calc(100% - 10px);
 }
 .just-go_modal-body .susbcribe-button {
-    margin: 5px;
-    width: calc(100% - 10px);
+    margin: 10px;
+    width: calc(100% - 40px) !important;
     padding:8px;
     font-size: 1rem;
 }
@@ -5061,6 +5058,7 @@ label {
 	}
 	.just-go_modal-body .susbcribe-button {
 		width: 100%;
+		margin: 10px auto;
 	}
 }
 
