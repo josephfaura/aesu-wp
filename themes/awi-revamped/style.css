@@ -5037,20 +5037,20 @@ label {
 }
 .just-go_modal-body label {
 	font-size: 1rem;
-	margin:5px auto;
+	/*margin:5px auto;*/
 }
-.just-go_modal-body .email_subscribe {
+/*.just-go_modal-body .email_subscribe {
 	width: calc(100% - 10px);
-}
+}*/
 .just-go_modal-body .susbcribe-button {
     margin: 10px;
-    width: calc(100% - 40px) !important;
+    width: calc(100% - 20px) !important;
     padding:8px;
     font-size: 1rem;
 }
 .just-go_modal-body p{
 	color:#3a3a3a;
-	margin: 0;
+	margin: 1rem auto;
 }
 @media screen and (max-width: 485px){
 	.just-go_modal-body .email_subscribe {
