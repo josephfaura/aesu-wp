@@ -1927,6 +1927,7 @@ a:not(.card_image_link):active {
 .subscribe_form{
 	width: calc(100% / 3*2);
   background-color: #efba1c;
+  color:#3a3a3a;
 	padding:32px;
 	display: flex;
 	justify-content: center;
@@ -1950,30 +1951,54 @@ a:not(.card_image_link):active {
 	padding: 10px 15px;
 }
 .subscribe_form span,.subscribe_form input{
-	/*width: 100%;*/
     display: block;
-    font-size: 18px;
 }
 .subscribe_form p {
 	font-size:14px;
 }
 .subscribe_form a {
 	color:#3a3a3a;
+	font-weight:700;
 }
 .subscribe_form a:hover {
 	color:black;
 }
-.last_name_subscribe,.first_name_subscribe,.email_subscribe{
+.left-label_subscribe,.right-label_subscribe{
 	display: inline-block;
 	vertical-align: top;
 }
-.last_name_subscribe,.first_name_subscribe{
+.left-label_subscribe,.right-label_subscribe{
 	width: calc(50% - 10px);
 	margin: 5px;
 }
-.email_subscribe{
+/*.email_subscribe{
 	width: calc(100% - 160px);
 	margin: 5px;
+}*/
+.subscribe_form .wpcf7-acceptance {
+	display: block;
+}
+.subscribe_form .wpcf7-list-item {
+	margin: 0;
+}
+
+.wpcf7-acceptance input[type="checkbox"] {
+	width: auto;
+	max-width: none;
+	display: inline;
+	margin: 0 6px 0 0;
+	vertical-align: baseline;
+	transform: translateY(2px);
+}
+.subscribe_form .wpcf7-acceptance label {
+	display: inline;     /* normal text flow */
+}
+.subscribe_form .wpcf7-list-item-label {
+	display: inline;
+}
+.wpcf7-acceptance label > span{
+  font-size: 12px;
+  line-height: 1rem;
 }
 .subscribe_form input[type="submit"]{
     display: inline-block;
@@ -1982,10 +2007,8 @@ a:not(.card_image_link):active {
     background-color: #e84c3d;
     color: #fff;
     text-transform: uppercase;
-    border: none;
-    border-radius: 3px;
 		position: relative;
-		width: 140px;
+		width: calc(100% - 10px);
 		height:40px;
 		font-size:18px;
 		margin:5px;
@@ -2010,7 +2033,6 @@ a:not(.card_image_link):active {
 	}
 }
 @media screen and (max-width:800px){
-
 	.subscription_section >div{
 		width:100%;
 	}
@@ -2020,8 +2042,8 @@ a:not(.card_image_link):active {
 		font-size:20px;
 	}
 	
-	.last_name_subscribe,.first_name_subscribe,
-	.email_subscribe,.subscribe_form input[type="submit"]{
+	.left-label_subscribe,.right-label_subscribe,
+	.subscribe_form input[type="submit"]{
 		width: 100%;
 		margin: 5px 0;
 	}
@@ -4490,10 +4512,10 @@ article, aside {
 .form-list li { margin: 10px 0 0; }
 
 /*.form-list li:first-child { margin: 0; }*/
-.page-template-default input[type=text],.page-template-default input[type=email] {
+.page-template-default input[type=text],.page-template-default input[type=email], .page-template-default input[type=tel] {
 	padding: 8px;
 	width: 100%;
-	height: 40px;
+	height: 32px;
 	height: auto\9;
 	font: inherit;
 	background: #fff;
