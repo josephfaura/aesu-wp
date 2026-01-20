@@ -3493,7 +3493,7 @@ aside ul{
 .trip_header_logo{
   flex: 1;
   margin: 18px;
-  background-size: contain;
+  background-size: contain !important;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -3517,7 +3517,7 @@ aside ul{
 .red_button_cta{
 	background-color:#E74C3C;
 	color:#fff;
-	font-size:20px;
+	font-size:18px;
 	letter-spacing: .05rem;
 	padding:.8rem 1.6rem;
 	border-radius: 3px;
