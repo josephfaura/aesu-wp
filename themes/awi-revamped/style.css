@@ -1906,10 +1906,6 @@ a:not(.card_image_link):active {
 	display: flex;
 	flex-wrap:wrap
 }
-/*body .subscription_section{
-	padding-left:0;
-	padding-right:0;
-}*/
 .subscribe_title_area{
 		/*width: 600px;
     padding: 100px 40px;*/
@@ -4972,10 +4968,10 @@ label {
     float: left;
     padding: 0 10px;
 }
-.form-list{
+/*.form-list{
 	margin:0;
 	padding:0;
-}
+}*/
 .page-id-2353 article textarea {
     height: 180px;
 		width:100%;
