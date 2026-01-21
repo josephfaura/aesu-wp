@@ -612,14 +612,6 @@ input[type="submit"] {
 	padding: 12px;
 	transition: transform 0.2s ease;
 }
-#wpcf7-f13342-p3095-o1 input[type="submit"], 
-#wpcf7-f13342-p3095-o2 input[type="submit"]{
-	  border: 2px solid white !important;
-    background: 0;
-    border-radius: 20px !important;
-    font-weight: 500;
-    text-transform: capitalize;
-}
 
 button:hover,
 input[type="button"]:hover,
@@ -4959,15 +4951,28 @@ label {
     margin: 5px 0;
     display: block;
 }
+/*.form-list{
+	margin:0;
+	padding:0;
+}*/
+
+/* Two Column Form Adjustments */
+
+#wpcf7-f13342-p3095-o1 input[type="submit"], 
+#wpcf7-f13342-p3095-o2 input[type="submit"]{
+	  border: 2px solid white !important;
+    background: 0;
+    border-radius: 20px !important;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
 .page-id-2353 article .form-list li {
     width: calc(50% - 20px);
     float: left;
     padding: 0 10px;
 }
-/*.form-list{
-	margin:0;
-	padding:0;
-}*/
+
 .page-id-2353 article textarea {
     height: 180px;
 		width:100%;
@@ -4975,20 +4980,35 @@ label {
 .full-width-field {
     width: calc(100% - 27px) !important;
 }
-@media screen and (max-width:767px){
+@media screen and (max-width: 767px) {
+	#wpcf7-f13342-p3095-o1 .form-list li,
+	#wpcf7-f13342-p3095-o2 .form-list li {
+		width: calc(100% - 20px) !important;
+		float: none !important;
+	}
+	.page-id-2353 article .form-list li {
+		width: 100%;
+		float: none;
+	}
+	.full-width-field {
+		width: 100% !important;
+	}
+	form .list--unstyled {
+		padding:20px;
+	}
 	.block-line, .block-line:first-child { height: 80px; }
 
-.block-1x1, .block-1x1.smaller, .block-1x1.larger { height: 95px; }
+	.block-1x1, .block-1x1.smaller, .block-1x1.larger { height: 95px; }
 
-.block-1x2, .block-1x2.larger { height: 202px; }
+	.block-1x2, .block-1x2.larger { height: 202px; }
 
-.block-1x3 { height: auto; }
-.col { width: 50%; }
+	.block-1x3 { height: auto; }
+	.col { width: 50%; }
 
-.grid-3-col .col, .grid-3-col .col:first-child, .tab-col, .grid-tabs .col, .grid-tabs .col:first-child {
-	width: 100%;
-	float: none;
-}
+	.grid-3-col .col, .grid-3-col .col:first-child, .tab-col, .grid-tabs .col, .grid-tabs .col:first-child {
+		width: 100%;
+		float: none;
+	}
 }
 @media screen and (max-width: 567px) {
     .col {
@@ -5059,12 +5079,6 @@ label {
 }
 
 /* ____________MISC STYLES______________ */
-
-@media screen and (max-width: 768px){
-	form .list--unstyled {
-		padding:20px;
-	}
-}
 
 *[style^="background-image"]{
 	background-size:cover;
