@@ -614,7 +614,11 @@ input[type="submit"] {
 }
 #wpcf7-f13342-p3095-o1 input[type="submit"], 
 #wpcf7-f13342-p3095-o2 input[type="submit"]{
-	background: #5e5e5e !important;
+	  border: 2px solid white !important;
+    background: 0;
+    border-radius: 20px !important;
+    font-weight: 500;
+    text-transform: capitalize;
 }
 
 button:hover,
