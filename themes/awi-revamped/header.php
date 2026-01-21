@@ -118,7 +118,7 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 			@media screen and (max-width:879px){
 				.mobile_header{
 					display:block;
-					padding:18px 32px;
+					padding:24px;
 				}
 				.desktop_header{
 					display:none;
@@ -143,9 +143,6 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				}
 			}
 			@media screen and (max-width:443px){
-				.mobile_header{
-					padding:24px;
-				}
 				.logo_wrap svg {
 					height: 35px;
 					width: 85px;

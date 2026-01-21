@@ -692,10 +692,6 @@ textarea {
 	height: 180px;
 }
 
-/*form .list--unstyled {
-	margin: 0 -6px;
-}*/
-
 form .list--unstyled li {
 	margin: 12px 6px;
 }
@@ -5063,6 +5059,12 @@ label {
 }
 
 /* ____________MISC STYLES______________ */
+
+@media screen and (max-width: 768px){
+	form .list--unstyled {
+		padding:20px;
+	}
+}
 
 *[style^="background-image"]{
 	background-size:cover;
