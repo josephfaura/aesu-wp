@@ -5029,7 +5029,7 @@ label {
 
 /* Newsletter Signup Modal Overrides */
 .just-go_modal {
-	gap:0;
+	gap:0 !important;
 	margin:0 !important;
 }
 .just-go_modal-title {

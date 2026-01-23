@@ -52,14 +52,12 @@
 		}
 
 		h1 {
-		    margin: 0;
 		    font-size: 3.5em;
 		    font-weight: 700;
 		    line-height: 1.25em;
 		}
 
 		h2 {
-		    margin: 0;
 		    font-size: 2.6em;
 		    font-weight: 700;
 		    line-height: 1.25em;
