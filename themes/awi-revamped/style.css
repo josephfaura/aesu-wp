@@ -5088,7 +5088,7 @@ label {
 .is-hidden{
 	display: none;
 }
-.lazyload {
+.lazyload:not(.header_school_logo) {
   background-color: rgba(0, 0, 0, .4);
 }
 
