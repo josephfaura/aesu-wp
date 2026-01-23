@@ -870,6 +870,26 @@ if ( ! $thumb ) {
 }
 																									     																																																																	
 
+/* reCAPTCHA override so it only loads on front-page and index pages as well as any page with cf7 shortcode only */
+
+add_action('wp_enqueue_scripts', function () {
+
+    // Always allow reCAPTCHA on home + blog pages
+    if ( is_front_page() || is_home() ) {
+        return;
+    }
+
+    // Check for CF7 shortcode in the current post content
+    global $post;
+    if ( $post && has_shortcode($post->post_content, 'contact-form-7') ) {
+        return;
+    }
+
+    // Otherwise, dequeue reCAPTCHA
+    wp_dequeue_script('google-recaptcha');
+    wp_dequeue_script('wpcf7-recaptcha');
+
+}, 20);
 
 
 /* ---------- Misc. Options and Backend Functions  ---------- */

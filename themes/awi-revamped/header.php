@@ -16,6 +16,142 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
+	<?php if ( is_front_page() ) : ?>
+		<style id="critical-css">
+		/* =========================
+		   Critical CSS – Homepage
+		   (Mobile-safe, CLS-safe)
+		========================= */
+
+		/* Base */
+		html {
+		    box-sizing: border-box;
+		    line-height: 1.15;
+		    -webkit-text-size-adjust: 100%;
+		}
+
+		*, *::before, *::after {
+		    box-sizing: inherit;
+		}
+
+		body {
+		    margin: 0;
+		    background: #fff;
+		}
+
+		/* Typography */
+		body,
+		input {
+		    font-family: 'open-sans', -apple-system, BlinkMacSystemFont,
+		                 "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+		                 "Helvetica Neue", sans-serif;
+		    font-size: 1rem;
+		    line-height: 1.5;
+		    font-weight: 500;
+		    color: #5E5E5E;
+		}
+
+		h1 {
+		    margin: 0;
+		    font-size: 3.5em;
+		    font-weight: 700;
+		    line-height: 1.25em;
+		}
+
+		h2 {
+		    margin: 0;
+		    font-size: 2.6em;
+		    font-weight: 700;
+		    line-height: 1.25em;
+		}
+
+		/* Layout container */
+		.container {
+		    max-width: 1300px;
+		    margin: 0 auto;
+		    padding: 0 32px;
+		    position: relative;
+		}
+
+		/* Header – lock height & position */
+		header {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    min-height: 80px;
+		    z-index: 9999;
+		    background-color: #3a3a3a;
+		    color: #fff;
+		    padding: 18px 56px;
+		}
+
+		header a {
+		    color: #fff;
+		    text-decoration: none;
+		}
+
+		/* Hero / Banner (structure only) */
+		.banner {
+		    min-height: 100vh;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    background-size: cover;
+		    background-position: center;
+		    position: relative;
+		    margin-bottom: 56px;
+		}
+
+		.banner::after {
+		    content: '';
+		    position: absolute;
+		    inset: 0;
+		    background-color: rgba(0, 0, 0, 0.4);
+		    z-index: 1;
+		}
+
+		.banner > * {
+		    position: relative;
+		    z-index: 2;
+		    color: #fff;
+		    text-align: center;
+		}
+
+		/* Hero text */
+		.banner h1 {
+		    font-size: 75px;
+		    line-height: 1em;
+		    margin-bottom: 1.25rem;
+		}
+
+		.banner h2 {
+		    font-size: 1.5rem;
+		    font-weight: 500;
+		    letter-spacing: 0.05rem;
+		}
+
+		/* Search form (above-the-fold) */
+		.search-form {
+		    display: flex;
+		    align-items: center;
+		    gap: 0.75rem;
+		    width: 100%;
+		}
+
+		.search-form label {
+		    width: 100%;
+		    position: relative;
+		}
+
+		.search-form input[type="search"] {
+		    width: 100%;
+		    padding: 8px;
+		    border: 0;
+		}
+		</style>
+	<?php endif; ?>
+
 	<?php wp_head(); ?>
 	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
