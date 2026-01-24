@@ -771,7 +771,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	}
 }
 
-/*home banner*/
+/*Home Banner*/
 .banner{
 	height: 100vh;
 	display: flex;
@@ -1005,52 +1005,6 @@ a:not(.card_image_link):active {
 	.cta-button {
   	font-size: 1rem;
   }
-}
-
-/* Card Image Links Hover State Hack */
-.card_image_link {
-  display: block;
-  overflow: hidden;
-  border-radius: 6px 6px 0 0;
-  position: relative;
-}
-.card_image_link .latest_post_item_thumb,
-.card_image_link .trip_main_image {
-  position: relative;
-  z-index: 0;
-  height: 30vh;
-}
-/* Create the image layer */
-.card_image_link .latest_post_item_thumb::before,
-.card_image_link .trip_main_image::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: inherit;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: transform 0.25s ease;
-  transform-origin: center;
-  z-index: -1; /* sits behind content */
-}
-/* Hover zoom */
-.card_image_link:hover .latest_post_item_thumb::before,
-.card_image_link:hover .trip_main_image::before {
-  transform: scale(1.05);
-}
-/* Active = reset */
-.card_image_link:active .latest_post_item_thumb::before,
-.card_image_link:active .trip_main_image::before {
-  transform: scale(1.025);
-}
-/* Keep radius on both layers */
-.card_image_link,
-.card_image_link .latest_post_item_thumb,
-.card_image_link .trip_main_image,
-.card_image_link .latest_post_item_thumb::before,
-.card_image_link .trip_main_image::before {
-  border-radius: 6px 6px 0 0;
 }
 
 .trip_summary_details{
@@ -1714,6 +1668,69 @@ a:not(.card_image_link):active {
 		flex: 0 0 100%;
 	}
 }
+
+/* Card Image Links Hover State Hack */
+
+/* Card wrapper */
+.card_image_link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+}
+
+/* Image container */
+.card_image_link .latest_post_item_thumb,
+.card_image_link .trip_main_image {
+  position: relative;
+  height: 30vh;
+  z-index: 0;
+}
+
+/* Zoom layer */
+.card_image_link .latest_post_item_thumb::before,
+.card_image_link .trip_main_image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 0.25s ease;
+
+  will-change: transform;
+  backface-visibility: hidden;
+
+  z-index: -1;
+}
+
+/* Hover zoom (desktop) */
+@media (hover: hover) {
+  .card_image_link:hover .latest_post_item_thumb::before,
+  .card_image_link:hover .trip_main_image::before {
+    transform: scale(1.05);
+  }
+}
+
+/* Active tap feedback (mobile) */
+.card_image_link:active .latest_post_item_thumb::before {
+  transform: scale(1.025);
+}
+
+/* Radius consistency */
+.card_image_link,
+.card_image_link .latest_post_item_thumb,
+.card_image_link .trip_main_image,
+.card_image_link .latest_post_item_thumb::before,
+.card_image_link .trip_main_image::before {
+  border-radius: 6px 6px 0 0;
+}
+
 
 /* Bespoke Travel */
 /*
