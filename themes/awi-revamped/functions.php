@@ -894,56 +894,44 @@ add_action('wp_enqueue_scripts', function () {
 
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
-// Require SMS consent only when phone number is entered 
+// --- PHP: Require SMS consent if phone entered ---
 add_filter('wpcf7_validate_tel', 'require_sms_consent_if_phone', 10, 2);
 add_filter('wpcf7_validate_tel*', 'require_sms_consent_if_phone', 10, 2);
 function require_sms_consent_if_phone($result, $tag) {
-  if ($tag->name !== 'sms-phone') {
+    if ($tag->name !== 'sms-phone') return $result;
+    $phone = trim($_POST['sms-phone'] ?? '');
+    $consent = $_POST['sms-consent'] ?? '';
+    if ($phone && empty($consent)) {
+        $result->invalidate($tag, 'Please agree to receive text messages if you provide a phone number.');
+    }
     return $result;
-  }
-  if (empty($_POST['_wpcf7'])) {
-    return $result;
-  }
-  $form_id = (int) $_POST['_wpcf7'];
-
-  // 🔴 Replace with your actual form IDs
-  $allowed_forms = [cbea9ad];
-
-  if (!in_array($form_id, $allowed_forms, true)) {
-    return $result;
-  }
-  $phone   = trim($_POST['sms-phone'] ?? '');
-  $consent = $_POST['sms-consent'] ?? '';
-
-  if ($phone !== '' && empty($consent)) {
-    $result->invalidate(
-      $tag,
-      'Please agree to receive text messages if you provide a phone number.'
-    );
-  }
-  return $result;
 }
 
-// Validate US phone numbers in forms
+// --- PHP: Validate US phone numbers ---
 add_filter('wpcf7_validate_tel', 'validate_us_phone_number', 20, 2);
 add_filter('wpcf7_validate_tel*', 'validate_us_phone_number', 20, 2);
 function validate_us_phone_number($result, $tag) {
-	if ($tag->name !== 'sms-phone') {
-		return $result;
-	}
-	$phone = isset($_POST['sms-phone']) ? trim($_POST['sms-phone']) : '';
-	if ($phone === '') {
-		return $result; // optional field
-	}
-	// Strip non-digits
-	$digits = preg_replace('/\D/', '', $phone);
-
-	// US NANP: must be 10 digits and not start with 0 or 1
-	if (!preg_match('/^[2-9][0-9]{2}[0-9]{3}[0-9]{4}$/', $digits)) {
-		$result->invalidate($tag, 'Please enter a valid 10-digit U.S. phone number.');
-	}
-	return $result;
+    if ($tag->name !== 'sms-phone') return $result;
+    $phone = trim($_POST['sms-phone'] ?? '');
+    if ($phone === '') return $result; // optional
+    $digits = preg_replace('/\D/', '', $phone);
+    if (!preg_match('/^[2-9][0-9]{2}[0-9]{3}[0-9]{4}$/', $digits)) {
+        $result->invalidate($tag, 'Please enter a valid 10-digit U.S. phone number.');
+    }
+    return $result;
 }
+
+// --- Enqueue helper JS for forms ---
+function enqueue_form_helper_js() {
+    wp_enqueue_script(
+        'form-helper',
+        get_stylesheet_directory_uri() . '/js/form-helper.js', // path to your JS file
+        array(),   // dependencies, e.g., ['jquery'] if needed
+        '1.0',     // version
+        true       // load in footer
+    );
+}
+add_action('wp_enqueue_scripts', 'enqueue_form_helper_js');
 
 /* Theme options page (ACF) */
 if ( function_exists('acf_add_options_page') ) {

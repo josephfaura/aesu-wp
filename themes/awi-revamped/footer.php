@@ -26,29 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<!-- Show SMS Consent with Phone No. is entered in Newsletter Subscribe Contact Form -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-	const phone = document.querySelector('.subscribe_form input[name="sms-phone"]');
-	const consentWrap = document.querySelector('.subscribe_form .wpcf7-acceptance');
-
-	if (!phone || !consentWrap) return;
-
-	// Hide initially
-	consentWrap.style.display = 'none';
-
-	phone.addEventListener('input', function () {
-		if (phone.value.trim() !== '') {
-			consentWrap.style.display = 'block';
-		} else {
-			consentWrap.style.display = 'none';
-			const checkbox = consentWrap.querySelector('input[type="checkbox"]');
-			if (checkbox) checkbox.checked = false;
-		}
-	});
-});
-</script>
-
 <?php
 // --------------------------------------------------
 // Match header logic in footer (do NOT touch header)
