@@ -898,19 +898,32 @@ add_action('wp_enqueue_scripts', function () {
 add_filter('wpcf7_validate_tel', 'require_sms_consent_if_phone', 10, 2);
 add_filter('wpcf7_validate_tel*', 'require_sms_consent_if_phone', 10, 2);
 function require_sms_consent_if_phone($result, $tag) {
-	if ($tag->name !== 'sms-phone') {
-		return $result;
-	}
-	$phone   = isset($_POST['sms-phone']) ? trim($_POST['sms-phone']) : '';
-	$consent = isset($_POST['sms-consent']) ? $_POST['sms-consent'] : '';
-	if ($phone && empty($consent)) {
-		$result->invalidate(
-			$tag,
-			'Please agree to receive text messages if you provide a phone number.'
-		);
-	}
-	return $result;
+  if ($tag->name !== 'sms-phone') {
+    return $result;
+  }
+  if (empty($_POST['_wpcf7'])) {
+    return $result;
+  }
+  $form_id = (int) $_POST['_wpcf7'];
+
+  // 🔴 Replace with your actual form IDs
+  $allowed_forms = [cbea9ad];
+
+  if (!in_array($form_id, $allowed_forms, true)) {
+    return $result;
+  }
+  $phone   = trim($_POST['sms-phone'] ?? '');
+  $consent = $_POST['sms-consent'] ?? '';
+
+  if ($phone !== '' && empty($consent)) {
+    $result->invalidate(
+      $tag,
+      'Please agree to receive text messages if you provide a phone number.'
+    );
+  }
+  return $result;
 }
+
 // Validate US phone numbers in forms
 add_filter('wpcf7_validate_tel', 'validate_us_phone_number', 20, 2);
 add_filter('wpcf7_validate_tel*', 'validate_us_phone_number', 20, 2);
