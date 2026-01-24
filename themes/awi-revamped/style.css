@@ -1577,6 +1577,78 @@ a:not(.card_image_link):active {
 	}
 }
 
+/* Card Image Links */
+.card_image_link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+}
+
+/* Image container (ACF background lives here) */
+.card_image_link .latest_post_item_thumb,
+.card_image_link .trip_main_image {
+  position: relative;
+  height: 30vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Zoom layer */
+.card_image_link .latest_post_item_thumb::before,
+.card_image_link .trip_main_image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* SAFELY mirror the background */
+  background-image: inherit;
+  background-size: inherit;
+  background-position: inherit;
+  background-repeat: inherit;
+
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 0.25s ease;
+
+  will-change: transform;
+  backface-visibility: hidden;
+
+  /* IMPORTANT: no negative z-index */
+  z-index: 0;
+}
+
+/* Ensure content stays above zoom layer (if any) */
+.card_image_link .latest_post_item_thumb > *,
+.card_image_link .trip_main_image > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover zoom (desktop only) */
+@media (hover: hover) {
+  .card_image_link:hover .latest_post_item_thumb::before,
+  .card_image_link:hover .trip_main_image::before {
+    transform: scale(1.05);
+  }
+}
+
+/* Tap feedback (mobile) */
+.card_image_link:active .latest_post_item_thumb::before,
+.card_image_link:active .trip_main_image::before {
+  transform: scale(1.025);
+}
+
+/* Border radius consistency */
+.card_image_link,
+.card_image_link .latest_post_item_thumb,
+.card_image_link .trip_main_image,
+.card_image_link .latest_post_item_thumb::before,
+.card_image_link .trip_main_image::before {
+  border-radius: 6px 6px 0 0;
+}
+
 /* Latest From Us*/
 .latest_from_us{
 	margin-bottom:56px;
@@ -1667,78 +1739,6 @@ a:not(.card_image_link):active {
 	.latest_posts_list li{
 		flex: 0 0 100%;
 	}
-}
-
-/* Card Image Links */
-.card_image_link {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  border-radius: 6px 6px 0 0;
-}
-
-/* Image container (ACF background lives here) */
-.card_image_link .latest_post_item_thumb,
-.card_image_link .trip_main_image {
-  position: relative;
-  height: 30vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* Zoom layer */
-.card_image_link .latest_post_item_thumb::before,
-.card_image_link .trip_main_image::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  /* SAFELY mirror the background */
-  background-image: inherit;
-  background-size: inherit;
-  background-position: inherit;
-  background-repeat: inherit;
-
-  transform: scale(1);
-  transform-origin: center center;
-  transition: transform 0.25s ease;
-
-  will-change: transform;
-  backface-visibility: hidden;
-
-  /* IMPORTANT: no negative z-index */
-  z-index: 0;
-}
-
-/* Ensure content stays above zoom layer (if any) */
-.card_image_link .latest_post_item_thumb > *,
-.card_image_link .trip_main_image > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hover zoom (desktop only) */
-@media (hover: hover) {
-  .card_image_link:hover .latest_post_item_thumb::before,
-  .card_image_link:hover .trip_main_image::before {
-    transform: scale(1.05);
-  }
-}
-
-/* Tap feedback (mobile) */
-.card_image_link:active .latest_post_item_thumb::before,
-.card_image_link:active .trip_main_image::before {
-  transform: scale(1.025);
-}
-
-/* Border radius consistency */
-.card_image_link,
-.card_image_link .latest_post_item_thumb,
-.card_image_link .trip_main_image,
-.card_image_link .latest_post_item_thumb::before,
-.card_image_link .trip_main_image::before {
-  border-radius: 6px 6px 0 0;
 }
 
 /* Bespoke Travel */
