@@ -931,62 +931,6 @@ add_action('wp_enqueue_scripts', function () {
 
 }, 30);
 
-
-// Mobile-only performance optimizations
-add_action('wp_enqueue_scripts', function() {
-
-    // 1. Defer JS that blocks render on mobile
-    if(wp_is_mobile()) {
-        add_filter('script_loader_tag', function($tag, $handle) {
-            $defer_scripts = [
-                'jquery',          // jQuery
-                'wp-polyfill',     // WordPress polyfill
-                'wp-i18n',         // i18n scripts
-                'wp-hooks',        // hooks
-            ];
-            if(in_array($handle, $defer_scripts)){
-                // Add defer attribute
-                return str_replace(' src', ' defer src', $tag);
-            }
-            return $tag;
-        }, 10, 2);
-    }
-
-    // 2. Conditionally remove Google reCAPTCHA on pages that don't need it
-    if(wp_is_mobile()) {
-        $pages_with_recaptcha = ['contact', 'signup']; // add slugs of pages that need recaptcha
-        if(!is_page($pages_with_recaptcha)){
-            wp_dequeue_script('google-recaptcha'); // handle might differ, check in your console/network tab
-        }
-    }
-
-    // 3. Optionally dequeue jQuery completely on mobile if not needed
-    // wp_dequeue_script('jquery'); // uncomment if safe
-
-}, 100);
-
-// 4. Reduce posts per page on mobile to reduce payload
-add_action('pre_get_posts', function($query){
-    if(!is_admin() && $query->is_main_query() && wp_is_mobile()){
-        $query->set('posts_per_page', 5); // adjust number as needed
-    }
-});
-
-// 5. Optional: inline critical mobile CSS (replace with your mobile-specific CSS)
-add_action('wp_head', function(){
-    if(wp_is_mobile()){
-        ?>
-        <style>
-        /* Example: only critical mobile styles */
-        body { font-size: 16px; }
-        header, .hero { max-height: 60vh; overflow: hidden; }
-        img { max-width: 100%; height: auto; }
-        </style>
-        <?php
-    }
-});
-
-
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
 // --- PHP: Require SMS consent if phone entered ---
