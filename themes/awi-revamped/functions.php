@@ -870,27 +870,66 @@ if ( ! $thumb ) {
 }
 																									     																																																																	
 
-/* reCAPTCHA override so it only loads on front-page and index pages as well as any page with cf7 shortcode only */
+/* reCAPTCHA override */
 
+/**
+ * Disable Contact Form 7 global loading (including reCAPTCHA)
+ */
+add_filter('wpcf7_load_js', '__return_false');
+add_filter('wpcf7_load_css', '__return_false');
+add_filter('wpcf7_load_recaptcha', '__return_false');
+
+/**
+ * Load CF7 core JS/CSS site-wide (header form support)
+ */
 add_action('wp_enqueue_scripts', function () {
-
-    // Always allow reCAPTCHA on home + blog pages
-    if ( is_front_page() || is_home() ) {
-        return;
-    }
-
-    // Check for CF7 shortcode in the current post content
-    global $post;
-    if ( $post && has_shortcode($post->post_content, 'contact-form-7') ) {
-        return;
-    }
-
-    // Otherwise, dequeue reCAPTCHA
-    wp_dequeue_script('google-recaptcha');
-    wp_dequeue_script('wpcf7-recaptcha');
-
+    wpcf7_enqueue_scripts();
+    wpcf7_enqueue_styles();
 }, 20);
 
+/**
+ * Lazy-load reCAPTCHA v3 on form interaction (footer)
+ */
+add_action('wp_enqueue_scripts', function () {
+
+    wp_enqueue_script(
+        'cf7-recaptcha-lazy',
+        false,
+        [],
+        null,
+        true // footer
+    );
+
+    wp_add_inline_script('cf7-recaptcha-lazy', "
+        document.addEventListener('DOMContentLoaded', function () {
+            let recaptchaLoaded = false;
+
+            function loadRecaptchaV3() {
+                if (recaptchaLoaded) return;
+                recaptchaLoaded = true;
+
+                const s = document.createElement('script');
+                s.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
+                s.async = true;
+                s.defer = true;
+                document.body.appendChild(s);
+            }
+
+            document.addEventListener('focusin', function (e) {
+                if (e.target.closest('.wpcf7')) {
+                    loadRecaptchaV3();
+                }
+            }, { once: true });
+
+            document.addEventListener('submit', function (e) {
+                if (e.target.closest('.wpcf7')) {
+                    loadRecaptchaV3();
+                }
+            }, { once: true });
+        });
+    ");
+
+}, 30);
 
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
