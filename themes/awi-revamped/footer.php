@@ -12,6 +12,53 @@
 ?>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Helper to load external scripts asynchronously
+    function loadScript(src, async = true, defer = true) {
+        const s = document.createElement('script');
+        s.src = src;
+        s.async = async;
+        s.defer = defer;
+        document.body.appendChild(s);
+    }
+
+    // Load scripts after first interaction OR after page load
+    function initThirdParty() {
+        // GA / GTM
+        loadScript('https://www.googletagmanager.com/gtag/js?id=G-DV23ZYP1X4');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DV23ZYP1X4');
+
+        // Facebook Pixel
+        loadScript('https://connect.facebook.net/en_US/fbevents.js');
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+        (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '824453369658979');
+        fbq('track', 'PageView');
+
+        // ContentSquare
+        loadScript('https://t.contentsquare.net/smb/tag.js');
+    }
+
+    // Trigger on first user interaction
+    ['mousemove','keydown','touchstart','scroll','focus'].forEach(event => {
+        window.addEventListener(event, initThirdParty, {once:true});
+    });
+
+    // Fallback: after 5 seconds if no interaction
+    setTimeout(initThirdParty, 5000);
+});
+</script>
+
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("back_to_top");
 

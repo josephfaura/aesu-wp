@@ -880,16 +880,16 @@ add_filter('wpcf7_load_css', '__return_false');
 add_filter('wpcf7_load_recaptcha', '__return_false');
 
 /**
- * Load CF7 core JS/CSS site-wide (header form support)
+ * Manually load CF7 core JS/CSS site-wide (header form support)
+ * reCAPTCHA will be loaded later via JS on interaction
  */
 add_action('wp_enqueue_scripts', function () {
+
     wpcf7_enqueue_scripts();
     wpcf7_enqueue_styles();
+
 }, 20);
 
-/**
- * Lazy-load reCAPTCHA v3 on form interaction (footer)
- */
 add_action('wp_enqueue_scripts', function () {
 
     wp_enqueue_script(
@@ -897,7 +897,7 @@ add_action('wp_enqueue_scripts', function () {
         false,
         [],
         null,
-        true // footer
+        true // this TRUE is what puts it in the footer
     );
 
     wp_add_inline_script('cf7-recaptcha-lazy', "
@@ -930,6 +930,7 @@ add_action('wp_enqueue_scripts', function () {
     ");
 
 }, 30);
+
 
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
