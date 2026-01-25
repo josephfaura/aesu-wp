@@ -4994,16 +4994,16 @@ label {
 	padding:0;
 }*/
 
-/* Two Column Form Adjustments */
-
-#wpcf7-f13342-p3095-o1 input[type="submit"], 
-#wpcf7-f13342-p3095-o2 input[type="submit"]{
+/* Bespoke Travel Form Submit Button */
+.bespoke_form input[type="submit"]{
 	  border: 2px solid white !important;
     background: 0;
     border-radius: 20px !important;
     font-weight: 500;
     text-transform: capitalize;
 }
+
+/* Two Column Form Adjustments */
 
 .page-id-2353 article .form-list li {
     width: calc(50% - 20px);
