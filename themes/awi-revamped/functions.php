@@ -931,6 +931,35 @@ add_action('wp_enqueue_scripts', function () {
 
 }, 30);
 
+
+/**
+ * Enqueue deferred third-party loader
+ */
+add_action('wp_enqueue_scripts', function () {
+
+    // Register (do NOT autoload in head)
+    wp_register_script(
+        'awi-third-party',
+        get_template_directory_uri() . '/js/third-party-loader.js',
+        [],
+        '1.0.0',
+        true // footer
+    );
+
+    // Enqueue it
+    wp_enqueue_script('awi-third-party');
+
+    // Optional: pass config safely from PHP → JS
+    wp_add_inline_script(
+        'awi-third-party',
+        'window.AWI_CONFIG = {
+            ga_id: "G-DV23ZYP1X4",
+            fb_pixel_id: "824453369658979"
+        };',
+        'before'
+    );
+});
+
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
 // --- PHP: Require SMS consent if phone entered ---
