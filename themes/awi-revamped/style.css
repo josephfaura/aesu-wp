@@ -3425,6 +3425,7 @@ aside ul{
 
 .single h1 {
 	margin: 0;
+	line-height: 1.125em;
 	text-align: center;
 	color:#2C768E;
 }
