@@ -3808,7 +3808,7 @@ color:#fff;
 	background:#f2f2f2;
 	padding:32px;
 	position: sticky;
-	top:20vh;
+	top:25vh;
 	align-self: flex-start;
 	align-items:center;
 	height:auto;
@@ -3816,7 +3816,7 @@ color:#fff;
 	margin-top:50px;
 }
 .whats_included_image img {
-	max-height: 70vh;
+	max-height: 75vh;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
