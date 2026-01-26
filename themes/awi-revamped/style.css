@@ -1447,11 +1447,19 @@ a:not(.card_image_link):active {
 	border-radius:50%;*/
 }
 
+
+.plyr--video {
+	background: transparent !important;
+}
+.plyr__video-wrapper {
+	background: transparent !important;
+}
+
 /* ==========================================================================
    DISABLED: Fancybox vertical video hack (kept for reference)
    ==========================================================================
 
-   // Remove Fancybox's calculated size for html5 videos
+   /* Remove Fancybox's calculated size for html5 videos
    .fancybox__slide.has-html5video .fancybox__content {
        max-width: none !important;
        max-height: none !important;
@@ -1461,7 +1469,7 @@ a:not(.card_image_link):active {
        position: relative;
    }
 
-   // Force vertical video to fill height correctly
+   /* Force vertical video to fill height correctly
    .fancybox__slide.has-html5video video.fancybox__html5video {
        height: 100vh;
        width: auto;
@@ -1470,7 +1478,7 @@ a:not(.card_image_link):active {
        background: black;
    }
 
-   // Remove Fancybox's padding on larger screens
+   /* Remove Fancybox's padding on larger screens
    .fancybox__slide.has-html5video .is-selected {
        padding: 0 !important;
    }
@@ -1481,7 +1489,7 @@ a:not(.card_image_link):active {
        }
    }
 
-   // Fix Fancybox video size on mobile
+   /* Fix Fancybox video size on mobile
    @media (max-width: 550px) {
        // Kill Fancybox's calculated box
        .fancybox__slide.has-html5video .fancybox__content {
@@ -1492,7 +1500,7 @@ a:not(.card_image_link):active {
            padding: 0 !important;
        }
 
-       // Let video size itself safely on mobile
+  	/* Let video size itself safely on mobile
        .fancybox__slide.has-html5video video.fancybox__html5video {
            width: 100% !important;
            height: auto !important;
@@ -1501,7 +1509,7 @@ a:not(.card_image_link):active {
        }
    }
 
-   // Move close button above video
+   /* Move close button above video
    .fancybox__slide.has-html5video .carousel__button.is-close {
        position: absolute;
        top: 16px !important;
@@ -3163,9 +3171,9 @@ a.header_cart.:hover, a.header_cart:active {
 	}
 }
 
-.carousel__button.is-close {
+/*.carousel__button.is-close {
 	right: -136px !important;
-}
+}*/
 .fancybox__container {
 	z-index: 99999 !important;
 }
