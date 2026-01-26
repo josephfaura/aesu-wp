@@ -209,7 +209,7 @@ get_header(); ?>
 				<div class="form_banner">
 					<i class="fa fa-search"></i>
 					<input type="text" id="search_packages" placeholder="What school are you looking for?">
-					<a href="#" id="search_submit" class="button">Search</a>
+					<button type="button" id="search_submit" class="button">Search</button>
 				</div>
 		</div>
 	</div>
