@@ -3563,6 +3563,7 @@ aside ul{
 }
 .trip_name{
 	text-align:left !important;
+	transition: font-size 0.35 ease;
 }
 .trip_destination_info{
 	margin:.5rem;

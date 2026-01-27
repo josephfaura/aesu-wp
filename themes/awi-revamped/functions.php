@@ -107,862 +107,281 @@ add_action( 'widgets_init', 'awi_revamped_widgets_init' );
 /**
  * Enqueue scripts and styles.
  */
-function awi_revamped_scripts() {
-	// Theme CSS (cache-bust on file change)
-	wp_enqueue_style(
-		'awi-revamped-style',
-		get_stylesheet_uri(),
-		[],
-		file_exists( get_stylesheet_directory() . '/style.css' ) ? filemtime( get_stylesheet_directory() . '/style.css' ) : _S_VERSION
-	);
-	wp_style_add_data( 'awi-revamped-style', 'rtl', 'replace' );
-
-	// Core JS
-	wp_enqueue_script( 'awi-revamped-navigation', get_template_directory_uri() . '/js/navigation.js', [], _S_VERSION, true );
-	wp_enqueue_script( 'awi-revamped-svg',        get_template_directory_uri() . '/js/svgxuse.min.js', [], _S_VERSION, true );
-	wp_enqueue_script( 'awiNav',                  get_template_directory_uri() . '/js/awiNav-1.2.1.js', [ 'jquery' ], false, true );
-
-	// Flexslider
-	wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/js/jquery.flexslider-min.js', [ 'jquery' ], false, true );
-	wp_enqueue_style ( 'flexslider', get_template_directory_uri() . '/css/flexslider.css' );
-
-	// Fancybox
-	wp_enqueue_script( 'fancybox-js-theme',  get_template_directory_uri() . '/js/fancybox.umd.js', [ 'jquery' ], false, true );
-	wp_enqueue_style ( 'fancybox-css-theme', get_template_directory_uri() . '/css/fancybox.css' );
-
-	// Comments
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
-
-	// Font Awesome is provided by the Font Awesome Official plugin (v6.7.x).
-	// Remove any manual CDN enqueues to avoid duplicates.
-
-	// Slick
-	wp_enqueue_style ( 'slick',       get_template_directory_uri() . '/js/slick/slick.css', [], '1.8.1' );
-	wp_enqueue_style ( 'slick-theme', get_template_directory_uri() . '/js/slick/slick-theme.css', [ 'slick' ], '1.8.1' );
-	wp_enqueue_script( 'slick',       get_template_directory_uri() . '/js/slick/slick.min.js', [ 'jquery' ], '1.8.1', true );
-
-	// Carousel fixes / initialization (depends on slick)
-	wp_enqueue_script(
-		'awi-carousel-fixes',
-		get_stylesheet_directory_uri() . '/js/carousel-fixes.js',
-		[ 'jquery', 'slick' ],
-		file_exists( get_stylesheet_directory() . '/js/carousel-fixes.js' ) ? filemtime( get_stylesheet_directory() . '/js/carousel-fixes.js' ) : _S_VERSION,
-		true
-	);
-
-	// Itinerary toggler (plus/minus icons, a11y)
-	wp_enqueue_script( 'itinerary-toggle', get_template_directory_uri() . '/js/itinerary-toggle.js', [ 'jquery' ], _S_VERSION, true );
-}
-add_action( 'wp_enqueue_scripts', 'awi_revamped_scripts', 1 );
-
-/**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/custom-header.php';
-
-/**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
- * Functions which enhance the theme by hooking into WordPress.
- */
-require get_template_directory() . '/inc/template-functions.php';
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
-}
-
-/**
- * Footer scripts that are not Slick initializations (Slick is now initialized
- * exclusively in js/carousel-fixes.js to avoid double-inits).
- */
-add_action('wp_footer', 'awi_initialize_scripts', 9999);
-function awi_initialize_scripts() { ?>
-<script>
-(function($){
-	/* Accordion (legacy simple accordions not managed by itinerary-toggle.js) */
-	$('.acc-button-all').on('click',function() {
-		if ($(this).hasClass('acc-toggle-open')) {
-			$('.acc-button').removeClass('acc-active');
-			$('.acc-content').slideUp('normal');
-			$(this).removeClass('acc-toggle-open');
-		} else {
-			$('.acc-button').addClass('acc-active');
-			$('.acc-content').slideDown('normal');
-			$(this).addClass('acc-toggle-open');
-		}
-	});
-	$('.acc-button').on('click',function() {
-		if ($(this).next().is(':hidden')) {
-			$(this).addClass('acc-active');
-			$(this).next().slideDown('normal');
-		} else {
-			$(this).next().slideUp('normal');
-			$(this).removeClass('acc-active');
-		}
-	});
-})( jQuery );
-</script>
-
-
-<script>
-(function($){
-	//AWT TOC Search/filter
-	<?php if(is_page(898)){ ?>
-	$(document).on('change','.interior_banner input',function(){
-		var textentered = $(this).val().toLowerCase();
-		var loop_counter = 0;
-		$('.packages li').each(function(){
-			let element_text = $("#"+$(this).attr('id')).text().toLowerCase();
-			if(!element_text.includes(textentered)){
-				$("#"+$(this).attr('id')).css('display','none');
-			}else{
-				$("#"+$(this).attr('id')).css('display','flex');
-				loop_counter += 1;
-			}
-		});
-		$('.awt_toc_form').css('display', loop_counter === 0 ? 'block' : 'none');
-	});
-	$(document).on('click','#search_submit',function(){
-		$([document.documentElement, document.body]).animate({
-			scrollTop: $(".packages").first().offset().top - 260
-		}, 500);
-	});
-	<?php if(isset($_GET['show_values']) && $_GET['show_values'] === 'true'){ ?>
-	$(document).ready(function(){
-		$('.packages li').each(function(){
-			$('footer').append($(this).find('.package_thumbnail img').attr('src') + '<br>');
-		});
-	});
-	<?php } ?>
-	<?php } ?>
-
-	//Load more images behavior in Landing Page Gallery
-     (function($){
-    $(document).ready(function(){
-
-        let itemsToShow = 6; // how many to load each click
-        let $items = $('.past_tour_gallery li');
-        let totalItems = $items.length;
-
-        $('.load_more_images').on('click', function(e){
-            e.preventDefault();
-
-            // Find how many are currently visible
-            let visibleCount = $items.filter(':visible').length;
-
-            // Show the next 6
-            $items.slice(visibleCount, visibleCount + itemsToShow).fadeIn();
-
-            // After revealing, check if we reached the end
-            if (visibleCount + itemsToShow >= totalItems) {
-                $(this).hide(); // hide "Load More Images"
-            }
-        });
-
-    });
-})(jQuery);
-
-	//GA Tracking calls and form submissions
-	$(document).ready(function(){
-	  $("a[href^='tel']").on("click",function(){
-	    gtag('event', 'click_to_call', { 'lead_source': '<?php echo isset($_SESSION['utm_source']) ? esc_js($_SESSION['utm_source']) : '' ; ?>' });
-	  });
-	  var wpcf7Elm = document.querySelector('.wpcf7');
-	  document.addEventListener('wpcf7mailsent', function(e) {
-	    e.preventDefault();
-	    gtag('event', 'contact_form_submitted', { 'lead_source': '<?php echo isset($_SESSION['utm_source']) ? esc_js($_SESSION['utm_source']) : '' ; ?>' });
-	  }, false);
-	});
-
-	//Flexslider wait for page to load to animate
-	$(window).on('load', function() {
-		$('.flexslider').flexslider({
-			animation: "slide",
-			prevText: '<i class="fa-solid fa-angle-left"></i>',
-			nextText: '<i class="fa-solid fa-angle-right"></i>'
-		});
-	});
-
-	// NOTE: The old global .accordion_trigger handler is removed.
-	// Itinerary accordions are handled by itinerary-toggle.js.
-
-	// Keep What's Included expand/collapse-all (legacy)
-	$('.whats_included .toggle_all_trigger').on('click',function(e){
-		e.preventDefault();
-		if($(this).text()=="Expand All"){
-			$(this).text('Collapse All');
-			$(this).parents('.whats_included_accordion_section').find('.accordion_content').slideDown();
-			$(this).parents('.whats_included_accordion_section').find('.collapsed_indicator').text('-');
-		}else{
-			$(this).text('Expand All');
-			$(this).parents('.whats_included_accordion_section').find('.accordion_content').slideUp();
-			$(this).parents('.whats_included_accordion_section').find('.collapsed_indicator').text('+');
-		}
-	});
-
-	// Smooth anchor scroll
-	$(document).on('click', 'a[href^="#"]', function (event) {
-		event.preventDefault();
-		$('html, body').animate({
-			scrollTop: $($.attr(this, 'href')).offset().top - 100
-		}, 500);
-	});
-
-	function checkAccordionStatewhatsincluded() {
-		var allHidden = true;
-		$('.whats_included .accordion_item .accordion_content').each(function() {
-			if ($(this).css('display') !== 'none') {
-				allHidden = false;
-				return false;
-			}
-		});
-		$('.whats_included .toggle_all_trigger').text(allHidden ? 'Expand All' : 'Collapse All');
-	}
-	checkAccordionStatewhatsincluded();
-
-	// Deals popup
-	$('.deals_cta a').on('click',function(e){
-		e.preventDefault();
-		$('.tour_deals_popup_wrap').css('display','flex');
-	});
-	$('.tour_deals_close_popup').on('click',function(e){
-		e.preventDefault();
-		$('.tour_deals_popup_wrap').css('display','none');
-	});
-	$('.tour_deals_popup_wrap').on('click',function(){
-		$('.tour_deals_popup_wrap').css('display','none');
-	});
-	$('.tour_deals_popup_content *').on('click',function(e){
-		e.stopPropagation();
-	});
-
-	// Travel tools popup
-	$('.travel_tools a').on('click',function(e){
-		e.preventDefault();
-		$('.travel_tools_popup_wrap').css('display','flex');
-	});
-	$('.travel_tools_close_popup').on('click',function(e){
-		e.preventDefault();
-		$('.travel_tools_popup_wrap').css('display','none');
-	});
-	$('.travel_tools_popup_wrap').on('click',function(){
-		$('.travel_tools_popup_wrap').css('display','none');
-	});
-	$('.travel_tools_popup_content *').on('click',function(e){
-		e.stopPropagation();
-	});
-})( jQuery );
-</script>
-
-<script>
-  /* New Header scroll behavior for top nav and trip headers */
-document.addEventListener("DOMContentLoaded", function() {
-
-    let lastScrollTop = 0;
-    const triggerRatio = 0.25; // 25vh trigger
-    let isTripPage = <?php echo ( is_singular('trips') || is_singular('tours') ) ? 'true' : 'false'; ?>;
-
-    // Determine scroll target dynamically
-    function getScrollTarget() {
-	    if (!isTripPage) {
-	        // Non-trip pages → target the visible header class
-	        if (window.innerWidth < 880) {
-	            return document.querySelector('.mobile_header');
-	        } else {
-	            return document.querySelector('.desktop_header');
-	        }
-	    } else {
-	        // Single trip pages → only mobile/tablet <=976px
-	        if (window.innerWidth <= 976) {
-	            return document.querySelector('.trip_header');
-	        } else {
-	            return null; // Desktop trip pages → sticky, no scroll behavior
-	        }
-	    }
-	}
-
-    // Initialize element style for smooth transform
-    function initStyle(el) {
-        if (!el) return;
-        el.style.transition = "transform 0.3s ease";
-        el.style.willChange = "transform";
-        el.style.transform = "translateY(0)";
-    }
-
-    // Scroll handler
-    function onScroll() {
-        const currentScroll = window.scrollY;
-        const triggerPoint = window.innerHeight * triggerRatio;
-        const target = getScrollTarget();
-
-        if (!target || currentScroll < triggerPoint) {
-            return; // No element or not past trigger point
-        }
-
-        if (currentScroll < lastScrollTop) {
-            // Scrolling UP → show
-            target.style.transform = "translateY(0)";
-        } else {
-            // Scrolling DOWN → hide
-            target.style.transform = `translateY(-${target.offsetHeight + 4}px)`;
-        }
-
-        lastScrollTop = currentScroll;
-    }
-
-    // Run init
-    const initialTarget = getScrollTarget();
-    initStyle(initialTarget);
-
-    // Listen to scroll and resize
-    window.addEventListener('scroll', onScroll);
-
-    // Re-init on resize (important for trip pages)
-    window.addEventListener('resize', function() {
-        const target = getScrollTarget();
-        initStyle(target);
-    });
-
-});
-</script>
-
-<script>
-/* Autoplay Home Page Banner Video on Desktop and Click to Play in Frame on Mobile*/
-(function($){
-
-    const video = $('.banner_video').get(0);
-    const playBtn = $('.play_banner_video');
-
-    // Lazy-load when visible
-    const observer = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                video.load();
-
-                // Desktop autoplay
-                if(window.innerWidth >= 768){
-                    video.play();
-                }
-
-                observer.disconnect();
-            }
-        });
-    });
-    observer.observe(video);
-
-    // MOBILE: click to play
-    playBtn.on('click', function(){
-        video.play();
-        $(this).fadeOut();
-    });
-
-})(jQuery);
-</script>
-
-<?php
-}
-
-
-/* ---------- AESU Trips Home Page Search Functions  ---------- */
-
-/* ---------------------------------------------------------------
- * Build a search index for Trip CPT including linked Tour content
- * --------------------------------------------------------------- */
-add_action('acf/save_post', 'awi_build_trip_search_index', 20);
-function awi_build_trip_search_index($post_id) {
-
-    // Only target Trips
-    if (get_post_type($post_id) !== 'trips') return;
-
-    // Prevent autosave / revisions
-    if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) return;
-
-    // Slight delay to ensure all ACF fields (including Post Objects) are saved
-    // This avoids timing issues
-    // Run in the next tick
-    add_action('shutdown', function() use ($post_id) {
-
-        $index = [];
-
-        // Trip-native content
-        $index[] = get_the_title($post_id);
-        $content = get_post_field('post_content', $post_id);
-        if (!empty($content)) $index[] = $content;
-
-        // Get the Tour Post Object
-        $tour_obj = get_field('tour', $post_id);
-        if ($tour_obj instanceof WP_Post) {
-            $tour_id = $tour_obj->ID;
-
-            // Tour title
-            $index[] = get_the_title($tour_id);
-
-            // Top-level fields
-            $description  = get_field('description', $tour_id);
-            $destinations = get_field('destinations', $tour_id);
-            if (!empty($description)) $index[] = $description;
-            if (!empty($destinations)) $index[] = $destinations;
-
-            // Repeaters
-            $repeaters = [
-                'trip_highlights',
-                'highlight_accordion',
-                'itinerary_items',
-                'hotels_items',
-                'manual_search_terms'
-            ];
-
-            foreach ($repeaters as $repeater) {
-                $rows = get_field($repeater, $tour_id);
-                if (empty($rows) || !is_array($rows)) continue;
-
-                foreach ($rows as $row) {
-                    if (!is_array($row)) continue;
-                    foreach ($row as $value) {
-                        if (is_string($value) && trim($value) !== '') {
-                            $index[] = $value;
-                        }
-                    }
-                }
-            }
-        }
-
-        // Normalize + save
-        $index_string = strtolower(
-            wp_strip_all_tags(
-                implode(' ', $index)
-            )
-        );
-        update_field('search_index', $index_string, $post_id);
-
-    }, 0);
-}
-
-
-/**
- * Force the front-page search to ONLY return Trips with header_type = AESU
- */
-function awi_force_trips_search_query( $query ) {
-    if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
-        if ( isset($_GET['post_type']) && $_GET['post_type'] === 'trips' ) {
-            $query->set( 'post_type', 'trips' );
-
-            // Filter to only AESU trips
-            $meta_query = array(
-                array(
-                    'key'     => 'header_type',
-                    'value'   => 'AESU',
-                    'compare' => '=',
-                ),
-            );
-
-            $query->set( 'meta_query', $meta_query );
-            $query->set( 'post_status', 'publish' );
-        }
-    }
-}
-add_action( 'pre_get_posts', 'awi_force_trips_search_query', 999 );
-
-
-/**
- * Custom search for Trips CPT
- * - Searches Trip fields exactly: title, post_content, citiescountries, main_trip_content
- * - Searches Tour content (search_index) with fuzzy matching
- * - Includes optional manual_search_terms repeater
- */
-add_filter( 'posts_search', 'awi_trips_acf_search', 10, 2 );
-function awi_trips_acf_search( $search, $query ) {
-
-    // Only target main query & trips search
-    if ( ! $query->is_main_query() || ! $query->is_search() ) return $search;
-    if ( ! isset($_GET['post_type']) || $_GET['post_type'] !== 'trips' ) return $search;
-
-    global $wpdb;
-    $raw_search = trim( $query->get('s') );
-    if ( empty($raw_search) ) return $search;
-
-    // Split keywords (no synonyms yet — we’ll use manual_search_terms in Tours instead)
-    $keywords = explode( ' ', $raw_search );
-
-    $keyword_clauses = [];
-    foreach ( $keywords as $word ) {
-        $word_esc = esc_sql( $word );
-
-        // Fuzzy version only for search_index
-        $fuzzy = preg_replace('/(s|es|ed|ing|ian|ianan)$/i', '', $word_esc);
-
-        $keyword_clauses[] = "
-            (
-                {$wpdb->posts}.post_title LIKE '%{$word_esc}%'
-                OR {$wpdb->posts}.post_content LIKE '%{$word_esc}%'
-                OR EXISTS (
-                    SELECT 1 FROM {$wpdb->postmeta} 
-                    WHERE post_id = {$wpdb->posts}.ID 
-                    AND meta_key = 'citiescountries' 
-                    AND meta_value LIKE '%{$word_esc}%'
-                )
-                OR EXISTS (
-                    SELECT 1 FROM {$wpdb->postmeta} 
-                    WHERE post_id = {$wpdb->posts}.ID 
-                    AND meta_key = 'main_trip_content' 
-                    AND meta_value LIKE '%{$word_esc}%'
-                )
-                OR EXISTS (
-                    SELECT 1 FROM {$wpdb->postmeta}
-                    WHERE post_id = {$wpdb->posts}.ID
-                    AND meta_key = 'search_index'
-                    AND (meta_value LIKE '%{$word_esc}%' OR meta_value LIKE '%{$fuzzy}%')
-                )
-            )
-        ";
-    }
-
-    if ( !empty($keyword_clauses) ) {
-        $search = " AND (" . implode( " OR ", $keyword_clauses ) . ")";
-    }
-
-    return $search;
-}
-
-
-/**
- * Relevance scoring: title > content > Trip ACF fields > search_index
- * Exact match for Trip fields, fuzzy match on search_index
- */
-add_filter( 'posts_clauses', 'awi_trips_relevance_order', 10, 2 );
-function awi_trips_relevance_order( $clauses, $query ) {
-
-    if ( ! $query->is_main_query() || ! $query->is_search() ) return $clauses;
-    if ( ! isset($_GET['post_type']) || $_GET['post_type'] !== 'trips' ) return $clauses;
-
-    global $wpdb;
-    $raw_search = trim( $query->get('s') );
-    if ( empty($raw_search) ) return $clauses;
-
-    $words = explode( ' ', esc_sql( $raw_search ) );
-    $relevance_sql = [];
-
-    foreach ( $words as $word ) {
-        $word_esc = esc_sql($word);
-        $fuzzy = preg_replace('/(s|es|ed|ing|ian|ianan)$/i', '', $word_esc);
-
-        // Trip title (highest weight)
-        $relevance_sql[] = "(CASE WHEN {$wpdb->posts}.post_title LIKE '%{$word_esc}%' THEN 5 ELSE 0 END)";
-
-        // Trip content
-        $relevance_sql[] = "(CASE WHEN {$wpdb->posts}.post_content LIKE '%{$word_esc}%' THEN 2 ELSE 0 END)";
-
-        // Trip ACF fields
-        $relevance_sql[] = "(CASE WHEN EXISTS (
-            SELECT 1 FROM {$wpdb->postmeta} 
-            WHERE post_id = {$wpdb->posts}.ID 
-            AND meta_key = 'citiescountries' 
-            AND meta_value LIKE '%{$word_esc}%'
-        ) THEN 1 ELSE 0 END)";
-
-        $relevance_sql[] = "(CASE WHEN EXISTS (
-            SELECT 1 FROM {$wpdb->postmeta} 
-            WHERE post_id = {$wpdb->posts}.ID 
-            AND meta_key = 'main_trip_content' 
-            AND meta_value LIKE '%{$word_esc}%'
-        ) THEN 1 ELSE 0 END)";
-
-        // Search index (Tour content + manual_search_terms) with fuzzy
-        $relevance_sql[] = "(CASE WHEN EXISTS (
-            SELECT 1 FROM {$wpdb->postmeta} 
-            WHERE post_id = {$wpdb->posts}.ID 
-            AND meta_key = 'search_index' 
-            AND (meta_value LIKE '%{$word_esc}%' OR meta_value LIKE '%{$fuzzy}%')
-        ) THEN 1 ELSE 0 END)";
-    }
-
-    if ( !empty($relevance_sql) ) {
-        $clauses['orderby'] = "(" . implode( " + ", $relevance_sql ) . ") DESC, {$wpdb->posts}.post_date DESC";
-    }
-
-    return $clauses;
-}
-
-
-/* ---------- General Search Parameters and Helper Functions  ---------- */
-
-/* Exclude CPT from Search Querry */
-function exclude_cpt_from_search( $query ) {
-	if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
-
-		$post_types = get_post_types(
-			array(
-				'public' => true,
-				'exclude_from_search' => false,
-			),
-			'names'
-		);
-
-		// Removes CPTs you do NOT want searchable
-		unset( $post_types['tours'] );
-
-		$query->set( 'post_type', $post_types );
-	}
-}
-add_action( 'pre_get_posts', 'exclude_cpt_from_search' );
-
-/* Search Results Query helper */
-
-/*
- * Set posts per page for Search + Archive pages
- */
-function awi_custom_posts_per_page( $query ) {
-
-	// Only affect the main front-end query
-	if ( ! is_admin() && $query->is_main_query() ) {
-
-		// Search pages → 9 posts
-		if ( $query->is_search() ) {
-			$query->set( 'posts_per_page', 9 );
-		}
-
-		// Archive pages → 9 posts
-		if ( $query->is_archive() ) {
-			$query->set( 'posts_per_page', 9 );
-		}
-
-	}
-
-}
-add_action( 'pre_get_posts', 'awi_custom_posts_per_page' );
-
-/* Search Results excerpt fields helper */
-function get_search_excerpt( $post_id = null, $word_limit = 25 ) {
-
-    $post_id = $post_id ?: get_the_ID();
-
-    $clean_text = function( $text ) use ( $word_limit ) {
-        if ( ! $text ) {
-            return false;
-        }
-
-        // 1. Remove shortcodes
-        $text = strip_shortcodes( $text );
-
-        // 2. Replace block-level tags with spaces to prevent word smashing
-        $block_tags = [
-            'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-            'li', 'ul', 'ol', 'section', 'article', 'header', 'footer', 'blockquote'
-        ];
-
-        foreach ( $block_tags as $tag ) {
-            // Add a space before and after each block tag
-            $text = preg_replace( '#</?' . $tag . '[^>]*>#i', ' ', $text );
-        }
-
-        // 3. Replace <br> and <br /> with space
-        $text = preg_replace( '#<br\s*/?>#i', ' ', $text );
-
-        // 4. Strip any remaining HTML tags
-        $text = wp_strip_all_tags( $text );
-
-        // 5. Collapse multiple spaces
-        $text = trim( preg_replace( '/\s+/', ' ', $text ) );
-
-        // 6. Trim to word limit
-        return wp_trim_words( $text, $word_limit, '...' );
-    };
-
-    // Try ACF WYSIWYG / textarea fields first
-    if ( function_exists( 'get_field_objects' ) ) {
-
-        $fields = get_field_objects( $post_id );
-
-        if ( $fields ) {
-            foreach ( $fields as $field ) {
-
-                if ( in_array( $field['type'], [ 'wysiwyg', 'textarea' ], true ) && ! empty( $field['value'] ) ) {
-
-                    $excerpt = $clean_text( $field['value'] );
-
-                    if ( $excerpt ) {
-                        return $excerpt;
-                    }
-                }
-            }
-        }
-    }
-
-    // Fall back to post content
-    $content = get_post_field( 'post_content', $post_id );
-    $excerpt = $clean_text( $content );
-    if ( $excerpt ) {
-        return $excerpt;
-    }
-
-    // Fall back to manual excerpt
-    $excerpt = $clean_text( get_post_field( 'post_excerpt', $post_id ) );
-    if ( $excerpt ) {
-        return $excerpt;
-    }
-
-    return '';
-}
-
-//* Search Results image Thumbnail helper */
-function get_first_image_url( $post_id = null ) {
-
-	$post_id = $post_id ?: get_the_ID();
-
-	// 1. ACF hero image
-	if ( function_exists( 'get_field' ) ) {
-
-		$hero_image = get_field( 'hero_image', $post_id );
-		if ( ! empty( $hero_image['url'] ) ) {
-			return $hero_image['url'];
-		}
-
-		$welcome_letter_image = get_field( 'welcome_letter_image', $post_id );
-		if ( ! empty( $welcome_letter_image['url'] ) ) {
-			return $welcome_letter_image['url'];
-		}
-
-		// Text-based URL fallback
-		$trip_hero_image_text_url = get_field( 'trip_hero_image_text_url', $post_id );
-		if ( ! empty( $trip_hero_image_text_url ) ) {
-			return $trip_hero_image_text_url;
-		}
-
-		// 2. Slider repeater (first slide image)
-		if ( have_rows( 'slider', $post_id ) ) {
-			the_row(); // first row only
-			$image = get_sub_field( 'slide_image' );
-
-			if ( ! empty( $image['url'] ) ) {
-				return $image['url'];
-			}
-		}
-	}
-
-	// 3. Fallback to content <img>
-	$content = get_post_field( 'post_content', $post_id );
-	if ( $content && preg_match( '/<img[^>]+src=["\']([^"\']+)["\']/', $content, $matches ) ) {
-		return $matches[1];
-	}
-
-	return false;
-}
-
-// Cache results
-$thumb = get_post_meta( get_the_ID(), '_first_image', true );
-
-if ( ! $thumb ) {
-	$thumb = get_first_image_url();
-	update_post_meta( get_the_ID(), '_first_image', $thumb );
-}
-																									     																																																																	
-
-/* reCAPTCHA override */
-
-/**
- * Disable Contact Form 7 global loading (including reCAPTCHA)
- */
-add_filter('wpcf7_load_js', '__return_false');
-add_filter('wpcf7_load_css', '__return_false');
-add_filter('wpcf7_load_recaptcha', '__return_false');
-
-/**
- * Manually load CF7 core JS/CSS site-wide (header form support)
- * reCAPTCHA will be loaded later via JS on interaction
- */
-add_action('wp_enqueue_scripts', function () {
-
-    wpcf7_enqueue_scripts();
-    wpcf7_enqueue_styles();
-
-}, 20);
-
-add_action('wp_enqueue_scripts', function () {
-
-    wp_enqueue_script(
-        'cf7-recaptcha-lazy',
-        false,
+function awi_enqueue_feature_scripts() {
+
+    $theme_version = _S_VERSION;
+
+    // -----------------------------------------
+    // Theme CSS
+    // -----------------------------------------
+    wp_enqueue_style(
+        'awi-revamped-style',
+        get_stylesheet_uri(),
         [],
-        null,
-        true // this TRUE is what puts it in the footer
+        file_exists(get_stylesheet_directory() . '/style.css') ? filemtime(get_stylesheet_directory() . '/style.css') : $theme_version
+    );
+    wp_style_add_data('awi-revamped-style', 'rtl', 'replace');
+
+    // -----------------------------------------
+    // Core JS
+    // -----------------------------------------
+    wp_enqueue_script(
+        'awi-revamped-navigation',
+        get_template_directory_uri() . '/js/navigation.js',
+        [],
+        file_exists(get_template_directory() . '/js/navigation.js') ? filemtime(get_template_directory() . '/js/navigation.js') : $theme_version,
+        true
     );
 
-    wp_add_inline_script('cf7-recaptcha-lazy', "
-        document.addEventListener('DOMContentLoaded', function () {
-            let recaptchaLoaded = false;
+    wp_enqueue_script(
+        'awi-revamped-svg',
+        get_template_directory_uri() . '/js/svgxuse.min.js',
+        [],
+        file_exists(get_template_directory() . '/js/svgxuse.min.js') ? filemtime(get_template_directory() . '/js/svgxuse.min.js') : $theme_version,
+        true
+    );
 
-            function loadRecaptchaV3() {
-                if (recaptchaLoaded) return;
-                recaptchaLoaded = true;
+    wp_enqueue_script(
+        'awiNav',
+        get_template_directory_uri() . '/js/awiNav-1.2.1.js',
+        ['jquery'],
+        file_exists(get_template_directory() . '/js/awiNav-1.2.1.js') ? filemtime(get_template_directory() . '/js/awiNav-1.2.1.js') : false,
+        true
+    );
 
-                const s = document.createElement('script');
-                s.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
-                s.async = true;
-                s.defer = true;
-                document.body.appendChild(s);
-            }
+    // -----------------------------------------
+    // Flexslider
+    // -----------------------------------------
+    wp_enqueue_style(
+        'flexslider',
+        get_template_directory_uri() . '/css/flexslider.css',
+        [],
+        file_exists(get_template_directory() . '/css/flexslider.css') ? filemtime(get_stylesheet_directory() . '/css/flexslider.css') : $theme_version
+    );
 
-            document.addEventListener('focusin', function (e) {
-                if (e.target.closest('.wpcf7')) {
-                    loadRecaptchaV3();
-                }
-            }, { once: true });
+    wp_enqueue_script(
+        'flexslider',
+        get_template_directory_uri() . '/js/jquery.flexslider-min.js',
+        ['jquery'],
+        file_exists(get_stylesheet_directory() . '/js/jquery.flexslider-min.js') ? filemtime(get_stylesheet_directory() . '/js/jquery.flexslider-min.js') : $theme_version,
+        true
+    );
 
-            document.addEventListener('submit', function (e) {
-                if (e.target.closest('.wpcf7')) {
-                    loadRecaptchaV3();
-                }
-            }, { once: true });
-        });
-    ");
+    wp_enqueue_script(
+        'flexslider-init',
+        get_stylesheet_directory_uri() . '/js/flexslider-init.js',
+        ['jquery','flexslider'],
+        file_exists(get_stylesheet_directory() . '/js/flexslider-init.js') ? filemtime(get_stylesheet_directory() . '/js/flexslider-init.js') : $theme_version,
+        true
+    );
 
-}, 30);
+    // -----------------------------------------
+    // Fancybox
+    // -----------------------------------------
+    wp_enqueue_style(
+        'fancybox-css-theme',
+        get_template_directory_uri() . '/css/fancybox.css',
+        [],
+        file_exists(get_stylesheet_directory() . '/css/fancybox.css') ? filemtime(get_stylesheet_directory() . '/css/fancybox.css') : $theme_version
+    );
 
+    wp_enqueue_script(
+        'fancybox-js-theme',
+        get_template_directory_uri() . '/js/fancybox.umd.js',
+        ['jquery'],
+        file_exists(get_stylesheet_directory() . '/js/fancybox.umd.js') ? filemtime(get_stylesheet_directory() . '/js/fancybox.umd.js') : $theme_version,
+        true
+    );
 
-/**
- * Enqueue deferred third-party loader
- */
-add_action('wp_enqueue_scripts', function () {
+    // -----------------------------------------
+    // Slick
+    // -----------------------------------------
+    wp_enqueue_style(
+        'slick',
+        get_template_directory_uri() . '/js/slick/slick.css',
+        [],
+        '1.8.1'
+    );
+    wp_enqueue_style(
+        'slick-theme',
+        get_template_directory_uri() . '/js/slick/slick-theme.css',
+        ['slick'],
+        '1.8.1'
+    );
+    wp_enqueue_script(
+        'slick',
+        get_template_directory_uri() . '/js/slick/slick.min.js',
+        ['jquery'],
+        '1.8.1',
+        true
+    );
 
-    // Register (do NOT autoload in head)
+    // Carousel fixes
+    wp_enqueue_script(
+        'awi-carousel-fixes',
+        get_stylesheet_directory_uri() . '/js/carousel-fixes.js',
+        ['jquery','slick'],
+        file_exists(get_stylesheet_directory() . '/js/carousel-fixes.js') ? filemtime(get_stylesheet_directory() . '/js/carousel-fixes.js') : $theme_version,
+        true
+    );
+
+    // -----------------------------------------
+    // Itinerary toggle accordion
+    // -----------------------------------------
+    wp_enqueue_script(
+        'itinerary-toggle',
+        get_template_directory_uri() . '/js/itinerary-toggle.js',
+        ['jquery'],
+        file_exists(get_stylesheet_directory() . '/js/itinerary-toggle.js') ? filemtime(get_stylesheet_directory() . '/js/itinerary-toggle.js') : $theme_version,
+        true
+    );
+
+    // -----------------------------------------
+    // Header scroll behavior
+    // -----------------------------------------
+    wp_enqueue_script(
+        'header-scroll',
+        get_stylesheet_directory_uri() . '/js/header-scroll.js',
+        [], // no dependencies
+        file_exists(get_stylesheet_directory() . '/js/header-scroll.js') ? filemtime(get_stylesheet_directory() . '/js/header-scroll.js') : $theme_version,
+        true
+    );
+    wp_localize_script(
+        'header-scroll',
+        'awiHeaderScroll',
+        ['isTripPage' => is_singular(['trips','tours'])]
+    );
+
+    // -----------------------------------------
+    // Banner video autoplay (homepage only)
+    // -----------------------------------------
+    if (is_front_page()) {
+        wp_enqueue_script(
+            'banner-video',
+            get_stylesheet_directory_uri() . '/js/banner-video.js',
+            ['jquery'],
+            file_exists(get_stylesheet_directory() . '/js/banner-video.js') ? filemtime(get_stylesheet_directory() . '/js/banner-video.js') : $theme_version,
+            true
+        );
+    }
+
+    // -----------------------------------------
+    // Popups (deals + travel tools)
+    // -----------------------------------------
+    wp_enqueue_script(
+        'popups',
+        get_stylesheet_directory_uri() . '/js/popups.js',
+        ['jquery'],
+        file_exists(get_stylesheet_directory() . '/js/popups.js') ? filemtime(get_stylesheet_directory() . '/js/popups.js') : $theme_version,
+        true
+    );
+
+    // -----------------------------------------
+    // GA Tracking (tel clicks & CF7 submissions)
+    // -----------------------------------------
+    wp_enqueue_script(
+        'tracking',
+        get_stylesheet_directory_uri() . '/js/tracking.js',
+        ['jquery'],
+        file_exists(get_stylesheet_directory() . '/js/tracking.js') ? filemtime(get_stylesheet_directory() . '/js/tracking.js') : $theme_version,
+        true
+    );
+    wp_localize_script(
+        'tracking',
+        'awiTracking',
+        [
+            'utm_source' => isset($_SESSION['utm_source']) ? esc_js($_SESSION['utm_source']) : ''
+        ]
+    );
+
+    // -----------------------------------------
+    // Load More Gallery (landing page)
+    // -----------------------------------------
+    if ( is_page_template('template-landing-gallery.php') || is_page(/* add landing page IDs */) ) {
+        wp_enqueue_script(
+            'gallery-load-more',
+            get_stylesheet_directory_uri() . '/js/gallery-load-more.js',
+            ['jquery'],
+            file_exists(get_stylesheet_directory() . '/js/gallery-load-more.js') ? filemtime(get_stylesheet_directory() . '/js/gallery-load-more.js') : $theme_version,
+            true
+        );
+    }
+
+    // -----------------------------------------
+    // AWT TOC Search (page 898)
+    // -----------------------------------------
+    if ( is_page(898) ) {
+        wp_enqueue_script(
+            'awt-toc',
+            get_stylesheet_directory_uri() . '/js/awt-toc-search.js',
+            ['jquery'],
+            file_exists(get_stylesheet_directory() . '/js/awt-toc-search.js') ? filemtime(get_stylesheet_directory() . '/js/awt-toc-search.js') : $theme_version,
+            true
+        );
+        wp_localize_script(
+            'awt-toc',
+            'awiToc',
+            [
+                'show_values' => isset($_GET['show_values']) && $_GET['show_values'] === 'true'
+            ]
+        );
+    }
+
+    // -----------------------------------------
+    // CF7 recaptcha lazy
+    // -----------------------------------------
+    wp_enqueue_script(
+        'cf7-recaptcha-lazy',
+        get_stylesheet_directory_uri() . '/js/cf7-recaptcha-lazy.js',
+        [],
+        file_exists(get_stylesheet_directory() . '/js/cf7-recaptcha-lazy.js') ? filemtime(get_stylesheet_directory() . '/js/cf7-recaptcha-lazy.js') : $theme_version,
+        true
+    );
+
+    // -----------------------------------------
+    // Third-party loader
+    // -----------------------------------------
     wp_register_script(
         'awi-third-party',
         get_template_directory_uri() . '/js/third-party-loader.js',
         [],
-        '1.0.0',
-        true // footer
+        file_exists(get_stylesheet_directory() . '/js/third-party-loader.js') ? filemtime(get_stylesheet_directory() . '/js/third-party-loader.js') : $theme_version,
+        true
     );
-
-    // Enqueue it
     wp_enqueue_script('awi-third-party');
-
-    // Optional: pass config safely from PHP → JS
     wp_add_inline_script(
         'awi-third-party',
-        'window.AWI_CONFIG = {
-            ga_id: "G-DV23ZYP1X4",
-            fb_pixel_id: "824453369658979"
-        };',
+        'window.AWI_CONFIG = { ga_id: "G-DV23ZYP1X4", fb_pixel_id: "824453369658979" };',
         'before'
     );
-});
+
+    // -----------------------------------------
+    // Comments reply
+    // -----------------------------------------
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+        wp_enqueue_script('comment-reply');
+    }
+
+    // -----------------------------------------
+    // Form helper
+    // -----------------------------------------
+    wp_enqueue_script(
+        'form-helper',
+        get_stylesheet_directory_uri() . '/js/form-helper.js',
+        [],
+        file_exists(get_stylesheet_directory() . '/js/form-helper.js') ? filemtime(get_stylesheet_directory() . '/js/form-helper.js') : $theme_version,
+        true
+    );
+
+}
+add_action('wp_enqueue_scripts', 'awi_enqueue_feature_scripts', 1);
+
+/* Include Search Helpers */
+require_once get_stylesheet_directory() . '/inc/search-helpers.php';				
 
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
-// --- PHP: Require SMS consent if phone entered ---
+// --- Require SMS consent if phone entered ---
 add_filter('wpcf7_validate_tel', 'require_sms_consent_if_phone', 10, 2);
 add_filter('wpcf7_validate_tel*', 'require_sms_consent_if_phone', 10, 2);
 function require_sms_consent_if_phone($result, $tag) {
@@ -975,7 +394,7 @@ function require_sms_consent_if_phone($result, $tag) {
     return $result;
 }
 
-// --- PHP: Validate US phone numbers ---
+// --- Validate US phone numbers ---
 add_filter('wpcf7_validate_tel', 'validate_us_phone_number', 20, 2);
 add_filter('wpcf7_validate_tel*', 'validate_us_phone_number', 20, 2);
 function validate_us_phone_number($result, $tag) {
@@ -988,18 +407,6 @@ function validate_us_phone_number($result, $tag) {
     }
     return $result;
 }
-
-// --- Enqueue helper JS for forms ---
-function enqueue_form_helper_js() {
-    wp_enqueue_script(
-        'form-helper',
-        get_stylesheet_directory_uri() . '/js/form-helper.js', // path to your JS file
-        array(),   // dependencies, e.g., ['jquery'] if needed
-        '1.0',     // version
-        true       // load in footer
-    );
-}
-add_action('wp_enqueue_scripts', 'enqueue_form_helper_js');
 
 /* Theme options page (ACF) */
 if ( function_exists('acf_add_options_page') ) {
