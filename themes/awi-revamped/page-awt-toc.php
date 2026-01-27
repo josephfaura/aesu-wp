@@ -25,6 +25,7 @@ get_header(); ?>
     	flex-direction: column;
     	align-items: center;
     	max-width:800px;
+    	margin-top:75px;
 	}
 	.interior_banner *{
 		position: relative;

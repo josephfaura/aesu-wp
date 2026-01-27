@@ -874,6 +874,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	z-index:999;
 	color:#fff;
 	text-align: center;
+	margin-top:75px !important;
 }
 .banner:after{
 	content:'';
@@ -4607,6 +4608,7 @@ article, aside {
 	z-index:999;
 	color:#fff;
 	text-align: center;
+	margin-top:75px;
 }
 body:not(.single) .banner_interior:after{
 	content:'';
@@ -4622,7 +4624,7 @@ body:not(.single) .banner_interior:after{
 /*.banner_interior .container { padding: 0; }*/
 
 .banner_interior h3 {
-	margin:1rem auto;
+	margin:auto auto 1rem auto;
 	font-size: 56px;
 	line-height: 1.25em;
 	color: #fff;
