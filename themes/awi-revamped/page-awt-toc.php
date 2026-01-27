@@ -206,11 +206,11 @@ get_header(); ?>
 			<?php if ( $title ) : ?>
 				<h3><?php echo esc_html($title); ?></h3>
 			<?php endif; ?>
-				<div class="form_banner">
+				<form class="form_banner">
 					<i class="fa fa-search"></i>
 					<input type="text" id="search_packages" placeholder="What school are you looking for?">
 					<button type="button" id="search_submit" class="button">Search</button>
-				</div>
+				</form>
 		</div>
 	</div>
 
