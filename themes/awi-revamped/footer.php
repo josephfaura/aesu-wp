@@ -11,24 +11,6 @@
 
 ?>
 
-<script>
-/*  ==================
-    Back-to-top button
-    ================== */
-    document.addEventListener("DOMContentLoaded", () => {
-      const btn = document.getElementById("back_to_top");
-
-      if (!btn) return; // if the markup isn't on the page, stop.
-
-      btn.addEventListener("click", () => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      });
-    });
-</script>
-
 <?php
 // --------------------------------------------------
 // Match header logic in footer (do NOT touch header)

@@ -1956,19 +1956,17 @@ a:not(.card_image_link):active {
 	margin:0;
 }
 .subscribe_form{
-	width: calc(100% / 3*2);
+	width: calc(100% * 2 / 3);
   background-color: #efba1c;
   color:#3a3a3a;
 	padding:32px;
 	display: flex;
+	flex-direction: column;
+	align-items: center;
 	justify-content: center;
-	text-align:center;
-	display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-	/*max-width: 750px; */
+	text-align: center;
+	container-type: inline-size;
+	container-name: subscribe_form;
 }
 .subscribe_form h2{
 	font-weight:500;
@@ -2061,16 +2059,20 @@ a:not(.card_image_link):active {
 		width:100%;
 	}
 }
-@media screen and (max-width:485px){
-	.subscribe_form h2{
-		font-size:20px;
-	}
-	
-	.left-label_subscribe,.right-label_subscribe,
-	.subscribe_form input[type="submit"]{
-		width: 100%;
+@media (max-width: 768px) {
+	@container subscribe_form (max-width: 485px) {
+		.subscribe_form h2{
+			font-size:20px !importnat;
+		}
+		.left-label_subscribe,
+		.right-label_subscribe,
+		.subscribe_form input[type="submit"]{
+			width: 100% !important;
+			margin:5px auto;
+		}
 	}
 }
+
 /*Footer CTA*/
 .site-footer{
 	clear:both;
@@ -5116,15 +5118,18 @@ label {
 	color:#3a3a3a;
 	margin: 1rem auto;
 }
-@media screen and (max-width: 485px){
-	.just-go_modal-body .email_subscribe {
-		width:100%;
-	}
-	.just-go_modal-body .susbcribe-button {
-		width: 100%;
-		margin: 10px auto;
-	}
+.pum-container {
+	container-type: inline-size;
+	container-name: popup;
 }
+@container popup (max-width: 485px) {
+		.left-label_subscribe,
+		.right-label_subscribe,
+		.subscribe_form input[type="submit"]{
+			width: 100% !important;
+			margin:5px auto;
+		}
+	}
 
 /* ____________MISC STYLES______________ */
 

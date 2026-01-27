@@ -295,19 +295,6 @@ function awi_enqueue_feature_scripts() {
     );
 
     // -----------------------------------------
-    // Load More Gallery (landing page)
-    // -----------------------------------------
-    if ( is_page_template('template-landing-gallery.php') || is_page(/* add landing page IDs */) ) {
-        wp_enqueue_script(
-            'gallery-load-more',
-            get_stylesheet_directory_uri() . '/js/gallery-load-more.js',
-            ['jquery'],
-            file_exists(get_stylesheet_directory() . '/js/gallery-load-more.js') ? filemtime(get_stylesheet_directory() . '/js/gallery-load-more.js') : $theme_version,
-            true
-        );
-    }
-
-    // -----------------------------------------
     // AWT TOC Search (page 898)
     // -----------------------------------------
     if ( is_page(898) ) {
@@ -373,11 +360,70 @@ function awi_enqueue_feature_scripts() {
         true
     );
 
+    // -----------------------------------------
+    // Site UI helpers - Load More - Back 2 Top - 
+    // -----------------------------------------
+        wp_enqueue_script(
+            'gallery-load-more',
+            get_stylesheet_directory_uri() . '/js/site-ui.js',
+            ['jquery'],
+            file_exists(get_stylesheet_directory() . '/js/site-ui.js') ? filemtime(get_stylesheet_directory() . '/js/site-ui.js') : $theme_version,
+            true
+        );
+
 }
 add_action('wp_enqueue_scripts', 'awi_enqueue_feature_scripts', 1);
 
+
 /* Include Search Helpers */
 require_once get_stylesheet_directory() . '/inc/search-helpers.php';				
+
+
+// Move AWT calculation to template_redirect
+add_action('template_redirect', function () {
+    // Determine referrer header type
+    $referrer = $_SERVER['HTTP_REFERER'] ?? '';
+    $referrer_header = null;
+
+    if ($referrer) {
+        $ref_post_id = url_to_postid($referrer);
+        if ($ref_post_id) {
+            $referrer_header = get_field('header_type', $ref_post_id);
+        }
+    }
+
+    // Determine current post header type
+    $current_header = get_field('header_type');
+
+    // Final logic: AWT wins if referrer OR current header is AWT
+    $is_awt = (
+        $referrer_header === 'AWT'
+        || $current_header === 'AWT'
+    );
+
+    // Store globally so body_class() and JS can access it
+    $GLOBALS['awi_is_awt'] = $is_awt;
+});
+
+// Adds body class for AWT pages
+add_filter('body_class', function ($classes) {
+    if (!empty($GLOBALS['awi_is_awt']) && $GLOBALS['awi_is_awt'] === true) {
+        $classes[] = 'is-awt';
+    }
+    return $classes;
+});
+
+// Disable Popup Maker modals server-side on AWT pages
+add_filter('pum_is_popup_enabled', function ($enabled, $popup_id) {
+
+    // Only target your newsletter popup
+    if ($popup_id == 14384 && !empty($GLOBALS['awi_is_awt']) && $GLOBALS['awi_is_awt'] === true) {
+        return false; // hard-disable popup
+    }
+
+    return $enabled;
+}, 10, 2);
+
 
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
@@ -592,42 +638,159 @@ add_action('admin_head', function () {
     </style>';
 });
 
-// Makes ACF Field Search Terms align as Rows on the backend
+// ACF admin: Search Terms repeater as pills + working per-pill delete + keep pills after Add Row
 add_action('acf/input/admin_head', function () {
-    ?>
-    <style>
-        /* Inline layout for manual search terms repeater */
-        .inline-search-terms .acf-repeater table.acf-table > tbody {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .inline-search-terms .acf-repeater tr.acf-row {
-            display: inline-flex;
-            width: auto !important;
-            border: 1px solid #ccd0d4;
-            border-radius: 6px;
-            padding: 6px 8px;
-            background: #fff;
-        }
-        .inline-search-terms .acf-repeater td {
-            padding: 0 !important;
-            border: none !important;
-        }
-        .inline-search-terms .acf-repeater input[type="text"] {
-            width: auto !important;
-            min-width: 60px;
-            max-width: 240px;
-        }
-        .inline-search-terms .acf-repeater .acf-row-handle {
-            display: none;
-        }
-        .inline-search-terms .acf-repeater .acf-icon.-minus {
-            margin-left: 6px;
-        }
-    </style>
-    <?php
+?>
+<style>
+  /* Pill layout (your original) */
+  .inline-search-terms .acf-repeater table.acf-table > tbody{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .inline-search-terms .acf-repeater tr.acf-row{
+    display:inline-flex;
+    width:auto !important;
+    border:1px solid #ccd0d4;
+    border-radius:6px;
+    padding:6px 8px;
+    background:#fff;
+    align-items:center;
+  }
+  .inline-search-terms .acf-repeater td{
+    padding:0 !important;
+    border:none !important;
+  }
+  .inline-search-terms .acf-repeater input[type="text"]{
+    width:auto !important;
+    min-width:60px;
+    max-width:240px;
+  }
+
+  /* Keep ACF handle columns hidden so layout stays pills */
+  .inline-search-terms .acf-repeater .acf-row-handle{
+    display:none;
+  }
+
+  /* Our delete button */
+  .inline-search-terms .inline-pill-delete{
+    margin-left:6px;
+    border:0;
+    background:none;
+    cursor:pointer;
+    font-size:16px;
+    line-height:1;
+    padding:0;
+    color:#b32d2e;
+  }
+  .inline-search-terms .inline-pill-delete:hover{
+    color:#dc3232;
+  }
+</style>
+<?php
 });
+
+add_action('acf/input/admin_footer', function () {
+?>
+<script>
+(function(){
+  function applyPillStylesToRow(row){
+    if (!row || row.classList.contains('acf-clone')) return;
+
+    // Force pill styles (survives ACF append/inline/table resets)
+    row.style.setProperty('display', 'inline-flex', 'important');
+    row.style.setProperty('width', 'auto', 'important');
+    row.style.setProperty('alignItems', 'center', 'important');
+
+    row.querySelectorAll('td').forEach(function(td){
+      td.style.setProperty('padding', '0', 'important');
+      td.style.setProperty('border', 'none', 'important');
+    });
+  }
+
+  function applyPillStyles(scope){
+    scope = scope || document;
+
+    // Force tbody flex too (some ACF flows can reset it)
+    scope.querySelectorAll('.inline-search-terms .acf-repeater table.acf-table > tbody').forEach(function(tbody){
+      tbody.style.setProperty('display', 'flex', 'important');
+      tbody.style.setProperty('flex-wrap', 'wrap', 'important');
+      tbody.style.setProperty('gap', '8px', 'important');
+    });
+
+    scope.querySelectorAll('.inline-search-terms .acf-repeater tr.acf-row').forEach(applyPillStylesToRow);
+  }
+
+  function fireRealClick(el){
+    // Some ACF handlers are happier with full mouse sequence
+    ['mousedown','mouseup','click'].forEach(function(type){
+      el.dispatchEvent(new MouseEvent(type, {bubbles:true, cancelable:true, view:window}));
+    });
+  }
+
+  function addDeleteButtons(scope){
+    scope = scope || document;
+
+    scope.querySelectorAll('.inline-search-terms .acf-repeater tr.acf-row').forEach(function(row){
+      if (row.classList.contains('acf-clone')) return;
+      if (row.querySelector('.inline-pill-delete')) return;
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'inline-pill-delete';
+      btn.innerHTML = '×';
+      btn.setAttribute('aria-label', 'Delete search term');
+
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Use ACF’s own remove-row link inside THIS row
+        var removeLink = row.querySelector('a[data-event="remove-row"]');
+        if (!removeLink) return;
+
+        // If ACF ignores hidden elements in some flows, temporarily unhide the remove cell
+        var removeCell = removeLink.closest('td');
+        var prevDisplay = removeCell && removeCell.style ? removeCell.style.display : '';
+
+        if (removeCell) removeCell.style.display = 'block';
+
+        // Prefer jQuery trigger if present (WP admin usually has it)
+        if (window.jQuery) {
+          window.jQuery(removeLink).trigger('mousedown').trigger('click');
+        } else {
+          fireRealClick(removeLink);
+        }
+
+        // Restore
+        if (removeCell) removeCell.style.display = prevDisplay;
+      });
+
+      row.appendChild(btn);
+    });
+  }
+
+  function enhance(scope){
+    applyPillStyles(scope);
+    addDeleteButtons(scope);
+  }
+
+  // Initial load
+  document.addEventListener('DOMContentLoaded', function(){
+    enhance(document);
+  });
+
+  // When ACF adds/duplicates/appends rows
+  if (window.acf) {
+    acf.addAction('ready append', function($el){
+      enhance(($el && $el[0]) ? $el[0] : document);
+    });
+  }
+})();
+</script>
+<?php
+});
+
 
 // Register Custom Taxonomy for Pages
 function page_category_taxonomy() {

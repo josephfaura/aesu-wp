@@ -454,7 +454,7 @@ if ( ! post_password_required() ) {
     </ul>
 </section>
 <div class="school_custom_wrap">
-<section class="trip_list">
+<section class="trip_list" id="trip_list">
     <div class="container">
 <?php
 $terms = get_terms( array(
