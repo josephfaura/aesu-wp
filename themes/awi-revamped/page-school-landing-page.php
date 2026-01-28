@@ -96,7 +96,6 @@ if(function_exists('get_field')){
     }
     .school_custom_wrap a{
         color:<?php echo $primary_color; ?>;
-        
     }
     .trip_text{
         padding:36px;
@@ -456,6 +455,8 @@ if ( ! post_password_required() ) {
             <?php } ?>
     </ul>
 </section>
+
+
 <div class="school_custom_wrap">
 <section class="trip_list" id="trip_list">
     <div class="container">

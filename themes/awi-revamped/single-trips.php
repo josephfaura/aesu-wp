@@ -102,6 +102,7 @@ if ( $tour ) {
 		display:inline-block;
 		text-align: center;
 		white-space: nowrap;
+		color:#fff !important;
 	}
 	.additional_link a {
 		color:<?php echo $primary_color; ?>;
@@ -168,7 +169,7 @@ if ( $tour ) {
 		}
 		*/
 }
-	
+
 	@media screen and (max-width:686px){
 		.accordion_content {
 			padding: 20px 30px;
@@ -213,6 +214,7 @@ if ( $tour ) {
 if ( ! post_password_required() ) {
     // The password has been entered — show this content
 ?>
+
 <section class="mobile_cta">
 	<div class="trip_days_price"><?php echo $days_price; ?></div>
 	<a href="<?php echo $cta_button['url'] ?>" class="red_button_cta" target="_blank"><?php echo $cta_button['title'] ?></a>
@@ -225,6 +227,7 @@ if ( ! post_password_required() ) {
 			}
 		</style>
 	<?php } ?>
+
 
 <section class="trip_header">
 	<div class="trip_header_info">
@@ -501,6 +504,7 @@ if ( ! post_password_required() ) {
 		<?php } ?>
 	</div>
 </section>
+
 <main>
 	<div class="container">
 		<article class="full-width" style="width:100%;max-width:100%;">
@@ -540,6 +544,7 @@ if ( ! post_password_required() ) {
 		</article>
 	</div>
 </main>
+
 <?php if($deals_popup || get_field('deals_popup',$tour->ID)){ ?>
 <div class="tour_deals_popup_wrap">
     <div class="tour_deals_popup_inner">
