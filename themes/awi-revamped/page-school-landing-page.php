@@ -403,7 +403,7 @@ if ( ! post_password_required() ) {
     <div class="container">
         <?php if($banner_title){ ?><h1><?php echo $banner_title; ?></h1><?php } ?>
         <?php if($banner_tagline){ ?><h2><?php echo $banner_tagline; ?></h2><?php } ?>
-        <?php if($banner_cta){ ?><a href="<?php echo $banner_cta['url'] ?>" class="cta-button" style="background-color:<?php echo $primary_color; ?>"><?php echo $banner_cta['title'] ?></a><?php } ?>
+        <?php if($banner_cta){ ?><a href="<?php echo $banner_cta['url'] ?>" class="cta-button" style="background-color:<?php echo $primary_color; ?>; border: 1px solid #5e5e5e";><?php echo $banner_cta['title'] ?></a><?php } ?>
         
     </div>
     <a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
