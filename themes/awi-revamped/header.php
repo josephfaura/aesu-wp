@@ -241,8 +241,12 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				.single-trips .trip_header{
 					top:0 !important;
 				}
-				}
-			}	
+			}
+			@media screen and (max-width: 600px) {
+			    #wpadminbar {
+			        position: fixed;
+			    }
+			}
 		</style>
 <?php } ?>
 		<style>

@@ -638,6 +638,41 @@ add_action('admin_head', function () {
     </style>';
 });
 
+// Style ACF tabs with WP blue in admin
+add_action('acf/input/admin_head', function () {
+    ?>
+    <style>
+        /* ACF Tab base */
+        .acf-tab-group li a {
+            background: #2271b1 !important; /* WP admin blue */
+            color: #fff !important;
+            border-radius: 4px 4px 0 0;
+            padding: 8px 14px;
+            border: 1px solid #1d5f8a;
+            margin-right: 4px;
+        }
+
+        /* Hover state */
+        .acf-tab-group li a:hover {
+            background: #135e96 !important;
+            color: #fff;
+        }
+
+        /* Active tab */
+        .acf-tab-group li.active a {
+            background: #1e8cbe !important;
+            border-bottom-color: #1e8cbe;
+            font-weight: 600;
+        }
+
+        /* Remove default white tab underline gap */
+        .acf-tab-group {
+            border-bottom: 1px solid #1e8cbe !important;
+        }
+    </style>
+    <?php
+});
+
 // ACF admin: Search Terms repeater as pills + working per-pill delete + keep pills after Add Row
 add_action('acf/input/admin_head', function () {
 ?>

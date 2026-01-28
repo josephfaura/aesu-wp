@@ -89,7 +89,7 @@ if(function_exists('get_field')){
         overflow:hidden;
     }
     .trip_title_lander{
-        margin:0 0 10px;
+        margin:0;
         text-align:center;
         font-size:24px;
         color:<?php echo $primary_color; ?>;
@@ -364,6 +364,9 @@ if(function_exists('get_field')){
         .banner {
             height:100vh
         }
+        .page-id-1464 .banner {
+            background-position: calc(50% - 100px) center !important;
+        }
         .anchor_nav {
             display: none;
         }
@@ -400,7 +403,7 @@ if ( ! post_password_required() ) {
     <div class="container">
         <?php if($banner_title){ ?><h1><?php echo $banner_title; ?></h1><?php } ?>
         <?php if($banner_tagline){ ?><h2><?php echo $banner_tagline; ?></h2><?php } ?>
-        <?php if($banner_cta){ ?><a href="<?php echo $banner_cta['url'] ?>" class="cta-button"><?php echo $banner_cta['title'] ?></a><?php } ?>
+        <?php if($banner_cta){ ?><a href="<?php echo $banner_cta['url'] ?>" class="cta-button" style="background-color:<?php echo $primary_color; ?>"><?php echo $banner_cta['title'] ?></a><?php } ?>
         
     </div>
     <a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
@@ -676,7 +679,7 @@ $trips_query = new WP_Query( $args );
                 <div class="payment_info_text">
                     <h2 class="payment_title"><?php echo $payment_info_item['payment_info_title'] ?></h2>
                     <?php echo do_shortcode($payment_info_item['payment_info_content']) ?>
-                    <a style="color:#fff !important; font-size: 18px;" href="<?php echo $payment_info_item['learn_more_cta_url'] ?>" class="cta-button">Learn more <i class="fa fa-arrow-right"></i></a>
+                    <a style="color:#fff !important; font-size: 18px; background-color:<?php echo $primary_color; ?>" href="<?php echo $payment_info_item['learn_more_cta_url'] ?>" class="cta-button">Learn more <i class="fa fa-arrow-right"></i></a>
                 </div>
             </li>
             <?php } ?>
