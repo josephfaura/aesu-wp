@@ -49,21 +49,166 @@ if(function_exists('get_field')){
 
 <!--FEATURED TRIP SECTION-->
 
-		<?php }elseif($home_section_builder_item['section_type'] == 'Featured Trip'){ ?>
+		<?php } elseif ($home_section_builder_item['section_type'] == 'Featured Trip') { ?>
+
+			<?php
+			/**
+			 * MANUAL DEFAULTS (existing homepage builder fields)
+			 */
+			$manual_image_url   = $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_image']['url'] ?? '';
+			$manual_title_h2    = $home_section_builder_item['featured_trip']['featured_trip_title'] ?? '';
+			$manual_title_h3    = $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_title'] ?? '';
+			$manual_destination = $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_destination'] ?? '';
+			$manual_description = $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_description'] ?? '';
+			$manual_price       = $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_price'] ?? '';
+
+			$manual_cta         = $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_cta'] ?? [];
+			$manual_cta_url     = $manual_cta['url'] ?? '';
+			$manual_cta_text    = $manual_cta['title'] ?? 'Explore this trip';
+
+			/**
+			 * RENDER VALUES start as manual values
+			 * (Manual H2 + CTA TEXT are intentionally never overwritten)
+			 */
+			$render_image_url   = $manual_image_url;
+			$render_title_h2    = $manual_title_h2;     // NEVER overwrite
+			$render_title_h3    = $manual_title_h3;
+			$render_destination = $manual_destination;
+			$render_description = $manual_description;
+			$render_price       = $manual_price;
+
+			$render_cta_url     = $manual_cta_url;      // may overwrite URL to featured trip
+			$render_cta_text    = $manual_cta_text;     // NEVER overwrite
+
+			/**
+			 * AUTO MODE: find a Trip flagged featured_trip = true
+			 */
+			$featured_trip_id = 0;
+
+			$featured_query = new WP_Query([
+			    'post_type'      => 'trips',
+			    'posts_per_page' => 1,
+			    'meta_query'     => [
+			        [
+			            'key'     => 'featured_trip',
+			            'value'   => '1',
+			            'compare' => '='
+			        ]
+			    ],
+			    'orderby' => 'rand', // change to 'date' + 'DESC' if you prefer newest featured
+			]);
+
+			if ( $featured_query->have_posts() ) {
+			    $featured_query->the_post();
+			    $featured_trip_id = get_the_ID();
+			}
+			wp_reset_postdata();
+
+			/**
+			 * If a featured trip exists, override render values with card-style logic
+			 * while preserving manual H2 title + CTA text.
+			 */
+			if ( $featured_trip_id && function_exists('get_field') ) {
+
+			    // Trip fields
+			    $hero_image               = get_field('trip_hero_image', $featured_trip_id);
+			    $hero_fallback            = get_field('trip_hero_image_text_url', $featured_trip_id);
+			    $trip_name                = get_field('trip_name', $featured_trip_id);
+			    $days_price               = get_field('days__price', $featured_trip_id);
+
+			    if ( !is_array($hero_image) ) {
+			        $hero_image = [];
+			    }
+
+			    // Trip -> selected Tour
+			    // IMPORTANT: if your field name isn't 'tour', change it here:
+			    $tour = get_field('tour', $featured_trip_id);
+			    $tour_id = $tour ? (is_object($tour) ? $tour->ID : (int)$tour) : 0;
+
+			    // trip_name: trip wins, else tour trip_name
+			    if ( ( $trip_name === null || $trip_name === false || $trip_name === '' ) && $tour_id ) {
+			        $trip_name = get_field('trip_name', $tour_id);
+			    }
+
+			    // hero image: trip image -> trip text url -> tour featured image
+			    if ( empty($hero_image['url']) && ( $hero_fallback === null || $hero_fallback === false || $hero_fallback === '' ) && $tour_id ) {
+			        $tour_featured_url = get_the_post_thumbnail_url($tour_id, 'full');
+			        if ( $tour_featured_url ) {
+			            $hero_image['url'] = $tour_featured_url;
+			            $hero_fallback = $tour_featured_url;
+			        }
+			    }
+
+			    // Destinations + Description come from the TOUR (to match your layout)
+			    if ( $tour_id ) {
+			        // Destinations for <h4>
+			        $destinations = get_field('destinations', $tour_id);
+			        if ( !empty($destinations) ) {
+			            $destinations_text = is_array($destinations)
+			                ? implode(', ', array_filter(array_map('wp_strip_all_tags', $destinations)))
+			                : wp_strip_all_tags($destinations);
+
+			            if ( $destinations_text ) {
+			                $render_destination = $destinations_text;
+			            }
+			        }
+
+			        // Tour description replaces the manual featured_trip_description
+			        $tour_description = get_field('description', $tour_id);
+			        if ( $tour_description ) {
+			            $render_description = $tour_description;
+			        }
+			    }
+
+			    // Price stays trip-specific (rendered only in <strong>)
+			    if ( $days_price ) {
+			        $render_price = $days_price;
+			    }
+
+			    // Map trip-derived values into featured section
+			    $render_image_url = !empty($hero_image['url']) ? $hero_image['url'] : $hero_fallback;
+			    $render_title_h3  = $trip_name ?: $render_title_h3;
+
+			    // CTA URL goes to the featured trip; CTA text stays manual
+			    $render_cta_url = get_permalink($featured_trip_id);
+			}
+			?>
+
 			<section class="featured_trip">
-				<div class="trip_body">
-					<div class="trip_featured_image" style="background-image:url(<?php echo $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_image']['url']; ?>)">
-					</div>
-					<div class="trip_details">
-						<h2 class="featured_trip_title"><?php echo $home_section_builder_item['featured_trip']['featured_trip_title'] ?></h2>
-						<h3><?php echo $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_title'] ?></h3>
-						<h4><?php echo $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_destination'] ?></h4>
-						<?php echo $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_description'] ?>
-						<strong class="trip_summary_details"><?php echo $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_price'] ?></strong>
-						<a href="<?php echo $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_cta']['url'] ?>" class="cta-button"><?php echo $home_section_builder_item['featured_trip']['featured_trip_group']['featured_trip_cta']['title'] ?></a>
-						<a href="<?php echo get_permalink(824) ?>" class="see_all_trips">See all available trips  <i class="fa fa-arrow-right"></i></a>
-					</div>
-				</div>
+			    <div class="trip_body">
+			        <div class="trip_featured_image" style="background-image:url('<?php echo esc_url($render_image_url); ?>')"></div>
+
+			        <div class="trip_details">
+			            <?php if ( $render_title_h2 ) : ?>
+			                <h2 class="featured_trip_title"><?php echo esc_html($render_title_h2); ?></h2>
+			            <?php endif; ?>
+
+			            <?php if ( $render_title_h3 ) : ?>
+			                <h3><?php echo esc_html($render_title_h3); ?></h3>
+			            <?php endif; ?>
+
+			            <?php if ( $render_destination ) : ?>
+			                <h4><?php echo esc_html($render_destination); ?></h4>
+			            <?php endif; ?>
+
+			            <?php
+			            // Keep formatting consistent with original: this supports WYSIWYG HTML
+			            echo wp_kses_post($render_description);
+			            ?>
+
+			            <?php if ( $render_price ) : ?>
+			                <strong class="trip_summary_details"><?php echo wp_kses_post($render_price); ?></strong>
+			            <?php endif; ?>
+
+			            <?php if ( $render_cta_url ) : ?>
+			                <a href="<?php echo esc_url($render_cta_url); ?>" class="cta-button"><?php echo esc_html($render_cta_text); ?></a>
+			            <?php endif; ?>
+
+			            <a href="<?php echo esc_url(get_permalink(824)); ?>" class="see_all_trips">
+			                See all available trips <i class="fa fa-arrow-right"></i>
+			            </a>
+			        </div>
+			    </div>
 			</section>
 
 <!--MAIN CARDS SECTION-->

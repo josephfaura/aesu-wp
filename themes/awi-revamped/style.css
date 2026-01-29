@@ -3106,6 +3106,21 @@ a.header_cart.:hover, a.header_cart:active {
 	color:#fff;
 }
 
+.destinations, .days_price {
+	color: #777;
+	font-weight: 600;
+	letter-spacing: .05rem;
+}
+.trip_description {
+	font-size:14px;
+}
+.days_price {
+	color: #777;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: .05rem;
+}
+
 /* Google Review Embed Adjustments */
 .slider-prev-next-wrapper {
 	display:none;

@@ -389,16 +389,16 @@ if ( $trips_query->have_posts() ) : ?>
                         : wp_strip_all_tags($destinations);
 
                     if ( $destinations_text ) {
-                        $fallback .= '<p style="font-weight:700">' . esc_html($destinations_text) . '</p>';
+                        $fallback .= '<p class="destinations">' . esc_html($destinations_text) . '</p>';
                     }
                 }
 
                 if ( $description ) {
-                    $fallback .= '<div style="font-size:14px;">' . wp_kses_post($description) . '</div>';
+                    $fallback .= '<div class="trip_description">' . wp_kses_post($description) . '</div>';
                 }
 
                 if ( $days_price ) {
-                    $fallback .= '<p style="font-weight:700">' . wp_kses_post($days_price) . '</p>';
+                    $fallback .= '<p class="days_price">' . wp_kses_post($days_price) . '</p>';
                 }
 
                 $toc_info = $fallback;

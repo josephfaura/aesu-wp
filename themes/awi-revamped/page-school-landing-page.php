@@ -103,9 +103,9 @@ if(function_exists('get_field')){
     .trip_dates_lander{
         font-size: 14px;
         font-weight: 600;
+        color: #777;
         letter-spacing: 0.05em;
         text-transform: uppercase;
-        color: #777;
         margin-bottom: 8px;
         display: inline-block;
     }
@@ -604,17 +604,17 @@ $trips_query = new WP_Query( $args );
                     }
 
                     if ( $destinations_text ) {
-                        $fallback .= '<p style="font-weight:700">' . esc_html($destinations_text) . '<p>';
+                        $fallback .= '<p class="destinations">' . esc_html($destinations_text) . '<p>';
                     }
                 }
 
                 if ( $description ) {
-                    $fallback .= '<div style="font-size:14px;"">' . wp_kses_post($description) . '</div>';
+                    $fallback .= '<div class="trip_description">' . wp_kses_post($description) . '</div>';
                 }
 
                 // Inject days/price into the same override block
                 if ( $days_price ) {
-                    $fallback .= '<p style="font-weight:700">' . wp_kses_post($days_price) . '</p>';
+                    $fallback .= '<p class="days_price">' . wp_kses_post($days_price) . '</p>';
                 }
 
                 $toc_info = $fallback;
