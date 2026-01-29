@@ -545,28 +545,106 @@ $trips_query = new WP_Query( $args );
 
             echo '<ul class="trip_post">';
             while ( $trips_query->have_posts() ) {
-                $trips_query->the_post();
-                if(function_exists('get_field')){
-                    $hero_image = get_field('trip_hero_image',get_the_ID());
-	                $trip_hero_image_text_url = get_field('trip_hero_image_text_url');
-                    $toc_info = get_field('toc_info',get_the_ID());
-                    $trip_name = get_field('trip_name',get_the_ID());
-                    $trip_dates = get_field('trip_dates',get_the_ID());
-                    $start_date = get_field('start_date',get_the_ID());
+            $trips_query->the_post();
+
+            $trip_id = get_the_ID();
+
+            // Trip-side fields
+            $hero_image               = get_field('trip_hero_image', $trip_id);
+            $trip_hero_image_text_url = get_field('trip_hero_image_text_url', $trip_id);
+            $trip_dates               = get_field('trip_dates', $trip_id);
+            $trip_name                = get_field('trip_name', $trip_id);
+            $toc_info                 = get_field('toc_info', $trip_id);
+            $days_price               = get_field('days__price', $trip_id);
+            $start_date               = get_field('start_date', $trip_id);
+
+            // Get the selected Tour from this Trip (adjust field name if yours differs)
+            $tour = get_field('tour', $trip_id); // <-- if your relationship field is named differently, change this
+            $tour_id = $tour ? (is_object($tour) ? $tour->ID : (int)$tour) : 0;
+
+            // -----------------------------
+            // 1) trip_name override (trip wins, else tour)
+            // -----------------------------
+            if ( ( $trip_name === null || $trip_name === false || $trip_name === '' ) && $tour_id ) {
+                $trip_name = get_field('trip_name', $tour_id);
+            }
+
+            // -----------------------------
+            // 2) hero image override (trip wins, else tour featured image)
+            // -----------------------------
+            $tour_featured_url = $tour_id ? get_the_post_thumbnail_url($tour_id, 'full') : '';
+
+            if ( empty($hero_image) || empty($hero_image['url']) ) {
+                // if trip_hero_image_text_url is empty too, fallback to tour featured
+                if ( ( $trip_hero_image_text_url === null || $trip_hero_image_text_url === false || $trip_hero_image_text_url === '' ) && $tour_featured_url ) {
+                    $hero_image = ['url' => $tour_featured_url];          // keeps your existing markup happy
+                    $trip_hero_image_text_url = $tour_featured_url;       // optional, but makes your else path work too
                 }
-                ?>
-                <li>
-                    
-                        <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>"><div class="trip_main_image" style="background-image:url('<?php if($hero_image['url'] && $hero_image['url'] != ''){echo $hero_image['url'];}else{echo $trip_hero_image_text_url;} ?>')"></div></a>
-                        <div class="trip_text">
-                        <?php //echo $start_date; ?>
-                        <div class="trip_dates_lander"><?php echo $trip_dates; ?></div>
-                        <a href="<?php echo esc_url( get_permalink() ); ?>"><h3 class="trip_title_lander"><?php echo esc_html( $trip_name ); ?></h3></a>
-                        <div><?php echo do_shortcode($toc_info); ?></div>
-                <a href="<?php echo esc_url( get_permalink() ); ?>">Explore this trip <i class="fa fa-arrow-right"></i></a>
-            </div>
+            }
+
+            // -----------------------------
+            // 3) toc_info override: if empty, build fallback from tour destinations + description
+            // -----------------------------
+            if ( ( $toc_info === null || $toc_info === false || $toc_info === '' ) && $tour_id ) {
+
+                // Tour fallback content
+                $destinations = get_field('destinations', $tour_id);
+                $description  = get_field('description', $tour_id);
+
+                // Trip-only field (still from trip)
+                $days_price = get_field('days__price', $trip_id);
+
+                $fallback = '';
+
+                if ( !empty($destinations) ) {
+                    if ( is_array($destinations) ) {
+                        $destinations_text = implode(', ', array_filter(array_map('wp_strip_all_tags', $destinations)));
+                    } else {
+                        $destinations_text = wp_strip_all_tags($destinations);
+                    }
+
+                    if ( $destinations_text ) {
+                        $fallback .= '<p style="font-weight:700">' . esc_html($destinations_text) . '<p>';
+                    }
+                }
+
+                if ( $description ) {
+                    $fallback .= '<div style="font-size:14px;"">' . wp_kses_post($description) . '</div>';
+                }
+
+                // Inject days/price into the same override block
+                if ( $days_price ) {
+                    $fallback .= '<p style="font-weight:700">' . wp_kses_post($days_price) . '</p>';
+                }
+
+                $toc_info = $fallback;
+            }
+
+            ?>
+            <li>
+                <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>">
+                    <div class="trip_main_image" style="background-image:url('<?php
+                        if ( !empty($hero_image['url']) ) {
+                            echo esc_url($hero_image['url']);
+                        } else {
+                            echo esc_url($trip_hero_image_text_url);
+                        }
+                    ?>')"></div>
+                </a>
+
+                <div class="trip_text">
+                    <div class="trip_dates_lander"><?php echo wp_kses_post($trip_dates); ?></div>
+
+                    <a href="<?php echo esc_url( get_permalink() ); ?>">
+                        <h3 class="trip_title_lander"><?php echo esc_html( $trip_name ); ?></h3>
+                    </a>
+
+                    <div><?php echo do_shortcode($toc_info); ?></div>
+
+                    <a href="<?php echo esc_url( get_permalink() ); ?>" style="font-size:18px;">Explore this trip <i class="fa fa-arrow-right"></i></a>
+                </div>
             </li>
-                <?php
+            <?php
             }
             echo '</ul>';
             wp_reset_postdata();

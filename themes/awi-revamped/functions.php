@@ -638,7 +638,7 @@ add_action('admin_head', function () {
     </style>';
 });
 
-// Style ACF tabs with WP blue in admin
+// Style ACF Repeater Tabs with WP blue in admin
 add_action('acf/input/admin_head', function () {
     ?>
     <style>
@@ -647,7 +647,7 @@ add_action('acf/input/admin_head', function () {
             background: #2271b1 !important; /* WP admin blue */
             color: #fff !important;
             border-radius: 4px 4px 0 0;
-            padding: 8px 14px;
+            padding: 8px 14px !important;
             border: 1px solid #1d5f8a;
             margin-right: 4px;
         }

@@ -8,21 +8,28 @@
 
 <?php get_header(); 
 if(function_exists('get_field')){
-	$school_shortcode = get_field('school_shortcode',get_the_ID());
-	$trip_name = get_field('trip_name',get_the_ID());
-	$citiescountries = get_field('citiescountries',get_the_ID());
+	// Fields that are trip specific
 	$days_price = get_field('days__price',get_the_ID());
 	$cta_button = get_field('cta_button',get_the_ID());
-	$hero_image = get_field('trip_hero_image',get_the_ID());
-	$trip_hero_image_text_url = get_field('trip_hero_image_text_url',get_the_ID());
 	$trip_dates = get_field('trip_dates',get_the_ID());
-	$main_trip_content = get_field('main_trip_content',get_the_ID());
+	$trip_departure = get_field('trip_departure',get_the_ID());
 	$e_brochure_link = get_field('e_brochure_link',get_the_ID());
 	$webinar_link = get_field('webinar_link',get_the_ID());
 	$additional_link = get_field('additional_link',get_the_ID());
+	
+	// Fields that are overrides
+	$trip_name = get_field('trip_name',get_the_ID());
+	$citiescountries = get_field('citiescountries',get_the_ID());
+	$hero_image = get_field('trip_hero_image',get_the_ID());
+	$main_trip_content = get_field('main_trip_content',get_the_ID());
 	$travel_tools = get_field('travel_tools',get_the_ID());
-	$toc_info = get_field('toc_info',get_the_ID());
 	$deals_popup = get_field('deals_popup',get_the_ID());
+
+	// Must keep for backwards compatability - can delete after 26 trips have operated
+	$trip_hero_image_text_url = get_field('trip_hero_image_text_url',get_the_ID());
+	$toc_info = get_field('toc_info',get_the_ID()); //can keep indefinitely
+	
+	$school_shortcode = get_field('school_shortcode',get_the_ID());
 	$trip_id = acf_preview_id_safe( get_the_ID() );
 
 $school = get_field('school', $trip_id);
@@ -39,10 +46,42 @@ if ( $school ) {
 // TOUR FIELDS
 if ( $tour ) {
     $tour_id = is_object($tour) ? $tour->ID : (int)$tour;
-    //$trip_name = get_field('trip_name', $tour_id);
-    $destinations = get_field('citiescountries', $tour_id);
+
+    // --- TRIP FIELDS OVERRIDE/FALLBACK ---
+
+    // trip_name: trip wins, else tour
+    if ( ! $trip_name || $trip_name === '' ) {
+        $trip_name = get_field('trip_name', $tour_id);
+    }
+
+    // citiescountries on trip falls back to destinations on tour
+    if ( empty($citiescountries) ) {
+        $citiescountries = get_field('destinations', $tour_id);
+    }
+
+    // hero image: trip hero image wins, else tour featured image
+    if ( empty($hero_image) || empty($hero_image['url']) ) {
+        $tour_featured_url = get_the_post_thumbnail_url($tour_id, 'full');
+
+        if ( $tour_featured_url ) {
+            // normalize to match your markup using $hero_image['url']
+            $hero_image = [ 'url' => $tour_featured_url ];
+
+            // optional: also populate the text-url fallback so your existing else works too
+            if ( ! $trip_hero_image_text_url || $trip_hero_image_text_url === '' ) {
+                $trip_hero_image_text_url = $tour_featured_url;
+            }
+        }
+    }
+
+    // main_trip_content: trip wins, else tour
+		if ( $main_trip_content === null || $main_trip_content === false || trim((string)$main_trip_content) === '' ) {
+		    $main_trip_content = get_field('main_trip_content', $tour_id);
+		}
+
+		// --- Tour specific fields no fallback ---
     $description = get_field('description', $tour_id);
-    	$tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
+    $tour_trip_highlights_title = get_field('trip_highlights_title', $tour_id);
     $trip_highlights = get_field('trip_highlights', $tour_id);
     $whats_included_title = get_field('whats_included_title', $tour_id);
     $whats_included_accordion = get_field('highlight_accordion', $tour_id);
@@ -59,7 +98,11 @@ if ( $tour ) {
     $experiences = get_field('experiences' , $tour_id);
     $level = get_field('activity_level' , $tour_id); 
 		$level = intval($level);
-		$travel_tools = get_field('travel_tools', $tour_id);
+		// travel_tools: tour default with trip override
+		if ( ! $travel_tools || $travel_tools === '' ) {
+        $travel_tools = get_field('travel_tools', $tour_id);
+    }
+		// deals_popup: tour default with trip override
     if ( ! $deals_popup || $deals_popup === '' ) {
         $deals_popup = get_field('deals_popup', $tour_id);
     }
@@ -259,11 +302,10 @@ if ( ! post_password_required() ) {
 		<div class="trip_dates"><?php echo $trip_dates; ?></div>
 		<div class="trip_main_content_text">
 			
-			<?php
-			//change to custom field 
-			//
-			echo do_shortcode($main_trip_content); 
-			?>
+			<?php echo do_shortcode($main_trip_content);?>
+
+			<?php echo do_shortcode($trip_departure);?>
+
 		</div>
 
 		<div class="trip_main_content_links">

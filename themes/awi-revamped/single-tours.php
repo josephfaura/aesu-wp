@@ -19,6 +19,9 @@ if ( function_exists('get_field') ) {
 	$trip_name                     = get_field('trip_name', $tour_id);
 	$destinations                  = get_field('destinations', $tour_id);
 	$description                   = get_field('description', $tour_id);
+	$main_trip_content             = get_field('main_trip_content', $tour_id);
+	$experiences                   = get_field('experiences', $tour_id);
+	$level                         = (int) get_field('activity_level', $tour_id);
 	$tour_trip_highlights_title    = get_field('trip_highlights_title', $tour_id);
 	$trip_highlights               = get_field('trip_highlights', $tour_id);
 	$whats_included_title          = get_field('whats_included_title', $tour_id);
@@ -33,8 +36,6 @@ if ( function_exists('get_field') ) {
 	$trip_options_title            = get_field('trip_options_title', $tour_id);
 	$trip_options_content          = get_field('trip_options_content', $tour_id);
 	$trip_option_items             = get_field('trip_option_items', $tour_id);
-	$experiences                   = get_field('experiences', $tour_id);
-	$level                         = (int) get_field('activity_level', $tour_id);
 	$travel_tools                  = get_field('travel_tools', $tour_id);
 	$deals_popup                   = get_field('deals_popup', $tour_id);
 }
@@ -105,6 +106,8 @@ if ( function_exists('get_field') ) {
 
 			<div class="trip_main_content_text">
 				<?php echo do_shortcode( wp_kses_post( $description ) ); ?>
+
+				<?php echo do_shortcode( wp_kses_post( $main_trip_content ) ); ?>
 			</div>
 
 			<?php if ( !empty($level) || !empty($experiences) ) : ?>
