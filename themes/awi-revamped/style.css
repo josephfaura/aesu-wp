@@ -1000,6 +1000,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	background-color:#d13b2d;
 }
 a:not(.card_image_link):active {
+	color:#fff!important;
   transform: translateY(3px);
 }
 @media screen and (max-width: 320px){
@@ -3634,7 +3635,8 @@ aside ul{
 	letter-spacing:.05rem;
 	margin:0;
 }
-.trip_main_content_text h3 {
+.trip_main_content h2,
+.trip_main_content h3 {
 	margin:1rem 0;
 }
 /*.primary-teal{
