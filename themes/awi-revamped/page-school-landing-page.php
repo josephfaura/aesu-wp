@@ -641,7 +641,7 @@ $trips_query = new WP_Query( $args );
 
                     <div><?php echo do_shortcode($toc_info); ?></div>
 
-                    <a href="<?php echo esc_url( get_permalink() ); ?>" style="font-size:18px;">Explore this trip <i class="fa fa-arrow-right"></i></a>
+                    <a href="<?php echo esc_url( get_permalink() ); ?>">Explore this trip <i class="fa fa-arrow-right"></i></a>
                 </div>
             </li>
             <?php
