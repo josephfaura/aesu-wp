@@ -3109,7 +3109,6 @@ a.header_cart.:hover, a.header_cart:active {
 .destinations, .days_price {
 	color: #777;
 	font-weight: 600;
-	letter-spacing: .05rem;
 }
 .trip_description {
 	font-size:14px;

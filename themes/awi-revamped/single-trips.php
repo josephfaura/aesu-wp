@@ -320,24 +320,42 @@ if ( ! post_password_required() ) {
 					</div>
 			<?php } ?>
 
-			<?php if($level || $experiences){ ?>
+			<?php if ( !empty($experiences) || !empty($level) ) : ?>
 
-			<div class="experiences">
-				<div class="experiences-grid">
-							<strong><a href="<?php echo get_permalink(11625) ?>" target="_blank" rel="noopener">Trip Experiences:</a></strong>
-							<?php if( $experiences && is_array($experiences)){foreach ($experiences as $experiences) {echo '<i class="' . esc_attr($experiences) . '"></i>';}} ?>
-				</div>
-				<div class="experiences-grid">
-			    	<strong>Activity Level:</strong>
-			    	<?php for ($i = 1; $i <= 5; $i++): ?>
-			        <div class="activity-box <?php echo ($i <= $level) ? 'active' : ''; ?>">
-			            <?php echo $i; ?>
-			        </div>
-			    <?php endfor; ?>
-			  </div>
-			</div>
+				  <div class="experiences">
 
-			<?php }?>
+				    <?php if ( !empty($experiences) && is_array($experiences) ) : ?>
+				      <div class="experiences-grid">
+				        <strong>
+				          <a href="<?php echo esc_url( get_permalink(11625) ); ?>" target="_blank" rel="noopener">
+				            Trip Experiences:
+				          </a>
+				        </strong>
+
+				        <?php foreach ( $experiences as $experience_icon_class ) : ?>
+				          <i class="<?php echo esc_attr( $experience_icon_class ); ?>"></i>
+				        <?php endforeach; ?>
+				      </div>
+				    <?php endif; ?>
+
+				    <?php if ( !empty($level) && (int) $level > 0 ) : ?>
+				      <div class="experiences-grid">
+				        <strong>Activity Level:</strong>
+
+				        <?php
+				          $level_int = min( 5, max( 0, (int) $level ) );
+				          for ( $i = 1; $i <= 5; $i++ ) :
+				        ?>
+				          <div class="activity-box <?php echo ( $i <= $level_int ) ? 'active' : ''; ?>">
+				            <?php echo (int) $i; ?>
+				          </div>
+				        <?php endfor; ?>
+				      </div>
+				    <?php endif; ?>
+
+				  </div>
+
+				<?php endif; ?>
 
 					<ul class="trip_cta_list">
 						<li class="more_trips"><a href="<?php echo get_permalink($school->ID) ?>"><i class="fa-solid fa-arrow-left"></i> More Trips</a></li>

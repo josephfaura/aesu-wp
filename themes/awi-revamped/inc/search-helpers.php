@@ -297,6 +297,10 @@ function get_search_excerpt( $post_id = null, $word_limit = 25 ) {
         // 3. Replace <br> and <br /> with space
         $text = preg_replace( '#<br\s*/?>#i', ' ', $text );
 
+        // 3.5 Remove URLs (http/https/www)
+        $text = preg_replace( '#\bhttps?://[^\s<>()"]+#i', ' ', $text );
+        $text = preg_replace( '#\bwww\.[^\s<>()"]+#i', ' ', $text );
+
         // 4. Strip any remaining HTML tags
         $text = wp_strip_all_tags( $text );
 
