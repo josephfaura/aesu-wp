@@ -999,14 +999,20 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	color:#fff!important;
 	background-color:#d13b2d;
 }
-a:not(.card_image_link):active {
-	color:#fff!important;
-  transform: translateY(3px);
+.cta-button:hover,
+.cta-button:active,
+.cta-button:focus-visible {
+	color: #fff !important;
+	background-color: #d13b2d;
 }
 @media screen and (max-width: 320px){
 	.cta-button {
   	font-size: 1rem;
   }
+}
+
+a:not(.card_image_link):active {
+  transform: translateY(3px);
 }
 
 .trip_summary_details{
