@@ -3584,7 +3584,7 @@ aside ul{
 }
 .trip_destination_info{
 	margin:.5rem;
-	letter-spacing: .05rem;
+	letter-spacing: .025rem;
 	font-size:1rem;
 }
 .red_button_cta{
@@ -3605,7 +3605,7 @@ aside ul{
 .trip_days_price{
 	margin:.5rem;
 	font-weight:700;
-	letter-spacing:.05rem;
+	letter-spacing:.025rem;
 }
 .trip_main_content_wrap{
 	display:flex;
