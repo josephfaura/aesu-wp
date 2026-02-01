@@ -55,7 +55,7 @@ if ( function_exists('get_field') ) {
 		top:0;
 		background-color:#fff;
 		box-shadow:0px 3px 10px rgba(0,0,0,.25);
-		z-index:99999;
+		z-index:9999;
 	}
 	.single-tours h1{ margin:.67em !important; }
 	.accordion_item{ clear:both; }
@@ -65,7 +65,7 @@ if ( function_exists('get_field') ) {
 		max-width:300px;
 		width:100%;
 		height:300px;
-		float:right;
+		/*float:right;*/
 		margin:20px 0 16px 20px
 	}
 	@media screen and (max-width:686px){
@@ -73,7 +73,7 @@ if ( function_exists('get_field') ) {
 		.itinerary_image{
 			max-width:100%;
 			height:300px;
-			float:none;
+			/*float:none;*/
 			width:100%;
 			margin:0;
 		}
@@ -87,7 +87,7 @@ if ( function_exists('get_field') ) {
 
 	<?php if ( is_user_logged_in() ) : ?>
 		<style>
-			.single-trips .trip_header{ top:32px; }
+			.single-tours .trip_header{ top:32px; }
 		</style>
 	<?php endif; ?>
 

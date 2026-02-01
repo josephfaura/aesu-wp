@@ -43,6 +43,9 @@ if(function_exists('get_field')){
 }
 ?>
 <style>
+    .school_custom_wrap a{
+        color:<?php echo $primary_color; ?>;
+    }
     .header_school_logo {
         display:flex;
         max-height:45px;
@@ -94,12 +97,6 @@ if(function_exists('get_field')){
         font-size:24px;
         color:<?php echo $primary_color; ?>;
     }
-    .school_custom_wrap a{
-        color:<?php echo $primary_color; ?>;
-    }
-    .trip_text{
-        padding:36px;
-    }
     .trip_dates_lander{
         font-size: 14px;
         font-weight: 600;
@@ -109,6 +106,17 @@ if(function_exists('get_field')){
         margin-bottom: 8px;
         display: inline-block;
     }
+    .trip_text{
+        padding:32px;
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    /*.trip_post > li a:last-child{
+        margin-top:auto;
+    }*/
+
     .welcome_letter{
         display:flex;
         flex-wrap:wrap;
@@ -295,14 +303,7 @@ if(function_exists('get_field')){
     .anchor_nav ul li{
         text-align:center;
     }
-    .trip_text{
-        flex:1;
-        display: flex;
-        flex-direction: column;
-    }
-    .trip_post > li a:last-child{
-        margin-top:auto;
-    }
+    
     @media screen and (max-width:1120px){
         .trip_post > li{
             width: calc(100% / 2 - 16px);

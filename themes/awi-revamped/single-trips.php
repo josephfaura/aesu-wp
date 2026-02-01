@@ -136,7 +136,7 @@ if ( $tour ) {
 		top:0;
 		background-color:#fff;
 		box-shadow:0px 3px 10px rgba(0,0,0,.25);
-		z-index:99999;
+		z-index:9999;
 	}
 	.mobile_cta{
 		display:none;
@@ -166,7 +166,7 @@ if ( $tour ) {
 		max-width:300px;
 		width:100%;
 		height:300px;
-		float:right;
+		/*float:right;*/
 		margin: 20px 0 16px 20px;
 	}
 
@@ -220,7 +220,7 @@ if ( $tour ) {
 		.itinerary_image {
 		    max-width: 100%;
 		    height: 300px;
-		    float: none;
+		    /*float: none;*/
 		    width: 100%;
 		    margin: 0;
 		}
