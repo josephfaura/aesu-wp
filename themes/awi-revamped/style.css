@@ -2702,7 +2702,7 @@ a.header_cart.:hover, a.header_cart:active {
   opacity: 0.8;
 }
 .awiNav__trigger.is-active {
-  opacity: 0.2;
+  opacity: 0;
 }
 
 .awiNav {

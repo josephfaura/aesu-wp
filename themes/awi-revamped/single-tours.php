@@ -110,29 +110,42 @@ if ( function_exists('get_field') ) {
 				<?php echo do_shortcode( wp_kses_post( $main_trip_content ) ); ?>
 			</div>
 
-			<?php if ( !empty($level) || !empty($experiences) ) : ?>
-				<div class="experiences">
-					<div class="experiences-grid">
-						<strong><a href="<?php echo esc_url( get_permalink(11625) ); ?>" target="_blank" rel="noopener">Trip Experiences:</a></strong>
-						<?php
-						if ( $experiences && is_array($experiences) ) {
-							foreach ( $experiences as $exp_class ) {
-								echo '<i class="' . esc_attr($exp_class) . '"></i>';
-							}
-						}
-						?>
-					</div>
+			<?php if ( !empty($experiences) || !empty($level) ) : ?>
 
-					<div class="experiences-grid">
-						<strong>Activity Level:</strong>
-						<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
-							<div class="activity-box <?php echo ( $i <= $level ) ? 'active' : ''; ?>">
-								<?php echo (int) $i; ?>
-							</div>
-						<?php endfor; ?>
-					</div>
-				</div>
-			<?php endif; ?>
+				  <div class="experiences">
+
+				    <?php if ( !empty($experiences) && is_array($experiences) ) : ?>
+				      <div class="experiences-grid">
+				        <strong>
+				          <a href="<?php echo esc_url( get_permalink(11625) ); ?>" target="_blank" rel="noopener">
+				            Trip Experiences:
+				          </a>
+				        </strong>
+
+				        <?php foreach ( $experiences as $experience_icon_class ) : ?>
+				          <i class="<?php echo esc_attr( $experience_icon_class ); ?>"></i>
+				        <?php endforeach; ?>
+				      </div>
+				    <?php endif; ?>
+
+				    <?php if ( !empty($level) && (int) $level > 0 ) : ?>
+				      <div class="experiences-grid">
+				        <strong>Activity Level:</strong>
+
+				        <?php
+				          $level_int = min( 5, max( 0, (int) $level ) );
+				          for ( $i = 1; $i <= 5; $i++ ) :
+				        ?>
+				          <div class="activity-box <?php echo ( $i <= $level_int ) ? 'active' : ''; ?>">
+				            <?php echo (int) $i; ?>
+				          </div>
+				        <?php endfor; ?>
+				      </div>
+				    <?php endif; ?>
+
+				  </div>
+
+				<?php endif; ?>
 
 			<ul class="list--unstyled trip_cta_list">
 				<li class="travel_tools"><a href="#">Travel Tools</a></li>
