@@ -2183,6 +2183,9 @@ a:not(.card_image_link):active {
 	color:#d7d7d7;
 	font-size: 14px
 }
+.footer_nav li a:hover{
+	opacity: 0.8;
+}
 .footer_info{
 	display: flex;
 	gap: 30px;
@@ -2207,6 +2210,9 @@ a:not(.card_image_link):active {
 	color: #d7d7d7 !important;
 	font-size: 14px;
 	text-align: right;
+}
+.footer_info a:hover{
+	opacity: 0.8;
 }
 .footer_logo{
 	height: 35px;
@@ -2254,6 +2260,9 @@ a:not(.card_image_link):active {
 }
 .copyright a{
 	color: #d7d7d7 !important;
+}
+.copyright a:hover{
+	opacity: 0.8;
 }
 .bottom_footer_logos ul{
 	list-style: none;
@@ -2585,6 +2594,9 @@ header a{
 	display: flex;
 	align-items: center;
 }
+header a:hover{
+  opacity: 0.8;
+}
 .header_right{
 	display: flex;
 	align-items: center;
@@ -2680,6 +2692,17 @@ a.header_cart.:hover, a.header_cart:active {
 .awiNav-wrap .awiNav__togglesub,
 .awiNav-cover {
 	display: none;
+}
+
+.awiNav__trigger {
+  transition: opacity 0.25s ease;
+}
+
+.awiNav__trigger:hover {
+  opacity: 0.8;
+}
+.awiNav__trigger.is-active {
+  opacity: 0.2;
 }
 
 .awiNav {
