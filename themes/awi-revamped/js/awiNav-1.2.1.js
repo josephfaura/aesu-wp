@@ -35,7 +35,7 @@ hasSubmenu.each(function() {
   var theLink = $(this).children("a");
   var theParent = $(this);
   theLink.wrap('<div class="awiNav__links">');
-  $('<a href="#" class="awiNav__togglesub"><i class="fa-solid fa-arrow-down"></i></a>').insertAfter(
+  $('<a href="#" class="awiNav__togglesub"></a>').insertAfter(
     theLink
   );
   if (theLink.attr("href") === "#") {

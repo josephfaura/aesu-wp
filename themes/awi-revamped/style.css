@@ -2986,11 +2986,12 @@ a.header_cart.:hover, a.header_cart:active {
 		top: 0;
 		right: 0;
 		display: inline-block;
+		padding: 0;
 		width: 45px;
 		height: 100%;
 		vertical-align: middle;
 		text-indent: -9999px;
-		background: rgba(255, 255, 255, .1);
+		/*background: rgba(255, 255, 255, .1);*/
 	}
 
 	.awiNav-wrap .awiNav__togglesub.nav-hidden {
@@ -3106,9 +3107,9 @@ a.header_cart.:hover, a.header_cart:active {
   background: rgba(255,255,255,.08);
 }
 
-.awiNav ul a {
+/*.awiNav ul a {
   padding-left: 3.5rem;
-}
+}*/
 @media screen and (max-width: 375px) {
 	.awiNav-wrap.nav-shown {
 		transform: translateX(-110%);
