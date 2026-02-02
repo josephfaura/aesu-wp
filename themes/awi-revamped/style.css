@@ -5058,7 +5058,7 @@ label {
 .bespoke_form input[type="submit"]{
 	  border: 2px solid white !important;
     background: 0;
-    border-radius: 20px !important;
+    border-radius: 8px !important;
     font-weight: 500;
     text-transform: capitalize;
 }
