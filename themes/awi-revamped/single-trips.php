@@ -165,9 +165,6 @@ if ( $tour ) {
 	.itinerary_image{
 		max-width:300px;
 		width:100%;
-		height:300px;
-		/*float:right;*/
-		margin: 20px 0 16px 20px;
 	}
 
 @media screen and (max-width:976px){
@@ -267,6 +264,11 @@ if ( ! post_password_required() ) {
 		<style>
 			.single-trips .trip_header{
 				top:32px;
+			}
+			@media screen and (max-width: 782px) {
+				.single-trips .trip_header{ 
+					top:46px;
+				}
 			}
 		</style>
 	<?php } ?>

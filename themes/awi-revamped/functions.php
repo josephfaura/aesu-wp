@@ -379,50 +379,115 @@ add_action('wp_enqueue_scripts', 'awi_enqueue_feature_scripts', 1);
 require_once get_stylesheet_directory() . '/inc/search-helpers.php';				
 
 
-// Move AWT calculation to template_redirect
-add_action('template_redirect', function () {
-    // Determine referrer header type
+/**
+ * Determine if the current request should be treated as an AWT page
+ *
+ * @return bool
+ */
+function awi_is_awt_page(): bool {
+
+    // Cache result so logic only runs once per request
+    static $is_awt = null;
+
+    if ($is_awt !== null) {
+        return $is_awt;
+    }
+
+    // -------------------------------------
+    // Check referrer header type
+    // -------------------------------------
     $referrer = $_SERVER['HTTP_REFERER'] ?? '';
     $referrer_header = null;
 
     if ($referrer) {
         $ref_post_id = url_to_postid($referrer);
         if ($ref_post_id) {
-            $referrer_header = get_field('header_type', $ref_post_id);
+            $referrer_header = function_exists('get_field')
+                ? get_field('header_type', $ref_post_id)
+                : null;
         }
     }
 
-    // Determine current post header type
-    $current_header = get_field('header_type');
+    // -------------------------------------
+    // Check current post header type
+    // -------------------------------------
+    $current_header = function_exists('get_field')
+        ? get_field('header_type')
+        : null;
 
-    // Final logic: AWT wins if referrer OR current header is AWT
+    // -------------------------------------
+    // Final logic: AWT wins if referrer OR current is AWT
+    // -------------------------------------
     $is_awt = (
         $referrer_header === 'AWT'
         || $current_header === 'AWT'
     );
 
-    // Store globally so body_class() and JS can access it
-    $GLOBALS['awi_is_awt'] = $is_awt;
-});
+    return $is_awt;
+}
 
-// Adds body class for AWT pages
+/**
+ * Add body class for AWT pages
+ */
 add_filter('body_class', function ($classes) {
-    if (!empty($GLOBALS['awi_is_awt']) && $GLOBALS['awi_is_awt'] === true) {
+    if (awi_is_awt_page()) {
         $classes[] = 'is-awt';
     }
     return $classes;
 });
 
-// Disable Popup Maker modals server-side on AWT pages
+/**
+ * Disable Popup Maker modals server-side on AWT pages
+ */
 add_filter('pum_is_popup_enabled', function ($enabled, $popup_id) {
 
     // Only target your newsletter popup
-    if ($popup_id == 14384 && !empty($GLOBALS['awi_is_awt']) && $GLOBALS['awi_is_awt'] === true) {
+    if ((int) $popup_id === 14384 && awi_is_awt_page()) {
         return false; // hard-disable popup
     }
 
     return $enabled;
 }, 10, 2);
+
+
+/**
+ * Route Tours to bespoke single template when selected via ACF/meta.
+ * Field: tour_template_type (standard|bespoke)
+ */
+add_filter('template_include', function ($template) {
+
+    if ( ! is_singular('tours') ) {
+        return $template;
+    }
+
+    $post_id = get_queried_object_id();
+    $type    = get_post_meta($post_id, 'tour_template_type', true);
+
+    // Default to "standard" when unset (so existing tours don't need edits)
+    if ( empty($type) ) {
+        $type = 'standard';
+    }
+
+    if ( $type === 'bespoke' ) {
+        $bespoke = locate_template('single-tours-bespoke.php');
+        if ( $bespoke ) {
+            return $bespoke;
+        }
+    }
+
+    return $template;
+}, 99);
+
+
+add_filter('body_class', function ($classes) {
+    if ( is_singular('tours') ) {
+        $type = get_post_meta(get_queried_object_id(), 'tour_template_type', true);
+        if ( $type === 'bespoke' ) {
+            $classes[] = 'tour--bespoke';
+        }
+    }
+    return $classes;
+});
 
 
 /* ---------- Misc. Options and Backend Functions  ---------- */

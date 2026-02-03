@@ -704,7 +704,7 @@ form .list--unstyled li {
 	font-weight: 700 !important;
 }
 
-/*form .list--unstyled li:first-child,
+form .list--unstyled li:first-child,
 form .list--unstyled .form-field--half:first-child,
 form .list--unstyled .form-field--half:first-child + .form-field--half,
 form .list--unstyled .form-field--third:first-child,
@@ -720,7 +720,7 @@ form .list--unstyled .form-field--third:last-child,
 form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3),
 form .list--unstyled li:not(.form-field--third) + .form-field--third:nth-last-child(3) + .form-field--third:nth-last-child(2) {
 	margin-bottom: 0;
-}*/
+}
 
 .form-field--half + li:not(.form-field--half):not(.form-field--third),
 .form-field--third + li:not(.form-field--half):not(.form-field--third) {
@@ -3611,7 +3611,6 @@ aside ul{
 }
 .trip_name{
 	text-align:left !important;
-	transition: font-size 0.35 ease;
 }
 .trip_destination_info{
 	margin:.5rem;
@@ -5061,6 +5060,21 @@ label {
     border-radius: 8px !important;
     font-weight: 500;
     text-transform: capitalize;
+}
+.bespoke_registration textarea,
+.bespoke_registration input {
+	  border: 1px solid #323232 !important;
+	  color:#323233;
+}
+.bespoke_registration input[type="submit"] {
+    background: #323232;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color:#fff;
+}
+.bespoke_registration input[type="submit"]:hover {
+	background: #5e5e5e;
 }
 
 /* Two Column Form Adjustments */

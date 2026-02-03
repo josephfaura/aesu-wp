@@ -64,19 +64,6 @@ if ( function_exists('get_field') ) {
 	.itinerary_image{
 		max-width:300px;
 		width:100%;
-		height:300px;
-		/*float:right;*/
-		margin:20px 0 16px 20px
-	}
-	@media screen and (max-width:686px){
-		.accordion_content{ padding:20px 30px; }
-		.itinerary_image{
-			max-width:100%;
-			height:300px;
-			/*float:none;*/
-			width:100%;
-			margin:0;
-		}
 	}
 	@media screen and (max-width: 976px){
 		#chat-widget-push-to-talk{ bottom:130px !important; }
@@ -88,6 +75,12 @@ if ( function_exists('get_field') ) {
 	<?php if ( is_user_logged_in() ) : ?>
 		<style>
 			.single-tours .trip_header{ top:32px; }
+
+			@media screen and (max-width: 782px) {
+				.single-tours .trip_header{ 
+					top:46px;
+				}
+			}
 		</style>
 	<?php endif; ?>
 
