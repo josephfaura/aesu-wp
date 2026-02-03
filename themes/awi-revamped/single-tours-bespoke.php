@@ -84,6 +84,8 @@ if ( function_exists('get_field') ) {
 		text-align: center;
 		white-space: nowrap;
 
+		font-size: 1.25rem;
+		font-weight: 500 !important;
 		color:#323233 !important;
 		border: 2px solid #323232;
 		border-radius: 8px;
@@ -139,8 +141,8 @@ if ( function_exists('get_field') ) {
 		box-shadow:0px -3px 10px rgba(0,0,0,.15);
     	}
 		.mobile_cta .button_cta{
-			font-size: 18px;
-			font-weight: 700;
+			font-size: 1.25rem;
+			font-weight: 500;
 			width:100%;
 		}
 		.mobile_cta .button_cta:hover,
@@ -150,9 +152,9 @@ if ( function_exists('get_field') ) {
 	   #chat-widget-push-to-talk {
 			bottom:130px !important;
 		}
-		/*.trip_name, .trip_destination_info{
+		.trip_name, .trip_destination_info{
 			text-align: center !important;
-		}*/
+		}
 	}
 
 	@media screen and (max-width:686px){
