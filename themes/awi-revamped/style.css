@@ -389,6 +389,11 @@ html {
 	box-sizing: border-box;
 }
 
+/* Prevent any remaining horizontal overflow  */
+html, body {
+  overflow-x: clip;
+}
+
 /*--------------------------------------------------------------
 # Base
 --------------------------------------------------------------*/
@@ -525,7 +530,7 @@ hr {
 	background-color: #ccc;
 	border: 0;
 	height: 1px;
-	margin-bottom: 1.5em;
+	margin: 1.25em 0;
 }
 
 /*ul,
@@ -651,7 +656,7 @@ input[type="datetime-local"],
 input[type="color"],
 textarea {
 	color: #666;
-	border: 1px solid #ccc;
+	border: 1px solid #888;
 	border-radius: 3px !important;
 	padding: 3px;
 }
@@ -676,7 +681,7 @@ textarea:focus {
 }
 
 select {
-	border: 1px solid #ccc;
+	border: 1px solid #888;
 }
 
 textarea {
@@ -771,6 +776,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	}
 }
 
+
 /*Home Banner*/
 .banner{
 	height: 100vh;
@@ -801,13 +807,12 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	  display: flex;
 	  align-items: center;
 	  gap: 0.75rem;
-	  min-width: 100%;
+	  min-width: 450px;
 	  max-width: 100%;
 	}
 	.home .search-form {
-		margin:2.5rem auto;
-		min-width: 40%;
-		max-width: 60%;
+		width: 450px;
+		margin:3rem auto;
 	}
 	.banner_interior .search-form {
 		margin:2.5rem auto 0;
@@ -857,16 +862,24 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	}
 	@media (max-width: 600px) {
 		.home .search-form {
+			width:100%;
+			min-width:260px;
 			max-width: 100%;
 		}
 	  .search-form {
 	    flex-direction: column;
 	    align-items: stretch;
 	    width:100%;
+	    min-width: 0;
 	  }
 	  .search-form .search-submit {
 	    width: 100%;
 	  }
+	}
+	@media (max-width: 300px) {
+		.home .search-form {
+			min-width: 0;
+		}
 	}
 
 .banner > *{
@@ -3068,7 +3081,7 @@ a.header_cart.:hover, a.header_cart:active {
 /* Close button – modal style */
 .awiNav__close {
   height: auto;
-  padding: 24px; /* so the close button doesn't go over the modal */
+  padding: 0;
   border: 0;
   font-size: 0;
   background: transparent;
@@ -3111,11 +3124,11 @@ a.header_cart.:hover, a.header_cart:active {
   padding-left: 3.5rem;
 }*/
 @media screen and (max-width: 375px) {
-	.awiNav-wrap.nav-shown {
+	/*.awiNav-wrap.nav-shown {
 		transform: translateX(-110%);
-	}
+	}*/
 	.awiNav {
-		min-width: 100%;
+		min-width: auto !important;
 	}
 }
 
@@ -3866,7 +3879,7 @@ color:#fff;
 	margin-top:50px;
 }
 .whats_included_image img {
-	max-height: 75vh;
+	max-height: 65vh;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
@@ -5039,7 +5052,7 @@ input, textarea, select, button{
 	width: 100%;
 	font: inherit;
 	background: #fff;
-	border: 1px solid #ccc;
+	border: 1px solid #888;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -5053,6 +5066,7 @@ label {
 	padding:0;
 }*/
 
+
 /* Bespoke Travel Form Submit Button */
 .bespoke_form input[type="submit"]{
 	  border: 2px solid white !important;
@@ -5062,20 +5076,151 @@ label {
     text-transform: capitalize;
 }
 .bespoke_registration textarea,
-.bespoke_registration input {
+.bespoke_registration input,
+.bespoke_registration select {
 	  border: 1px solid #323232 !important;
 	  color:#323233;
 }
 .bespoke_registration input[type="submit"] {
-    background: #323232;
+    background: #ffcc2d;
+    border: 2px solid #323232;
     border-radius: 4px;
     font-weight: 700;
     text-transform: capitalize;
-    color:#fff;
+    color:#323232;
 }
 .bespoke_registration input[type="submit"]:hover {
-	background: #5e5e5e;
+	background: #FFF0A6;
 }
+
+
+/* =========================================================
+   1) Center the entire CF7 block (fixes GutenKit/container issues)
+   ========================================================= */
+
+/* Make the GutenKit inner wrapper full width and centered */
+.gkit-block__inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Prevent horizontal scrolling on smaller screens */
+.gkit-block__inner > * { min-width: 0; }
+
+.wp-block-contact-form-7-contact-form-selector .wpcf7-form-control-wrap,
+.wp-block-contact-form-7-contact-form-selector .wpcf7-form-control {
+  display: block;
+  max-width: 100%;
+}
+
+/* Ensure the CF7 block can actually expand */
+.wp-block-contact-form-7-contact-form-selector {
+  width: 100%;
+  max-width: 1100px;   /* adjust */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure form fills the centered block */
+.wp-block-contact-form-7-contact-form-selector .wpcf7,
+.wp-block-contact-form-7-contact-form-selector .wpcf7 form,
+.wp-block-contact-form-7-contact-form-selector .cf7-grid {
+  width: 100%;
+}
+
+
+/* =========================================================
+   2) Two-column grid
+   ========================================================= */
+
+.wp-block-contact-form-7-contact-form-selector .cf7-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 640px) {
+  .wp-block-contact-form-7-contact-form-selector .cf7-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wp-block-contact-form-7-contact-form-selector
+.cf7-grid input[type="text"],
+.wp-block-contact-form-7-contact-form-selector
+.cf7-grid input[type="email"],
+.wp-block-contact-form-7-contact-form-selector
+.cf7-grid input[type="tel"],
+.wp-block-contact-form-7-contact-form-selector
+.cf7-grid input[type="date"],
+.wp-block-contact-form-7-contact-form-selector
+.cf7-grid input[type="number"],
+.wp-block-contact-form-7-contact-form-selector
+.cf7-grid select,
+.wp-block-contact-form-7-contact-form-selector
+.cf7-grid textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   3) Radio/checkbox alignment (prevents the weird wrapping)
+   ========================================================= */
+
+/* Stack options neatly */
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-form-control.wpcf7-radio,
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-form-control.wpcf7-acceptance {
+  display: grid;
+  gap: 12px;
+}
+
+/* Make each option a 2-column grid: dot | text */
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-list-item {
+  margin: 0;
+}
+
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-list-item > label {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  column-gap: 10px;
+  align-items: center;
+}
+
+/* Keep inputs from drifting */
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-list-item input[type="radio"]{
+  margin: 0;
+}
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-list-item input[type="checkbox"] {
+	margin: 0 0 4px;
+}
+
+/* Let label text wrap normally (not one word per line) */
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-list-item-label {
+  margin: 0;
+  white-space: normal;
+  word-break: normal;
+}
+.wp-block-contact-form-7-contact-form-selector
+.acceptance-terms {
+	margin:1rem 0;
+	font-size:14px;
+}
+.wp-block-contact-form-7-contact-form-selector
+.wpcf7-acceptance label > span {
+	font-size: 14px;
+}
+
+
 
 /* Two Column Form Adjustments */
 
@@ -5274,9 +5419,9 @@ nav{
   .itinerary .accordion_content{ flex-direction:column; gap:12px; padding:16px 20px 22px; }
   .itinerary .itinerary_image{ order:-1; width:100%; height:220px; margin:0 0 12px 0; flex:none; }
 }
-@media (max-width:480px){
+/*@media (max-width:480px){
   .itinerary .itinerary_image{ height:180px; }
-}
+}*/
 
 /* ==============================================
    Accordion Icons — Unified for .itinerary & .whats_included

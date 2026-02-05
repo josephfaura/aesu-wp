@@ -61,10 +61,10 @@ if ( function_exists('get_field') ) {
 	.accordion_item{ clear:both; }
 	.slick-next{ right:-14px; }
 	.whats_included_accordion_section{ margin-bottom:32px }
-	.itinerary_image{
+	/*.itinerary_image{
 		max-width:300px;
 		width:100%;
-	}
+	}*/
 	@media screen and (max-width: 976px){
 		#chat-widget-push-to-talk{ bottom:130px !important; }
 	}
@@ -195,6 +195,9 @@ if ( function_exists('get_field') ) {
 					?>
 						<div class="whats_included_accordion_section">
 							<h3><?php echo esc_html( $section_title ); ?></h3>
+
+							<!-- make this label simple; JS will sync it -->
+							<a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>
 
 							<ul>
 								<?php if ( $rows && is_array($rows) ) : foreach ( $rows as $row ) : ?>

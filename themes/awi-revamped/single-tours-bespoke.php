@@ -85,15 +85,17 @@ if ( function_exists('get_field') ) {
 		white-space: nowrap;
 
 		font-size: 1.25rem;
-		font-weight: 500 !important;
+		font-weight: 600 !important;
 		color:#323233 !important;
 		border: 2px solid #323232;
 		border-radius: 8px;
 		box-shadow: 0;
-		background-color: transparent;
+		background-color: #ffcc2d;
 		padding: .8rem 1.6rem;
 	}
-	.button_cta:hover{background-color: #fafafa; border: 2px solid #5e5e5e !important; color: #5e5e5e !important}
+	.button_cta:hover,
+	.button_cta:active,
+	.button_cta:focus {background-color: #FFF0A6; border: 2px solid #202020 !important; color: #202020 !important}
 
 	.single-tours.tour--bespoke li.slick-slide {background: #fff}
 
@@ -106,10 +108,10 @@ if ( function_exists('get_field') ) {
 	    background: #f2f2f2;
 	    border: 1px solid #dbdbdb;
 	}	
-	.single-tours.tour--bespoke .itinerary_image{
+	/*.single-tours.tour--bespoke .itinerary_image{
 		max-width:300px;
 		width:100%;
-	}
+	}*/
 
 	.hotel_location {
 		color: #323232;
@@ -142,13 +144,9 @@ if ( function_exists('get_field') ) {
     	}
 		.mobile_cta .button_cta{
 			font-size: 1.25rem;
-			font-weight: 500;
 			width:100%;
 		}
-		.mobile_cta .button_cta:hover,
-		.mobile_cta .button_cta:active,
-		.mobile_cta .button_cta:focus {background-color: #fafafa; border: 2px solid #5e5e5e !important; color: #5e5e5e !important}
-
+		
 	   #chat-widget-push-to-talk {
 			bottom:130px !important;
 		}
@@ -167,18 +165,18 @@ if ( function_exists('get_field') ) {
 		.accordion_content {
 			padding: 20px 30px;
 		}
-		.itinerary_image {
+		/*.itinerary_image {
 		    max-width: 100%;
 		    height: 300px;
-		    /*float: none;*/
+		    float: none;
 		    width: 100%;
 		    margin: 0;
-		}
+		}*/
 	}
 	@media screen and (max-width:420px){
-		.mobile_cta .red_button_cta {
+		/*.mobile_cta .button_cta {
 			font-size: 14px;
-		}
+		}*/
 		.trip_days_price {
         font-size: 80%;
     }
@@ -195,7 +193,7 @@ if ( function_exists('get_field') ) {
     }
     .trip_days_price {
        margin-bottom: .5rem;
-    .red_button_cta{
+    .button_cta{
 			white-space: wrap;
 		}
 	}
@@ -337,6 +335,10 @@ if ( function_exists('get_field') ) {
 						?>
 							<div class="whats_included_accordion_section">
 								<h3><?php echo esc_html( $section_title ); ?></h3>
+
+								<!-- make this label simple; JS will sync it -->
+								<a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>
+
 
 								<ul>
 									<?php if ( $rows && is_array($rows) ) : foreach ( $rows as $row ) : ?>

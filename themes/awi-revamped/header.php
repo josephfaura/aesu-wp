@@ -291,6 +291,29 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 		</style>
 		
 <?php
+/**
+ * Header template
+ */
+
+// 1. Determine bespoke FIRST
+$is_bespoke = false;
+
+if ( function_exists('is_singular') && function_exists('get_queried_object_id') ) {
+
+    $post_id = get_queried_object_id();
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+
+    if ( $post_id && is_singular( array('tours', 'tour') ) ) {
+        $type = function_exists('get_field')
+            ? get_field('tour_template_type', $post_id)
+            : get_post_meta($post_id, 'tour_template_type', true);
+
+        $is_bespoke = ( strtolower( trim( (string) $type ) ) === 'bespoke' );
+    }
+}
+
 // --------------------------------------
 // Determine referrer header type (RUN ONCE)
 // --------------------------------------
@@ -323,8 +346,21 @@ $is_awt = (
 
 // --------------------------------------
 // Shared links + labels (DEFINE ONCE)
+// Priority: BESPOKE > AWT > AESU
 // --------------------------------------
-if ($is_awt) {
+if ($is_bespoke) {
+
+    // BESPOKE SETTINGS
+    $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home';
+
+    // Replace these when you have the IDs
+    $contact_link = get_permalink(3095);
+    $home_link    = get_permalink(2934);
+
+    $mobile_tag   = "Bespoke Journeys";
+    $tagline      = "Bespoke Journeys<br />Since 1977";
+
+} elseif ($is_awt) {
     // AWT SETTINGS
     $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AWT&Action=Home';
     $contact_link = get_permalink(2836);
@@ -350,7 +386,7 @@ $account_link = strtok($account_link, "\n");
 
             <div class="nav-logo">
 
-                <?php if (! $is_awt) : ?>
+                <?php if (! $is_awt && ! $is_bespoke) : ?>
                     <nav>
                         <?php wp_nav_menu([
                             'theme_location' => 'main_nav',
@@ -433,7 +469,7 @@ $account_link = strtok($account_link, "\n");
 				    >
 				<?php endif; ?>
 
-                <?php if (! $is_awt) : ?>
+                <?php if (! $is_awt && ! $is_bespoke) : ?>
                     <nav>
                         <?php wp_nav_menu([
                             'theme_location' => 'main_nav',

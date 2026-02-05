@@ -162,10 +162,10 @@ if ( $tour ) {
 	.whats_included_accordion_section h3{
 		max-width: calc(100% - 109px);
 	}
-	.itinerary_image{
+	/*.itinerary_image{
 		max-width:300px;
 		width:100%;
-	}
+	}*/
 
 @media screen and (max-width:976px){
 		.mobile_cta {
@@ -214,13 +214,13 @@ if ( $tour ) {
 		.accordion_content {
 			padding: 20px 30px;
 		}
-		.itinerary_image {
+		/*.itinerary_image {
 		    max-width: 100%;
 		    height: 300px;
-		    /*float: none;*/
+		    float: none;
 		    width: 100%;
 		    margin: 0;
-		}
+		}*/
 	}
 	@media screen and (max-width:420px){
 		.mobile_cta .red_button_cta {
@@ -421,7 +421,7 @@ if ( ! post_password_required() ) {
   <h3><?php echo $whats_included_accordion_title ?></h3>
 
   <!-- make this label simple; JS will sync it -->
-  <!-- <a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>-->
+  <a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>
 
   <ul>
     <?php foreach ($whats_included_accordion_item['accordion_items'] as $row) { 

@@ -21,31 +21,69 @@ if(function_exists('get_field')){
 
 	<main id="primary" class="site-main">
 
-	<?php foreach($home_section_builder as $home_section_builder_item){ ?>
+	<?php foreach ( $home_section_builder as $home_section_builder_item ) { ?>
 
-<!--BANNER SECTION-->
+<!-- BANNER SECTION -->
 
-		<?php if($home_section_builder_item['section_type'] == 'Banner Area'){ ?>
-			<div class="banner" style="background-image:url(<?php echo $home_section_builder_item['banner_area']['banner_image']['url'] ?>)">
-				<div class="container">
-					<h1><?php echo $home_section_builder_item['banner_area']['banner_title']; ?></h1>
-					<h2><?php echo $home_section_builder_item['banner_area']['banner_tagline']; ?></h2>
-					<!--<a href="<?php echo $home_section_builder_item['banner_area']['banner_cta']['url'] ?>" class="cta-button"><?php echo $home_section_builder_item['banner_area']['banner_cta']['title'] ?></a>-->
+	    <?php if ( $home_section_builder_item['section_type'] === 'Banner Area' ) {
 
-					<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
-						<label>
-							<span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
-							<i class="fa fa-search"></i>
-							<input type="search" id="trip-search" class="search-field" placeholder="Where do you want to go?" value="" name="s">
-						</label>
-						<input type="submit" class="search-submit" value="Explore Trips">
-						<input type="hidden" name="post_type" value="trips" />
-					</form>
-					
-				</div>
-				<a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
-			</div>
-			<div id="skip_banner"></div>
+	        $banner_area = $home_section_builder_item['banner_area'];
+
+	        // 1. Get gallery field (ACF Gallery returns an array)
+	        $hero_images = $banner_area['hero_images'] ?? [];
+
+	        // 2. Default fallback: featured image of the current post/page
+	        $background_image_url = '';
+
+	        $current_post_id = get_queried_object_id();
+
+			if ( $current_post_id && has_post_thumbnail( $current_post_id ) ) {
+			    $background_image_url = get_the_post_thumbnail_url( $current_post_id, 'full' );
+			}
+
+	        // 3. If gallery exists, randomly select one image
+	        if ( ! empty( $hero_images ) && is_array( $hero_images ) ) {
+	            $random_image = $hero_images[ array_rand( $hero_images ) ];
+	            $background_image_url = $random_image['url'];
+	        }
+	    ?>
+	        <div class="banner" style="background-image:url('<?php echo esc_url( $background_image_url ); ?>')">
+		            <div class="container">
+	                <?php if ( ! empty( $banner_area['banner_title'] ) ) : ?>
+					    <h1><?php echo esc_html( $banner_area['banner_title'] ); ?></h1>
+					<?php endif; ?>
+
+					<?php if ( ! empty( $banner_area['banner_tagline'] ) ) : ?>
+					    <h2><?php echo esc_html( $banner_area['banner_tagline'] ); ?></h2>
+					<?php endif; ?>
+	                <?php if ( ! empty( $banner_area['banner_cta']['url'] ?? '' ) ) : ?>
+					    <a href="<?php echo esc_url( $banner_area['banner_cta']['url'] ); ?>" class="cta-button">
+					        <?php echo esc_html( $banner_area['banner_cta']['title'] ); ?>
+					    </a>
+					<?php endif; ?>
+
+	                <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
+	                    <label>
+	                        <span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
+	                        <i class="fa fa-search"></i>
+	                        <input type="search"
+	                               id="trip-search"
+	                               class="search-field"
+	                               placeholder="Where do you want to go?"
+	                               value=""
+	                               name="s">
+	                    </label>
+	                    <input type="submit" class="search-submit" value="Explore Trips">
+	                    <input type="hidden" name="post_type" value="trips" />
+	                </form>
+	            </div>
+
+	            <a href="#skip_banner" class="banner_arrow">
+	                <i class="fa-solid fa-angle-down"></i>
+	            </a>
+	        </div>
+
+	        <div id="skip_banner"></div>
 
 <!--FEATURED TRIP SECTION-->
 
