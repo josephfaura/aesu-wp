@@ -22,12 +22,12 @@ get_header(); ?>
 	$image    = get_sub_field('slide_image');
 	$title    = get_sub_field('slide_title');
 	$subtitle = get_sub_field('slide_subtitle');
-	$link     = get_sub_field('slide_link');
-	$copy	  = get_sub_field('slide_link_copy');
+	$link     = get_sub_field('slide_link'); // Link array
 	?>
-	
+
 	<div class="banner_interior" style="background-image:url(<?php echo esc_url($image['url']); ?>);">
 		<div class="container">
+
 			<?php if ( $title ) : ?>
 				<h3><?php echo esc_html($title); ?></h3>
 			<?php endif; ?>
@@ -36,11 +36,18 @@ get_header(); ?>
 				<p><?php echo esc_html($subtitle); ?></p>
 			<?php endif; ?>
 
-			<?php if ( $link ) : ?>
-				<a href="<?php echo esc_url($link); ?>" class="cta-button">
-					<?php echo esc_html($copy); ?>
+			<?php if ( $link ) : 
+				$url    = $link['url'];
+				$text   = $link['title'];
+				$target = $link['target'] ?: '_self';
+			?>
+				<a href="<?php echo esc_url($url); ?>"
+				   target="<?php echo esc_attr($target); ?>"
+				   class="cta-button">
+					<?php echo esc_html($text); ?>
 				</a>
 			<?php endif; ?>
+
 		</div>
 	</div>
 

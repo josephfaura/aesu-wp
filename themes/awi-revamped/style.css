@@ -783,11 +783,23 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-size:cover;
-	background-position: center;
+	background-repeat: no-repeat;
+  background-position: center center;
 	background-attachment: fixed;
 	position: relative;
 	margin-bottom:56px;
+}
+/* iOS/iPadOS Safari: disable fixed (width-independent) */
+@supports (-webkit-touch-callout: none){
+  .banner{
+    background-attachment: scroll;
+  }
+}
+/* iPad-ish devices (coarse pointer + no hover) */
+@media (hover: none) and (pointer: coarse){
+  .banner{
+    background-attachment: scroll;
+  }
 }
 .home .site-main{
 	margin:0;
@@ -803,7 +815,80 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	font-size:1.5rem;
 }
 
-	.search-form {
+.banner > *{
+	position: relative;
+	z-index:999;
+	color:#fff;
+	text-align: center;
+	margin-top:75px !important;
+}
+.banner:after{
+	content:'';
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,.4);
+	z-index:99;
+}
+.banner_arrow{
+	position: absolute;
+    bottom: 100px;
+    /*left: calc(50% - 24px);
+    width: 45px;
+    height: 45px;*/
+    display: flex;
+    justify-content: center;
+    font-size: 32px;
+    align-items: center;
+    opacity: .7;
+    /*border-radius: 50%;*/
+}
+.banner_arrow span {
+    position: relative;
+    top: -2px;
+}
+.banner_arrow:hover,
+.banner_arrow:focus,
+.banner_arrow:active {
+	color:white;
+	opacity: .9;
+}
+@media screen and (max-width:1000px){
+	.banner h1{
+		font-size:56px;
+	}
+}
+@media screen and (max-width:767px){
+	.banner {
+		background-attachment: scroll;
+	}
+	.banner h1{
+		line-height:1.25em;
+	}
+	.banner h2 {
+		font-size:20px;
+		line-height:1.5em;
+	}
+}
+@media screen and (max-width: 485px) {
+  .banner_arrow {
+    bottom: 150px;
+  }
+}
+@media screen and (max-width: 360px) {
+	.banner h1 {
+    font-size:42px;
+  }
+	.banner .container {
+		padding: 0 24px;
+	}
+}
+
+/* Search Form */
+
+.search-form {
 	  display: flex;
 	  align-items: center;
 	  gap: 0.75rem;
@@ -881,77 +966,6 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 			min-width: 0;
 		}
 	}
-
-.banner > *{
-	position: relative;
-	z-index:999;
-	color:#fff;
-	text-align: center;
-	margin-top:75px !important;
-}
-.banner:after{
-	content:'';
-	position: absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background-color:rgba(0,0,0,.4);
-	z-index:99;
-}
-.banner_arrow{
-	position: absolute;
-    bottom: 100px;
-    /*left: calc(50% - 24px);
-    width: 45px;
-    height: 45px;*/
-    display: flex;
-    justify-content: center;
-    font-size: 32px;
-    align-items: center;
-    opacity: .7;
-    /*border-radius: 50%;*/
-}
-.banner_arrow span {
-    position: relative;
-    top: -2px;
-}
-.banner_arrow:hover,
-.banner_arrow:focus,
-.banner_arrow:active {
-	color:white;
-	opacity: .9;
-}
-@media screen and (max-width:1000px){
-	.banner h1{
-		font-size:56px;
-	}
-}
-@media screen and (max-width:767px){
-	.banner {
-		background-attachment: scroll;
-	}
-	.banner h1{
-		line-height:1.25em;
-	}
-	.banner h2 {
-		font-size:20px;
-		line-height:1.5em;
-	}
-}
-@media screen and (max-width: 485px) {
-  .banner_arrow {
-    bottom: 150px;
-  }
-}
-@media screen and (max-width: 360px) {
-	.banner h1 {
-    font-size:42px;
-  }
-	.banner .container {
-		padding: 0 24px;
-	}
-}
 
 /* Featured Trip */
 .featured_trip_title{
