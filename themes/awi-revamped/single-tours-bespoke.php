@@ -87,7 +87,7 @@ if ( function_exists('get_field') ) {
 		font-size: 1.25rem;
 		font-weight: 600 !important;
 		color:#323233 !important;
-		border: 2px solid #323232;
+		border: 1px solid #323232;
 		border-radius: 8px;
 		box-shadow: 0;
 		background-color: #ffcc2d;
@@ -95,7 +95,7 @@ if ( function_exists('get_field') ) {
 	}
 	.button_cta:hover,
 	.button_cta:active,
-	.button_cta:focus {background-color: #FFF0A6; border: 2px solid #202020 !important; color: #202020 !important}
+	.button_cta:focus {background-color: #FFF0A6;}
 
 	.single-tours.tour--bespoke li.slick-slide {background: #fff}
 

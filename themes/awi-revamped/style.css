@@ -4674,6 +4674,18 @@ article, aside {
 	background-attachment: fixed;
 	position: relative;
 }
+/* iOS/iPadOS Safari: disable fixed (width-independent) */
+@supports (-webkit-touch-callout: none){
+  .banner_interior{
+    background-attachment: scroll;
+  }
+}
+/* iPad-ish devices (coarse pointer + no hover) */
+@media (hover: none) and (pointer: coarse){
+  .banner_interior{
+    background-attachment: scroll;
+  }
+}
 
 .banner_interior > *{
 	position: relative;
