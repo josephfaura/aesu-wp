@@ -31,7 +31,7 @@ get_header();
 	    padding: .5rem .8rem;
 	    border: 1px solid #2c768e;
 	    border-radius: 3px;
-	    font-weight: 600;
+	    font-weight: 700;
 	    color: #2c768e;
 	    text-decoration: none;
 	    box-decoration-break: clone;

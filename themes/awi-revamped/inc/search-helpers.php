@@ -239,6 +239,7 @@ function exclude_cpt_from_search( $query ) {
 
 		// Removes CPTs you do NOT want searchable
 		unset( $post_types['tours'] );
+        unset( $post_types['trips'] );
 
 		$query->set( 'post_type', $post_types );
 	}

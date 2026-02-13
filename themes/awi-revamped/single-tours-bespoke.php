@@ -85,7 +85,8 @@ if ( function_exists('get_field') ) {
 		white-space: nowrap;
 
 		font-size: 1.25rem;
-		font-weight: 600 !important;
+		text-transform: uppercase;
+		letter-spacing: .05rem;
 		color:#323233 !important;
 		border: 1px solid #323232;
 		border-radius: 8px;
@@ -124,6 +125,9 @@ if ( function_exists('get_field') ) {
 	}
 
 	@media screen and (max-width:976px){
+		.bottom_footer {
+			padding-bottom: 150px;
+		}
 		.single-tours.tour--bespoke .trip_header {
 			justify-content: center;
 			padding: 24px 32px;
@@ -143,7 +147,7 @@ if ( function_exists('get_field') ) {
 		box-shadow:0px -3px 10px rgba(0,0,0,.15);
     	}
 		.mobile_cta .button_cta{
-			font-size: 1.25rem;
+			font-weight: 700;
 			width:100%;
 		}
 		

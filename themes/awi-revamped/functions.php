@@ -105,6 +105,19 @@ function awi_revamped_widgets_init() {
 add_action( 'widgets_init', 'awi_revamped_widgets_init' );
 
 /**
+ * Enqueue Google Font Open Sans Variable.
+ */
+function load_google_fonts() {
+    wp_enqueue_style(
+        'google-open-sans',
+        'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap',
+        array(),
+        null
+    );
+}
+add_action('wp_enqueue_scripts', 'load_google_fonts');
+
+/**
  * Enqueue scripts and styles.
  */
 function awi_enqueue_feature_scripts() {

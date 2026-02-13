@@ -43,9 +43,10 @@ if(function_exists('get_field')){
 
 	        // 3. If gallery exists, randomly select one image
 	        if ( ! empty( $hero_images ) && is_array( $hero_images ) ) {
-	            $random_image = $hero_images[ array_rand( $hero_images ) ];
-	            $background_image_url = $random_image['url'];
-	        }
+			    shuffle( $hero_images );
+			    $random_image = $hero_images[0];
+			    $background_image_url = $random_image['url'] ?? '';
+			}
 	    ?>
 	        <div class="banner" style="background-image:url('<?php echo esc_url( $background_image_url ); ?>')">
 		            <div class="container">
@@ -62,7 +63,7 @@ if(function_exists('get_field')){
 					    </a>
 					<?php endif; ?>
 
-	                <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
+	                <form role="search" method="get" class="trip-search" action="<?php echo esc_url( home_url('/') ); ?>">
 	                    <label>
 	                        <span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
 	                        <i class="fa fa-search"></i>

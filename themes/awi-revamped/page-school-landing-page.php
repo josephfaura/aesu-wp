@@ -50,7 +50,7 @@ if(function_exists('get_field')){
         display:flex;
         max-height:45px;
         max-width:256px;
-        padding-right:18px;
+        padding-right:1rem;
         border-right:2px solid white;
     }
     .trip_list{
@@ -82,7 +82,7 @@ if(function_exists('get_field')){
     }
     .trip_post > li a{
         font-size:18px;
-        font-weight:bold;
+        font-weight:700;
     }
     .trip_main_image{
         position:relative;
@@ -99,7 +99,7 @@ if(function_exists('get_field')){
     }
     .trip_dates_lander{
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 700;
         color: #777;
         letter-spacing: 0.05em;
         text-transform: uppercase;
@@ -218,9 +218,10 @@ if(function_exists('get_field')){
     .load_more_images{
         display:block;
         color:<?php echo $primary_color; ?>;
-        font-weight:bold;
+        font-weight:700;
         text-align:center;
         margin:32px auto;
+        font-size: 18px;
     }
     .payment_options{
         list-style:none;

@@ -60,21 +60,33 @@ get_header();
 	    font-style: italic;      /* optional styling */
 	}
 	.navigation {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
 		border-top: 2px solid #e5e5e5;
 		border-bottom: 2px solid #e5e5e5;
 		margin:2rem 0 0;
 		padding: 1rem 0;
 	}
-	.navigation a {
+
+	.nav-prev,
+	.nav-next {
+	  flex: 1;
+	}
+	.nav-next {
+		text-align: right;
+	}
+
+	.nav-center {
+	  flex: 0 0 auto;
+	  text-align: center;
+	  text-transform: uppercase;
+	  letter-spacing: .05rem;
+	}
+
+	.nav-prev a,
+	.nav-next a {
 		color:#E74C3C !important;
-	}
-	.alignleft {
-		margin-right:0;
-		margin-bottom:0;
-	}
-	.alignright {
-		margin-left:0;
-		margin-bottom:0;
 	}
 	
 	/*.sidebar ul{
@@ -182,17 +194,38 @@ if ( $valid ) : ?>
 		        <?php the_content(); ?>
 
 		        <?php 
-		            // Navigation links
-		            $prev = get_previous_post_link('%link','<i class="fa-solid fa-arrow-left"></i> Previous');
-		            $next = get_next_post_link('%link','Next <i class="fa-solid fa-arrow-right"></i>');
+				// Navigation links
+				$prev = get_previous_post_link('%link','<i class="fa-solid fa-arrow-left"></i> Prev');
+				$next = get_next_post_link('%link','Next <i class="fa-solid fa-arrow-right"></i>');
 
-		            if ( $prev || $next ) : ?>
-		                <div class="navigation clearfix">
-		                    <div class="alignleft"><strong><?php echo $prev; ?></strong></div>
-		                    <div class="alignright"><strong><?php echo $next; ?></strong></div>
-		                </div>
+				// Get blog page URL (WordPress posts page)
+				$blog_url = get_permalink( get_option('page_for_posts') );
 
-		        <?php endif; ?>
+				if ( $prev || $next ) : ?>
+				    <div class="navigation clearfix">
+
+				        <div class="nav-prev">
+				            <?php if ( $prev ) : ?>
+				                <strong><?php echo $prev; ?></strong>
+				            <?php endif; ?>
+				        </div>
+
+				        <div class="nav-center">
+				            <strong>
+				                <a href="<?php echo esc_url( $blog_url ); ?>" class="top-stories">
+				                    Top Stories
+				                </a>
+				            </strong>
+				        </div>
+
+				        <div class="nav-next">
+				            <?php if ( $next ) : ?>
+				                <strong><?php echo $next; ?></strong>
+				            <?php endif; ?>
+				        </div>
+
+				    </div>
+				<?php endif; ?>
 
 		    </div><!-- .entry -->
 

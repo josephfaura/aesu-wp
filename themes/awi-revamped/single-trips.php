@@ -168,6 +168,9 @@ if ( $tour ) {
 	}*/
 
 @media screen and (max-width:976px){
+		.bottom_footer {
+			padding-bottom: 150px;
+		}
 		.mobile_cta {
         display: flex;
         justify-content: space-between;

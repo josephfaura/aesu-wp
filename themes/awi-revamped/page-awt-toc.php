@@ -8,6 +8,9 @@
 get_header(); ?>
 
 <style>
+	body {
+		background:#fafafa;
+	}
 	.interior_banner {
 		height:60vh;
 		display: flex;
@@ -59,9 +62,9 @@ get_header(); ?>
 	.interior_banner i{
 		position: absolute;
 		color:#5e5e5e;
-	    /*top: 50%;*/
-	    left: 15px;
-	    /*transform: translateY(-50%);*/
+	    top: 50%;
+	    left: 12px;
+	    transform: translateY(-50%);
 	    pointer-events: none;
 	    font-size: 1rem;
 	    z-index:9999;
@@ -102,6 +105,7 @@ get_header(); ?>
 		flex-direction: column;
 		box-shadow: 0 3px 10px rgba(0,0,0,.25);
 		border-radius: 6px;
+		background:#fff;
 	}
 	.packages div.thumbnail_wrap{
 		border-radius:6px 6px 0 0;
@@ -121,7 +125,7 @@ get_header(); ?>
 	.packages div.package_content{
 		padding:32px;
 		text-align: center;
-		/*background-color:#f2f2f2;*/
+		font-size: 18px;
 		height:100%;
 		display: flex;
 		flex-direction: column;
@@ -137,7 +141,7 @@ get_header(); ?>
 		max-width:1300px;
 	}
 	.package_content h3{
-		font-size:1.5em;
+		font-size:1.5rem;
 		margin-top:0;
 		color:#5e5e5e;
 	}

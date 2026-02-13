@@ -25,9 +25,19 @@
 
 	<div class="latest_post_item_text">
 
-		<span class="post-type-label">
-			<?php echo esc_html( $post_type->labels->singular_name ); ?>
-		</span>
+		<?php
+		$post_type = get_post_type();
+
+		// default label
+		$label = get_post_type_object($post_type)->labels->singular_name ?? ucfirst($post_type);
+
+		// override "post" -> "Article"
+		if ($post_type === 'post') {
+		  $label = 'Article';
+		}
+
+		echo '<span class="post-type-label">' . esc_html($label) . '</span>';
+		?>
 
 		<a href="<?php the_permalink(); ?>">
 			<h3><?php the_title(); ?></h3>

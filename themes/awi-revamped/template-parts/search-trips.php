@@ -44,7 +44,7 @@ if ( ! empty( $thumb_url ) ) : ?>
             <!--<a href="<?php echo get_permalink(824) ?>" class="button cta-button">Search Other Trips</a>-->
 
 
-            <p><form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url('/') ); ?>">
+            <p><form role="search" method="get" class="trip-search" action="<?php echo esc_url( home_url('/') ); ?>">
 			<label>
 			<span class="screen-reader-text" for="trip-search">Where would you like to go?</span>
 			<i class="fa fa-search"></i>

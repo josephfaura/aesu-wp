@@ -151,8 +151,9 @@
 	<?php endif; ?>
 
 	<?php wp_head(); ?>
-	
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<?php if(is_singular('trips')){ ?>
 		<?php $hero_image_for_og = get_field('trip_hero_image',get_the_ID()); ?>
 		<?php //print_r($hero_image_for_og); ?>
@@ -261,13 +262,13 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				.nav-logo {
 					display: flex;
 					align-items: center;
-					gap: 18px;
+					gap:1rem;
 					min-width: 0;
 				}
 				.top_nav_account_wrap{
 					display: flex;
 					flex-direction: row;
-					gap:18px;
+					gap:1rem;
 				}
 				.top_nav_account_wrap .top_account_area i {
 					font-size: 24px;
@@ -283,9 +284,10 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 					width: 85px;
 				}
 			}
-			@media screen and (max-width:350px){
+			@media screen and (max-width:400px){
 			    .inner-header {
-			        flex-direction: column !important;
+			        flex-wrap: wrap;
+			        justify-content: center !important;
 			    }
 			}
 		</style>
@@ -351,18 +353,15 @@ $is_awt = (
 if ($is_bespoke) {
 
     // BESPOKE SETTINGS
-    $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AESU&Action=Home';
-
-    // Replace these when you have the IDs
     $contact_link = get_permalink(3095);
     $home_link    = get_permalink(2934);
-
     $mobile_tag   = "Bespoke Journeys";
     $tagline      = "Bespoke Journeys<br />Since 1977";
 
 } elseif ($is_awt) {
     // AWT SETTINGS
     $account_link = 'https://res.aesu.com/res/STWMain.aspx?Theme=AWT&Action=Home';
+    $cart_link	  = 'https://res.aesu.com/res/STWMain.aspx?Theme=AWT&Action=ShoppingCart';
     $contact_link = get_permalink(2836);
     $home_link    = get_permalink(898);
     $mobile_tag   = "Alumni World Travel";
@@ -376,7 +375,7 @@ if ($is_bespoke) {
     $tagline      = "Expanding Horizons <br/>Since 1977";
 }
 
-// Defensive cleanup (kept)
+// Defensive cleanup
 $account_link = strtok($account_link, "\n");
 ?>
 
@@ -410,12 +409,24 @@ $account_link = strtok($account_link, "\n");
             <div class="header_right">
 
                 <div class="top_nav_account_wrap">
+                	<?php if (! $is_bespoke) : ?>
+
+                	<?php if (! $is_awt) : ?>
+					<span class="top_account_area search-toggle">
+					    <a href="#" class="search-toggle-link js-search-toggle" aria-expanded="false">
+					        <i class="fa-solid fa-magnifying-glass"></i>
+					    </a>
+					</span>
+					<?php endif; ?>
+
 
                     <span class="top_account_area">
                         <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                     </span>
+
+                    <?php endif; ?>
 
                     <span class="top_account_area">
                         <a class="header_phone" href="tel:8006387640">
@@ -469,6 +480,12 @@ $account_link = strtok($account_link, "\n");
 				    >
 				<?php endif; ?>
 
+				<?php if (! $is_awt) : ?>
+				  <div class="header-search-inline" id="header-search-desktop" aria-hidden="true">
+				    <?php get_search_form(); ?>
+				  </div>
+				<?php endif; ?>
+
                 <?php if (! $is_awt && ! $is_bespoke) : ?>
                     <nav>
                         <?php wp_nav_menu([
@@ -479,17 +496,27 @@ $account_link = strtok($account_link, "\n");
                 <?php endif; ?>
 
                 <div class="top_nav_account_wrap">
+                <?php if (! $is_bespoke) : ?>
                     <span class="top_account_area">
                         <a href="<?php echo esc_url($account_link); ?>" target="_blank">
                             <i class="fa-solid fa-circle-user"></i> My Account
                         </a>
                     </span>
 
-                    <span class="top_account_area">
-                        <a href="<?php echo esc_url($account_link); ?>" target="_blank">
-                            <i class="fa-solid fa-cart-shopping"></i> My Cart
-                        </a>
-                    </span>
+                    <?php if (! $is_awt) : ?>
+					<span class="top_account_area search-toggle">
+					    <a href="#" class="search-toggle-link js-search-toggle" aria-expanded="false">
+					        <i class="fa-solid fa-magnifying-glass"></i> Search
+					    </a>
+					</span>
+					<?php else : ?>
+					<span class="top_account_area">
+					    <a href="<?php echo esc_url($cart_link); ?>" target="_blank">
+					        <i class="fa-solid fa-cart-shopping"></i> My Cart
+					    </a>
+					</span>
+					<?php endif; ?>
+				<?php endif; ?>
 
                     <span class="top_account_area">
                         <a class="contact_page_link" href="<?php echo $contact_link; ?>">
@@ -508,3 +535,11 @@ $account_link = strtok($account_link, "\n");
         </div>
     </div>
 </header>
+
+<?php if (! $is_awt) : ?>
+<div class="header-search header-search--mobile" id="header-search-mobile">
+  <div class="container">
+    <?php get_search_form(); ?>
+  </div>
+</div>
+<?php endif; ?>
