@@ -685,6 +685,22 @@ textarea:focus {
 	color: #111;
 }
 
+input, textarea, select {
+	padding: 8px;
+	width: 100%;
+	font: inherit;
+	background: #fff;
+	border: 1px solid #888;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+label {
+    margin: 5px 0;
+    display: block;
+}
+
 select {
 	border: 1px solid #888;
 }
@@ -790,6 +806,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 	  gap: 0.75rem;
 	  max-width: 450px;
 	  width: 100%;
+	  box-sizing: border-box;
 	}
 	.search-form label {
 	  width: 100%;
@@ -4934,20 +4951,6 @@ body.single-tours .site {
     border-radius: 4px;
     cursor: pointer;    line-height: 53px;
 }*/
-input, textarea, select, button{
-	padding: 8px;
-	width: 100%;
-	font: inherit;
-	background: #fff;
-	border: 1px solid #888;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-label {
-    margin: 5px 0;
-    display: block;
-}
 /*.form-list{
 	margin:0;
 	padding:0;

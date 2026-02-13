@@ -183,14 +183,15 @@
 		}
 	</style>
 	<?php if($_SERVER['REMOTE_ADDR'] != "50.242.219.73" && $_SERVER['REMOTE_ADDR'] != "71.244.235.248" && $_SERVER['REMOTE_ADDR'] != "98.204.75.105" && $_SERVER['REMOTE_ADDR'] != "174.172.196.238"){ ?>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
 
-  gtag('config', 'G-DV23ZYP1X4');
-</script>
-<?php } ?>
+	  gtag('config', 'G-DV23ZYP1X4');
+	</script>
+	<?php } ?>
+
 <!-- Meta Pixel Code -->
 
 <script>
@@ -224,6 +225,7 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 /></noscript>
 
 <!-- End Meta Pixel Code -->
+
 </head>
 
 <body <?php body_class(); ?>>
