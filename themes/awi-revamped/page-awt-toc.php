@@ -177,7 +177,7 @@ get_header(); ?>
 			gap:20px;
 		}
 		.interior_banner i {
-			transform:translateY(-175%);
+			transform:translateY(-225%);
 		}
 		.packages li {
 			width:calc(100% / 1 - 20px);
