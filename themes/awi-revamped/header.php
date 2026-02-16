@@ -261,12 +261,6 @@ src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
 				.desktop_header{
 					display:none;
 				}
-				.nav-logo {
-					display: flex;
-					align-items: center;
-					gap:1rem;
-					min-width: 0;
-				}
 				.top_nav_account_wrap{
 					display: flex;
 					flex-direction: row;

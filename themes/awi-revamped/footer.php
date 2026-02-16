@@ -68,7 +68,7 @@ if (function_exists('get_field') && !$is_awt) {
 
 					<div class="footer_info">
 
-					    <?php if ( $show_social && !empty($social_links) ) : ?>
+					    <?php if ( !is_front_page() && $show_social && !empty($social_links) ) : ?>
 					        <ul class="bottom_footer_roundlinks">
 					            <?php foreach ($social_links as $social_link) : ?>
 					                <li><a href="<?php echo $social_link['social_link_url']; ?>" target="_blank">

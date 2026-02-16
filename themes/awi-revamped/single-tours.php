@@ -50,14 +50,14 @@ if ( function_exists('get_field') ) {
 	.tour_deals_popup_content a, .tour_deals_popup_content strong{ margin:0!important; display:inline!important; }
 	header{ position:static; }
 	.single-tours .trip_header{
-		padding:.12px;
+		padding:.67em;
 		position:sticky;
 		top:0;
 		background-color:#fff;
 		box-shadow:0px 3px 10px rgba(0,0,0,.25);
 		z-index:9999;
 	}
-	.single-tours h1{ margin:.67em !important; }
+	/*.single-tours h1{ margin:.67em !important; }*/
 	.accordion_item{ clear:both; }
 	.slick-next{ right:-14px; }
 	.whats_included_accordion_section{ margin-bottom:32px }
