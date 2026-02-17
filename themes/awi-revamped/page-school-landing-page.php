@@ -263,14 +263,20 @@ if(function_exists('get_field')){
     }
     .banner {
         height: calc(100vh - 48px);
-        /*display: flex;
-        justify-content: center;
-        align-items: center;
-        background-size: cover;
-        background-position: center;
-        position: relative;*/
         margin-bottom: 0;
+        overflow: hidden;
     }
+    .banner video {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        height: 100%;
+        width: auto;
+        min-width: 100%;
+        object-fit: cover;
+        transform: translateX(-50%);
+    }
+
     .welcome_letter_left {
         max-width:50%;
     }
@@ -348,6 +354,7 @@ if(function_exists('get_field')){
             background-size: cover;
         }
     }
+
      @media screen and (max-width:527px){
         .trip_post > li {
             width: calc(100% / 1 - 10px);
@@ -365,9 +372,6 @@ if(function_exists('get_field')){
         .banner {
             height:100vh
         }
-        .page-id-1464 .banner {
-            background-position: calc(50% - 100px) center !important;
-        }
         .anchor_nav {
             display: none;
         }
@@ -379,7 +383,7 @@ if(function_exists('get_field')){
         }
         .welcome_letter_contact{
             text-align: center;
-        }sdxz z  
+        } 
     }
     #video_banner_schools {
         position: absolute;
@@ -396,8 +400,8 @@ if ( ! post_password_required() ) {
 ?>
 <div class="banner" style="background-image:url(<?php echo $banner_image['url'] ?>)">
     <?php if($banner_video){ ?>
-    <video autoplay muted playsinline loop id="video_banner_schools">
-      <source src="<?php echo $banner_video ?>" type="video/mp4">
+    <video autoplay muted playsinline loop preload="metadata" poster="<?php echo $banner_image['url']; ?>" id="video_banner_schools">
+      <source src="<?php echo esc_url($banner_video); ?>" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
 <?php } ?>

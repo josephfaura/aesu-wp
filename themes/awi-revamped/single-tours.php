@@ -227,53 +227,34 @@ if ( function_exists('get_field') ) {
 				</div>
 
 				<?php
-				// What's Included Image - Build safe image values
-				$wi_img_url = '';
-				$wi_img_alt = '';
+				// Map (Leaflet JS)
+				$map_html = !empty($interactive_map) ? trim($interactive_map) : '';
 
-				if (is_array($whats_included_image)) {
-				  $wi_img_url = $whats_included_image['url'] ?? '';
-				  $wi_img_alt = $whats_included_image['alt'] ?? '';
-				} elseif (is_string($whats_included_image)) {
-				  $wi_img_url = $whats_included_image;
-				}
+				// Image fallback
+				$img_url = '';
+				$img_alt = '';
 
-				// Decide if map is “present”
-				// - If map return format is Leaflet JS, it’s typically a non-empty string
-				// - If return format is Raw data, it’s an array with lat/lng and/or markers
-				$has_map = false;
-
-				if (is_string($interactive_map) && trim($interactive_map) !== '') {
-				  $has_map = true;
-				} elseif (is_array($interactive_map)) {
-				  if (!empty($interactive_map['lat']) && !empty($interactive_map['lng'])) $has_map = true;
-				  if (!empty($interactive_map['markers']) && is_array($interactive_map['markers'])) $has_map = true;
+				if (!empty($whats_included_image)) {
+					if (is_array($whats_included_image)) {
+						$img_url = $whats_included_image['url'] ?? '';
+						$img_alt = $whats_included_image['alt'] ?? '';
+					} else {
+						$img_url = $whats_included_image;
+					}
 				}
 				?>
 
 				<div class="whats_included_image">
-				  <?php if ($has_map) : ?>
-				    <div class="whats_included_map">
-				      <?php
-				      // Leaflet JS return format (plugin prints ready-to-use output)
-				      if (is_string($interactive_map)) {
-				        echo $interactive_map;
-				      } else {
-				        // Raw data return format: leave a target div for your own Leaflet init later
-				        $map_id = 'wi-map-' . (int) $tour_id;
-				        ?>
-				        <div id="<?php echo esc_attr($map_id); ?>"
-				             class="wi-map-canvas"
-				             data-map="<?php echo esc_attr(wp_json_encode($interactive_map)); ?>"></div>
-				        <?php
-				      }
-				      ?>
-				    </div>
 
-				  <?php elseif ($wi_img_url) : ?>
-				    <img src="<?php echo esc_url($wi_img_url); ?>"
-				         alt="<?php echo esc_attr($wi_img_alt); ?>">
-				  <?php endif; ?>
+					<?php if ($map_html) : ?>
+						<div class="whats_included_map">
+							<?php echo $map_html; ?>
+						</div>
+
+					<?php elseif ($img_url) : ?>
+						<img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>">
+					<?php endif; ?>
+
 				</div>
 			</div>
 		</div>

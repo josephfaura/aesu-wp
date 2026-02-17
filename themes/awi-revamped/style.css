@@ -4120,9 +4120,6 @@ color:#fff;
 	font-size:32px;
 	text-align: center;
 }
-.accordion_trigger{
-	cursor:pointer;
-}
 .whats_included_accordion_section h3{
 	font-size:24px;
 	color:#2C768E;
@@ -4133,6 +4130,23 @@ color:#fff;
 	padding:0;
 	margin:0;
 	margin-left:0;
+}
+.additional_whats_included_text ul{
+	margin-left:10px;
+}
+.toggle_all_trigger{
+	position:absolute;
+	right:5px;
+	top:5px;
+}
+.whats_included_accordion_section{
+	position:relative;
+}
+.accordion_trigger{
+	cursor:pointer;
+	padding:14px 30px;
+	font-weight:700;
+	color:#2C768E;
 }
 .whats_included_content_wrap{
 	display:flex;
@@ -4152,6 +4166,7 @@ color:#fff;
 	height:auto;
 	border-radius: 9px;
 	margin-top:50px;
+	border:1px solid #dbdbdb;
 }
 .whats_included_image img {
 	max-height: 65vh;
@@ -4161,32 +4176,12 @@ color:#fff;
   display: block;
   border-radius: 9px;
 }
-.additional_whats_included_text ul{
-	margin-left:10px;
-}
-.toggle_all_trigger{
-	position:absolute;
-	right:5px;
-	top:5px;
-}
-.whats_included_accordion_section{
-	position:relative;
-}
-/*.trips-template-default ul{
-	margin-left:0;
-}*/
-.accordion_trigger{
-	padding:14px 30px;
-	font-weight:700;
-	color:#2C768E;
-}
 /* MAP replacement inside the sticky image card */
 .whats_included_map {
   width: 100%;
   max-height: 65vh;         /* match your image cap */
   overflow: hidden;         /* clip tiles to rounded corners */
   border-radius: 9px;       /* match your card */
-  border:1px solid #dbdbdb;
 }
 /* If plugin outputs a Leaflet container */
 .whats_included_map .leaflet-container {
