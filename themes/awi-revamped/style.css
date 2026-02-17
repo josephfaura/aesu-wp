@@ -3079,7 +3079,7 @@ a.header_cart.:hover, a.header_cart:active {
 		width: 100%;
 		height: calc(100vh + 200px);
 		/*cursor: pointer;*/
-		background: rgba(0, 0, 0, .6);
+		background: rgba(0, 0, 0, .4);
 	}
 
 	.awiNav__trigger {
@@ -3121,7 +3121,7 @@ a.header_cart.:hover, a.header_cart:active {
 		position: fixed;
 		z-index: 999999;
 		top: 0;
-		left: 100%;
+		right: 100%;
 		/*width: calc(100% - 45px);
 		max-width: 320px;*/
 		height: 100vh;
@@ -3135,9 +3135,9 @@ a.header_cart.:hover, a.header_cart:active {
 	}
 
 	.awiNav-wrap.nav-shown {
-		-webkit-transform: translateX(-100%);
-			-ms-transform: translateX(-100%);
-				transform: translateX(-100%);
+		-webkit-transform: translateX(100%);
+			-ms-transform: translateX(100%);
+				transform: translateX(100%);
 	}
 
 	.awiNav-wrap .awiNav__close {
@@ -3171,27 +3171,19 @@ a.header_cart.:hover, a.header_cart:active {
 
 	.awiNav__close span {
 		position: absolute;
-		top: 10px;
-		left: 10px;
-		width: 20px;
+		top: 25px;
+		left: 65px;
+		width: 31px;
 		height: 3px;
-		-webkit-transform: rotate(45deg) translateX(4px);
-			-ms-transform: rotate(45deg) translateX(4px);
-				transform: rotate(45deg) translateX(4px);
-		-webkit-transform-origin: left center;
-			-ms-transform-origin: left center;
-				transform-origin: left center;
+		transform: rotate(45deg) translateX(6px);
+		transform-origin: left center;
 		border-radius: 2px;
 		background: #fff;
 	}
 
 	.awiNav__close span ~ span {
-		-webkit-transform: rotate(-45deg) translateX(-4px);
-			-ms-transform: rotate(-45deg) translateX(-4px);
-				transform: rotate(-45deg) translateX(-4px);
-		-webkit-transform-origin: right center;
-			-ms-transform-origin: right center;
-				transform-origin: right center;
+		transform: rotate(-45deg) translateX(-6px);
+		transform-origin: right center;
 	}
 
 	.awiNav {
@@ -3308,12 +3300,12 @@ a.header_cart.:hover, a.header_cart:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* Keep existing slide logic intact */
 .awiNav-wrap.nav-shown {
-  transform: translateX(-100%);
+  transform: translateX(100%);
 }
 
 /* Modal “outline” look */
@@ -3326,12 +3318,13 @@ a.header_cart.:hover, a.header_cart:active {
 }
 /* ONLY enforce modal width when menu is open */
 .awiNav-wrap.nav-shown .awiNav {
-  min-width: 350px;
+  min-width: 400px;
 }
 
 /* Close button – modal style */
 .awiNav__close {
-  height: auto;
+  height: 82px;
+  width: 100%;
   padding: 0;
   border: 0;
   font-size: 0;
@@ -3340,8 +3333,8 @@ a.header_cart.:hover, a.header_cart:active {
 
 /* Keep existing X icon (spans) */
 .awiNav__close span {
-  top: 30px;
-  left: 30px;
+  top: 25px;
+  left: 65px;
   z-index: 99999999;
 }
 
@@ -3374,21 +3367,44 @@ a.header_cart.:hover, a.header_cart:active {
   padding-left: 3.5rem;
 }*/
 
+@media screen and (max-width: 1300px) {
+	.awiNav__close span {
+		left: 40px;
+	}
+	.awiNav-wrap.nav-shown .awiNav {
+	  min-width: 350px;
+	}
+}
+@media screen and (max-width: 879px) {
+	.awiNav__close {
+  	height: 93px;
+	}
+	.awiNav__close span {
+		top: 30px;
+	}
+}
 @media screen and (max-width: 600px) {
 	.awiNav-wrap.nav-shown {
-		transform: translateX(-105%);
+		transform: translateX(105%);
 	}
 	.awiNav-wrap.nav-shown .awiNav {
 		width: 100%;
 	}
 	.awiNav__close span {
-	  top: 30px;
-	  left: 15px;
+	  left: 20px;
 	}
 }
 @media screen and (max-width: 400px) {
 	.awiNav {
 		min-width: auto !important;
+		width: auto;
+	}
+	.awiNav__close {
+  	height: 110px;
+	}
+	.awiNav__close span {
+		top: 25px;
+	  left: 15px;
 	}
 }
 
@@ -4129,7 +4145,6 @@ color:#fff;
 }
 .whats_included_image{
 	background:#f2f2f2;
-	padding:32px;
 	position: sticky;
 	top:25vh;
 	align-self: flex-start;
@@ -4140,6 +4155,11 @@ color:#fff;
 }
 .whats_included_image img {
 	max-height: 65vh;
+	padding:32px;
+	width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 9px;
 }
 .additional_whats_included_text ul{
 	margin-left:10px;
@@ -4155,11 +4175,32 @@ color:#fff;
 /*.trips-template-default ul{
 	margin-left:0;
 }*/
-
 .accordion_trigger{
 	padding:14px 30px;
 	font-weight:700;
 	color:#2C768E;
+}
+/* MAP replacement inside the sticky image card */
+.whats_included_map {
+  width: 100%;
+  max-height: 65vh;         /* match your image cap */
+  overflow: hidden;         /* clip tiles to rounded corners */
+  border-radius: 9px;       /* match your card */
+  border:1px solid #dbdbdb;
+}
+/* If plugin outputs a Leaflet container */
+.whats_included_map .leaflet-container {
+  width: 100%;
+  height: 65vh !important;             /* make it actually visible */
+  max-height: 65vh;
+  border-radius: 9px;
+}
+/* If you use Raw data mode with your own div */
+.wi-map-canvas {
+  width: 100%;
+  height: 65vh !important;
+  max-height: 65vh;
+  border-radius: 9px;
 }
 .trip_highlights_image {
 	height:30vh;

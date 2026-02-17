@@ -447,6 +447,17 @@ $account_link = strtok($account_link, "\n");
     <div class="container">
         <div class="inner-header">
 
+        <div class="nav-logo">
+
+        		<?php if (! $is_awt && ! $is_bespoke) : ?>
+                    <nav>
+                        <?php wp_nav_menu([
+                            'theme_location' => 'main_nav',
+                            'menu_class'     => 'awiNav'
+                        ]); ?>
+                    </nav>
+                <?php endif; ?>
+
             <div class="logo_wrap">
                 <a href="<?php echo $home_link; ?>">
                     <svg class="icon">
@@ -456,6 +467,8 @@ $account_link = strtok($account_link, "\n");
 
                 <span><?php echo $tagline; ?></span>
             </div>
+
+        </div>
 
             <div class="header_right">
 
@@ -481,15 +494,6 @@ $account_link = strtok($account_link, "\n");
 				    <?php get_search_form(); ?>
 				  </div>
 				<?php endif; ?>
-
-                <?php if (! $is_awt && ! $is_bespoke) : ?>
-                    <nav>
-                        <?php wp_nav_menu([
-                            'theme_location' => 'main_nav',
-                            'menu_class'     => 'awiNav'
-                        ]); ?>
-                    </nav>
-                <?php endif; ?>
 
                 <div class="top_nav_account_wrap">
                 <?php if (! $is_bespoke) : ?>

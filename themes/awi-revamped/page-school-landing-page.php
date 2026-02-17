@@ -397,9 +397,9 @@ if ( ! post_password_required() ) {
 <div class="banner" style="background-image:url(<?php echo $banner_image['url'] ?>)">
     <?php if($banner_video){ ?>
     <video autoplay muted playsinline loop id="video_banner_schools">
-  <source src="<?php echo $banner_video ?>" type="video/mp4">
-  Your browser does not support HTML5 video.
-</video>
+      <source src="<?php echo $banner_video ?>" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
 <?php } ?>
     <div class="container">
         <?php if($banner_title){ ?><h1><?php echo $banner_title; ?></h1><?php } ?>

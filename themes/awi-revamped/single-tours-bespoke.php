@@ -22,12 +22,13 @@ if ( function_exists('get_field') ) {
 	$main_trip_content              = get_field('main_trip_content', $tour_id);
 	$experiences                    = get_field('experiences', $tour_id);
 	$level                          = (int) get_field('activity_level', $tour_id);
-	$cta_button		                = get_field('cta_button', $tour_id);
+	$cta_button		                 = get_field('cta_button', $tour_id);
 	$tour_trip_highlights_title     = get_field('trip_highlights_title', $tour_id);
 	$trip_highlights                = get_field('trip_highlights', $tour_id);
 	$whats_included_title           = get_field('whats_included_title', $tour_id);
 	$whats_included_accordion       = get_field('highlight_accordion', $tour_id);
 	$additional_whats_included_text = get_field('additional_whats_included_text', $tour_id);
+	$whats_included_image           = get_field('whats_included_image', $tour_id);
 	$whats_included_image           = get_field('whats_included_image', $tour_id);
 	$itinerary_title                = get_field('itinerary_title', $tour_id);
 	$itinerary_items                = get_field('itinerary_items', $tour_id);
@@ -370,11 +371,55 @@ if ( function_exists('get_field') ) {
 
 					</div>
 
-					<?php if ( !empty($whats_included_image['url']) ) : ?>
-						<div class="whats_included_image">
-							<img src="<?php echo esc_url( $whats_included_image['url'] ); ?>" alt="">
-						</div>
-					<?php endif; ?>
+					<?php
+					// What's Included Image - Build safe image values
+					$wi_img_url = '';
+					$wi_img_alt = '';
+
+					if (is_array($whats_included_image)) {
+					  $wi_img_url = $whats_included_image['url'] ?? '';
+					  $wi_img_alt = $whats_included_image['alt'] ?? '';
+					} elseif (is_string($whats_included_image)) {
+					  $wi_img_url = $whats_included_image;
+					}
+
+					// Decide if map is “present”
+					// - If map return format is Leaflet JS, it’s typically a non-empty string
+					// - If return format is Raw data, it’s an array with lat/lng and/or markers
+					$has_map = false;
+
+					if (is_string($interactive_map) && trim($interactive_map) !== '') {
+					  $has_map = true;
+					} elseif (is_array($interactive_map)) {
+					  if (!empty($interactive_map['lat']) && !empty($interactive_map['lng'])) $has_map = true;
+					  if (!empty($interactive_map['markers']) && is_array($interactive_map['markers'])) $has_map = true;
+					}
+					?>
+
+					<div class="whats_included_image">
+					  <?php if ($has_map) : ?>
+					    <div class="whats_included_map">
+					      <?php
+					      // Leaflet JS return format (plugin prints ready-to-use output)
+					      if (is_string($interactive_map)) {
+					        echo $interactive_map;
+					      } else {
+					        // Raw data return format: leave a target div for your own Leaflet init later
+					        $map_id = 'wi-map-' . (int) $tour_id;
+					        ?>
+					        <div id="<?php echo esc_attr($map_id); ?>"
+					             class="wi-map-canvas"
+					             data-map="<?php echo esc_attr(wp_json_encode($interactive_map)); ?>"></div>
+					        <?php
+					      }
+					      ?>
+					    </div>
+
+					  <?php elseif ($wi_img_url) : ?>
+					    <img src="<?php echo esc_url($wi_img_url); ?>"
+					         alt="<?php echo esc_attr($wi_img_alt); ?>">
+					  <?php endif; ?>
+					</div>
 				</div>
 			</div>
 			<?php endif; ?>
