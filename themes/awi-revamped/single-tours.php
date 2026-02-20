@@ -227,35 +227,51 @@ if ( function_exists('get_field') ) {
 				</div>
 
 				<?php
-				// Map (Leaflet JS)
-				$map_html = !empty($interactive_map) ? trim($interactive_map) : '';
+				$stops = get_field('itinerary_stops', $tour_id);
 
-				// Image fallback
-				$img_url = '';
-				$img_alt = '';
+				$route_points = [];
 
-				if (!empty($whats_included_image)) {
-					if (is_array($whats_included_image)) {
-						$img_url = $whats_included_image['url'] ?? '';
-						$img_alt = $whats_included_image['alt'] ?? '';
-					} else {
-						$img_url = $whats_included_image;
-					}
+				if (is_array($stops)) {
+				  foreach ($stops as $stop) {
+				    $loc = $stop['stop_location'] ?? null;
+
+				    // Expecting Raw data return format from the OpenStreetMap field
+				    $lat = is_array($loc) ? ($loc['lat'] ?? null) : null;
+				    $lng = is_array($loc) ? ($loc['lng'] ?? null) : null;
+
+				    if ($lat !== null && $lng !== null) {
+				      $route_points[] = [
+				        'lat'   => (float) $lat,
+				        'lng'   => (float) $lng,
+				        'title' => (string) ($stop['stop_title'] ?? ''),
+				        'popup' => (string) ($stop['stop_popup'] ?? ''),
+				      ];
+				    }
+				  }
 				}
+
+				$has_route = count($route_points) >= 1;
+				$map_id = 'wi-map-' . (int) $tour_id;
+
+				$pin_url = get_stylesheet_directory_uri() . '/img/location-icon.svg';
 				?>
 
 				<div class="whats_included_image">
-
-					<?php if ($map_html) : ?>
-						<div class="whats_included_map">
-							<?php echo $map_html; ?>
-						</div>
-
-					<?php elseif ($img_url) : ?>
-						<img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>">
-					<?php endif; ?>
-
+				  <?php if ($has_route) : ?>
+				    <div class="whats_included_map">
+				      <div
+				        id="<?php echo esc_attr($map_id); ?>"
+				        class="wi-map-canvas"
+				        data-route="<?php echo esc_attr(wp_json_encode($route_points)); ?>"
+				        data-pin="<?php echo esc_attr($pin_url); ?>"
+				      ></div>
+				    </div>
+				  <?php else : ?>
+				    <img src="<?php echo esc_url($whats_included_image['url'] ?? ''); ?>"
+				         alt="<?php echo esc_attr($whats_included_image['alt'] ?? ''); ?>">
+				  <?php endif; ?>
 				</div>
+				
 			</div>
 		</div>
 		<?php endif; ?>

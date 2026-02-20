@@ -1876,6 +1876,29 @@ a:not(.card_image_link):active {
   }
 }
 
+/* Trip Status Badges */
+.trip_status_badge {
+      position: absolute !important;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      border-radius: 3px;
+      z-index: 3;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow:0 3px 8px rgba(0,0,0,.25)
+    }
+    .trip_status_badge--sold_out { background: #e24c3e; }
+    .trip_status_badge--waitlisted { background: #2980B9; }
+    .trip_status_badge--limited_spots { background: #55AC67; }
+
+
 /* Bespoke Travel */
 /*
 .bespoke_travel{
@@ -4186,17 +4209,67 @@ color:#fff;
 /* If plugin outputs a Leaflet container */
 .whats_included_map .leaflet-container {
   width: 100%;
-  height: 65vh !important;             /* make it actually visible */
+  height: 65vh !important;  /* make it actually visible */
   max-height: 65vh;
   border-radius: 9px;
 }
-/* If you use Raw data mode with your own div */
+/* MAP Raw data mode with its own div */
 .wi-map-canvas {
   width: 100%;
   height: 65vh !important;
   max-height: 65vh;
   border-radius: 9px;
 }
+/* map popup container */
+.leaflet-popup-content-wrapper {
+  border-radius: 6px !important;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,.25) !important;
+  background: #fff;
+}
+/* map popup inner content */
+.leaflet-popup-content {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.25 !important;
+  color: #5e5e5e;
+}
+/* map popup title (the <strong> we output in JS) */
+.leaflet-popup-content strong {
+  display: block;
+  font-size: 16px;
+  color: #2C768E;
+  margin: 6px 0;
+}
+.leaflet-popup-content p {
+		margin: 6px 0 !important;
+}
+.leaflet-popup-content ul {
+	margin: 6px 0 !important;
+	padding-left:16px;
+}
+/* map popup image) */
+.leaflet-popup-content img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 6px 0;
+}
+/* map popup arrow tip */
+.leaflet-popup-tip {
+  background: #fff;
+}
+/* map close button */
+.leaflet-popup-close-button {
+  top: 6px !important;
+  right: 8px !important;
+}
+/* map popup remove small default width limit */
+.leaflet-popup {
+  max-width: 275px;
+}
+
 .trip_highlights_image {
 	height:30vh;
 	border-radius: 6px 6px 0 0;

@@ -371,74 +371,93 @@ if ( $trips_query->have_posts() ) : ?>
 
             $trip_id = get_the_ID();
 
-            // Trip fields
-            $hero_image               = get_field('trip_hero_image', $trip_id);
-            $trip_hero_image_text_url = get_field('trip_hero_image_text_url', $trip_id);
-            $trip_name                = get_field('trip_name', $trip_id);
-            $trip_dates               = get_field('trip_dates', $trip_id);
-            $toc_info                 = get_field('toc_info', $trip_id);
-            $days_price               = get_field('days__price', $trip_id);
+		// Trip fields
+		$hero_image = get_field('trip_hero_image', $trip_id);
+		$trip_name  = get_field('trip_name', $trip_id);
+		$trip_dates = get_field('trip_dates', $trip_id);
+		$toc_info   = get_field('toc_info', $trip_id);
+		$days_price = get_field('days__price', $trip_id);
 
-            // Normalize hero_image so ['url'] access never warnings
-            if ( !is_array($hero_image) ) {
-                $hero_image = [];
-            }
+		// Trip -> selected Tour
+		$tour    = get_field('tour', $trip_id);
+		$tour_id = $tour ? (is_object($tour) ? $tour->ID : (int)$tour) : 0;
 
-            // Trip -> selected Tour (change 'tour' if your field name differs)
-            $tour = get_field('tour', $trip_id);
-            $tour_id = $tour ? (is_object($tour) ? $tour->ID : (int)$tour) : 0;
 
-            // 1) trip_name fallback to tour
-            if ( ( $trip_name === null || $trip_name === false || $trip_name === '' ) && $tour_id ) {
-                $trip_name = get_field('trip_name', $tour_id);
-            }
+		// -------------------------------------------------
+		// 1) trip_name fallback to tour
+		// -------------------------------------------------
+		if ( ($trip_name === null || $trip_name === false || $trip_name === '') && $tour_id ) {
+		    $trip_name = get_field('trip_name', $tour_id);
+		}
 
-            // 2) hero image fallback to tour featured image if trip has neither image nor text-url
-            if ( empty($hero_image['url']) && ( $trip_hero_image_text_url === null || $trip_hero_image_text_url === false || $trip_hero_image_text_url === '' ) && $tour_id ) {
-                $tour_featured_url = get_the_post_thumbnail_url($tour_id, 'full');
-                if ( $tour_featured_url ) {
-                    $hero_image['url'] = $tour_featured_url;
-                    $trip_hero_image_text_url = $tour_featured_url;
-                }
-            }
 
-            // 3) toc_info fallback to tour destinations + description + trip days_price
-            if ( ( $toc_info === null || $toc_info === false || trim(wp_strip_all_tags($toc_info)) === '' ) && $tour_id ) {
+		// -------------------------------------------------
+		// 2) Determine hero image URL (no text-url anymore)
+		// -------------------------------------------------
+		$hero_url = '';
 
-                $destinations = get_field('destinations', $tour_id);
-                $description  = get_field('description', $tour_id);
+		if ( is_array($hero_image) && !empty($hero_image['url']) ) {
+		    $hero_url = $hero_image['url'];
+		} else {
+		    // prefer Tour featured image
+		    if ( $tour_id ) {
+		        $tour_featured = get_the_post_thumbnail_url($tour_id, 'full');
+		        if ( $tour_featured ) {
+		            $hero_url = $tour_featured;
+		        }
+		    }
 
-                $fallback = '';
+		    // fallback to Trip featured image
+		    if ( !$hero_url ) {
+		        $trip_featured = get_the_post_thumbnail_url($trip_id, 'full');
+		        if ( $trip_featured ) {
+		            $hero_url = $trip_featured;
+		        }
+		    }
+		}
 
-                if ( !empty($destinations) ) {
-                    $destinations_text = is_array($destinations)
-                        ? implode(', ', array_filter(array_map('wp_strip_all_tags', $destinations)))
-                        : wp_strip_all_tags($destinations);
 
-                    if ( $destinations_text ) {
-                        $fallback .= '<p class="destinations">' . esc_html($destinations_text) . '</p>';
-                    }
-                }
+		// -------------------------------------------------
+		// 3) toc_info fallback to tour destinations + description + trip days_price
+		// -------------------------------------------------
+		if ( ($toc_info === null || $toc_info === false || trim(wp_strip_all_tags($toc_info)) === '') && $tour_id ) {
 
-                if ( $description ) {
-                    $fallback .= '<div class="trip_description">' . wp_kses_post($description) . '</div>';
-                }
+		    $destinations = get_field('destinations', $tour_id);
+		    $description  = get_field('description', $tour_id);
 
-                if ( $days_price ) {
-                    $fallback .= '<p class="days_price">' . wp_kses_post($days_price) . '</p>';
-                }
+		    $fallback = '';
 
-                $toc_info = $fallback;
-            }
-        ?>
+		    if ( !empty($destinations) ) {
+		        $destinations_text = is_array($destinations)
+		            ? implode(', ', array_filter(array_map('wp_strip_all_tags', $destinations)))
+		            : wp_strip_all_tags($destinations);
 
-        <li <?php post_class( 'latest_posts_list_item' ); ?>>
+		        if ( $destinations_text ) {
+		            $fallback .= '<p class="destinations">' . esc_html($destinations_text) . '</p>';
+		        }
+		    }
 
-            <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>">
-                <div class="latest_post_item_thumb" style="background-image:url('<?php
-                    echo !empty($hero_image['url']) ? esc_url($hero_image['url']) : esc_url($trip_hero_image_text_url);
-                ?>')"></div>
-            </a>
+		    if ( $description ) {
+		        $fallback .= '<div class="trip_description">' . wp_kses_post($description) . '</div>';
+		    }
+
+		    if ( $days_price ) {
+		        $fallback .= '<p class="days_price">' . wp_kses_post($days_price) . '</p>';
+		    }
+
+		    $toc_info = $fallback;
+		}
+		?>
+
+		<li <?php post_class('latest_posts_list_item'); ?>>
+
+		    <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>">
+		        <div class="latest_post_item_thumb"
+		             <?php if ($hero_url) : ?>
+		                style="background-image:url('<?php echo esc_url($hero_url); ?>')"
+		             <?php endif; ?>>
+		        </div>
+		    </a>
 
             <div class="latest_post_item_text">
                 <span class="post-type-label"><?php echo esc_html($trip_dates); ?></span>

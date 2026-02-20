@@ -1,33 +1,17 @@
 /* New Header scroll behavior for top nav and trip headers */
 document.addEventListener("DOMContentLoaded", function () {
   let lastScrollTop = window.scrollY || 0;
-  const triggerRatio = 0.25; // 25vh trigger
-  const isTripPage = awiHeaderScroll.isTripPage; // passed from PHP
+  const triggerRatio = 0.25;
+  const isTripPage = awiHeaderScroll.isTripPage;
 
   let activeTarget = null;
 
-  function getScrollTarget() {
-    if (!isTripPage) {
-      if (window.innerWidth < 880) {
-        return document.querySelector(".mobile_header");
-      } else {
-        return document.querySelector(".desktop_header");
-      }
-    } else {
-      // Trip header only participates on mobile/tablet widths
-      if (window.innerWidth <= 976) {
-        return document.querySelector(".trip_header");
-      } else {
-        return null;
-      }
-    }
-  }
+  const tripHeader = document.querySelector(".trip_header");
 
   function initStyle(el) {
     if (!el) return;
     el.style.transition = "transform 0.5s ease";
     el.style.willChange = "transform";
-    // NOTE: don't force translateY(0) here; we handle reset separately
   }
 
   function resetHeader(el) {
@@ -35,20 +19,50 @@ document.addEventListener("DOMContentLoaded", function () {
     el.style.transform = "translateY(0)";
   }
 
-  function setActiveTarget(nextTarget) {
-    if (activeTarget && activeTarget !== nextTarget) {
-      // IMPORTANT: undo any "hidden" transform when leaving that mode
-      resetHeader(activeTarget);
-    }
+  /* ---------------------------------------------------
+     HARD GUARD: Trip header may NEVER be translated on desktop
+     --------------------------------------------------- */
+  function forceTripHeaderVisibleOnDesktop() {
+    if (!isTripPage || !tripHeader) return;
 
-    activeTarget = nextTarget;
+    if (window.innerWidth > 976) {
+      // Clear any inline transforms
+      if (tripHeader.style.transform !== "translateY(0)") {
+        tripHeader.style.transform = "translateY(0)";
+      }
 
-    if (activeTarget) {
-      initStyle(activeTarget);
+      // Remove animation properties so nothing animates it off-screen
+      tripHeader.style.transition = "";
+      tripHeader.style.willChange = "";
     }
   }
 
+  /* Run repeatedly to defeat race conditions / other scripts */
+  function guardLoop() {
+    forceTripHeaderVisibleOnDesktop();
+    requestAnimationFrame(guardLoop);
+  }
+
+  function getScrollTarget() {
+    if (isTripPage) {
+      // Only mobile/tablet participates in hide-on-scroll
+      if (window.innerWidth <= 976) return document.querySelector(".trip_header");
+      return null;
+    }
+
+    if (window.innerWidth < 880) return document.querySelector(".mobile_header");
+    return document.querySelector(".desktop_header");
+  }
+
+  function setActiveTarget(nextTarget) {
+    if (activeTarget && activeTarget !== nextTarget) resetHeader(activeTarget);
+    activeTarget = nextTarget;
+    if (activeTarget) initStyle(activeTarget);
+  }
+
   function onScroll() {
+    forceTripHeaderVisibleOnDesktop();
+
     const currentScroll = window.scrollY;
     const triggerPoint = window.innerHeight * triggerRatio;
 
@@ -57,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // If above trigger point, ensure header is visible
     if (currentScroll < triggerPoint) {
       resetHeader(activeTarget);
       lastScrollTop = currentScroll;
@@ -65,10 +78,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (currentScroll < lastScrollTop) {
-      // scrolling up
       activeTarget.style.transform = "translateY(0)";
     } else {
-      // scrolling down
       activeTarget.style.transform = `translateY(-${activeTarget.offsetHeight + 4}px)`;
     }
 
@@ -76,37 +87,33 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onResize() {
-    // Re-evaluate which header should be controlled at this breakpoint
-    const nextTarget = getScrollTarget();
-    setActiveTarget(nextTarget);
-
-    // Make sure the correct header state applies immediately after resize
+    forceTripHeaderVisibleOnDesktop();
+    setActiveTarget(getScrollTarget());
     onScroll();
   }
 
   // Init
   setActiveTarget(getScrollTarget());
+  forceTripHeaderVisibleOnDesktop();
+  onScroll();
+
+  // Start continuous protection (prevents unreproducible bugs)
+  guardLoop();
 
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onResize);
 
-  // ---------------------------
-  // Header Search positioning (MOBILE ONLY)
-  // ---------------------------
+  // ---- mobile search positioning stays as-is ----
   const searchMobile = document.getElementById("header-search-mobile");
 
   function syncSearchMobilePosition() {
     if (!searchMobile) return;
-
-    // Only apply on mobile
     if (window.innerWidth >= 880) {
       searchMobile.style.top = "";
       return;
     }
-
     const header = document.querySelector(".mobile_header");
     if (!header) return;
-
     const rect = header.getBoundingClientRect();
     searchMobile.style.top = rect.bottom + "px";
   }

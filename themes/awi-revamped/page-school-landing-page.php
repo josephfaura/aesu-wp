@@ -587,44 +587,52 @@ $trips_query = new WP_Query( $args );
                 $trip_id = get_the_ID();
 
                 // Trip-side fields
-                $hero_image               = get_field('trip_hero_image', $trip_id);
-                $trip_hero_image_text_url = get_field('trip_hero_image_text_url', $trip_id);
-                $trip_dates               = get_field('trip_dates', $trip_id);
-                $trip_name                = get_field('trip_name', $trip_id);
-                $toc_info                 = get_field('toc_info', $trip_id);
-                $days_price               = get_field('days__price', $trip_id);
-                $start_date               = get_field('start_date', $trip_id);
+                $hero_image = get_field('trip_hero_image', $trip_id);
+                $trip_dates = get_field('trip_dates', $trip_id);
+                $trip_name  = get_field('trip_name', $trip_id);
+                $toc_info   = get_field('toc_info', $trip_id);
+                $days_price = get_field('days__price', $trip_id);
+                $start_date = get_field('start_date', $trip_id);
 
-                // Get the selected Tour from this Trip (adjust field name if yours differs)
-                $tour = get_field('tour', $trip_id); // <-- if your relationship field is named differently, change this
-                $tour_id = $tour ? (is_object($tour) ? $tour->ID : (int)$tour) : 0;
+                // Get the selected Tour from this Trip
+                $tour    = get_field('tour', $trip_id);
+                $tour_id = $tour ? (is_object($tour) ? $tour->ID : (int) $tour) : 0;
+
+                $trip_status = $tour_id ? get_field('trip_status', $tour_id) : '';
 
                 // -----------------------------
                 // 1) trip_name override (trip wins, else tour)
                 // -----------------------------
-                if ( ( $trip_name === null || $trip_name === false || $trip_name === '' ) && $tour_id ) {
+                if ( ($trip_name === null || $trip_name === false || $trip_name === '') && $tour_id ) {
                     $trip_name = get_field('trip_name', $tour_id);
                 }
 
                 // -----------------------------
-                // 2) hero image override (trip wins, else tour featured image)
+                // 2) Hero image URL: trip_hero_image wins, else tour featured, else trip featured
                 // -----------------------------
-                $tour_featured_url = $tour_id ? get_the_post_thumbnail_url($tour_id, 'full') : '';
+                $hero_url = '';
 
-                if ( empty($hero_image) || empty($hero_image['url']) ) {
-                    // if trip_hero_image_text_url is empty too, fallback to tour featured
-                    if ( ( $trip_hero_image_text_url === null || $trip_hero_image_text_url === false || $trip_hero_image_text_url === '' ) && $tour_featured_url ) {
-                        $hero_image = ['url' => $tour_featured_url];          // keeps your existing markup happy
-                        $trip_hero_image_text_url = $tour_featured_url;       // optional, but makes your else path work too
+                if ( !empty($hero_image) && is_array($hero_image) && !empty($hero_image['url']) ) {
+                    $hero_url = $hero_image['url'];
+                } else {
+                    // fallback to Tour featured image (preferred)
+                    $tour_featured_url = $tour_id ? get_the_post_thumbnail_url($tour_id, 'full') : '';
+                    if ( $tour_featured_url ) {
+                        $hero_url = $tour_featured_url;
+                    } else {
+                        // optional: fallback to Trip featured image
+                        $trip_featured_url = get_the_post_thumbnail_url($trip_id, 'full');
+                        if ( $trip_featured_url ) {
+                            $hero_url = $trip_featured_url;
+                        }
                     }
                 }
 
                 // -----------------------------
                 // 3) toc_info override: if empty, build fallback from tour destinations + description
                 // -----------------------------
-                if ( ( $toc_info === null || $toc_info === false || $toc_info === '' ) && $tour_id ) {
+                if ( ($toc_info === null || $toc_info === false || $toc_info === '') && $tour_id ) {
 
-                    // Tour fallback content
                     $destinations = get_field('destinations', $tour_id);
                     $description  = get_field('description', $tour_id);
 
@@ -641,7 +649,7 @@ $trips_query = new WP_Query( $args );
                         }
 
                         if ( $destinations_text ) {
-                            $fallback .= '<p class="destinations">' . esc_html($destinations_text) . '<p>';
+                            $fallback .= '<p class="destinations">' . esc_html($destinations_text) . '</p>';
                         }
                     }
 
@@ -649,24 +657,34 @@ $trips_query = new WP_Query( $args );
                         $fallback .= '<div class="trip_description">' . wp_kses_post($description) . '</div>';
                     }
 
-                    // Inject days/price into the same override block
                     if ( $days_price ) {
                         $fallback .= '<p class="days_price">' . wp_kses_post($days_price) . '</p>';
                     }
 
                     $toc_info = $fallback;
                 }
-
                 ?>
                 <li>
-                    <a class="card_image_link" href="<?php echo esc_url( get_permalink() ); ?>">
-                        <div class="trip_main_image" style="background-image:url('<?php
-                            if ( !empty($hero_image['url']) ) {
-                                echo esc_url($hero_image['url']);
-                            } else {
-                                echo esc_url($trip_hero_image_text_url);
-                            }
-                        ?>')"></div>
+                    <a class="card_image_link" href="<?php echo esc_url(get_permalink()); ?>">
+                      <div class="latest_post_item_thumb" <?php if ($hero_url) : ?>
+                            style="background-image:url('<?php echo esc_url($hero_url); ?>')"
+                          <?php endif; ?>>
+
+                          <?php
+                          // Map field value -> label text (so you control copy)
+                          $status_labels = [
+                            'limited_spots' => 'Limited Spots',
+                            'waitlisted'    => 'Waitlisted',
+                            'sold_out'      => 'Sold Out',
+                          ];
+
+                          if ( $trip_status && isset($status_labels[$trip_status]) ) : ?>
+                            <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($trip_status); ?>">
+                              <?php echo esc_html($status_labels[$trip_status]); ?>
+                            </span>
+                          <?php endif; ?>
+
+                      </div>
                     </a>
 
                     <div class="trip_text">
