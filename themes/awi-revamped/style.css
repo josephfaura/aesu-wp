@@ -3335,18 +3335,14 @@ a.header_cart.:hover, a.header_cart:active {
 .awiNav {
   background: #3a3a3a;
   box-shadow: 0 3px 10px rgba(0,0,0,.25);
-  margin: 1rem;
+  margin: 1rem 0;
   min-width: 0;
   max-width: 100%;
-}
-/* ONLY enforce modal width when menu is open */
-.awiNav-wrap.nav-shown .awiNav {
-  min-width: 400px;
 }
 
 /* Close button – modal style */
 .awiNav__close {
-  height: 82px;
+  height: 80px;
   width: 100%;
   padding: 0;
   border: 0;
@@ -3400,19 +3396,13 @@ a.header_cart.:hover, a.header_cart:active {
 }
 @media screen and (max-width: 879px) {
 	.awiNav__close {
-  	height: 93px;
+  	height: 100px;
 	}
 	.awiNav__close span {
 		top: 30px;
 	}
 }
 @media screen and (max-width: 600px) {
-	.awiNav-wrap.nav-shown {
-		transform: translateX(105%);
-	}
-	.awiNav-wrap.nav-shown .awiNav {
-		width: 100%;
-	}
 	.awiNav__close span {
 	  left: 20px;
 	}
@@ -3423,12 +3413,23 @@ a.header_cart.:hover, a.header_cart:active {
 		width: auto;
 	}
 	.awiNav__close {
-  	height: 110px;
+  	height: 120px;
 	}
 	.awiNav__close span {
 		top: 25px;
 	  left: 15px;
 	}
+}
+
+/* Determine width of modal to avoid scroll bars when closing */
+@media screen and (max-width: 3999px) {
+  .awiNav-wrap{
+    width: min(400px, 100vw);
+  }
+  .awiNav{
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 /****Page Template Adjustments****/
