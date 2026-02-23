@@ -79,6 +79,12 @@ navTrigger.click(toggleNav);
 navClose.click(toggleNav);
 $(".awiNav-cover").click(toggleNav);
 
+// --- Added: allow other scripts (like header scroll) to safely close the menu ---
+window.awiNavCloseIfOpen = function () {
+  if (!navWrap.hasClass("nav-shown")) return; // already closed
+  toggleNav(); // reuse existing close logic
+};
+
 function toggleSubNav(e) {
   if (!isMobile) return;
 

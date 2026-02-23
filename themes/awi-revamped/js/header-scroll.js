@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let activeTarget = null;
 
+  // --- Added: close mobile nav on downward page scroll (works on trip pages too) ---
+  let navCloseScrollLock = false;
+
   const tripHeader = document.querySelector(".trip_header");
 
   function initStyle(el) {
@@ -66,6 +69,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentScroll = window.scrollY;
     const triggerPoint = window.innerHeight * triggerRatio;
 
+    // --- Added: close open menu on ANY downward page scroll (independent of which header is active) ---
+    if (currentScroll > lastScrollTop) {
+      const navWrapEl = document.querySelector(".awiNav-wrap");
+      const navIsOpen = !!(navWrapEl && navWrapEl.classList.contains("nav-shown"));
+
+      // small threshold prevents closing from tiny jitter at top
+      if (navIsOpen && currentScroll > 10 && !navCloseScrollLock) {
+        navCloseScrollLock = true;
+
+        if (window.awiNavCloseIfOpen) window.awiNavCloseIfOpen();
+
+        // release lock after close animation (matches your nav transition ~300ms)
+        setTimeout(() => { navCloseScrollLock = false; }, 350);
+      }
+    }
+
     if (!activeTarget) {
       lastScrollTop = currentScroll;
       return;
@@ -80,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (currentScroll < lastScrollTop) {
       activeTarget.style.transform = "translateY(0)";
     } else {
+
       activeTarget.style.transform = `translateY(-${activeTarget.offsetHeight + 4}px)`;
     }
 
