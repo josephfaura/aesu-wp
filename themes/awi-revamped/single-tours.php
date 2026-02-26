@@ -271,7 +271,7 @@ if ( function_exists('get_field') ) {
 				         alt="<?php echo esc_attr($whats_included_image['alt'] ?? ''); ?>">
 				  <?php endif; ?>
 				</div>
-				
+
 			</div>
 		</div>
 		<?php endif; ?>
@@ -297,7 +297,7 @@ if ( function_exists('get_field') ) {
 								</span>
 							</div>
 
-							<div class="accordion_content" style="display:<?php echo $default_expand ? 'block' : 'none'; ?>">
+							<div class="accordion_content" style="display:<?php echo $default_expand ? 'flex' : 'none'; ?>">
 								<div class="itinerary_text">
 									<?php echo wp_kses_post( $itinerary_item['itinerary_content'] ?? '' ); ?>
 								</div>

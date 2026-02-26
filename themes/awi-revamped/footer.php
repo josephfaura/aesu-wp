@@ -79,7 +79,7 @@ if (function_exists('get_field') && !$is_awt) {
 					    <?php endif; ?>
 
 					    <a href="<?php echo $home_link; ?>">
-					        <img src="<?php echo get_template_directory_uri() ?>/img/logo_footer.png" class="footer_logo">
+					        <img src="<?php echo esc_url(get_template_directory_uri() . '/img/aesu.svg'); ?>" alt="<?php bloginfo('name'); ?>" class="footer_logo">
 					        <?php if ( $footer_label ) : ?>
 					            <br><span><?php echo $footer_label; ?></span>
 					        <?php endif; ?>

@@ -1880,24 +1880,36 @@ a:not(.card_image_link):active {
 .trip_status_badge {
       position: absolute !important;
       top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 0;
+      /*transform: translateX(-50%);*/
+      background:#2C768E;
       color: #fff;
+      text-shadow: 0 1px 5px rgba(0,0,0,.25);
       font-weight: 700;
       font-size: 14px;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       padding: 8px 10px;
-      border-radius: 3px;
+      /*border-radius: 3px;*/
       z-index: 3;
       line-height: 1;
       white-space: nowrap;
-      box-shadow:0 3px 8px rgba(0,0,0,.25)
+      box-shadow:0 1px 5px rgba(0,0,0,.25)
     }
     .trip_status_badge--sold_out { background: #e24c3e; }
     .trip_status_badge--waitlisted { background: #2980B9; }
     .trip_status_badge--limited_spots { background: #55AC67; }
+    .trip_status_badge--selling_fast { background: #EFBB1C; }
 
+.trip_status {
+	position: relative !important;
+	top:0;
+	border-radius: 3px;
+	margin-bottom: 1rem;
+	align-self: start;
+	font-size: 18px;
+
+}
 
 /* Bespoke Travel */
 /*
@@ -2766,8 +2778,7 @@ header .container{
 .header_right strong{
 	font-size:14px;
 }
-.logo_wrap svg{
-	height: 45px;
+.logo_wrap img.logo{
   width: 95px;
   padding-right: 10px;
   border-right: 2px solid #fff;
@@ -3966,6 +3977,7 @@ aside ul{
 	padding:56px;
 	background: #f2f2f2;
 	container: trip-main / inline-size;
+	position: relative;
 	  display: flex;
     flex-direction: column;
     justify-content: center;

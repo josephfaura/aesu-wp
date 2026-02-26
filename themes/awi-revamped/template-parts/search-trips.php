@@ -95,8 +95,6 @@ if ( ! empty( $thumb_url ) ) : ?>
 			$tour    = get_field('tour', $trip_id);
 			$tour_id = $tour ? (is_object($tour) ? $tour->ID : (int)$tour) : 0;
 
-			$trip_status = $tour_id ? get_field('trip_status', $tour_id) : '';
-
 			// 1) trip_name: trip wins, else tour
 			if ( ($trip_name === null || $trip_name === false || $trip_name === '') && $tour_id ) {
 			    $trip_name = get_field('trip_name', $tour_id);
@@ -161,18 +159,36 @@ if ( ! empty( $thumb_url ) ) : ?>
                           <?php endif; ?>>
 
                           <?php
-                          // Map field value -> label text (so you control copy)
-                          $status_labels = [
-                            'limited_spots' => 'Limited Spots',
-                            'waitlisted'    => 'Waitlisted',
-                            'sold_out'      => 'Sold Out',
-                          ];
+                            // trip_status value is stored on the TOUR
+                            if ( $tour_id ) {
 
-                          if ( $trip_status && isset($status_labels[$trip_status]) ) : ?>
-                            <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($trip_status); ?>">
-                              <?php echo esc_html($status_labels[$trip_status]); ?>
-                            </span>
-                          <?php endif; ?>
+                              $status_value = get_field('trip_status', $tour_id); // e.g. "sold_out"
+
+                              if ( $status_value ) {
+
+                                // Get the ACF field object for this field (so we can use its "choices" labels)
+                                $field_obj = function_exists('get_field_object')
+                                  ? get_field_object('trip_status', $tour_id)
+                                  : null;
+
+                                // Preferred: label exactly as defined in ACF choices
+                                $status_label = '';
+                                if ( is_array($field_obj) && !empty($field_obj['choices']) && isset($field_obj['choices'][$status_value]) ) {
+                                  $status_label = $field_obj['choices'][$status_value];
+                                }
+
+                                // Fallback: convert "limited_spots" -> "Limited Spots"
+                                if ( $status_label === '' ) {
+                                  $status_label = ucwords(str_replace(['_', '-'], ' ', (string) $status_value));
+                                }
+                                ?>
+                                <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($status_value); ?>">
+                                  <?php echo esc_html($status_label); ?>
+                                </span>
+                                <?php
+                              }
+                            }
+                            ?>
 
                       </div>
                     </a>

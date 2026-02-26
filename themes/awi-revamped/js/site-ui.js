@@ -59,12 +59,9 @@
           const hash = this.hash;
           if (!hash) return;
 
-          let target;
-          try {
-            target = document.querySelector(hash);
-          } catch (err) {
-            return;
-          }
+          // ✅ FIX: don't use querySelector(hash) because IDs like "#2026_trips" break as CSS selectors
+          const id = decodeURIComponent(hash.slice(1));
+          let target = document.getElementById(id) || document.querySelector(`[name="${id}"]`);
           if (!target) return;
 
           e.preventDefault();

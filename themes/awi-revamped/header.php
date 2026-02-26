@@ -391,11 +391,9 @@ $account_link = strtok($account_link, "\n");
                 <?php endif; ?>
 
                 <div class="logo_wrap">
-                    <a href="<?php echo $home_link; ?>">
-                        <svg class="icon">
-                            <use xlink:href="<?php echo get_template_directory_uri(); ?>/img/icons.svg#icon-cropped-logo-full"></use>
-                        </svg>
-                    </a>
+                    <a href="<?php echo esc_url($home_link); ?>">
+					    <img src="<?php echo esc_url(get_template_directory_uri() . '/img/aesu.svg'); ?>" alt="<?php bloginfo('name'); ?>" class="logo">
+					</a>
 
                     <span><?php echo $mobile_tag; ?></span>
                 </div>
@@ -459,11 +457,9 @@ $account_link = strtok($account_link, "\n");
                 <?php endif; ?>
 
             <div class="logo_wrap">
-                <a href="<?php echo $home_link; ?>">
-                    <svg class="icon">
-                        <use xlink:href="<?php echo get_template_directory_uri();?>/img/icons.svg#icon-cropped-logo-full"></use>
-                    </svg>
-                </a>
+                <a href="<?php echo esc_url($home_link); ?>">
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/img/aesu.svg'); ?>" alt="<?php bloginfo('name'); ?>" class="logo">
+				</a>
 
                 <span><?php echo $tagline; ?></span>
             </div>
