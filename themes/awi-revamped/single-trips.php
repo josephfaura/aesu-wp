@@ -71,14 +71,14 @@ $level = 0;
 if ( function_exists('get_field') ) {
 
   // Trip-specific fields
-  $days_price      = get_field('days__price',     $trip_id);
-  $cta_button      = get_field('cta_button',      $trip_id);
-  $trip_dates      = get_field('trip_dates',      $trip_id);
-  $trip_departure  = get_field('trip_departure',  $trip_id);
-  $e_brochure_link = get_field('e_brochure_link', $trip_id);
+  $days_price      		= get_field('days__price',     $trip_id);
+  $cta_button      		= get_field('cta_button',      $trip_id);
+  $trip_dates      		= get_field('trip_dates',      $trip_id);
+  $trip_departure  		= get_field('trip_departure',  $trip_id);
+  $e_brochure_link 		= get_field('e_brochure_link', $trip_id);
   $show_webinar_link  = (bool) get_field('show_webinar_link', $trip_id);
-  $webinar_link    = get_field('webinar_link',    $trip_id);
-  $additional_link = get_field('additional_link', $trip_id);
+  $webinar_link    		= get_field('webinar_link',    $trip_id);
+  $additional_link 		= get_field('additional_link', $trip_id);
 
   // Overrides / display fields
   $trip_name         = get_field('trip_name',        $trip_id);
@@ -433,10 +433,11 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
 
               <?php if ( $show_webinar_link ) : ?>
 							  <li><a href="<?php echo esc_url( get_permalink(11615) ); ?>" class="webinar_link">Live Webinars</a></li>
+							  
+							<?php elseif ( !empty($webinar_link) ) : ?>
+							  <li><a target="_blank" rel="noopener" href="<?php echo esc_url($webinar_link); ?>" class="webinar_link">Live Webinars</a></li>
+
 							<?php endif; ?>
-              <?php if ( $webinar_link ) : ?>
-                <li><a target="_blank" rel="noopener" href="<?php echo esc_url($webinar_link); ?>" class="webinar_link">Live Webinars</a></li>
-              <?php endif; ?>
 
               <?php if ( is_array($additional_link) && !empty($additional_link['url']) ) : ?>
                 <li class="additional_link">
