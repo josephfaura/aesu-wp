@@ -15,7 +15,8 @@ if(function_exists('get_field')){
 	$trip_departure = get_field('trip_departure',get_the_ID());
 	$e_brochure_link = get_field('e_brochure_link',get_the_ID());
 	$webinar_link = get_field('webinar_link',get_the_ID());
-	$additional_link = get_field('additional_link',get_the_ID());
+	$show_webinar_link  = (bool) get_field('show_webinar_link', $trip_id);
+  $additional_link = get_field('additional_link',get_the_ID());
 	
 	// Fields that are overrides
 	$trip_name = get_field('trip_name',get_the_ID());
