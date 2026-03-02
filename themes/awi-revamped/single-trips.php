@@ -326,9 +326,10 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
     	display: block;
     }
     .trip_days_price {
-       margin-bottom: .5rem;
+      margin-bottom: .5rem;
+    }
     .red_button_cta{
-			white-space: wrap;
+			white-space: normal;
 		}
 }
 /*.trip_main_image{
@@ -502,9 +503,18 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
   <?php if ( $tour_id ) : ?>
     <section class="tour_area">
 
-      <?php if ( $tour_trip_highlights_title && !empty($trip_highlights) && is_array($trip_highlights) ) : ?>
-        <div class="trip_highlights">
-          <h2><?php echo esc_html($tour_trip_highlights_title); ?></h2>
+      <?php
+			$has_trip_highlights = ( ! empty($trip_highlights) && is_array($trip_highlights) );
+			$trip_highlights_heading = trim((string) $tour_trip_highlights_title);
+
+			if ( $trip_highlights_heading === '' ) {
+			  $trip_highlights_heading = 'Trip Highlights';
+			}
+			?>
+
+			<?php if ( $has_trip_highlights ) : ?>
+			  <div class="trip_highlights">
+			    <h2><?php echo esc_html($trip_highlights_heading); ?></h2>
           <ul class="trip_highlight_items">
             <?php foreach ( $trip_highlights as $trip_highlight ) :
               $highlight_image = $trip_highlight['highlight_image'] ?? null;
@@ -535,8 +545,15 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
         </div>
       <?php endif; ?>
 
-      <div class="whats_included">
-        <h2><?php echo esc_html($whats_included_title); ?></h2>
+      <?php
+			$whats_included_heading = trim((string) $whats_included_title);
+			if ( $whats_included_heading === '' ) {
+			  $whats_included_heading = "What's Included";
+			}
+			?>
+
+			<div class="whats_included">
+			  <h2><?php echo esc_html($whats_included_heading); ?></h2>
 
         <div class="whats_included_content_wrap">
           <div class="whats_included_content">
@@ -627,9 +644,18 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
         </div>
       </div>
 
-      <?php if ( $itinerary_title && !empty($itinerary_items) && is_array($itinerary_items) ) : ?>
-        <div class="itinerary">
-          <h2><?php echo esc_html($itinerary_title); ?></h2>
+      <?php
+			// Show itinerary if there are items, even if the title is blank.
+			$has_itinerary_items = ( !empty($itinerary_items) && is_array($itinerary_items) );
+			$itinerary_heading   = trim((string)$itinerary_title);
+			if ( $itinerary_heading === '' ) {
+			  $itinerary_heading = 'Itinerary';
+			}
+			?>
+
+			<?php if ( $has_itinerary_items ) : ?>
+			  <div class="itinerary">
+			    <h2><?php echo esc_html($itinerary_heading); ?></h2>
 
           <div style="position:relative;height:40px;" class="accordion_collapse_wrap">
             <a href="#" class="toggle_all_trigger">Expand All <i class="fa-solid fa-plus"></i></a>
@@ -662,9 +688,20 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
         </div>
       <?php endif; ?>
 
-      <?php if ( $hotels_title ) : ?>
-        <div class="hotels" style="clear:both;">
-          <h2><?php echo esc_html($hotels_title); ?></h2>
+      <?php
+			$has_hotels =
+			  ( ! empty($hotels_content) && trim((string)$hotels_content) !== '' )
+			  || ( ! empty($hotels_items) && is_array($hotels_items) );
+
+			$hotels_heading = trim((string) $hotels_title);
+			if ( $hotels_heading === '' ) {
+			  $hotels_heading = 'Hotels';
+			}
+			?>
+
+			<?php if ( $has_hotels ) : ?>
+			  <div class="hotels" style="clear:both;">
+			    <h2><?php echo esc_html($hotels_heading); ?></h2>
           <div class="hotels_content"><?php echo do_shortcode((string)$hotels_content); ?></div>
 
           <?php if ( !empty($hotels_items) && is_array($hotels_items) ) : ?>
@@ -693,9 +730,20 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
         </div>
       <?php endif; ?>
 
-      <?php if ( $trip_options_title ) : ?>
-        <div class="trip_options">
-          <h2><?php echo esc_html($trip_options_title); ?></h2>
+      <?php
+			$has_trip_options =
+			  ( ! empty($trip_options_content) && trim((string)$trip_options_content) !== '' )
+			  || ( ! empty($trip_option_items) && is_array($trip_option_items) );
+
+			$trip_options_heading = trim((string) $trip_options_title);
+			if ( $trip_options_heading === '' ) {
+			  $trip_options_heading = 'Trip Options';
+			}
+			?>
+
+			<?php if ( $has_trip_options ) : ?>
+			  <div class="trip_options">
+			    <h2><?php echo esc_html($trip_options_heading); ?></h2>
           <div class="trip_options_content"><?php echo do_shortcode((string)$trip_options_content); ?></div>
 
           <?php if ( !empty($trip_option_items) && is_array($trip_option_items) ) : ?>
