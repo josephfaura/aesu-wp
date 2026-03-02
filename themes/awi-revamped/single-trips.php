@@ -11,82 +11,27 @@ get_header();
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 <?php
-// ----------------------------------------------------
-// 1) Preview-safe Trip ID
-// ----------------------------------------------------
- $trip_id = get_the_ID();
-
-if ( is_preview() ) {
-  // Gutenberg preview URLs usually include preview_id
-  $preview_id = isset($_GET['preview_id']) ? (int) $_GET['preview_id'] : 0;
-  if ( $preview_id > 0 ) {
-    $trip_id = $preview_id;
-  }
-}
-// ----------------------------------------------------
-// 2) Load Trip Fields (ALWAYS from $trip_id)
-// ----------------------------------------------------
-$days_price = $cta_button = $trip_dates = $trip_departure = '';
-$e_brochure_link = $webinar_link = '';
-$show_webinar_link = false;
-$additional_link = null;
-
-$trip_name = $citiescountries = '';
-$hero_image = null;
-$main_trip_content = '';
-$travel_tools = '';
-$deals_popup = '';
-
-$trip_hero_image_text_url = '';
-$toc_info = '';
-$school_shortcode = '';
-
-$school = null; // Post Object
-$tour   = null; // Post Object
-$school_id = 0;
-$tour_id   = 0;
-
-$school_logo = null;
-$school_logo_background = '';
-$primary_color = '';
-
-$description = '';
-$tour_trip_highlights_title = '';
-$trip_highlights = [];
-$whats_included_title = '';
-$whats_included_accordion = [];
-$additional_whats_included_text = '';
-$whats_included_image = null;
-$itinerary_title = '';
-$itinerary_items = [];
-$hotels_title = '';
-$hotels_content = '';
-$hotels_items = [];
-$trip_options_title = '';
-$trip_options_content = '';
-$trip_option_items = [];
-$experiences = [];
-$level = 0;
+$trip_id = get_the_ID();
 
 if ( function_exists('get_field') ) {
 
   // Trip-specific fields
-  $days_price      		= get_field('days__price',     $trip_id);
-  $cta_button      		= get_field('cta_button',      $trip_id);
-  $trip_dates      		= get_field('trip_dates',      $trip_id);
-  $trip_departure  		= get_field('trip_departure',  $trip_id);
-  $e_brochure_link 		= get_field('e_brochure_link', $trip_id);
+  $days_price         = get_field('days__price',     $trip_id);
+  $cta_button         = get_field('cta_button',      $trip_id);
+  $trip_dates         = get_field('trip_dates',      $trip_id);
+  $trip_departure     = get_field('trip_departure',  $trip_id);
+  $e_brochure_link    = get_field('e_brochure_link', $trip_id);
   $show_webinar_link  = (bool) get_field('show_webinar_link', $trip_id);
-  $webinar_link    		= get_field('webinar_link',    $trip_id);
-  $additional_link 		= get_field('additional_link', $trip_id);
+  $webinar_link       = get_field('webinar_link',    $trip_id);
+  $additional_link    = get_field('additional_link', $trip_id);
 
   // Overrides / display fields
-  $trip_name         = get_field('trip_name',        $trip_id);
-  $citiescountries   = get_field('citiescountries',  $trip_id);
-  $hero_image        = get_field('trip_hero_image',  $trip_id);
-  $main_trip_content = get_field('main_trip_content',$trip_id);
-  $travel_tools      = get_field('travel_tools',     $trip_id);
-  $deals_popup       = get_field('deals_popup',      $trip_id);
+  $trip_name          = get_field('trip_name',         $trip_id);
+  $citiescountries    = get_field('citiescountries',   $trip_id);
+  $hero_image         = get_field('trip_hero_image',   $trip_id);
+  $main_trip_content  = get_field('main_trip_content', $trip_id);
+  $travel_tools       = get_field('travel_tools',      $trip_id);
+  $deals_popup        = get_field('deals_popup',       $trip_id);
 
   // Backwards compatible
   $trip_hero_image_text_url = get_field('trip_hero_image_text_url', $trip_id);
@@ -94,22 +39,20 @@ if ( function_exists('get_field') ) {
 
   $school_shortcode = get_field('school_shortcode', $trip_id);
 
-  // Relationships (CONFIRMED: Post Objects)
+  // Relationships (Post Objects or IDs depending on ACF setting)
   $school = get_field('school', $trip_id);
   $tour   = get_field('tour',   $trip_id);
 
-  // Preview/formatting fallback: if ACF doesn't hydrate Post Object, pull stored IDs and hydrate
-	if ( (!is_object($school) || empty($school->ID)) ) {
-	  $school_id_raw = (int) get_post_meta($trip_id, 'school', true);
-	  if ( $school_id_raw ) $school = get_post($school_id_raw);
-	}
-	if ( (!is_object($tour) || empty($tour->ID)) ) {
-	  $tour_id_raw = (int) get_post_meta($trip_id, 'tour', true);
-	  if ( $tour_id_raw ) $tour = get_post($tour_id_raw);
-	}
+  // Hydrate relationship IDs robustly (handles object OR raw ID OR missing hydration)
+  $school_id = is_object($school) ? (int) ($school->ID ?? 0) : (int) $school;
+  $tour_id   = is_object($tour)   ? (int) ($tour->ID   ?? 0) : (int) $tour;
 
-  $school_id = ( is_object($school) && ! empty($school->ID) ) ? (int) $school->ID : 0;
-  $tour_id   = ( is_object($tour)   && ! empty($tour->ID) )   ? (int) $tour->ID   : 0;
+  if ( !$school_id ) {
+    $school_id = (int) get_post_meta($trip_id, 'school', true);
+  }
+  if ( !$tour_id ) {
+    $tour_id = (int) get_post_meta($trip_id, 'tour', true);
+  }
 
   // School fields
   if ( $school_id ) {
@@ -121,41 +64,34 @@ if ( function_exists('get_field') ) {
   // Tour fields + fallbacks
   if ( $tour_id ) {
 
-    // trip_name: trip wins, else tour
     if ( $trip_name === null || trim((string)$trip_name) === '' ) {
       $trip_name = get_field('trip_name', $tour_id);
     }
 
-    // citiescountries: trip wins, else tour destinations
     if ( empty($citiescountries) ) {
       $citiescountries = get_field('destinations', $tour_id);
     }
 
-    // hero image: trip wins, else tour featured image
-    $hero_url = is_array($hero_image) ? ($hero_image['url'] ?? '') : '';
-    if ( $hero_url === '' ) {
+    $hero_url_tmp = is_array($hero_image) ? ($hero_image['url'] ?? '') : '';
+    if ( $hero_url_tmp === '' ) {
       $tour_featured_url = get_the_post_thumbnail_url($tour_id, 'full');
       if ( $tour_featured_url ) {
         $hero_image = [ 'url' => $tour_featured_url ];
 
-        // legacy fallback too
         if ( $trip_hero_image_text_url === null || trim((string)$trip_hero_image_text_url) === '' ) {
           $trip_hero_image_text_url = $tour_featured_url;
         }
       }
     }
 
-    // main_trip_content: trip wins, else tour
     if ( $main_trip_content === null || $main_trip_content === false || trim((string)$main_trip_content) === '' ) {
       $main_trip_content = get_field('main_trip_content', $tour_id);
     }
 
-    // travel_tools: trip override, else tour
     if ( $travel_tools === null || trim((string)$travel_tools) === '' ) {
       $travel_tools = get_field('travel_tools', $tour_id);
     }
 
-    // deals_popup: trip override, else tour
     if ( $deals_popup === null || trim((string)$deals_popup) === '' ) {
       $deals_popup = get_field('deals_popup', $tour_id);
     }
@@ -792,22 +728,16 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
           <div class="entry">
             <?php
             // Show Tour content first (the_content() of tour post), then Trip content
-            global $post;
-						$original_post = $post;
-
 						if ( $tour_id ) {
 						  $tour_post = get_post($tour_id);
 
 						  if ( $tour_post ) {
-						    $post = $tour_post;          // set global $post
-						    setup_postdata($post);
-						    the_content();               // Tour content
-						    wp_reset_postdata();
-						    $post = $original_post;      // restore global
+						    echo apply_filters('the_content', $tour_post->post_content);
 						  }
 						}
 
-            the_content(); // Trip content
+						// Trip content (current post in the loop)
+						the_content();
             ?>
           </div>
         </div>
