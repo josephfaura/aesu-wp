@@ -351,16 +351,31 @@ if ( ! post_password_required() ) {
 		</div>
 
 		<div class="trip_main_content_links">
+        <?php if ( $e_brochure_link || $webinar_link || $show_webinar_link || (is_array($additional_link) && !empty($additional_link['url'])) ) : ?>
+          <div class="additional_links">
+            <ul class="additional_link_items">
+              <?php if ( $e_brochure_link ) : ?>
+                <li><a target="_blank" rel="noopener" href="<?php echo esc_url($e_brochure_link); ?>" class="print_brochure">Download Brochure</a></li>
+              <?php endif; ?>
 
-			<?php if($e_brochure_link || $webinar_link || $additional_link){ ?>
-					<div class="additional_links">
-						<ul class="additional_link_items">
-							<?php if($e_brochure_link){ ?><li><a target="_blank" href="<?php echo $e_brochure_link; ?>" class="print_brochure">Download Brochure</a></li><?php } ?>
-							<?php if($webinar_link){ ?><li><a target="_blank" href="<?php echo $webinar_link ?>" class="webinar_link">Live Webinars</a></li><?php } ?>
-							<?php if($additional_link){ ?><li class="additional_link"><a target="_blank" href="<?php echo $additional_link['url'] ?>"><?php echo $additional_link['title'] ?></a></li><?php } ?>
-						</ul>
-					</div>
-			<?php } ?>
+              <?php if ( $show_webinar_link ) : ?>
+							  <li><a href="<?php echo esc_url( get_permalink(11615) ); ?>" class="webinar_link">Live Webinars</a></li>
+							  
+							<?php elseif ( !empty($webinar_link) ) : ?>
+							  <li><a target="_blank" rel="noopener" href="<?php echo esc_url($webinar_link); ?>" class="webinar_link">Live Webinars</a></li>
+
+							<?php endif; ?>
+
+              <?php if ( is_array($additional_link) && !empty($additional_link['url']) ) : ?>
+                <li class="additional_link">
+                  <a target="_blank" rel="noopener" href="<?php echo esc_url($additional_link['url']); ?>">
+                    <?php echo esc_html($additional_link['title'] ?? 'More Info'); ?>
+                  </a>
+                </li>
+              <?php endif; ?>
+            </ul>
+          </div>
+        <?php endif; ?>
 
 			<?php if ( !empty($experiences) || !empty($level) ) : ?>
 
