@@ -124,6 +124,19 @@ $hero_url  = is_array($hero_image) ? ($hero_image['url'] ?? '') : '';
 if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
 ?>
 
+<?php if(is_user_logged_in()){ ?>
+    <style>
+      .awiNav-wrap{
+        top:32px;
+      }
+      @media screen and (max-width:879px){
+        .awiNav-wrap{
+          top:46px;
+        }
+      }
+    </style>
+<?php } ?>
+
 <style>
 	.trip_header_cta{
 		text-align:right;
@@ -198,7 +211,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
 				align-items:center;
         bottom: 0;
         width: 100%;
-        z-index: 9999999;
+        z-index: 99999;
         background-color: #fff;
 				box-shadow:0px -3px 10px rgba(0,0,0,.25);
     }

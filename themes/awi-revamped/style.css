@@ -3113,7 +3113,7 @@ a.header_cart.:hover, a.header_cart:active {
 @media screen and (max-width: 3999px) {
 	.awiNav-cover {
 		position: fixed;
-		z-index: 999;
+		z-index: 999999;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -3412,9 +3412,6 @@ a.header_cart.:hover, a.header_cart:active {
 	}
 }
 @media screen and (max-width: 879px) {
-	.awiNav__close {
-  	height: 100px;
-	}
 	.awiNav__close span {
 		top: 30px;
 	}
@@ -3429,9 +3426,6 @@ a.header_cart.:hover, a.header_cart:active {
 		min-width: auto !important;
 		width: auto;
 	}
-	.awiNav__close {
-  	height: 120px;
-	}
 	.awiNav__close span {
 		top: 25px;
 	  left: 15px;
@@ -3441,7 +3435,7 @@ a.header_cart.:hover, a.header_cart:active {
 /* Determine width of modal to avoid scroll bars when closing */
 @media screen and (max-width: 3999px) {
   .awiNav-wrap{
-    width: min(400px, 100vw);
+    width: min(425px, 100vw);
   }
   .awiNav{
     width: 100%;

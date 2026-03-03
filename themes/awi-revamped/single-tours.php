@@ -42,6 +42,19 @@ if ( function_exists('get_field') ) {
 }
 ?>
 
+<?php if(is_user_logged_in()){ ?>
+    <style>
+      .awiNav-wrap{
+        top:32px;
+      }
+      @media screen and (max-width:879px){
+        .awiNav-wrap{
+          top:46px;
+        }
+      }
+    </style>
+<?php } ?>
+
 <style>
 	.trip_cta_list { justify-content:center; }
 	.trip_cta_list > *:last-child { margin-left:0; }
