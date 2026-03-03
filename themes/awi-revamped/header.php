@@ -393,7 +393,7 @@ $account_link = strtok($account_link, "\n");
                 <div class="logo_wrap">
                     <a href="<?php echo $home_link; ?>">
                         <svg class="icon">
-                            <use xlink:href="<?php echo get_template_directory_uri(); ?>/img/icons.svg#icon-cropped-logo-full"></use>
+                            <use xlink:href="<?php echo get_template_directory_uri(); ?>/img/icons.svg#icon-aesu-logo"></use>
                         </svg>
                     </a>
 
@@ -461,7 +461,7 @@ $account_link = strtok($account_link, "\n");
             <div class="logo_wrap">
                 	<a href="<?php echo $home_link; ?>">
                         <svg class="icon">
-                            <use xlink:href="<?php echo get_template_directory_uri(); ?>/img/icons.svg#icon-cropped-logo-full"></use>
+                            <use xlink:href="<?php echo get_template_directory_uri(); ?>/img/icons.svg#icon-aesu-logo"></use>
                         </svg>
                     </a>
 
