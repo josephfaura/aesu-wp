@@ -2778,6 +2778,12 @@ header .container{
 .header_right strong{
 	font-size:14px;
 }
+.logo_wrap svg{
+	height: 45px;
+  width: 95px;
+  padding-right: 10px;
+  border-right: 2px solid #fff;
+}
 .logo_wrap img.logo{
   width: 95px;
   padding-right: 10px;
