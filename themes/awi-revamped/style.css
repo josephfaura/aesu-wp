@@ -4948,6 +4948,7 @@ article, aside {
 .no-banner { 
 	margin: 0 0 32px;
 	height: 82px;
+	background:#3a3a3a;
 }
 
 .banner_interior {
