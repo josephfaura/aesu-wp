@@ -184,6 +184,37 @@ if ( $trips_query->have_posts() ) : ?>
                          <?php if ($hero_url) : ?>
                             style="background-image:url('<?php echo esc_url($hero_url); ?>')"
                          <?php endif; ?>>
+                         <?php
+                            // trip_status value is stored on the TOUR
+                            if ( $tour_id ) {
+
+                              $status_value = get_field('trip_status', $tour_id); // e.g. "sold_out"
+
+                              if ( $status_value ) {
+
+                                // Get the ACF field object for this field (so we can use its "choices" labels)
+                                $field_obj = function_exists('get_field_object')
+                                  ? get_field_object('trip_status', $tour_id)
+                                  : null;
+
+                                // Preferred: label exactly as defined in ACF choices
+                                $status_label = '';
+                                if ( is_array($field_obj) && !empty($field_obj['choices']) && isset($field_obj['choices'][$status_value]) ) {
+                                  $status_label = $field_obj['choices'][$status_value];
+                                }
+
+                                // Fallback: convert "limited_spots" -> "Limited Spots"
+                                if ( $status_label === '' ) {
+                                  $status_label = ucwords(str_replace(['_', '-'], ' ', (string) $status_value));
+                                }
+                                ?>
+                                <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($status_value); ?>">
+                                  <?php echo esc_html($status_label); ?>
+                                </span>
+                                <?php
+                              }
+                            }
+                            ?>
                     </div>
                 </a>
 

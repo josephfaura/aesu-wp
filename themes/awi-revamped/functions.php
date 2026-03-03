@@ -741,7 +741,7 @@ add_action('acf/input/admin_head', function () {
 
         /* Remove default white tab underline gap */
         .acf-tab-group {
-            border-bottom: 1px solid #1e8cbe !important;
+            border-bottom: 0 !important;
         }
     </style>
     <?php
