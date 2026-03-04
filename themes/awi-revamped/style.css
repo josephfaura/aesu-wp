@@ -3435,11 +3435,16 @@ a.header_cart.:hover, a.header_cart:active {
 /* Determine width of modal to avoid scroll bars when closing */
 @media screen and (max-width: 3999px) {
   .awiNav-wrap{
-    width: min(425px, 100vw);
+    width: min(400px, 100vw);
   }
   .awiNav{
     width: 100%;
     min-width: 0;
+  }
+}
+@media screen and (max-width: 600px) {
+  .awiNav-wrap{
+    width: 100vw;
   }
 }
 

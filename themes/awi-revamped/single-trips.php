@@ -211,7 +211,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
 				align-items:center;
         bottom: 0;
         width: 100%;
-        z-index: 99999;
+        z-index: 999990;
         background-color: #fff;
 				box-shadow:0px -3px 10px rgba(0,0,0,.25);
     }
