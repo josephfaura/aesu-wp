@@ -3119,7 +3119,7 @@ a.header_cart.:hover, a.header_cart:active {
 		width: 100%;
 		height: calc(100vh + 200px);
 		/*cursor: pointer;*/
-		background: rgba(0, 0, 0, .4);
+		background: rgba(0, 0, 0, .6);
 	}
 
 	.awiNav__trigger {

@@ -260,39 +260,45 @@ if ( $cat ) :
 
     $related_query = new WP_Query( $related_args );
 
-    // If we got fewer than 3 posts, relax the date to include all older posts
+    // Always define $final_query (prevents fatal errors)
+    $final_query = $related_query;
+
+    // If we got fewer than 3 posts, relax the date to include older posts too
     if ( $related_query->found_posts < 3 ) {
 
-        $remaining = 3 - $related_query->found_posts;
+        $remaining = 3 - (int) $related_query->found_posts;
 
-        $related_args['posts_per_page'] = $remaining;
-        $related_args['date_query'] = array(); // remove year filter
-        $older_query = new WP_Query( $related_args );
+        $older_args = $related_args;
+        $older_args['posts_per_page'] = $remaining;
+        $older_args['date_query']     = array(); // remove year filter
 
+        $older_query = new WP_Query( $older_args );
+
+        // Merge ONLY if older_query actually adds something
         if ( $older_query->have_posts() ) {
-            // Merge post IDs so we can display them in one loop
+
             $merged_ids = array_merge(
                 wp_list_pluck( $related_query->posts, 'ID' ),
                 wp_list_pluck( $older_query->posts, 'ID' )
             );
 
-            $final_args = array(
-                'post_type' => 'post',
-                'post__in'  => $merged_ids,
-                'orderby'   => 'post__in',
-            );
+            // de-dupe just in case
+            $merged_ids = array_values( array_unique( array_filter( $merged_ids ) ) );
 
-            $final_query = new WP_Query( $final_args );
+            if ( ! empty( $merged_ids ) ) {
+                $final_query = new WP_Query( array(
+                    'post_type' => 'post',
+                    'post__in'  => $merged_ids,
+                    'orderby'   => 'post__in',
+                ) );
+            }
         }
 
         wp_reset_postdata();
-
-    } else {
-        $final_query = $related_query;
     }
 
-    // Display posts if any
-    if ( $final_query->have_posts() ) : ?>
+    // Display posts if any (guard against null)
+    if ( $final_query && $final_query->have_posts() ) : ?>
         <section class="related-articles">
             <h2 class="related-articles-title">
                 Similar <?php echo esc_html( $cat->name ); ?> Stories
@@ -325,13 +331,10 @@ if ( $cat ) :
                 <?php endwhile; ?>
             </ul>
 
-            <?php if ( $cat ) : ?>
-				    <div class="center">
-				        <strong><a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
-				            Explore more stories in <?php echo esc_html( $cat->name ); ?> <i class="fa fa-arrow-right"></i></a></strong>
-				    </div>
-			<?php endif; ?>
-
+            <div class="center">
+                <strong><a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+                    Explore more stories in <?php echo esc_html( $cat->name ); ?> <i class="fa fa-arrow-right"></i></a></strong>
+            </div>
         </section>
     <?php
     endif;
