@@ -179,7 +179,9 @@ if ( $valid ) : ?>
 			$categories = get_the_category();
 			$cat = ! empty( $categories ) ? $categories[0] : null;
 			?>
-			<h4 class="blog-type-label"><?php echo esc_html( $cat->name ); ?></h4>
+			<?php if ( $cat ) : ?>
+			  <h4 class="blog-type-label"><?php echo esc_html( $cat->name ); ?></h4>
+			<?php endif; ?>
 		<h1><?php the_title(); ?></h1>
 			<p class="postmetadata-postdate">
 		         <small>Published on <?php echo get_the_date('M j, Y'); ?> | <?php echo get_reading_time(); ?>-min read</small>
