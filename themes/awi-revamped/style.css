@@ -1882,7 +1882,7 @@ a:not(.card_image_link):active {
       top: 20px;
       right: 0;
       /*transform: translateX(-50%);*/
-      background:#2C768E;
+      background:#E74C3C;
       color: #fff;
       text-shadow: 0 1px 5px rgba(0,0,0,.25);
       font-weight: 700;
@@ -1896,11 +1896,15 @@ a:not(.card_image_link):active {
       white-space: nowrap;
       box-shadow:0 1px 5px rgba(0,0,0,.25)
     }
-    .trip_status_badge--sold_out { background: #e24c3e; }
-    .trip_status_badge--waitlisted { background: #2980B9; }
-    .trip_status_badge--limited_spots { background: #55AC67; }
-    .trip_status_badge--selling_fast { background: #EFBB1C; }
+    .trip_status_badge--closed { background: #E74C3C; }
+    .trip_status_badge--waitlisted { background: #5e5e5e; }
+    .trip_status_badge--limited_spots { background: #2C768E; }
+    .trip_status_badge--selling_fast { background: #deaa0b; }
+    .trip_status_badge--closing_soon { background: #3a3a3a; }
 
+.trip_status_badge--custom {
+  background: #D13B2D;
+}
 .trip_status {
 	position: relative !important;
 	top:0;

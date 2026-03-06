@@ -343,28 +343,50 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
 
     <div class="trip_main_content">
 
-      <?php
-      // trip_status stored on TOUR
-      if ( $tour_id ) {
-        $status_value = get_field('trip_status', $tour_id);
-        if ( $status_value ) {
-          $field_obj = function_exists('get_field_object') ? get_field_object('trip_status', $tour_id) : null;
-          $status_label = '';
+                        <?php
+                        // Trip-level status manual override text field
+                        $trip_status_override = trim((string) get_field('trip_status_override', get_the_ID()));
 
-          if ( is_array($field_obj) && !empty($field_obj['choices']) && isset($field_obj['choices'][$status_value]) ) {
-            $status_label = $field_obj['choices'][$status_value];
-          }
-          if ( $status_label === '' ) {
-            $status_label = ucwords(str_replace(['_', '-'], ' ', (string) $status_value));
-          }
-          ?>
-          <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($status_value); ?> trip_status">
-            <?php echo esc_html($status_label); ?>
-          </span>
-          <?php
-        }
-      }
-      ?>
+                        // 1) If Trip override exists, use it and ignore Tour status completely
+                        if ( $trip_status_override !== '' ) : ?>
+                          <span class="trip_status_badge trip_status_badge--custom trip_status">
+                            <?php echo esc_html($trip_status_override); ?>
+                          </span>
+                        <?php
+
+                        // 2) Otherwise fall back to Tour status selector
+                        elseif ( $tour_id ) :
+
+                          $status_value = get_field('trip_status', $tour_id); // e.g. "sold_out"
+
+                          if ( $status_value ) :
+
+                            $field_obj = function_exists('get_field_object')
+                              ? get_field_object('trip_status', $tour_id)
+                              : null;
+
+                            $status_label = '';
+
+                            if (
+                              is_array($field_obj) &&
+                              !empty($field_obj['choices']) &&
+                              isset($field_obj['choices'][$status_value])
+                            ) {
+                              $status_label = $field_obj['choices'][$status_value];
+                            }
+
+                            if ( $status_label === '' ) {
+                              $status_label = ucwords(str_replace(['_', '-'], ' ', (string) $status_value));
+                            }
+                            ?>
+                            <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($status_value); ?> trip_status">
+                              <?php echo esc_html($status_label); ?>
+                            </span>
+                            <?php
+                          endif;
+
+                        endif;
+                        ?>
 
       <div class="trip_dates"><?php echo wp_kses_post($trip_dates); ?></div>
 
@@ -570,6 +592,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
           $has_route = count($route_points) >= 1;
           $map_id = 'wi-map-' . (int) $tour_id;
           $pin_url = get_stylesheet_directory_uri() . '/img/location-icon.svg';
+          $pin_start_url = get_stylesheet_directory_uri() . '/img/location-icon-start.svg';
           ?>
 
           <div class="whats_included_image">
@@ -580,6 +603,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
                   class="wi-map-canvas"
                   data-route="<?php echo esc_attr( wp_json_encode($route_points) ); ?>"
                   data-pin="<?php echo esc_attr($pin_url); ?>"
+                  data-pin-start="<?php echo esc_attr($pin_start_url); ?>"
                 ></div>
               </div>
             <?php else : ?>

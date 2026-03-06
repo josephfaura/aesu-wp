@@ -48,6 +48,7 @@
     if (points.length === 0) return;
 
     const pinUrl = el.getAttribute("data-pin") || "";
+    const pinStartUrl = el.getAttribute("data-pin-start") || pinUrl;
 
     const map = L.map(el, { scrollWheelZoom: false });
 
@@ -58,7 +59,7 @@
       attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
     }).addTo(map);
 
-    // One shared SVG icon for all markers
+    // Default marker icon
     const pinIcon = pinUrl
       ? L.icon({
           iconUrl: pinUrl,
@@ -68,6 +69,16 @@
         })
       : null;
 
+    // First marker icon
+    const startPinIcon = pinStartUrl
+      ? L.icon({
+          iconUrl: pinStartUrl,
+          iconSize: [32, 32],
+          iconAnchor: [16, 32],
+          popupAnchor: [0, -28],
+        })
+      : pinIcon;
+
     const latlngs = [];
     const bounds = [];
 
@@ -75,12 +86,13 @@
     // set this to true. If it’s plain text, keep false.
     const popupIsHtml = true;
 
-    points.forEach((pt) => {
+    points.forEach((pt, idx) => {
       const ll = [pt.lat, pt.lng];
       latlngs.push(ll);
       bounds.push(ll);
 
-      const marker = L.marker(ll, pinIcon ? { icon: pinIcon } : undefined).addTo(map);
+      const iconToUse = (idx === 0) ? startPinIcon : pinIcon;
+      const marker = L.marker(ll, iconToUse ? { icon: iconToUse } : undefined).addTo(map);
 
       if (pt.title || pt.popup) {
         const titleHtml = pt.title ? `<strong>${escapeHtml(pt.title)}</strong>` : "";

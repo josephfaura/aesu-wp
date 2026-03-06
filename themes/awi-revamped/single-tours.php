@@ -267,17 +267,19 @@ if ( function_exists('get_field') ) {
 				$map_id = 'wi-map-' . (int) $tour_id;
 
 				$pin_url = get_stylesheet_directory_uri() . '/img/location-icon.svg';
-				?>
+				$pin_start_url = get_stylesheet_directory_uri() . '/img/location-icon-start.svg';
+          		?>
 
 				<div class="whats_included_image">
 				  <?php if ($has_route) : ?>
 				    <div class="whats_included_map">
 				      <div
-				        id="<?php echo esc_attr($map_id); ?>"
-				        class="wi-map-canvas"
-				        data-route="<?php echo esc_attr(wp_json_encode($route_points)); ?>"
-				        data-pin="<?php echo esc_attr($pin_url); ?>"
-				      ></div>
+		                  id="<?php echo esc_attr($map_id); ?>"
+		                  class="wi-map-canvas"
+		                  data-route="<?php echo esc_attr( wp_json_encode($route_points) ); ?>"
+		                  data-pin="<?php echo esc_attr($pin_url); ?>"
+		                  data-pin-start="<?php echo esc_attr($pin_start_url); ?>"
+		                ></div>
 				    </div>
 				  <?php else : ?>
 				    <img src="<?php echo esc_url($whats_included_image['url'] ?? ''); ?>"
