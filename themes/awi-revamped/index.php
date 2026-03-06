@@ -418,37 +418,50 @@ if ( $trips_query->have_posts() ) : ?>
                          <?php if ($hero_url) : ?>
                             style="background-image:url('<?php echo esc_url($hero_url); ?>')"
                          <?php endif; ?>>
-                         <?php
-                            // trip_status value is stored on the TOUR
-                            if ( $tour_id ) {
+                        <?php
+                        // Trip-level status manual override text field
+                        $trip_status_override = trim((string) get_field('trip_status_override', get_the_ID()));
 
-                              $status_value = get_field('trip_status', $tour_id); // e.g. "sold_out"
+                        // 1) If Trip override exists, use it and ignore Tour status completely
+                        if ( $trip_status_override !== '' ) : ?>
+                          <span class="trip_status_badge trip_status_badge--custom">
+                            <?php echo esc_html($trip_status_override); ?>
+                          </span>
+                        <?php
 
-                              if ( $status_value ) {
+                        // 2) Otherwise fall back to Tour status selector
+                        elseif ( $tour_id ) :
 
-                                // Get the ACF field object for this field (so we can use its "choices" labels)
-                                $field_obj = function_exists('get_field_object')
-                                  ? get_field_object('trip_status', $tour_id)
-                                  : null;
+                          $status_value = get_field('trip_status', $tour_id); // e.g. "sold_out"
 
-                                // Preferred: label exactly as defined in ACF choices
-                                $status_label = '';
-                                if ( is_array($field_obj) && !empty($field_obj['choices']) && isset($field_obj['choices'][$status_value]) ) {
-                                  $status_label = $field_obj['choices'][$status_value];
-                                }
+                          if ( $status_value ) :
 
-                                // Fallback: convert "limited_spots" -> "Limited Spots"
-                                if ( $status_label === '' ) {
-                                  $status_label = ucwords(str_replace(['_', '-'], ' ', (string) $status_value));
-                                }
-                                ?>
-                                <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($status_value); ?>">
-                                  <?php echo esc_html($status_label); ?>
-                                </span>
-                                <?php
-                              }
+                            $field_obj = function_exists('get_field_object')
+                              ? get_field_object('trip_status', $tour_id)
+                              : null;
+
+                            $status_label = '';
+
+                            if (
+                              is_array($field_obj) &&
+                              !empty($field_obj['choices']) &&
+                              isset($field_obj['choices'][$status_value])
+                            ) {
+                              $status_label = $field_obj['choices'][$status_value];
+                            }
+
+                            if ( $status_label === '' ) {
+                              $status_label = ucwords(str_replace(['_', '-'], ' ', (string) $status_value));
                             }
                             ?>
+                            <span class="trip_status_badge trip_status_badge--<?php echo esc_attr($status_value); ?>">
+                              <?php echo esc_html($status_label); ?>
+                            </span>
+                            <?php
+                          endif;
+
+                        endif;
+                        ?>
                     </div>
                 </a>
 
