@@ -1897,10 +1897,10 @@ a:not(.card_image_link):active {
       box-shadow:0 1px 5px rgba(0,0,0,.25)
     }
     .trip_status_badge--closed { background: #E74C3C; }
-    .trip_status_badge--waitlisted { background: #5e5e5e; }
-    .trip_status_badge--limited_spots { background: #2C768E; }
-    .trip_status_badge--selling_fast { background: #deaa0b; }
+    .trip_status_badge--waitlisted { background: #4d4d4d; }
     .trip_status_badge--closing_soon { background: #3a3a3a; }
+    .trip_status_badge--limited_spots { background: #3b879d; }
+    .trip_status_badge--selling_fast { background: #deaa0b; }
 
 .trip_status_badge--custom {
   background: #D13B2D;
