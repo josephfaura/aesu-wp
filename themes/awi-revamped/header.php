@@ -154,12 +154,45 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<?php if(is_singular('trips')){ ?>
-		<?php $hero_image_for_og = get_field('trip_hero_image',get_the_ID()); ?>
-		<?php //print_r($hero_image_for_og); ?>
-		<meta property="og:image" content="<?php echo $hero_image_for_og['url'] ?>">
-	<?php } ?>
-	<?php 
+	<?php if ( is_singular('trips') ) :
+
+	    $trip_id  = get_the_ID();
+	    $og_image = '';
+	    $tour_id  = 0;
+
+	    // 1. Trip hero image (ACF image field)
+	    $trip_hero = get_field('trip_hero_image', $trip_id);
+
+	    if ( is_array($trip_hero) && !empty($trip_hero['url']) ) {
+	        $og_image = $trip_hero['url'];
+	    } elseif ( is_numeric($trip_hero) ) {
+	        $og_image = wp_get_attachment_image_url((int) $trip_hero, 'full');
+	    } elseif ( is_string($trip_hero) && filter_var($trip_hero, FILTER_VALIDATE_URL) ) {
+	        $og_image = $trip_hero;
+	    }
+
+	    // 2. Trip featured image fallback
+	    if ( !$og_image && has_post_thumbnail($trip_id) ) {
+	        $og_image = get_the_post_thumbnail_url($trip_id, 'full');
+	    }
+
+	    // 3. Tour featured image fallback
+	    if ( !$og_image ) {
+	        $tour_id = (int) get_post_meta($trip_id, 'tour', true);
+
+	        if ( $tour_id && has_post_thumbnail($tour_id) ) {
+	            $og_image = get_the_post_thumbnail_url($tour_id, 'full');
+	        }
+	    }
+
+	    // 4. Set the opengraph image if one is found
+	    if ( $og_image ) : ?>
+	        <meta property="og:image" content="<?php echo esc_url($og_image); ?>">
+	    <?php endif; ?>
+
+	<?php endif; ?>
+
+	<?php // Load Theme General Settings CSS
 	$css_commits = get_field('css_commits','option');
 	foreach($css_commits as $css_commit){ ?>
 		<?php if($css_commit['activate_css'] == 'True'){ ?>
@@ -168,6 +201,7 @@
 			</style>
 		<?php } ?>
 	<?php } ?>
+
 	<style>
 		#menu-aesu-main-nav-1 > li{
 			display:none;
@@ -182,15 +216,28 @@
 			display:block;
 		}
 	</style>
-	<?php if($_SERVER['REMOTE_ADDR'] != "50.242.219.73" && $_SERVER['REMOTE_ADDR'] != "71.244.235.248" && $_SERVER['REMOTE_ADDR'] != "68.33.31.231" && $_SERVER['REMOTE_ADDR'] != "174.172.196.238"){ ?>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
 
-	  gtag('config', 'G-DV23ZYP1X4');
-	</script>
-	<?php } ?>
+<!-- Google Tag Manager -->
+
+<?php if($_SERVER['REMOTE_ADDR'] != "50.242.219.73" 
+&& $_SERVER['REMOTE_ADDR'] != "71.244.235.248" 
+&& $_SERVER['REMOTE_ADDR'] != "68.33.31.231" 
+&& $_SERVER['REMOTE_ADDR'] != "174.172.196.238"){ ?>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DV23ZYP1X4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-DV23ZYP1X4'); // GA4
+gtag('config', 'AW-998998094'); // Google Ads
+
+</script>
+
+<?php } ?>
+
+<!-- End Google Tag Manager -->
 
 <!-- Meta Pixel Code -->
 
