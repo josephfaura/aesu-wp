@@ -73,9 +73,9 @@
     const startPinIcon = pinStartUrl
       ? L.icon({
           iconUrl: pinStartUrl,
-          iconSize: [32, 32],
-          iconAnchor: [16, 32],
-          popupAnchor: [0, -28],
+          iconSize: [42, 42],
+          iconAnchor: [21, 42],
+          popupAnchor: [0, -36],
         })
       : pinIcon;
 
