@@ -222,7 +222,7 @@
 <?php if($_SERVER['REMOTE_ADDR'] != "50.242.219.73" 
 && $_SERVER['REMOTE_ADDR'] != "71.244.235.248" 
 && $_SERVER['REMOTE_ADDR'] != "68.33.31.231" 
-&& $_SERVER['REMOTE_ADDR'] != "174.172.196.238"){ ?>
+&& $_SERVER['REMOTE_ADDR'] != "73.135.217.32"){ ?>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DV23ZYP1X4"></script>
 <script>
@@ -520,21 +520,21 @@ $account_link = strtok($account_link, "\n");
             <div class="header_right">
 
 				<?php
-				$school_logo     = get_field('school_logo');
-				$school_shortcode = get_field('school_shortcode');
+				if ( is_singular('trips') || is_page_template('page-school-landing-page.php') ) :
 
-				if (
-				    is_page_template('page-school-landing-page.php')
-				    && $school_logo
-				    && strtolower($school_shortcode) !== 'awt' //if field is set to awt do not show the school_logo
-				) : ?>
-				    <img
-				        class="header_school_logo"
-				        style="width:auto;"
-				        src="<?php echo esc_url($school_logo['url']); ?>"
-				        alt=""
-				    >
-				<?php endif; ?>
+				    $school_id = is_singular('trips')
+				        ? (int) get_post_meta(get_the_ID(), 'school', true)
+				        : get_the_ID();
+
+				    $school_logo      = get_field('school_logo', $school_id);
+				    $school_shortcode = strtolower(trim((string) get_field('school_shortcode', $school_id)));
+
+				    if ( $school_logo && $school_shortcode !== 'awt' ) : ?>
+				    
+				    <a href="<?php echo esc_url( get_permalink($school_id) ); ?>"><img class="header_school_logo" style="width:auto;" src="<?php echo esc_url($school_logo['url']); ?>" alt="<?php echo esc_attr( get_the_title($school_id) ); ?>"></a>
+
+				<?php endif;
+				endif; ?>
 
 				<?php if (! $is_awt) : ?>
 				  <div class="header-search-inline" id="header-search-desktop" aria-hidden="true">

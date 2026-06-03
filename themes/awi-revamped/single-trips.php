@@ -307,7 +307,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
   <section class="trip_header">
     <div class="trip_header_info">
 
-      <?php if ( is_array($school_logo) && ! empty($school_logo['url']) && $school_id ) : ?>
+      <!--<?php if ( is_array($school_logo) && ! empty($school_logo['url']) && $school_id ) : ?>
         <div class="trip_header_logo_wrap">
           <a
             class="trip_header_logo"
@@ -316,7 +316,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
             aria-label="<?php echo esc_attr( get_the_title($school_id) ); ?>"
           ></a>
         </div>
-      <?php endif; ?>
+      <?php endif; ?>-->
 
       <div class="trip_header_info_text">
         <?php if ( $school_id && $school_id != 824 ) : ?>

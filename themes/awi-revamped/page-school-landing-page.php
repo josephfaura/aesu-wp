@@ -46,13 +46,6 @@ if(function_exists('get_field')){
     .school_custom_wrap a{
         color:<?php echo $primary_color; ?>;
     }
-    .header_school_logo {
-        display:flex;
-        max-height:45px;
-        max-width:256px;
-        padding-right:1rem;
-        border-right:2px solid white;
-    }
     .trip_list{
         margin:32px auto;
     }
@@ -398,6 +391,12 @@ if(function_exists('get_field')){
 if ( ! post_password_required() ) {
     // The password has been entered — show this content
 ?>
+<?php if ( is_user_logged_in() ) : ?>
+    <style>
+      .banner{height:calc(100vh - 80px);}
+      @media screen and (max-width: 550px) {.banner{height:calc(100vh - 46px);}}
+    </style>
+<?php endif; ?>
 <div class="banner" style="background-image:url(<?php echo $banner_image['url'] ?>)">
     <?php if($banner_video){ ?>
     <video autoplay muted playsinline loop preload="metadata" poster="<?php echo $banner_image['url']; ?>" id="video_banner_schools">

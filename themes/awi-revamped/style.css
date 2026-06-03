@@ -737,6 +737,7 @@ form .list--unstyled .form-field--third:first-child,
 form .list--unstyled .form-field--third:first-child + .form-field--third,
 form .list--unstyled .form-field--third:first-child + .form-field--third + .form-field--third {
 	margin-top: 0;
+	margin:0 6px;
 }
 
 form .list--unstyled li:last-child,
@@ -1879,9 +1880,8 @@ a:not(.card_image_link):active {
 /* Trip Status Badges */
 .trip_status_badge {
       position: absolute !important;
-      top: 20px;
-      right: 0;
-      /*transform: translateX(-50%);*/
+      top: 1rem;
+      right: 1rem;
       background:#E74C3C;
       color: #fff;
       text-shadow: 0 1px 5px rgba(0,0,0,.25);
@@ -1890,14 +1890,14 @@ a:not(.card_image_link):active {
       letter-spacing: 0.05em;
       text-transform: uppercase;
       padding: 8px 10px;
-      /*border-radius: 3px;*/
+      border-radius: 3px;
       z-index: 3;
       line-height: 1;
       white-space: nowrap;
       box-shadow:0 1px 5px rgba(0,0,0,.25)
     }
     .trip_status_badge--closed { background: #E74C3C; }
-    .trip_status_badge--waitlisted { background: #4d4d4d; }
+    .trip_status_badge--waitlist { background: #4d4d4d; }
     .trip_status_badge--closing_soon { background: #3a3a3a; }
     .trip_status_badge--limited_spots { background: #3b879d; }
     .trip_status_badge--selling_fast { background: #deaa0b; }
@@ -1908,7 +1908,7 @@ a:not(.card_image_link):active {
 .trip_status {
 	position: relative !important;
 	top:0;
-	border-radius: 3px;
+	right:0;
 	margin-bottom: 1rem;
 	align-self: start;
 	font-size: 18px;
@@ -2796,6 +2796,14 @@ header .container{
 .logo_wrap span{
 	display: flex;
 	align-items: center;
+}
+
+.header_school_logo {
+        display:flex;
+        max-height:45px;
+        max-width:256px;
+        padding-right:1rem;
+        border-right:2px solid white;
 }
 
  .top_nav_account_wrap {
@@ -3940,13 +3948,13 @@ aside ul{
 	font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: .05rem;
-  margin: .5rem .5rem 0;
+  margin: 0 0 0 .25rem ;
 }
 .trip_name{
 	text-align:left !important;
 }
 .trip_destination_info{
-	margin:.5rem;
+	margin:.5rem 0 0 .25rem;
 	letter-spacing: .025rem;
 	font-size:1rem;
 }
@@ -3966,7 +3974,7 @@ aside ul{
 	background-color:#d93d2c;
 }
 .trip_days_price{
-	margin:.5rem;
+	margin: 0 .25rem .5rem 0;
 	font-weight:700;
 	letter-spacing:.025rem;
 }
@@ -4459,9 +4467,10 @@ i.fa-star{
 	.trip_name {
 		font-size: 3em;
 	}
+}
 @media screen and (max-width:976px){
 	.single-trips .trip_header {
-		padding: 24px;
+		padding: 18px 24px 24px;
 	}
 	.trip_main_content_wrap{
 		flex-direction: column;
@@ -4476,7 +4485,6 @@ i.fa-star{
 		padding-left:32px!important;
 		padding-right:32px!important;
 	}
-	
 .trip_main_content_wrap > div{
 		width:100%;
 	}
@@ -4500,12 +4508,9 @@ i.fa-star{
 	}
 }
 @media screen and (max-width:676px){
-	/*.single-trips .trip_header{
-		margin-top:42px;
-	}*/
 	.trip_school_name{
 		font-size:80%;
-		margin:.5rem 0 0 0;
+		margin:.25rem 0 0 0;
 	}
 	.trip_name{
 		font-size:2.5em;
@@ -4523,12 +4528,6 @@ i.fa-star{
 	.tour_area{
 		padding-left:24px!important;
 		padding-right:24px!important;
-	}
-	/*.single-trips .trip_header {
-        margin-top: 63px;
-    }
-	.trip_header_info_text{
-		width: calc(100% - 132px);*/
 	}
 }
 
@@ -4899,13 +4898,15 @@ article, aside {
 .page-template-page-sidebar-left aside, .page-template-page-sidebar-left-awt aside { padding: 0 30px 0 0; }
 
 .form-list, #loginform {
-	margin: 0 0 20px;
+	margin: 0 0 2rem;
+	padding:0;
 	list-style: none;
 }
 
 .form-list li { margin: 10px 0 0; }
 
-/*.form-list li:first-child { margin: 0; }*/
+.form-list li:first-child:not(.form-field--half) { margin: 20px 0 0; }
+.form-list li:last-child:not(.form-field--half) { margin: 20px 0 0; }
 
 /*.page-template-default input[type=text],.page-template-default input[type=email], .page-template-default input[type=tel] {
 	padding: 8px;
