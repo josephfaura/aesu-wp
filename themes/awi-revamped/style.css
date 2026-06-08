@@ -952,7 +952,7 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 }
 @media screen and (max-width: 485px) {
   .banner_arrow {
-    bottom: 150px;
+    bottom: 50px;
   }
 }
 @media screen and (max-width: 360px) {

@@ -319,7 +319,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
       <?php endif; ?>-->
 
       <div class="trip_header_info_text">
-        <?php if ( $school_id && $school_id != 824 ) : ?>
+        <?php if ( $school_id && $school_id != 824 && $school_id != 1705 ) : ?>
           <h2 class="trip_school_name"><?php echo esc_html( get_the_title($school_id) ); ?></h2>
         <?php endif; ?>
 

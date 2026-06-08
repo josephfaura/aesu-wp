@@ -50,6 +50,11 @@ if(function_exists('get_field')){
 	    ?>
 	        <div class="banner" style="background-image:url('<?php echo esc_url( $background_image_url ); ?>')">
 		            <div class="container">
+
+		            <?php if ( ! empty( $banner_area['banner_image'] ) ) : ?>
+		            	<img style="width:90%; max-width:600px; margin-bottom:1rem;" src="<?php echo $banner_area['banner_image']['url'] ?>">
+					<?php endif; ?>
+
 	                <?php if ( ! empty( $banner_area['banner_title'] ) ) : ?>
 					    <h1><?php echo esc_html( $banner_area['banner_title'] ); ?></h1>
 					<?php endif; ?>
@@ -120,9 +125,12 @@ if(function_exists('get_field')){
 			$render_cta_text    = $manual_cta_text;     // NEVER overwrite
 
 			/**
-			 * AUTO MODE: find a Trip flagged featured_trip = true
+			 * AUTO MODE: find Trips flagged featured_trip = true
+			 * Select the one with the furthest upcoming departure date
 			 */
 			$featured_trip_id = 0;
+
+			$today = date('Ymd');
 
 			$featured_query = new WP_Query([
 			    'post_type'      => 'trips',
@@ -132,9 +140,17 @@ if(function_exists('get_field')){
 			            'key'     => 'featured_trip',
 			            'value'   => '1',
 			            'compare' => '='
+			        ],
+			        [
+			            'key'     => 'start_date',
+			            'value'   => $today,
+			            'compare' => '>=',
+			            'type'    => 'NUMERIC'
 			        ]
 			    ],
-			    'orderby' => 'rand', // change to 'date' + 'DESC' if you prefer newest featured
+			    'meta_key' => 'start_date',
+			    'orderby'  => 'meta_value_num',
+			    'order'    => 'DESC',
 			]);
 
 			if ( $featured_query->have_posts() ) {
