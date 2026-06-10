@@ -4905,8 +4905,8 @@ article, aside {
 
 .form-list li { margin: 10px 0 0; }
 
-.form-list li:first-child:not(.form-field--half) { margin: 20px 0 0; }
-.form-list li:last-child:not(.form-field--half) { margin: 20px 0 0; }
+.form-list li:first-child:not(.form-field--half) { margin: 20px 6px 6px; }
+.form-list li:last-child:not(.form-field--half) { margin: 20px 6px 6px; }
 
 /*.page-template-default input[type=text],.page-template-default input[type=email], .page-template-default input[type=tel] {
 	padding: 8px;
