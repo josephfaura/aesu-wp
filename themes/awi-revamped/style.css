@@ -4726,7 +4726,7 @@ section .slick-prev:before,section .slick-next:before {
 	.no-results {
 			text-align: center;
 			margin: 2rem auto;
-			max-width: 500px;
+			max-width: 450px;
 	}
 	.no-results a{
 		display: inline-block;
