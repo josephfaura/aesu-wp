@@ -238,10 +238,10 @@ if ( function_exists('get_field') ) {
 			<div class="trip_main_image" style="background-image:url(<?php echo esc_url( get_the_post_thumbnail_url( $tour_id, 'full' ) ); ?>);"></div>
 
 			<div class="trip_main_content">
-				<?php if ( !empty($trip_name) || !empty($destinations) ) : ?>
+				<!--<?php if ( !empty($trip_name) || !empty($destinations) ) : ?>
 					<h2><?php echo esc_html( $trip_name ); ?></h2>
 					<div class="trip_dates"><?php echo wp_kses_post( $destinations ); ?></div>
-				<?php endif; ?>
+				<?php endif; ?>-->
 
 				<div class="trip_main_content_text">
 					<?php echo do_shortcode( wp_kses_post( $description ) ); ?>
