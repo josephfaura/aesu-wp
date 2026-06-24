@@ -124,6 +124,10 @@ if ( function_exists('get_field') ) {
 	    letter-spacing: .05em;
 	    text-transform: uppercase;
 	}
+	.trip_options_price {
+		font-size: 12px;
+		color: #323232;
+	}
 
 	@media screen and (max-width:976px){
 		.bottom_footer {
