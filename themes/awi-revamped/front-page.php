@@ -52,7 +52,7 @@ if(function_exists('get_field')){
 		            <div class="container">
 
 		            <?php if ( ! empty( $banner_area['banner_image'] ) ) : ?>
-		            	<img style="width:90%; max-width:600px; margin-bottom:1rem;" src="<?php echo $banner_area['banner_image']['url'] ?>">
+		            	<img class="banner_image" src="<?php echo $banner_area['banner_image']['url'] ?>">
 					<?php endif; ?>
 
 	                <?php if ( ! empty( $banner_area['banner_title'] ) ) : ?>

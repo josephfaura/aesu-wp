@@ -882,6 +882,11 @@ li:not(.form-field--half):not(.form-field--third) + .form-field--third + .form-f
 .home .site-main{
 	margin:0;
 }
+.banner_image {
+	width:90%;
+	max-width:600px;
+	margin-bottom:1rem;
+}
 .banner h1{
 	margin: 0 auto 1.25rem auto;
 	font-size:75px;
@@ -5350,7 +5355,7 @@ body.single-tours .site {
 	background-size:cover;
 	background-position:center;
 }
-.lazyload:not(.logo):not(.header_school_logo):not(.contact_logo):not(.trip_header_logo) {
+.lazyload:not(.logo):not(.header_school_logo):not(.contact_logo):not(.trip_header_logo):not(.banner_image) {
   background-color: rgba(0, 0, 0, .4);
 }
 .is-hidden{
