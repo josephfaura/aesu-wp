@@ -154,9 +154,11 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<?php if ( is_singular('trips') ) :
+	<?php if ( is_singular('trips') || ! empty($GLOBALS['expired_trip']) ) :
 
-	    $trip_id  = get_the_ID();
+	    $trip_id = ! empty($GLOBALS['expired_trip'])
+		    ? $GLOBALS['expired_trip']->ID
+		    : get_the_ID();
 	    $og_image = '';
 	    $tour_id  = 0;
 
@@ -359,6 +361,14 @@ if ( function_exists('is_singular') && function_exists('get_queried_object_id') 
     }
 }
 
+$is_expired_trip = ! empty($GLOBALS['expired_trip']);
+
+$is_trip_page = is_singular('trips') || $is_expired_trip;
+
+$trip_context_id = $is_expired_trip
+    ? $GLOBALS['expired_trip']->ID
+    : get_the_ID();
+
 // --------------------------------------
 // Determine referrer header type (RUN ONCE)
 // --------------------------------------
@@ -374,8 +384,17 @@ if ($referrer) {
 
 // --------------------------------------
 // Determine current post header type
+// Supports normal pages AND expired trip pages
 // --------------------------------------
-$current_header = get_field('header_type'); // AESU, AWT, or empty
+$header_post_id = get_the_ID();
+
+if ( ! $header_post_id && ! empty($GLOBALS['expired_trip']) ) {
+    $header_post_id = $GLOBALS['expired_trip']->ID;
+}
+
+$current_header = $header_post_id 
+    ? get_field('header_type', $header_post_id)
+    : '';
 
 // --------------------------------------
 // FINAL LOGIC:
@@ -520,11 +539,11 @@ $account_link = strtok($account_link, "\n");
             <div class="header_right">
 
 				<?php
-				if ( is_singular('trips') || is_page_template('page-school-landing-page.php') ) :
+				if ( $is_trip_page || is_page_template('page-school-landing-page.php') ) :
 
-				    $school_id = is_singular('trips')
-				        ? (int) get_post_meta(get_the_ID(), 'school', true)
-				        : get_the_ID();
+				    $school_id = $is_trip_page
+					    ? (int) get_post_meta($trip_context_id, 'school', true)
+					    : get_the_ID();
 
 				    $school_logo      = get_field('school_logo', $school_id);
 				    $school_shortcode = strtolower(trim((string) get_field('school_shortcode', $school_id)));

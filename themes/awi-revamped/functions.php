@@ -499,6 +499,85 @@ add_action('template_redirect', function () {
 }, 0);
 
 
+/**
+ * Use custom template for expired Trip URLs.
+ */
+function trip_404_template( $template ) {
+
+    if ( ! is_404() ) {
+        return $template;
+    }
+
+    // Get the requested URL path.
+    $path = trim( parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+
+    // Match URLs like /trip/trip-name/
+    $parts = explode( '/', $path );
+
+    if ( count( $parts ) !== 2 ) {
+        return $template;
+    }
+
+    $rewrite_slug = $parts[0];
+    $trip_slug    = $parts[1];
+
+    // Make sure this is the Trip CPT URL.
+    if ( $rewrite_slug !== 'trip' ) {
+        return $template;
+    }
+
+    global $wpdb;
+
+    // Find the expired trip.
+    $trip_id = $wpdb->get_var(
+        $wpdb->prepare(
+            "
+            SELECT ID
+            FROM {$wpdb->posts}
+            WHERE post_name = %s
+            AND post_type = 'trips'
+            AND post_status = 'draft'
+            LIMIT 1
+            ",
+            $trip_slug
+        )
+    );
+
+    if ( ! $trip_id ) {
+        return $template;
+    }
+
+    // Store the full post object.
+    $GLOBALS['expired_trip'] = get_post( $trip_id );
+    $GLOBALS['trip_not_found'] = true;
+
+    $custom_template = get_stylesheet_directory() . '/trip-not-found.php';
+
+    if ( file_exists( $custom_template ) ) {
+        return $custom_template;
+    }
+
+    return $template;
+}
+
+add_filter( 'template_include', 'trip_404_template' );
+
+/**
+ * Change title for expired trips.
+ */
+function trip_not_found_title( $title ) {
+
+    if ( ! empty( $GLOBALS['trip_not_found'] ) ) {
+        return 'Trip No Longer Available - ' . get_bloginfo( 'name' );
+    }
+
+    return $title;
+}
+
+add_filter( 'pre_get_document_title', 'trip_not_found_title', 999 );
+add_filter( 'wp_title', 'trip_not_found_title', 999 );
+
+
 /* ---------- Misc. Options and Backend Functions  ---------- */
 
 // --- Require SMS consent if phone entered ---

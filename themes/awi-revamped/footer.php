@@ -27,8 +27,16 @@ if ($referrer) {
     }
 }
 
-// Current page header type
-$current_header = get_field('header_type'); // AESU, AWT, empty
+// Current page header type / supports expired trip pages
+$header_post_id = get_the_ID();
+
+if ( ! $header_post_id && ! empty($GLOBALS['expired_trip']) ) {
+    $header_post_id = $GLOBALS['expired_trip']->ID;
+}
+
+$current_header = $header_post_id 
+    ? get_field('header_type', $header_post_id)
+    : '';
 
 // Final logic: AWT wins if either is AWT, else AESU
 $is_awt = (
