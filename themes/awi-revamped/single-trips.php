@@ -404,7 +404,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
               <?php endif; ?>
 
               <?php if ( $show_webinar_link ) : ?>
-							  <li><a href="<?php echo esc_url( get_permalink(11615) ); ?>" class="webinar_link">Live Webinars</a></li>
+							  <li><a target="_blank" rel="noopener" href="<?php echo esc_url( get_permalink(11615) ); ?>" class="webinar_link">Live Webinars</a></li>
 							  
 							<?php elseif ( !empty($webinar_link) ) : ?>
 							  <li><a target="_blank" rel="noopener" href="<?php echo esc_url($webinar_link); ?>" class="webinar_link">Live Webinars</a></li>
