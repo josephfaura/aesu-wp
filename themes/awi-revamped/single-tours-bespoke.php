@@ -40,10 +40,45 @@ if ( function_exists('get_field') ) {
 	$trip_option_items              = get_field('trip_option_items', $tour_id);
 	$travel_tools                   = get_field('travel_tools', $tour_id);
 	$deals_popup                    = get_field('deals_popup', $tour_id);
+
+	// Split main trip content on the [[readmore]] marker
+	$main_trip_content_intro  = $main_trip_content;
+	$main_trip_content_hidden = '';
+
+	if ( ! empty( $main_trip_content ) ) {
+	    $parts = explode( '[[readmore]]', $main_trip_content, 2 );
+
+	    $main_trip_content_intro = $parts[0];
+
+	    if ( isset( $parts[1] ) ) {
+	        $main_trip_content_hidden = $parts[1];
+	    }
+	}
 }
 ?>
 
 <style>
+
+	.trip-content-more {
+		display: none;
+	}
+
+	.trip-content-more.is-open {
+		display: block;
+	}
+
+	.trip-read-more {
+		display: inline-block;
+		background: none;
+		border: 1px solid #323232 !important;
+		padding: 6px 12px;
+		color: #323232;
+	}
+
+	.trip-read-more:hover {
+		background-color: #FFF0A6;
+	}
+
 	/* Bespoke hooks: style safely without impacting standard tours */
 	.single-tours.tour--bespoke {color:#323232;background:#fafafa;}
 	.single-tours.tour--bespoke h3,
@@ -242,14 +277,25 @@ if ( function_exists('get_field') ) {
 			<div class="trip_main_image" style="background-image:url(<?php echo esc_url( get_the_post_thumbnail_url( $tour_id, 'full' ) ); ?>);"></div>
 
 			<div class="trip_main_content">
-				<!--<?php if ( !empty($trip_name) || !empty($destinations) ) : ?>
-					<h2><?php echo esc_html( $trip_name ); ?></h2>
-					<div class="trip_dates"><?php echo wp_kses_post( $destinations ); ?></div>
-				<?php endif; ?>-->
 
 				<div class="trip_main_content_text">
+
+					<?php echo do_shortcode( wp_kses_post( $main_trip_content_intro ) ); ?>
+
+					<?php if ( ! empty( $main_trip_content_hidden ) ) : ?>
+
+						<div class="trip-content-more">
+							<?php echo do_shortcode( wp_kses_post( $main_trip_content_hidden ) ); ?>
+						</div>
+
+						<button type="button" class="trip-read-more">
+							Read More
+						</button>
+
+					<?php endif; ?>
+
 					<?php echo do_shortcode( wp_kses_post( $description ) ); ?>
-					<?php echo do_shortcode( wp_kses_post( $main_trip_content ) ); ?>
+
 				</div>
 
 				<?php if ( !empty($experiences) || !empty($level) ) : ?>
@@ -288,11 +334,6 @@ if ( function_exists('get_field') ) {
 					</div>
 
 				<?php endif; ?>
-
-				<!--<ul class="list--unstyled trip_cta_list">
-					<li class="travel_tools"><a href="#">Travel Tools</a></li>
-					<li class="deals_cta"><a href="#">Deals</a></li>
-				</ul>-->
 			</div>
 		</section>
 
@@ -606,5 +647,27 @@ if ( function_exists('get_field') ) {
 	</main>
 
 <?php endif; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+	const button = document.querySelector('.trip-read-more');
+
+	if (!button) return;
+
+	const hidden = document.querySelector('.trip-content-more');
+
+	button.addEventListener('click', function () {
+
+		hidden.classList.toggle('is-open');
+
+		this.textContent = hidden.classList.contains('is-open')
+			? 'Read Less'
+			: 'Read More';
+
+	});
+
+});
+</script>
 
 <?php get_footer(); ?>
