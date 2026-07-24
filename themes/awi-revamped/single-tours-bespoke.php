@@ -46,13 +46,29 @@ if ( function_exists('get_field') ) {
 	$main_trip_content_hidden = '';
 
 	if ( ! empty( $main_trip_content ) ) {
-	    $parts = explode( '[[readmore]]', $main_trip_content, 2 );
 
-	    $main_trip_content_intro = $parts[0];
+		// Remove TinyMCE paragraph wrappers around the readmore marker
+		$main_trip_content = preg_replace(
+			'#<p>\s*\[\[readmore\]\]\s*</p>#i',
+			'[[readmore]]',
+			$main_trip_content
+		);
 
-	    if ( isset( $parts[1] ) ) {
-	        $main_trip_content_hidden = $parts[1];
-	    }
+		$parts = explode( '[[readmore]]', $main_trip_content, 2 );
+
+		$main_trip_content_intro = $parts[0];
+
+		if ( isset( $parts[1] ) ) {
+
+			// Remove empty paragraphs WordPress may leave after the split
+			$main_trip_content_hidden = preg_replace(
+				'#^(?:\s*<p>(?:\s|&nbsp;|<br\s*/?>)*</p>)+#i',
+				'',
+				$parts[1]
+			);
+
+		}
+
 	}
 }
 ?>
@@ -60,11 +76,16 @@ if ( function_exists('get_field') ) {
 <style>
 
 	.trip-content-more {
-		display: none;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height .4s ease;
 	}
 
 	.trip-content-more.is-open {
-		display: block;
+		/* JS will set the max-height inline */
+	}
+	.trip-content-more > p:first-child {
+		margin-top: 0;
 	}
 
 	.trip-read-more {
@@ -78,6 +99,11 @@ if ( function_exists('get_field') ) {
 
 	.trip-read-more:hover {
 		background-color: #FFF0A6;
+	}
+
+	.trip-read-more i {
+		margin-left: .35rem;
+		font-size: .9em;
 	}
 
 	/* Bespoke hooks: style safely without impacting standard tours */
@@ -290,7 +316,7 @@ if ( function_exists('get_field') ) {
 						</div>
 
 						<button type="button" class="trip-read-more">
-							Read More
+							Read More <i class="fa-solid fa-chevron-down"></i>
 						</button>
 
 					<?php endif; ?>
@@ -660,11 +686,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	button.addEventListener('click', function () {
 
-		hidden.classList.toggle('is-open');
+		if (hidden.classList.contains('is-open')) {
 
-		this.textContent = hidden.classList.contains('is-open')
-			? 'Read Less'
-			: 'Read More';
+			hidden.style.maxHeight = hidden.scrollHeight + 'px';
+
+			requestAnimationFrame(function () {
+				hidden.style.maxHeight = '0px';
+			});
+
+			hidden.classList.remove('is-open');
+
+			button.innerHTML = 'Read More <i class="fa-solid fa-chevron-down"></i>';
+
+		} else {
+
+			hidden.classList.add('is-open');
+			hidden.style.maxHeight = hidden.scrollHeight + 'px';
+
+			button.innerHTML = 'Read Less <i class="fa-solid fa-chevron-up"></i>';
+
+			hidden.addEventListener('transitionend', function handler() {
+				hidden.style.maxHeight = 'none';
+				hidden.removeEventListener('transitionend', handler);
+			});
+		}
 
 	});
 
