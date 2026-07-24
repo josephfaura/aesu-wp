@@ -73,6 +73,7 @@ if ( function_exists('get_field') ) {
 		border: 1px solid #323232 !important;
 		padding: 6px 12px;
 		color: #323232;
+		font-size: 1rem;
 	}
 
 	.trip-read-more:hover {
