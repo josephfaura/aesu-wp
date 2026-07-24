@@ -80,13 +80,9 @@ if ( function_exists('get_field') ) {
 	overflow: hidden;
 	transition: max-height .4s ease;
 	}
-
-	.trip-content-more.is-open {
-		/* JS will set the max-height inline */
-	}
 	.trip-content-more > p:first-child {
-		margin-top: 0;
-	}
+	margin-top: 0;
+}
 
 	.trip-read-more {
 		display: inline-block;
