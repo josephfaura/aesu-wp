@@ -38,8 +38,6 @@ if ( function_exists('get_field') ) {
 	$trip_options_title             = get_field('trip_options_title', $tour_id);
 	$trip_options_content           = get_field('trip_options_content', $tour_id);
 	$trip_option_items              = get_field('trip_option_items', $tour_id);
-	$travel_tools                   = get_field('travel_tools', $tour_id);
-	$deals_popup                    = get_field('deals_popup', $tour_id);
 
 	// Split main trip content on the [[readmore]] marker
 	$main_trip_content_intro  = $main_trip_content;
@@ -76,13 +74,13 @@ if ( function_exists('get_field') ) {
 <style>
 
 	.trip-content-more {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height .4s ease;
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height .4s ease;
 	}
 	.trip-content-more > p:first-child {
-	margin-top: 0;
-}
+		margin-top: 0;
+	}
 
 	.trip-read-more {
 		display: inline-block;
@@ -167,11 +165,7 @@ if ( function_exists('get_field') ) {
 	.single-tours.tour--bespoke .whats_included_image {
 	    background: #f2f2f2;
 	    border: 1px solid #dbdbdb;
-	}	
-	/*.single-tours.tour--bespoke .itinerary_image{
-		max-width:300px;
-		width:100%;
-	}*/
+	}
 
 	.hotel_location {
 		color: #323232;
@@ -232,18 +226,8 @@ if ( function_exists('get_field') ) {
 		.accordion_content {
 			padding: 20px 30px;
 		}
-		/*.itinerary_image {
-		    max-width: 100%;
-		    height: 300px;
-		    float: none;
-		    width: 100%;
-		    margin: 0;
-		}*/
 	}
 	@media screen and (max-width:420px){
-		/*.mobile_cta .button_cta {
-			font-size: 14px;
-		}*/
 		.trip_days_price {
         font-size: 80%;
     }
@@ -624,32 +608,6 @@ if ( function_exists('get_field') ) {
 				</article>
 			</div>
 		</main>
-
-		<?php if ( !empty($deals_popup) ) : ?>
-			<div class="tour_deals_popup_wrap">
-				<div class="tour_deals_popup_inner">
-					<div class="popup_outline">
-						<a href="#" class="tour_deals_close_popup"><i class="fa-solid fa-xmark"></i></a>
-						<div class="tour_deals_popup_content">
-							<?php echo do_shortcode( $deals_popup ); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		<?php endif; ?>
-
-		<?php if ( !empty($travel_tools) ) : ?>
-			<div class="travel_tools_popup_wrap">
-				<div class="travel_tools_popup_inner">
-					<div class="popup_outline">
-						<a href="#" class="travel_tools_close_popup"><i class="fa-solid fa-xmark"></i></a>
-						<div class="travel_tools_popup_content">
-							<?php echo do_shortcode( $travel_tools ); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		<?php endif; ?>
 
 	</div><!-- /.tour--bespoke -->
 
