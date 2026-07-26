@@ -607,6 +607,18 @@ function validate_us_phone_number($result, $tag) {
     return $result;
 }
 
+// --- Hidden Fields Autopopulation in CF7 ---
+add_filter( 'wpcf7_form_hidden_fields', function( $hidden_fields ) {
+
+    if ( is_singular() ) {
+        $hidden_fields['page_title'] = get_the_title();
+        $hidden_fields['page_url']   = get_permalink();
+        $hidden_fields['post_type']  = get_post_type();
+    }
+
+    return $hidden_fields;
+} );
+
 /* Theme options page (ACF) */
 if ( function_exists('acf_add_options_page') ) {
 	acf_add_options_page(array(
