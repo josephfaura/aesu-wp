@@ -686,6 +686,21 @@ function add_edit_post_type_a_link($wp_admin_bar) {
 add_action('admin_bar_menu', 'add_edit_post_type_a_link', 100);
 
 
+/* Custom Post Type Trip slug (/trip) and Tours (/tour + /tours) redirect to Home Page */
+function redirect_trip_tour_short_urls() {
+
+    $path = untrailingslashit(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+    if (in_array($path, array('/tour', '/tours', '/trip'), true)) {
+        wp_safe_redirect(home_url(), 301);
+        exit;
+    }
+
+}
+add_action('template_redirect', 'redirect_trip_tour_short_urls', 1);
+
+
+
 /* ---------- Admin list table helpers ---------- */
 
 // Add custom "Template" column to Pages

@@ -86,11 +86,11 @@ get_header();
 				<h2 class="page-title">
 					<?php echo wp_kses_post( $archive_title ); ?>
 				</h2>
-			</div>
 
 			<?php if ( get_the_archive_description() ) : ?>
 				<div class="archive-description"><?php echo wp_kses_post( get_the_archive_description() ); ?></div>
 			<?php endif; ?>
+			</div>
 
 		<?php endif; ?>
 
