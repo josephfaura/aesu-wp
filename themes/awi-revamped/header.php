@@ -219,62 +219,6 @@
 		}
 	</style>
 
-<!-- Google Tag Manager -->
-
-<?php if($_SERVER['REMOTE_ADDR'] != "50.242.219.73" 
-&& $_SERVER['REMOTE_ADDR'] != "71.244.235.248" 
-&& $_SERVER['REMOTE_ADDR'] != "68.33.31.231" 
-&& $_SERVER['REMOTE_ADDR'] != "73.135.217.32"){ ?>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DV23ZYP1X4"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-
-gtag('config', 'G-DV23ZYP1X4'); // GA4
-gtag('config', 'AW-998998094'); // Google Ads
-
-</script>
-
-<?php } ?>
-
-<!-- End Google Tag Manager -->
-
-<!-- Meta Pixel Code -->
-
-<script>
-
-!function(f,b,e,v,n,t,s)
-
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-
-n.queue=[];t=b.createElement(e);t.async=!0;
-
-t.src=v;s=b.getElementsByTagName(e)[0];
-
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-
-'https://connect.facebook.net/en_US/fbevents.js');
-
-fbq('init', '824453369658979');
-
-fbq('track', 'PageView');
-
-</script>
-
-<noscript><img height="1" width="1" style="display:none"
-
-src="https://www.facebook.com/tr?id=824453369658979&ev=PageView&noscript=1"
-
-/></noscript>
-
-<!-- End Meta Pixel Code -->
-
 </head>
 
 <body <?php body_class(); ?>>

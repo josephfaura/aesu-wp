@@ -12,6 +12,23 @@ if ( ! defined( '_S_VERSION' ) ) {
 	define( '_S_VERSION', '1.0.0' );
 }
 
+/**
+ * Exclude internal traffic from third-party tracking scripts.
+ */
+function awi_is_internal_ip() {
+
+    $internal_ips = [
+        '50.242.219.73',
+        '71.244.235.248',
+        '68.33.31.231',
+        '73.135.217.32',
+    ];
+
+    $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+
+    return in_array( $user_ip, $internal_ips );
+}
+
 // add_filter('use_block_editor_for_post', '__return_false');
 
 /**
@@ -339,21 +356,31 @@ function awi_enqueue_feature_scripts() {
     );
 
     // -----------------------------------------
-    // Third-party loader
+    // Third-party analytics loader
     // -----------------------------------------
-    wp_register_script(
-        'awi-third-party',
-        get_template_directory_uri() . '/js/third-party-loader.js',
-        [],
-        file_exists(get_stylesheet_directory() . '/js/third-party-loader.js') ? filemtime(get_stylesheet_directory() . '/js/third-party-loader.js') : $theme_version,
-        true
-    );
-    wp_enqueue_script('awi-third-party');
-    wp_add_inline_script(
-        'awi-third-party',
-        'window.AWI_CONFIG = { ga_id: "G-DV23ZYP1X4", fb_pixel_id: "824453369658979" };',
-        'before'
-    );
+
+    if ( ! awi_is_internal_ip() ) {
+
+        wp_register_script(
+            'awi-third-party',
+            get_template_directory_uri() . '/js/third-party-loader.js',
+            [],
+            file_exists(get_stylesheet_directory() . '/js/third-party-loader.js') ? filemtime(get_stylesheet_directory() . '/js/third-party-loader.js') : $theme_version,
+            true
+        );
+
+        wp_enqueue_script('awi-third-party');
+
+        wp_add_inline_script(
+            'awi-third-party',
+            'window.AWI_CONFIG = { 
+                ga_id: "G-DV23ZYP1X4",
+                google_ads_id: "AW-998998094",
+                fb_pixel_id: "824453369658979"
+            };',
+            'before'
+        );
+    }
 
     // -----------------------------------------
     // Comments reply

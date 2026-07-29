@@ -29,7 +29,14 @@
       window.gtag = gtag;
 
       gtag('js', new Date());
+
+      // GA4
       gtag('config', AWI_CONFIG.ga_id);
+
+      // Google Ads
+      if (window.AWI_CONFIG?.google_ads_id) {
+        gtag('config', AWI_CONFIG.google_ads_id);
+      }
     }
 
     /* =====================
@@ -51,7 +58,7 @@
         s.parentNode.insertBefore(t,s);
       }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-      fbq('init', AWI_CONFIG.fb_pixel_id);
+      fbq('init', window.AWI_CONFIG.fb_pixel_id);
       fbq('track', 'PageView');
     }
 
