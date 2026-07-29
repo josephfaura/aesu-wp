@@ -32,11 +32,6 @@
 
       // GA4
       gtag('config', AWI_CONFIG.ga_id);
-
-      // Google Ads
-      if (window.AWI_CONFIG?.google_ads_id) {
-        gtag('config', AWI_CONFIG.google_ads_id);
-      }
     }
 
     /* =====================

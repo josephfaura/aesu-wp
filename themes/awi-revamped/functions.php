@@ -375,7 +375,6 @@ function awi_enqueue_feature_scripts() {
             'awi-third-party',
             'window.AWI_CONFIG = { 
                 ga_id: "G-DV23ZYP1X4",
-                google_ads_id: "AW-998998094",
                 fb_pixel_id: "824453369658979"
             };',
             'before'
