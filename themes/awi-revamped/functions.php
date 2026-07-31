@@ -356,10 +356,12 @@ function awi_enqueue_feature_scripts() {
     );
 
     // -----------------------------------------
-    // Third-party analytics loader
+    // Third-party GA4 FB ContentSquare analytics
     // -----------------------------------------
 
-    if ( ! awi_is_internal_ip() ) {
+    $force_tracking = isset($_GET['track']); // add url query < ?track=1 > to test
+
+    if ( ! awi_is_internal_ip() || $force_tracking ) {
 
         wp_register_script(
             'awi-third-party',
