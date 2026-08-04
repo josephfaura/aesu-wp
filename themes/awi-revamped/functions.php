@@ -635,17 +635,16 @@ function validate_us_phone_number($result, $tag) {
     return $result;
 }
 
-// --- Hidden Fields Autopopulation in CF7 ---
-add_filter( 'wpcf7_form_hidden_fields', function( $hidden_fields ) {
+// --- Populate existing CF7 hidden field: page_title ---
+add_filter( 'wpcf7_form_tag', function( $tag ) {
 
-    if ( is_singular() ) {
-        $hidden_fields['page_title'] = get_the_title();
-        $hidden_fields['page_url']   = get_permalink();
-        $hidden_fields['post_type']  = get_post_type();
+    if ( 'page_title' === $tag['name'] && is_singular() ) {
+        $tag['values'] = array( get_the_title() );
     }
 
-    return $hidden_fields;
-} );
+    return $tag;
+
+}, 10, 1 );
 
 /* Theme options page (ACF) */
 if ( function_exists('acf_add_options_page') ) {
