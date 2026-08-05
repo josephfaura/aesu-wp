@@ -829,7 +829,7 @@ $trips_query = new WP_Query( $args );
                 <li style="background-image:url('<?php echo $past_tour_item['url'] ?>');<?php if($loop_index > 5){echo "display:none;";} ?>"><a data-fancybox="gallery1" href="<?php echo $past_tour_item['url'] ?>"></a></li>
             <?php $loop_index++;} ?>
         </ul>
-        <a href="#" class="load_more_images">Load more images to view <i class="fa fa-arrow-right"></i></a>
+        <a href="#" class="load_more_images">Load more images <i class="fa fa-chevron-down"></i></a>
     </div>
 </section>
 <?php } ?>

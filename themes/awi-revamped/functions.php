@@ -15,18 +15,24 @@ if ( ! defined( '_S_VERSION' ) ) {
 /**
  * Exclude internal traffic from third-party tracking scripts.
  */
-function awi_is_internal_ip() {
+function awi_is_internal_visitor() {
 
+    // Exclude logged-in WordPress users
+    if ( is_user_logged_in() ) {
+        return true;
+    }
+
+    // Exclude office IPv4 addresses
     $internal_ips = [
         '50.242.219.73',
         '71.244.235.248',
-        '68.33.31.231',
-        '73.135.217.32',
     ];
 
-    $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    $user_ip = $_SERVER['HTTP_CF_CONNECTING_IP']
+        ?? $_SERVER['REMOTE_ADDR']
+        ?? '';
 
-    return in_array( $user_ip, $internal_ips );
+    return in_array( $user_ip, $internal_ips, true );
 }
 
 // add_filter('use_block_editor_for_post', '__return_false');
@@ -361,7 +367,7 @@ function awi_enqueue_feature_scripts() {
 
     $force_tracking = isset($_GET['track']); // add url query < ?track=1 > to test
 
-    if ( ! awi_is_internal_ip() || $force_tracking ) {
+    if ( ! awi_is_internal_visitor() || $force_tracking ) {
 
         wp_register_script(
             'awi-third-party',
