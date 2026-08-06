@@ -5355,7 +5355,7 @@ body.single-tours .site {
 	background-size:cover;
 	background-position:center;
 }
-.lazyload:not(.logo):not(.header_school_logo):not(.contact_logo):not(.trip_header_logo):not(.banner_image) {
+.lazyload:not(.logo):not(.header_school_logo):not(.contact_logo):not(.trip_header_logo):not(.banner_image):not(.no_lazy_bg) {
   background-color: rgba(0, 0, 0, .4);
 }
 .is-hidden{
