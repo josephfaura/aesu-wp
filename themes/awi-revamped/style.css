@@ -686,7 +686,7 @@ textarea:focus {
 }
 
 input, textarea, select {
-	padding: 8px;
+	padding: 3px;
 	width: 100%;
 	font: inherit;
 	background: #fff;
