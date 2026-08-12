@@ -53,9 +53,10 @@ function awi_revamped_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	register_nav_menus( array(
-		'main_nav'       => 'Main Nav',
-		'footer_nav'     => 'Footer Nav',
-		'awt_footer_nav' => 'AWT Footer Nav',
+		'main_nav'           => 'Main Nav',
+		'footer_nav'         => 'Footer Nav',
+		'awt_footer_nav'     => 'AWT Footer Nav',
+        'bespoke_footer_nav' => 'Bespoke Footer Nav',
 	));
 	/*
 		* Switch default core markup for search form, comment form, and comments

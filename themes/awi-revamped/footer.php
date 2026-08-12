@@ -16,6 +16,26 @@
 // Match header logic in footer (do NOT touch header)
 // --------------------------------------------------
 
+// Determine if this is a Bespoke tour
+$is_bespoke = false;
+
+if ( function_exists('is_singular') && function_exists('get_queried_object_id') ) {
+
+    $post_id = get_queried_object_id();
+
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+
+    if ( $post_id && is_singular( array('tours', 'tour') ) ) {
+        $type = function_exists('get_field')
+            ? get_field('tour_template_type', $post_id)
+            : get_post_meta($post_id, 'tour_template_type', true);
+
+        $is_bespoke = ( strtolower( trim( (string) $type ) ) === 'bespoke' );
+    }
+}
+
 // Referrer check
 $referrer = $_SERVER['HTTP_REFERER'] ?? '';
 $referrer_header = null;
@@ -45,12 +65,20 @@ $is_awt = (
 );
 
 // Set footer values exactly like header logic
-if ($is_awt) {
+if ($is_bespoke) {
+    // BESPOKE
+    $home_link = get_home_url();
+    $footer_menu = 'bespoke_footer_nav';
+    $show_social = false;
+    $footer_label = false;
+
+} elseif ($is_awt) {
     // AWT
     $home_link = get_permalink(898);
     $footer_menu = 'awt_footer_nav';
     $show_social = false;
     $footer_label = 'Alumni World Travel';
+
 } else {
     // AESU default
     $home_link = get_home_url();

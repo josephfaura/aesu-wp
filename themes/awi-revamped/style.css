@@ -2452,6 +2452,9 @@ a:not(.card_image_link):active {
 	#menu-awt-footer-nav{
 		text-align:center;
 	}
+	#menu-bespoke-footer-nav{
+		text-align:center;
+	}
 	.footer_info a {
 	text-align: center;
 }

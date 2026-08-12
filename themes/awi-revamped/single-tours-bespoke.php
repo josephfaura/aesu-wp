@@ -206,6 +206,7 @@ if ( function_exists('get_field') ) {
 		.mobile_cta .button_cta{
 			font-weight: 700;
 			width:100%;
+			font-size:18px;
 		}
 		
 	   #chat-widget-push-to-talk {
@@ -251,7 +252,6 @@ if ( function_exists('get_field') ) {
 </style>
 
 <section class="mobile_cta">
-	<div class="trip_days_price"><?php echo $days_price; ?></div>
 	<a href="<?php echo $cta_button['url'] ?>" class="button_cta" target="_blank"><?php echo $cta_button['title'] ?></a>
 </section>
 
