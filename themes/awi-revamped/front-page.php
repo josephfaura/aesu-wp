@@ -509,7 +509,14 @@ if(function_exists('get_field')){
 		</section>
 		<?php } ?>
 	<?php } ?>
-	</main><!-- #main -->
+	</main>
+
+<!--CONTACT US-->
+
+		<section class="footer_cta">
+			<h2>Want to Get in Touch?</h2>
+			<a href="<?php echo get_permalink(11601) ?>" class="cta-button">CONTACT US</a>
+		</section>
 
 <!--NEWSLETTER SIGNUP-->
 
@@ -526,12 +533,8 @@ if(function_exists('get_field')){
 			</div>
 		</section>
 
-<!--CONTACT & SOCIALS-->
+<!--SOCIALS-->
 
-		<section class="footer_cta">
-			<h2>Want to Get in Touch?</h2>
-			<a href="<?php echo get_permalink(11601) ?>" class="cta-button">CONTACT US</a>
-		</section>
 		<section class="connect_with_us">
 			<div class="connect_with_us_header_wrap">
 				<h2 class="connect_header">Connect with Us</h2>
