@@ -344,50 +344,107 @@ if(function_exists('get_field')){
 				</div>
 			</section>
 
-<!--TESTIMONIALS SECTION-->
+<!--TESTIMONIALS GRID-->
 
-		<?php }elseif($home_section_builder_item['section_type'] == 'Testimonials Section'){ ?>
-			<section class="testimonials_wrap">
-				<div class="container">
-					<div class="testimonials_text_wrap">
-						<ul class="testimonials_list">
-							<?php foreach($home_section_builder_item['testimonials_section']['testimonials'] as $testimonial){ ?>
-								<li class="testimonials_list_item">
-									<div class="testimonial_image" style="background-image:url('<?php echo $testimonial['testimonial_image']['url'] ?>')"></div>
-									<div class="testimonial_text">
-										<div class="testimonial_quote_icon_left"><i class="fa fa-quote-left"></i></div>
-										<p><?php echo $testimonial['testimonial_text'] ?></p>
-										<p class="testimonial_author"><?php echo $testimonial['testimonial_author'] ?></p>
-										<div class="testimonial_quote_icon_right"><i class="fa fa-quote-right"></i></div>
-									</div>
-								</li>
-							<?php } ?>
-						</ul>
-					</div>
-					<div class="testimonials_video_wrap">
-					    <?php foreach ($home_section_builder_item['testimonials_section']['testimonial_videos'] as $testimonial_video) { ?>
-					        
-					        <div
-					            class="testimonials_video_item"
-					            style="background-image:url('<?php echo esc_url($testimonial_video['testimonial_video_background']['url']); ?>');"
-					        >
-					            <a
-					                data-fancybox
-					                data-type="html5video"
-					                data-width="1080"
-					                data-height="1920"
-					                href="<?php echo esc_url($testimonial_video['testimonial_link']); ?>"
-					                class="play_video_testimonials"
-					            >
-					                <i class="fa fa-circle-play"></i>
-					            </a>
-					        </div>
+		<?php }elseif ($home_section_builder_item['section_type'] == 'Testimonials') { ?>
 
-					    <?php } ?>
-					</div>
+        <section class="latest_testimonials">
+            <div class="container">
+
+            	<div class="header">
+					<h2>Testimonials</h2>
 				</div>
-				<div class="testimonials_cta"><a href="<?php echo get_permalink(2349) ?>">What our past travelers are saying <i class="fa fa-arrow-right"></i></a></div>
-			</section>
+
+                <div class="testimonials-grid">
+
+                    <?php
+                    $args = array(
+                        'post_type'      => 'testimonial',
+                        'post_status'    => 'publish',
+                        'posts_per_page' => 4
+                    );
+
+                    $latest_testimonials = new WP_Query($args);
+
+                    if ($latest_testimonials->have_posts()) :
+
+                        while ($latest_testimonials->have_posts()) :
+                            $latest_testimonials->the_post();
+
+                            $name        = get_field('name');
+                            $school      = get_field('school');
+                            $designation = get_field('designation');
+                    ?>
+
+                            <div class="testimonial-item">
+
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <div class="testimonial-image">
+                                        <?php
+                                        the_post_thumbnail('large', array(
+                                            'class' => 'testimonial-img'
+                                        ));
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="testimonial-content">
+
+                                    <div class="testimonial_quote_icon_left">
+                                        <i class="fa fa-quote-left"></i>
+                                    </div>
+
+                                    <div class="testimonial-text">
+                                        <?php the_content(); ?>
+                                    </div>
+
+                                    <div class="testimonial_author">
+
+                                        <?php if ($name) : ?>
+                                            <p class="testimonial-name">
+                                                <?php echo esc_html($name); ?>
+                                            </p>
+                                        <?php endif; ?>
+
+                                        <?php if ($school) : ?>
+                                            <p class="testimonial-school">
+                                                <?php echo esc_html($school->post_title); ?>
+                                            </p>
+                                        <?php elseif ($designation) : ?>
+                                            <p class="testimonial-designation">
+                                                <?php echo esc_html($designation); ?>
+                                            </p>
+                                        <?php endif; ?>
+
+                                    </div>
+
+                                    <div class="testimonial_quote_icon_right">
+                                        <i class="fa fa-quote-right"></i>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                    <?php
+                        endwhile;
+
+                        wp_reset_postdata();
+
+                    endif;
+                    ?>
+
+                </div>
+
+                <div class="testimonials_cta">
+                    <a href="<?php echo get_permalink(2349); ?>">
+                        What our travelers have to say
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
 
 <!--CARD GRID SECTION-->
 
@@ -425,7 +482,7 @@ if(function_exists('get_field')){
 					$args = array( 
 						'post_type'   => 'post',
 						'post_status' => 'publish',
-						'posts_per_page' => 3
+						'posts_per_page' => 4
 					);
 					$latest_from_us = new WP_Query( $args );
 
@@ -435,7 +492,9 @@ if(function_exists('get_field')){
 							<li class="latest_posts_list_item">
 								<a class="card_image_link" href="<?php echo get_the_permalink(); ?>"><div class="latest_post_item_thumb" style="background-image:url(<?php echo get_the_post_thumbnail_url() ?>)"></div></a>
 								<div class="latest_post_item_text">
+									<span class="post-type-label"><?php echo esc_html( get_the_category()[0]->name ); ?></span>
 									<a href="<?php echo get_the_permalink(); ?>"><h3><?php echo get_the_title(); ?></h3></a>
+									<span class="post-type-label">Published on <?php echo get_the_date('m.d.y'); ?></span>
 									<p><?php echo wp_trim_words( get_the_excerpt(), 25, '...' ); ?></p>
 									<a href="<?php echo get_the_permalink(); ?>">Read more <i class="fa fa-arrow-right"></i></a>
 								</div>

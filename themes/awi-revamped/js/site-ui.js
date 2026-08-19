@@ -154,5 +154,145 @@
           });
         }
 
+        /* ===============================
+           Mobile CTA / WPConsent Banner
+        =============================== */
+
+        function updateMobileCtaPosition() {
+
+            const $mobileCta = $('.mobile_cta');
+
+            if (!$mobileCta.length) {
+                return;
+            }
+
+            // Mobile CTA only exists/should be affected at 976px and below
+            if (window.innerWidth > 976) {
+                $mobileCta.css('bottom', '');
+                return;
+            }
+
+            const container = document.querySelector('#wpconsent-container');
+
+            if (!container || !container.shadowRoot) {
+                return;
+            }
+
+            // Holder controls visibility
+            const holder = container.shadowRoot.querySelector(
+                '#wpconsent-banner-holder'
+            );
+
+            // Actual visible banner
+            const banner = container.shadowRoot.querySelector(
+                '.wpconsent-banner'
+            );
+
+            if (!holder || !banner) {
+                return;
+            }
+
+            const isVisible = holder.classList.contains(
+                'wpconsent-banner-visible'
+            );
+
+            if (isVisible) {
+
+                const bannerHeight = banner.getBoundingClientRect().height;
+
+                $mobileCta.css('bottom', bannerHeight + 'px');
+
+            } else {
+
+                $mobileCta.css('bottom', '0px');
+            }
+        }
+
+
+        /* ===============================
+           Initial check
+        =============================== */
+
+        updateMobileCtaPosition();
+
+
+        /* ===============================
+           Viewport resize
+        =============================== */
+
+        $(window).on('resize', function () {
+            updateMobileCtaPosition();
+        });
+
+
+        /* ===============================
+           Wait for WPConsent to load
+        =============================== */
+
+        const wpConsentHostObserver = new MutationObserver(function () {
+
+            const container = document.querySelector('#wpconsent-container');
+
+            if (!container || !container.shadowRoot) {
+                return;
+            }
+
+            wpConsentHostObserver.disconnect();
+
+            const holder = container.shadowRoot.querySelector(
+                '#wpconsent-banner-holder'
+            );
+
+            const banner = container.shadowRoot.querySelector(
+                '.wpconsent-banner'
+            );
+
+            if (!holder || !banner) {
+                return;
+            }
+
+
+            /* -------------------------------
+               Watch visibility changes
+            ------------------------------- */
+
+            const bannerObserver = new MutationObserver(function () {
+                updateMobileCtaPosition();
+            });
+
+            bannerObserver.observe(holder, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+
+
+            /* -------------------------------
+               Watch banner height changes
+            ------------------------------- */
+
+            if (typeof ResizeObserver !== 'undefined') {
+
+                const bannerResizeObserver = new ResizeObserver(function () {
+                    updateMobileCtaPosition();
+                });
+
+                bannerResizeObserver.observe(banner);
+            }
+
+
+            // Run once after everything is ready
+            updateMobileCtaPosition();
+        });
+
+
+        /* ===============================
+           Start watching for WPConsent
+        =============================== */
+
+        wpConsentHostObserver.observe(document.documentElement, {
+            childList: true,
+            subtree: true
+        });
+
     });
 })(jQuery);

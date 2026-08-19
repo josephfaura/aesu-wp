@@ -1446,7 +1446,7 @@ a:not(.card_image_link):active {
 }
 @media screen and (max-width:1000px){
 	.who_are_we_wrap{
-		flex-direction: column;
+		flex-direction: column-reverse;
 	}
 	.who_are_we_wrap > div{
 		width:100%;
@@ -1708,9 +1708,185 @@ a:not(.card_image_link):active {
 	}
 }
 
+/* Testimonials Grid */
+.latest_testimonials .container {
+	padding:0 56px;
+	max-width: 100%;
+}
+.latest_testimonials .header{
+	text-align:center;
+}
+.testimonials-grid {
+	margin:32px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+body.home .testimonials-grid {
+	justify-content: space-evenly;
+}
+.testimonial-item {
+    display: flex;
+    flex-direction: column;
+    width: calc(34% - 2rem);
+}
+body.home .testimonial-item {
+		width: calc(33.333% - 2rem);
+}
+/* =========================================
+   HOMEPAGE TESTIMONIALS
+   ========================================= */
+
+/* -----------------------------------------
+   DEFAULT: DESKTOP
+   1025px–1999px
+   Show 3 testimonials
+   ----------------------------------------- */
+
+body.home .testimonials-grid .testimonial-item:nth-child(4) {
+    display: none;
+}
+
+
+/* -----------------------------------------
+   LARGE DESKTOP
+   2000px+
+   Show 4 testimonials
+   ----------------------------------------- */
+
+@media (min-width: 2000px) {
+
+    body.home .testimonials-grid .testimonial-item {
+        width: calc(25% - 2rem);
+    }
+
+    body.home .testimonials-grid .testimonial-item:nth-child(4) {
+        display: flex;
+    }
+}
+
+
+/* -----------------------------------------
+   TABLET
+   721px–1024px
+   Show 2 testimonials
+   ----------------------------------------- */
+
+@media (min-width: 721px) and (max-width: 1024px) {
+
+    body.home .testimonials-grid .testimonial-item:nth-child(3),
+    body.home .testimonials-grid .testimonial-item:nth-child(4) {
+        display: none;
+    }
+}
+
+
+/* -----------------------------------------
+   MOBILE
+   720px and below
+   Show 3 testimonials
+   ----------------------------------------- */
+
+@media (max-width: 720px) {
+
+    body.home .testimonials-grid .testimonial-item {
+        width: 100%;
+    }
+
+    body.home .testimonials-grid .testimonial-item:nth-child(3) {
+        display: flex;
+    }
+
+}
+.testimonial-image {
+    aspect-ratio: 1.25 / 1;
+    width: 100%;
+    overflow: hidden;
+}
+body.home .testimonial-image {
+    height: 30vh;
+}
+.testimonial-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.testimonial-content {
+	padding: 3rem 4rem 3rem 5rem;
+	position: relative;
+	background-color:#f2f2f2;
+	flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.testimonial-text p{
+	font-weight:500;
+	font-size: 1.25rem;
+	margin-top:.5rem;
+}
+.testimonial_author p{
+	margin:.25em auto;
+}
+.testimonial-name {
+	font-size: 1rem;
+}
+.testimonial-school,
+.testimonial-designation {
+	font-weight: 400;
+}
+
+@media (max-width:1300px){
+	.latest_testimonials .container {
+		padding: 0 32px;
+	}
+}
+@media (max-width: 1024px) {
+    .testimonial-item {
+        width: calc(50% - 2rem);
+    }
+    body.home .testimonial-item {
+        width: calc(50% - 2rem);
+    }
+}
+@media (max-width: 720px) {
+    .testimonial-item {
+        width: 100%;
+    }
+    body.home .testimonial-item {
+        width: 100%;
+    }
+    .testimonial-image {
+    	aspect-ratio: 1.5 / 1;
+		}
+    .testimonial-content {
+        padding: 2rem;
+    }
+    .testimonial-text p {
+        font-size: 1.125rem;
+    }
+    .testimonial_quote_icon_left {
+        display: none;
+    }
+    .testimonial_quote_icon_right{
+		bottom:42px;
+	}
+}
+@media (max-width:527px){
+	.latest_testimonials .container {
+		padding: 0 24px;
+	}
+}
+
 /* Latest From Us*/
 .latest_from_us{
 	margin-bottom:56px;
+}
+.latest_from_us .container {
+	padding:0 56px;
+	max-width: 100%;
 }
 .latest_post_list_item{
 	box-shadow: 0px 3px 10px rgba(0,0,0,0.25);
@@ -1739,10 +1915,79 @@ a:not(.card_image_link):active {
 	box-shadow: 0 3px 10px rgba(0,0,0,.25);
 	border-radius: 6px;
 	flex: 0 0 calc(34% - 32px);
-	/*flex: 0 0 calc(33.333% - 32px); //this makes the width of the container look narrower */
 	display: flex;
 	flex-direction: column;
 }
+body.home .latest_posts_list li {
+	flex: 0 0 calc(33.333% - 32px);
+	max-width: 450px;
+}
+/* =========================================
+   HOMEPAGE Blogs
+   ========================================= */
+
+/* -----------------------------------------
+   DEFAULT: DESKTOP
+   1025px–1999px
+   Show 3 blog posts
+   ----------------------------------------- */
+
+body.home .latest_posts_list li:nth-child(4) {
+    display: none;
+}
+
+
+/* -----------------------------------------
+   LARGE DESKTOP
+   2000px+
+   Show 4 blog posts
+   ----------------------------------------- */
+
+@media (min-width: 2000px) {
+
+    body.home .latest_posts_list li {
+        width: calc(25% - 32px);
+    }
+
+    body.home .latest_posts_list li:nth-child(4) {
+        display: flex;
+    }
+}
+
+
+/* -----------------------------------------
+   TABLET
+   721px–1024px
+   Show 2 blog posts
+   ----------------------------------------- */
+
+@media (min-width: 721px) and (max-width: 1024px) {
+
+    body.home .latest_posts_list li:nth-child(3),
+    body.home .latest_posts_list li:nth-child(4) {
+        display: none;
+    }
+}
+
+
+/* -----------------------------------------
+   MOBILE
+   720px and below
+   Show 3 blog posts
+   ----------------------------------------- */
+
+@media (max-width: 720px) {
+
+    body.home .latest_posts_list li {
+        width: 100%;
+    }
+
+    body.home .latest_posts_list li:nth-child(3) {
+        display: flex;
+    }
+
+}
+
 .latest_post_item_thumb {
 	height:30vh;
 	border-radius: 6px 6px 0 0;
@@ -1754,10 +1999,14 @@ a:not(.card_image_link):active {
 	border-radius: 0 0 6px 6px;
 	background-color:#fff;
 	text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 	height: calc(100% - 30vh);
+}
+.latest_post_item_text>*{
+	max-width: 340px;
 }
 .latest_post_item_text h3{
 	margin:0 0 10px 0;
@@ -1786,9 +2035,15 @@ a:not(.card_image_link):active {
 		margin-bottom: 8px;
 		display: inline-block;
 }
+@media screen and (max-width:1300px){
+	.latest_from_us .container {
+		padding: 0 32px;
+	}
+}
 @media screen and (max-width:1120px){
-	.latest_posts_list li{
-		flex: 0 0 calc(50% - 32px);
+	.latest_posts_list li,
+	body.home .latest_posts_list li{
+		flex: 0 0 calc(50% - 16px);
 	}
 }
 @media screen and (max-width:720px){
@@ -1796,8 +2051,14 @@ a:not(.card_image_link):active {
 		flex-direction: column;
 		padding:0;
 	}
-	.latest_posts_list li{
+	.latest_posts_list li,
+	body.home .latest_posts_list li{
 		flex: 0 0 100%;
+	}
+}
+@media screen and (max-width:527px){
+	.latest_from_us .container {
+		padding: 0 24px;
 	}
 }
 
@@ -2028,6 +2289,10 @@ a:not(.card_image_link):active {
 .travel_for_good{
 	margin:56px auto;
 }
+.travel_for_good .container {
+	padding:0 56px;
+	max-width:100%;
+}
 .travel_for_good_title{
 	padding:0 0 32px;
 	text-align:center;
@@ -2043,12 +2308,13 @@ a:not(.card_image_link):active {
 }
 .travel_for_good_list{
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	list-style: none;
 	padding:0;
 	margin:0;
 	margin-bottom:0;
-	gap:56px;
+	gap:32px;
+	flex-wrap: wrap;
 }
 .travel_for_good_list > li{
 	width:100%;
@@ -2056,10 +2322,11 @@ a:not(.card_image_link):active {
 	text-align: center;
 	flex-direction: column;
 	align-items:center;
+	max-width: 300px;
 }
 .travel_for_good_item_image{
-	width:175px;
-	height:175px;
+	aspect-ratio: 1;
+	height:25vh;
 	border-radius:50%;
 	background-color:gray;
   transition: transform 0.25s ease;
@@ -2077,20 +2344,25 @@ a:not(.card_image_link):active {
 	font-weight:700;
 	margin-top:auto;
 }
-@media screen and (max-width:1000px){
-	.travel_for_good_list{
-		flex-wrap:wrap;
+@media screen and (max-width:1300px){
+	.travel_for_good .container {
+		padding:0 32px;
 	}
+}
+@media screen and (max-width:1000px){
 	.travel_for_good_list > li {
-		width: calc(50% - 41px);
+		width: calc(50% - 32px);
+		max-width: 100%;
+	}
+}
+@media screen and (max-width:527px){
+	.young_adult_trips .container {
+		padding: 0 24px;
 	}
 }
 @media screen and (max-width:453px){
-	.travel_for_good_list{
-		flex-wrap:wrap;
-	}
 	.travel_for_good_list > li {
-		width: calc(100% - 41px);
+		width: 100%;
 	}
 }
 /* Subscription Section */
@@ -2243,7 +2515,7 @@ a:not(.card_image_link):active {
 	background-color:#2c768f;
 	text-align:center;
 	padding:70px 20px;
-	margin: 32px 0
+	margin: 0
 }
 
 .footer_cta h2{

@@ -409,7 +409,8 @@ function awi_enqueue_feature_scripts() {
     );
 
     // -----------------------------------------
-    // Site UI helpers - Load More - Back 2 Top - 
+    // Site UI helpers - Load More - Back 2 Top - Smooth Scroll - Header Search Toggle -
+    // Mobile CTA Consent Position - 
     // -----------------------------------------
         wp_enqueue_script(
             'gallery-load-more',
