@@ -1928,7 +1928,7 @@ body.home .latest_posts_list li {
 
 /* -----------------------------------------
    DEFAULT: DESKTOP
-   1025px–1999px
+   1121px–1999px
    Show 3 blog posts
    ----------------------------------------- */
 
@@ -1957,11 +1957,11 @@ body.home .latest_posts_list li:nth-child(4) {
 
 /* -----------------------------------------
    TABLET
-   721px–1024px
+   721px–1120px
    Show 2 blog posts
    ----------------------------------------- */
 
-@media (min-width: 721px) and (max-width: 1024px) {
+@media (min-width: 721px) and (max-width: 1120px) {
 
     body.home .latest_posts_list li:nth-child(3),
     body.home .latest_posts_list li:nth-child(4) {
@@ -2348,6 +2348,11 @@ body.home .latest_posts_list li:nth-child(4) {
 	.travel_for_good .container {
 		padding:0 32px;
 	}
+}
+@media (min-width: 1030px) and (max-width: 1410px) {
+    .travel_for_good_list > li:nth-child(1) {
+    	display: none;
+  	}
 }
 @media screen and (max-width:1000px){
 	.travel_for_good_list > li {
