@@ -420,26 +420,39 @@ function awi_enqueue_feature_scripts() {
             true
         );
 
+    // -----------------------------------------
+    // Interactive Trip Map Enqueue
+    // -----------------------------------------
+    if ( is_singular( ['tour', 'tours', 'trip', 'trips'] ) ) {
+
+        wp_enqueue_style(
+            'leaflet',
+            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+            [],
+            '1.9.4'
+        );
+
+        wp_enqueue_script(
+            'leaflet',
+            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+            [],
+            '1.9.4',
+            true
+        );
+
+        $map_js_path = get_stylesheet_directory() . '/js/interactive-trip-map.js';
+
+        wp_enqueue_script(
+            'awi-trip-map',
+            get_stylesheet_directory_uri() . '/js/interactive-trip-map.js',
+            ['leaflet'],
+            file_exists( $map_js_path ) ? filemtime( $map_js_path ) : $theme_version,
+            true
+        );
+    }
+
 }
 add_action('wp_enqueue_scripts', 'awi_enqueue_feature_scripts', 1);
-
-
-/* Interactive Trip Map Enqueue */
-add_action('wp_enqueue_scripts', function () {
-  if (!is_singular(['tour','tours','trip','trips'])) return;
-
-  wp_enqueue_style('leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', [], '1.9.4');
-  wp_enqueue_script('leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', [], '1.9.4', true);
-
-  wp_enqueue_script(
-    'awi-trip-map',
-    get_stylesheet_directory_uri() . '/js/interactive-trip-map.js',
-    ['leaflet'],
-    '1.0.0',
-    true
-  );
-});
-
 
 /* Include Search Helpers */
 require_once get_stylesheet_directory() . '/inc/search-helpers.php';				

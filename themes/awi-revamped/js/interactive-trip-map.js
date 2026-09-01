@@ -53,7 +53,7 @@
     const map = L.map(el, { scrollWheelZoom: false });
 
     // CARTO Voyager tiles (matches what you want)
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+    L.tileLayer("https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_2r4f_1_72a3154f19788f868972e3b7", {
       subdomains: "abcd",
       maxZoom: 20,
       attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
