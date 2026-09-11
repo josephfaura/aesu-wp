@@ -22,7 +22,6 @@ if ( function_exists('get_field') ) {
   $trip_departure     = get_field('trip_departure',  $trip_id);
   $e_brochure_link    = get_field('e_brochure_link', $trip_id);
   $show_webinar_link  = (bool) get_field('show_webinar_link', $trip_id);
-  $webinar_link       = get_field('webinar_link',    $trip_id);
   $additional_link    = get_field('additional_link', $trip_id);
 
   // Overrides / display fields
@@ -307,17 +306,6 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
   <section class="trip_header">
     <div class="trip_header_info">
 
-      <!--<?php if ( is_array($school_logo) && ! empty($school_logo['url']) && $school_id ) : ?>
-        <div class="trip_header_logo_wrap">
-          <a
-            class="trip_header_logo"
-            href="<?php echo esc_url( get_permalink($school_id) ); ?>"
-            style="background-image:url('<?php echo esc_url($school_logo['url']); ?>')"
-            aria-label="<?php echo esc_attr( get_the_title($school_id) ); ?>"
-          ></a>
-        </div>
-      <?php endif; ?>-->
-
       <div class="trip_header_info_text">
         <?php if ( $school_id && $school_id != 824 && $school_id != 1705 ) : ?>
           <h2 class="trip_school_name"><?php echo esc_html( get_the_title($school_id) ); ?></h2>
@@ -396,7 +384,7 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
       </div>
 
       <div class="trip_main_content_links">
-        <?php if ( $e_brochure_link || $webinar_link || $show_webinar_link || (is_array($additional_link) && !empty($additional_link['url'])) ) : ?>
+        <?php if ( $e_brochure_link || $show_webinar_link || (is_array($additional_link) && !empty($additional_link['url'])) ) : ?>
           <div class="additional_links">
             <ul class="additional_link_items">
               <?php if ( $e_brochure_link ) : ?>
@@ -405,10 +393,6 @@ if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
 
               <?php if ( $show_webinar_link ) : ?>
 							  <li><a target="_blank" rel="noopener" href="<?php echo esc_url( get_permalink(11615) ); ?>" class="webinar_link">Live Webinars</a></li>
-							  
-							<?php elseif ( !empty($webinar_link) ) : ?>
-							  <li><a target="_blank" rel="noopener" href="<?php echo esc_url($webinar_link); ?>" class="webinar_link">Live Webinars</a></li>
-
 							<?php endif; ?>
 
               <?php if ( is_array($additional_link) && !empty($additional_link['url']) ) : ?>

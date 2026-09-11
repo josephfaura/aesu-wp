@@ -4222,6 +4222,7 @@ aside ul{
 	gap:24px;
 	flex:1;
 }
+//*
 .trip_header_logo_wrap{
 	display: flex;
   width:200px;
@@ -4236,6 +4237,7 @@ aside ul{
   background-position: center;
   background-repeat: no-repeat;
 }
+*//
 .trip_header_info_text{
   flex: 1;
 }
