@@ -25,13 +25,12 @@ if ( $wp_query->have_posts() ) {
     // Featured first
     $featured = get_the_post_thumbnail_url( $first_id, 'full' );
 
-    // ACF fallbacks
+    // ACF hero image
     $hero_image    = get_field( 'trip_hero_image', $first_id );
-    $hero_fallback = get_field( 'trip_hero_image_text_url', $first_id );
 
     // Determine best available
     $thumb_url = $featured
-        ?: ( !empty($hero_image['url']) ? $hero_image['url'] : $hero_fallback );
+        ?: ( !empty($hero_image['url']) ? $hero_image['url'] : '' );
 }
 
 // If we found any usable image, show banner; otherwise show no-banner

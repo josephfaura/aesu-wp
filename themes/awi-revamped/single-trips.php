@@ -33,7 +33,6 @@ if ( function_exists('get_field') ) {
   $deals_popup        = get_field('deals_popup',       $trip_id);
 
   // Backwards compatible
-  $trip_hero_image_text_url = get_field('trip_hero_image_text_url', $trip_id);
   $toc_info                 = get_field('toc_info',                 $trip_id);
 
   $school_shortcode = get_field('school_shortcode', $trip_id);
@@ -76,10 +75,6 @@ if ( function_exists('get_field') ) {
       $tour_featured_url = get_the_post_thumbnail_url($tour_id, 'full');
       if ( $tour_featured_url ) {
         $hero_image = [ 'url' => $tour_featured_url ];
-
-        if ( $trip_hero_image_text_url === null || trim((string)$trip_hero_image_text_url) === '' ) {
-          $trip_hero_image_text_url = $tour_featured_url;
-        }
       }
     }
 
@@ -120,7 +115,6 @@ if ( function_exists('get_field') ) {
 $cta_url   = is_array($cta_button) ? ($cta_button['url'] ?? '') : '';
 $cta_title = is_array($cta_button) ? ($cta_button['title'] ?? '') : '';
 $hero_url  = is_array($hero_image) ? ($hero_image['url'] ?? '') : '';
-if ( $hero_url === '' ) { $hero_url = (string) $trip_hero_image_text_url; }
 ?>
 
 <?php if(is_user_logged_in()){ ?>

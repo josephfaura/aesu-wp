@@ -121,7 +121,7 @@ if(function_exists('get_field')){
 			$render_description = $manual_description;
 			$render_price       = $manual_price;
 
-			$render_cta_url     = $manual_cta_url;      // may overwrite URL to featured trip
+			$render_cta_url     = $manual_cta_url;      
 			$render_cta_text    = $manual_cta_text;     // NEVER overwrite
 
 			/**
@@ -167,9 +167,9 @@ if(function_exists('get_field')){
 
 			    // Trip fields
 			    $hero_image               = get_field('trip_hero_image', $featured_trip_id);
-			    $hero_fallback            = get_field('trip_hero_image_text_url', $featured_trip_id);
 			    $trip_name                = get_field('trip_name', $featured_trip_id);
 			    $days_price               = get_field('days__price', $featured_trip_id);
+			    $trip_dates         	  = get_field('trip_dates', $featured_trip_id);
 
 			    if ( !is_array($hero_image) ) {
 			        $hero_image = [];
@@ -185,14 +185,14 @@ if(function_exists('get_field')){
 			        $trip_name = get_field('trip_name', $tour_id);
 			    }
 
-			    // hero image: trip image -> trip text url -> tour featured image
-			    if ( empty($hero_image['url']) && ( $hero_fallback === null || $hero_fallback === false || $hero_fallback === '' ) && $tour_id ) {
-			        $tour_featured_url = get_the_post_thumbnail_url($tour_id, 'full');
-			        if ( $tour_featured_url ) {
-			            $hero_image['url'] = $tour_featured_url;
-			            $hero_fallback = $tour_featured_url;
-			        }
-			    }
+			    // hero image: trip image -> tour featured image
+				if (empty($hero_image['url']) && $tour_id) {
+				    $tour_featured_url = get_the_post_thumbnail_url($tour_id, 'full');
+
+				    if ($tour_featured_url) {
+				        $hero_image['url'] = $tour_featured_url;
+				    }
+				}
 
 			    // Destinations + Description come from the TOUR (to match your layout)
 			    if ( $tour_id ) {
@@ -221,8 +221,8 @@ if(function_exists('get_field')){
 			    }
 
 			    // Map trip-derived values into featured section
-			    $render_image_url = !empty($hero_image['url']) ? $hero_image['url'] : $hero_fallback;
-			    $render_title_h3  = $trip_name ?: $render_title_h3;
+			    $render_image_url = !empty($hero_image['url']) ? $hero_image['url'] : '';
+				$render_title_h3  = $trip_name ?: $render_title_h3;
 
 			    // CTA URL goes to the featured trip; CTA text stays manual
 			    $render_cta_url = get_permalink($featured_trip_id);
@@ -254,6 +254,8 @@ if(function_exists('get_field')){
 			            <?php if ( $render_price ) : ?>
 			                <strong class="trip_summary_details"><?php echo wp_kses_post($render_price); ?></strong>
 			            <?php endif; ?>
+
+			            <p class="post-type-label"><?php echo esc_html( $trip_dates ); ?></p>
 
 			            <?php if ( $render_cta_url ) : ?>
 			                <a href="<?php echo esc_url($render_cta_url); ?>" class="cta-button"><?php echo esc_html($render_cta_text); ?></a>

@@ -366,12 +366,6 @@ function get_first_image_url( $post_id = null ) {
 			return $welcome_letter_image['url'];
 		}
 
-		// Text-based URL fallback
-		$trip_hero_image_text_url = get_field( 'trip_hero_image_text_url', $post_id );
-		if ( ! empty( $trip_hero_image_text_url ) ) {
-			return $trip_hero_image_text_url;
-		}
-
 		// 2. Slider repeater (first slide image)
 		if ( have_rows( 'slider', $post_id ) ) {
 			the_row(); // first row only
