@@ -435,8 +435,12 @@ $hero_url  = is_array($hero_image) ? ($hero_image['url'] ?? '') : '';
               <a href="<?php echo esc_url( get_permalink($school_id) ); ?>"><i class="fa-solid fa-arrow-left"></i> More Trips</a>
             </li>
           <?php endif; ?>
-          <li class="travel_tools"><a href="#">Travel Tools</a></li>
-          <li class="deals_cta"><a href="#">Deals</a></li>
+          <?php if ( $travel_tools ) : ?>
+          <li class="travel_tools"><a href="">Travel Tools</a></li>
+          <?php endif; ?>
+          <?php if ( $deals_popup ) : ?>
+          <li class="deals_cta"><a href="">Deals</a></li>
+          <?php endif; ?>
           <li class="share_section">
             <span><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
             <div class="share_options">
