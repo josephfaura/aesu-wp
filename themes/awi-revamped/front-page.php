@@ -19,6 +19,13 @@ if(function_exists('get_field')){
 }
 ?>
 
+<?php if ( is_user_logged_in() ) : ?>
+    <style>
+      .banner{height:calc(100vh - 32px);}
+      @media screen and (max-width:879px) {.banner{height:calc(100vh - 46px);}}
+    </style>
+<?php endif; ?>
+
 	<main id="primary" class="site-main">
 
 	<?php foreach ( $home_section_builder as $home_section_builder_item ) { ?>
