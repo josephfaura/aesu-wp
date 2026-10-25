@@ -258,7 +258,10 @@ if ( ! empty( $thumb_url ) ) : ?>
 
 		<?php else : ?>
 
-			<?php get_template_part( 'template-parts/content', 'none' ); ?>
+		    <?php
+		    wp_safe_redirect( home_url( '/trips/#trip_list' ) );
+		    exit;
+		    ?>
 
 		<?php endif; ?>
 

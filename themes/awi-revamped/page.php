@@ -15,7 +15,7 @@
 get_header(); ?>
 
 <main>
-<?php if ( have_rows('slider', $dupID) ) : ?>
+<?php if ( have_rows('slider', get_queried_object_id()) ) : ?>
 	<?php
 	the_row(); // ← advance to FIRST slide only
 

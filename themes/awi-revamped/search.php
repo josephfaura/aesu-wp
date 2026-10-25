@@ -248,12 +248,8 @@ if ( $trips_query->have_posts() ) : ?>
         <?php endwhile; ?>
     </ul>
 
-    <h2 class="related-articles-title" style="margin:2em 0 .5rem 0 !important;">Ready for Your Next Adventure?</h2>
-    <div style="text-align: center;">
-        <a class="cta-button" href="<?php echo esc_url(get_permalink(824)); ?>">View all trips <i class="fa fa-arrow-right"></i></a>
-    </div>
-
 </section>
+
 <?php
 endif;
 wp_reset_postdata();
@@ -262,6 +258,12 @@ wp_reset_postdata();
 </div>
 
 	</main><!-- #main -->
+
+    
+        <section class="footer_cta">
+            <h2>Ready for Your Next Adventure?</h2>
+            <a href="<?php echo get_permalink(824) ?>" class="cta-button">View All Trips</a>
+        </section>
 
 <?php
 get_footer();

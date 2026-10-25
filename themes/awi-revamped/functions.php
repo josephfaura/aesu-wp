@@ -765,8 +765,11 @@ function custom_show_template_column( $column, $post_id ) {
         $template_slug = get_post_meta( $post_id, '_wp_page_template', true );
 
         $custom_labels = [
-            'page-school-landing-page.php' => 'School',
-            'page-awt-toc.php'             => 'TOC',
+            'page-school-landing-page.php' => 'Landing Page',
+            'page-awt-toc.php'             => 'Alumni Grid',
+            'page-adjustable-width.php'    => 'Adjustable Width',
+            'page-testimonials.php'        => 'Testimonials',
+
         ];
 
         if ( $template_slug === 'default' ) {

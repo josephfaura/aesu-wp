@@ -12,7 +12,67 @@
 get_header();
 if(function_exists('get_field')){
 	//banner
-	$banner_image = get_field('banner_image');
+    $banner_image = get_field('banner_image');
+    $banner_video = get_field('banner_video');
+
+    $default_video = get_field(
+        'default_video_banner',
+        'option'
+    );
+
+    $default_poster = get_field(
+        'default_video_banner_poster',
+        'option'
+    );
+
+    $banner_image_url = (
+        is_array($banner_image) &&
+        !empty($banner_image['url'])
+    ) ? $banner_image['url'] : '';
+
+    $custom_video_url = (
+        is_array($banner_video) &&
+        !empty($banner_video['url'])
+    ) ? $banner_video['url'] : '';
+
+    $default_video_url = (
+        is_array($default_video) &&
+        !empty($default_video['url'])
+    ) ? $default_video['url'] : '';
+
+    $default_poster_url = (
+        is_array($default_poster) &&
+        !empty($default_poster['url'])
+    ) ? $default_poster['url'] : '';
+
+    $banner_media_type = '';
+    $banner_video_url = '';
+    $banner_poster_url = '';
+
+    // Priority: custom video > image > default video
+
+    if ($custom_video_url) {
+
+        $banner_media_type = 'video';
+        $banner_video_url = $custom_video_url;
+
+    } elseif ($banner_image_url) {
+
+        $banner_media_type = 'image';
+
+    } elseif ($default_video_url) {
+
+        $banner_media_type = 'video';
+        $banner_video_url = $default_video_url;
+        $banner_poster_url = $default_poster_url;
+
+    } else {
+
+        // Fallback image when no other media is available.
+        $banner_media_type = 'image';
+        $banner_poster_url = $default_poster_url;
+
+    }
 	$banner_title = get_field('banner_title');
 	$banner_tagline = get_field('banner_taqline');
 	$banner_cta = get_field('banner_cta');
@@ -38,7 +98,6 @@ if(function_exists('get_field')){
     $payment_info = get_field('payment_info');
     $footer_cta_text = get_field('footer_cta_text');
     $welcome_letter_contact_address = get_field('welcome_letter_contact_address');
-    $banner_video = get_field('banner_video');
     $contact_website = get_field('contact_website');
 }
 ?>
@@ -397,21 +456,36 @@ if ( ! post_password_required() ) {
       @media screen and (max-width: 550px) {.banner{height:calc(100vh - 46px);}}
     </style>
 <?php endif; ?>
-<div class="banner" style="background-image:url(<?php echo $banner_image['url'] ?>)">
-    <?php if($banner_video){ ?>
-    <video autoplay muted playsinline loop preload="metadata" poster="<?php echo $banner_image['url']; ?>" id="video_banner_schools">
-      <source src="<?php echo esc_url($banner_video); ?>" type="video/mp4">
-      Your browser does not support HTML5 video.
-    </video>
-<?php } ?>
+
+<div class="banner"<?php if ($banner_media_type === 'image') : ?> style="background-image: url('<?php echo esc_url(!empty($banner_image_url) ? $banner_image_url : $banner_poster_url); ?>')"<?php endif; ?>>
+
+    <?php if ($banner_media_type === 'video') : ?>
+        <video autoplay muted playsinline loop preload="metadata" id="video_banner_schools">
+            <source src="<?php echo esc_url($banner_video_url); ?>" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+    <?php endif; ?>
+
     <div class="container">
-        <?php if($banner_title){ ?><h1><?php echo $banner_title; ?></h1><?php } ?>
-        <?php if($banner_tagline){ ?><h2><?php echo $banner_tagline; ?></h2><?php } ?>
-        <?php if($banner_cta){ ?><a href="<?php echo $banner_cta['url'] ?>" class="cta-button" style="background-color:<?php echo $primary_color; ?>; border: 1px solid #5e5e5e";><?php echo $banner_cta['title'] ?></a><?php } ?>
-        
+        <?php if ($banner_title) : ?>
+            <h1><?php echo esc_html($banner_title); ?></h1>
+        <?php endif; ?>
+
+        <?php if ($banner_tagline) : ?>
+            <h2><?php echo esc_html($banner_tagline); ?></h2>
+        <?php endif; ?>
+
+        <?php if ($banner_cta) : ?>
+            <a href="<?php echo esc_url($banner_cta['url']); ?>" class="cta-button" style="background-color:<?php echo esc_attr($primary_color); ?>; border: 1px solid #5e5e5e;">
+                <?php echo esc_html($banner_cta['title']); ?>
+            </a>
+        <?php endif; ?>
     </div>
+
     <a href="#skip_banner" class="banner_arrow"><i class="fa-solid fa-angle-down"></i></a>
 </div>
+
+
 <div id="skip_banner"></div>
 <section class="anchor_nav">
     <ul class="list-unstyled">
