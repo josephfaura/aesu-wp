@@ -298,8 +298,24 @@ if ( ! empty( $top_cats ) ) : ?>
 
 <?php
 
-// Check if every post has a start_date value
-$all_have_start_date = true;
+// Get all published AESU trip IDs
+$all_trips = get_posts( array(
+    'post_type'      => 'trips',
+    'post_status'    => 'publish',
+    'fields'         => 'ids',
+    'posts_per_page' => -1,
+    'meta_query'     => array(
+        array(
+            'key'     => 'header_type',
+            'value'   => 'AESU',
+            'compare' => '=',
+        ),
+    ),
+));
+
+// Check if every AESU trip has a start_date value
+$all_have_start_date = ! empty( $all_trips );
+
 foreach ( $all_trips as $trip_id ) {
     if ( ! get_field( 'start_date', $trip_id ) ) {
         $all_have_start_date = false;

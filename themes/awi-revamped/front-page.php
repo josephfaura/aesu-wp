@@ -262,7 +262,9 @@ if(function_exists('get_field')){
 			                <strong class="trip_summary_details"><?php echo wp_kses_post($render_price); ?></strong>
 			            <?php endif; ?>
 
-			            <p class="post-type-label"><?php echo esc_html( $trip_dates ); ?></p>
+			            <?php if ( !empty($trip_dates) ) : ?>
+						    <p class="post-type-label"><?php echo esc_html( $trip_dates ); ?></p>
+						<?php endif; ?>
 
 			            <?php if ( $render_cta_url ) : ?>
 			                <a href="<?php echo esc_url($render_cta_url); ?>" class="cta-button"><?php echo esc_html($render_cta_text); ?></a>

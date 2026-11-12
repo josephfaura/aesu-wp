@@ -7,44 +7,53 @@
 
 get_header(); ?>
 <main>
-<?php if ( have_rows('slider', get_queried_object_id()) ) : ?>
-	<?php
-	the_row(); // ← advance to FIRST slide only
+<?php
+$show_banner = false;
 
-	$image    = get_sub_field('slide_image');
-	$title    = get_sub_field('slide_title');
-	$subtitle = get_sub_field('slide_subtitle');
-	$link     = get_sub_field('slide_link'); // Link array
-	?>
+if ( have_rows('slider', get_queried_object_id()) ) :
+    the_row(); // ← advance to FIRST slide only
 
-	<div class="banner_interior" style="background-image:url(<?php echo esc_url($image['url']); ?>);">
-		<div class="container">
+    $image    = get_sub_field('slide_image');
+    $title    = get_sub_field('slide_title');
+    $subtitle = get_sub_field('slide_subtitle');
+    $link     = get_sub_field('slide_link');
 
-			<?php if ( $title ) : ?>
-				<h3><?php echo esc_html($title); ?></h3>
-			<?php endif; ?>
+    $show_banner = is_array($image) && !empty($image['url']);
+endif;
+?>
 
-			<?php if ( $subtitle ) : ?>
-				<p><?php echo esc_html($subtitle); ?></p>
-			<?php endif; ?>
+<?php if ( $show_banner ) : ?>
 
-			<?php if ( $link ) : 
-				$url    = $link['url'];
-				$text   = $link['title'];
-				$target = $link['target'] ?: '_self';
-			?>
-				<a href="<?php echo esc_url($url); ?>"
-				   target="<?php echo esc_attr($target); ?>"
-				   class="cta-button">
-					<?php echo esc_html($text); ?>
-				</a>
-			<?php endif; ?>
+    <div class="banner_interior" style="background-image:url('<?php echo esc_url($image['url']); ?>');">
+        <div class="container">
 
-		</div>
-	</div>
+            <?php if ( $title ) : ?>
+                <h3><?php echo esc_html($title); ?></h3>
+            <?php endif; ?>
+
+            <?php if ( $subtitle ) : ?>
+                <p><?php echo esc_html($subtitle); ?></p>
+            <?php endif; ?>
+
+            <?php if ( is_array($link) && !empty($link['url']) ) :
+                $url    = $link['url'];
+                $text   = $link['title'] ?? '';
+                $target = !empty($link['target']) ? $link['target'] : '_self';
+            ?>
+                <a href="<?php echo esc_url($url); ?>"
+                   target="<?php echo esc_attr($target); ?>"
+                   class="cta-button">
+                    <?php echo esc_html($text); ?>
+                </a>
+            <?php endif; ?>
+
+        </div>
+    </div>
 
 <?php else : ?>
-	<div class="no-banner"></div>
+
+    <div class="no-banner"></div>
+
 <?php endif; ?>
 
 	<div class="container">

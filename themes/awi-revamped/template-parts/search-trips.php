@@ -259,7 +259,7 @@ if ( ! empty( $thumb_url ) ) : ?>
 		<?php else : ?>
 
 		    <?php
-		    wp_safe_redirect( home_url( '/trips/#trip_list' ) );
+		    wp_safe_redirect( home_url( '/trips' ) );
 		    exit;
 		    ?>
 

@@ -382,7 +382,7 @@ if ($is_bespoke) {
 }
 
 // Defensive cleanup
-$account_link = strtok($account_link, "\n");
+$account_link = strtok($account_link ?? '', "\n");
 ?>
 
 <header class="mobile_header">

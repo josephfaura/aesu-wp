@@ -869,6 +869,30 @@ add_action('admin_head', function () {
     </style>';
 });
 
+// Adjust title column width on selected admin list screens
+add_action('admin_head', function () {
+
+    $screen = get_current_screen();
+
+    if ( ! $screen ) {
+        return;
+    }
+
+    $target_screens = array(
+        'edit-page',  // Pages
+        'edit-trips', // Trips
+        'edit-tours', // Tours
+    );
+
+    if ( in_array( $screen->id, $target_screens, true ) ) {
+        echo '<style>
+            .wp-list-table .column-title {
+                width: 25% !important;
+            }
+        </style>';
+    }
+});
+
 // Style ACF Repeater Tabs with WP blue in admin
 add_action('acf/input/admin_head', function () {
     ?>
@@ -1233,18 +1257,6 @@ foreach ( get_post_types( array( 'public' => true ) ) as $post_type ) {
 }
 add_shortcode( 'sitemap','generate_sitemap' );
 
-// Small admin CSS tweak - Adjust width as needed
-add_action('admin_head', function () {
-    echo '<style>.wp-list-table .column-title{width:25% !important;}</style>';
-});
-
-/*______________________________________________ */
-add_action('pre_get_posts', function ($query) {
-    if ($query->is_main_query() && !is_admin()) {
-        $query->set('orderby', 'date');
-        $query->set('order', 'DESC');
-    }
-});
 
 /* ACF preview helpers */
 add_filter( 'acf/pre_load_post_id', function( $post_id ) {

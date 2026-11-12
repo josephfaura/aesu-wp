@@ -275,7 +275,6 @@ if ( function_exists('get_field') ) {
 			<h4 class="trip_destination_info"><?php echo $destinations; ?></h4>
 		</div>
 		<div class="trip_header_right">
-			<div class="trip_days_price"><?php echo $days_price; ?></div>
 			<a href="<?php echo $cta_button['url'] ?>" class="button_cta" target="_blank"><?php echo $cta_button['title'] ?></a>
 			</div>
 	</section>

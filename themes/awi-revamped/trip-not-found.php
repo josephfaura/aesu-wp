@@ -166,14 +166,17 @@ get_header();
 
 
         <p>
-            This departure has concluded and is no longer available.
+            <strong>This departure has concluded and is no longer available.</strong>
+        </p>
+        <p>
+            Call AESU at <a href="tel:8006387640"><strong>800-638-7640</strong></a> if you need further details about a trip.
         </p>
 
 
         <a 
             href="<?php echo esc_url($school_url); ?>" 
             class="blue-primary-button">
-            <i class="fa-solid fa-arrow-left"></i> More Trips
+            <i class="fa-solid fa-arrow-left"></i> See Current Trips
         </a>
 
     </div>
