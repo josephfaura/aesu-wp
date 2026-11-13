@@ -56,6 +56,7 @@ if ( function_exists('get_field') ) {
 <?php } ?>
 
 <style>
+	body.single-tours{background: #fafafa;}
 	.trip_cta_list { justify-content:center; }
 	.trip_cta_list > *:last-child { margin-left:0; }
 	.experiences { justify-content:center; }

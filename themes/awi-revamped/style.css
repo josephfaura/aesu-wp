@@ -4608,6 +4608,7 @@ color:#fff;
 	border-radius:6px;
 	/*border:1px solid #dbdbdb;*/
 	height:inherit;
+	background: #fff;
 }
 .trip_highlights h2{
 	margin-top:0;
@@ -4982,6 +4983,7 @@ i.fa-star{
 	box-shadow: 0 3px 10px 0 #00000026;
   border: 1px solid #dbdbdb;
 	border-radius: 3px;
+	background:#fff;
 }
 .trip_options_slider {
 	list-style:none;

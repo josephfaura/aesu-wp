@@ -102,6 +102,7 @@ if(function_exists('get_field')){
 }
 ?>
 <style>
+    body.page-template-page-school-landing-page{background:#fafafa;}
     .school_custom_wrap a{
         color:<?php echo $primary_color; ?>;
     }
@@ -130,7 +131,8 @@ if(function_exists('get_field')){
         /* width: calc(100% / 3 - 32px); // can't understand why this math produces a narrow grid and 34% - 32px fits perfect when the math doesn't add up ¯\_(ツ)_/¯ */
         text-align:center;
         border-radius: 6px;
-        box-shadow:0 3px 10px rgba(0,0,0,.25)
+        box-shadow:0 3px 10px rgba(0,0,0,.25);
+        background:#fff;
     }
     .trip_post > li a{
         font-size:18px;

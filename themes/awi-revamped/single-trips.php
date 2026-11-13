@@ -131,6 +131,7 @@ $hero_url  = is_array($hero_image) ? ($hero_image['url'] ?? '') : '';
 <?php } ?>
 
 <style>
+  body.single-trips{background: #fafafa;}
 	.trip_header_cta{
 		text-align:right;
 	}
