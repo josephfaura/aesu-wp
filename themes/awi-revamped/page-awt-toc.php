@@ -125,7 +125,7 @@ get_header(); ?>
 	.packages div.package_content{
 		padding:32px;
 		text-align: center;
-		font-size: 18px;
+		font-size: 1rem;
 		height:100%;
 		display: flex;
 		flex-direction: column;
@@ -141,8 +141,8 @@ get_header(); ?>
 		max-width:1300px;
 	}
 	.package_content h3{
-		font-size:1.5rem;
-		margin-top:0;
+		font-size:1.25rem;
+		margin:0 0 1rem 0;
 		color:#5e5e5e;
 	}
 	.search-terms {
@@ -254,6 +254,7 @@ get_header(); ?>
 							 $school_logo = get_field('school_logo', get_the_ID());
 							 $school_logo_background = get_field('school_logo_background', get_the_ID());
 							 $primary_color = get_field('primary_color', get_the_ID());
+							 $school_logo_background = get_field('school_logo_background', get_the_ID());
 							?>
 							<li id="package_<?php echo $looping_index; ?>">
 								<div class="thumbnail_wrap" style="background-color:<?php echo $school_logo_background; ?>;">
@@ -263,7 +264,7 @@ get_header(); ?>
 									</a>
 								</div>
 								<div class="package_content">
-									<a href="<?php echo get_the_permalink(); ?>"><h3><?php echo get_the_title(); ?></h3></a>
+									<a href="<?php echo get_the_permalink(); ?>"><h3 style="color:<?php echo $school_logo_background; ?> !important;"><?php echo get_the_title(); ?></h3></a>
 
 									 <a style="color:<?php echo $primary_color; ?> !important;font-weight:700;" href="<?php echo get_the_permalink(); ?>">Explore our trips <i class="fa fa-arrow-right"></i></a>
 									
